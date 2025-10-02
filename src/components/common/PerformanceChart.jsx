@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { Line } from 'recharts';
-import { storage } from '@/services/storageService';
+import { getAllAttempts } from '@/data/attemptRepository';
+
 export function PerformanceChart({ examType = 'all', days = 30 }) {
   const chartData = useMemo(() => {
-    const attempts = storage.getAttempts()
+    const attempts = getAllAttempts()
       .filter(a => a.status === 'completed')
       .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     const cutoffDate = new Date();

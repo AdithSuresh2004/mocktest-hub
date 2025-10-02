@@ -11,8 +11,8 @@ import {
   FaBook,
   FaBullseye,
 } from "react-icons/fa";
-import TestCard from "@/components/ui/TestCard";
-import { useExamSelection } from "@/hooks/useExamSelection";
+import TestCard from "@/components/common/TestCard";
+import { useExamSelection } from "@/hooks/useExamSelection/useExamSelection";
 const TEST_TYPE_ICONS = {
   all: FaHome,
   full_tests: FaFileAlt,

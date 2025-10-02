@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { calculateSectionStats } from "@/utils/examHelpers"; 
+import { calculateSectionStats } from "@/utils/helpers/examHelpers"; 
 export function useQuestionNavigator({
   sections,
   currentSection,

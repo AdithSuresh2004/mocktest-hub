@@ -9,13 +9,7 @@ export const formatDate = (timestamp, format = 'long') => {
     hour: '2-digit', minute: '2-digit'
   });
 };
-export const formatTime = (seconds) => {
-  const hrs = Math.floor(seconds / 3600);
-  const mins = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
-  if (hrs > 0) return `${hrs}h ${mins}m ${secs}s`;
-  return `${mins}m ${secs}s`;
-};
+
 export const getPerformanceColor = (score, total) => {
   const percentage = (score / total) * 100;
   if (percentage >= 80) return 'text-green-600 dark:text-green-400';
@@ -30,4 +24,12 @@ export const getDifficultyColor = (strength) => {
     Hard: "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400",
   };
   return colors[strength] || "bg-gray-50 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400";
+};
+export const formatTime = (seconds) => {
+  if (seconds === undefined || seconds === null) {
+    return "0m 0s";
+  }
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}m ${secs}s`;
 };

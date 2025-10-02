@@ -1,8 +1,8 @@
 import { FaCheck } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useSettings } from "@/hooks/useSettings";
-import { useDataManagement } from "@/hooks/useDataManagement";
+import { useSettings } from "@/hooks/useSettings/useSettings";
+import { useDataManagement } from "@/hooks/useSettings/useDataManagement";
 import AppearanceSection from "@/components/settings/AppearanceSection";
 import PreferencesSection from "@/components/settings/PreferencesSection";
 import DataManagementSection from "@/components/settings/DataManagementSection";

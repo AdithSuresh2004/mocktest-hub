@@ -1,7 +1,7 @@
 import { IoChevronDown, IoGrid, IoClose } from "react-icons/io5";
 import QuestionLegend from "@/components/exam/QuestionLegend";
-import { getQuestionStatusClasses } from "@/utils/examHelpers";
-import { useQuestionNavigator } from "@/hooks/useQuestionNavigator"; 
+import { getQuestionStatusClasses } from "@/utils/helpers/examHelpers";
+import { useQuestionNavigator } from "@/hooks/useExam/useQuestionNavigator"; 
 export default function QuestionNavigator({
   sections,
   currentSection,

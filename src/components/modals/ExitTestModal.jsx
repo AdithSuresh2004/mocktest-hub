@@ -6,8 +6,6 @@ export default function ExitTestModal({
   onExitWithoutSaving,
   onCancel,
 }) {
-  const exitButtonClasses =
-    "w-full px-4 py-3 rounded-lg font-medium transition-colors bg-red-600 hover:bg-red-700 text-white";
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-2xl">
@@ -50,7 +48,7 @@ export default function ExitTestModal({
               Save Progress & Exit
             </button>
           )}
-          <button onClick={onExitWithoutSaving} className={exitButtonClasses}>
+          <button onClick={onExitWithoutSaving} className="w-full px-4 py-3 rounded-lg font-medium transition-colors bg-red-600 hover:bg-red-700 text-white">
             {hasAnswers ? "Exit Without Saving" : "Exit Exam"}
           </button>
           <button

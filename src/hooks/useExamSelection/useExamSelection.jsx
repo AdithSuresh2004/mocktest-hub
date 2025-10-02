@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { getExamsManifest } from "@/api/examApi";
+import { getManifest as getExamsManifest } from "@/data/examRepository";
 const TEST_TYPES = [
   { id: "all", label: "All Tests" },
   { id: "full_tests", label: "Mock Tests" },

@@ -1,7 +1,7 @@
 import { FaExpandArrowsAlt, FaArrowLeft, FaCompress } from "react-icons/fa";
-import ThemeToggle from "@/components/ui/ThemeToggle";
-import { useExamHeaderState } from "@/hooks/useExamHeaderState"; 
-import { formatTime } from "@/utils/examHelpers";
+import ThemeToggle from "@/components/common/ThemeToggle";
+import { useExamHeaderState } from "@/hooks/useExam/useExamHeaderState"; 
+import { formatTime } from "@/utils/helpers/examHelpers";
 export default function ExamHeader({ exam, timeRemaining, onExit }) {
   const { isFullscreen, timeColorClass, toggleFullscreen } = useExamHeaderState(timeRemaining);
   return (

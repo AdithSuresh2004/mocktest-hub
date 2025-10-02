@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { getAttemptById } from "@/api/attemptApi";
-import { getExamById } from "@/api/examApi";
+import { findAttemptById } from "@/data/attemptRepository";
+import { findExamById } from "@/data/examRepository";
 const getQuestionMarks = (question) => {
     if (typeof question.marks === 'number') {
         return question.marks;
@@ -108,7 +108,7 @@ export default function useResultAnalysis(attemptId) {
         setLoading(true);
         setError(null);
         try {
-            const attemptData = getAttemptById(attemptId);
+            const attemptData = findAttemptById(attemptId);
             if (!attemptData) {
                 setError("Attempt not found.");
                 setLoading(false);
@@ -119,7 +119,7 @@ export default function useResultAnalysis(attemptId) {
                 setLoading(false);
                 return;
             }
-            const examData = await getExamById(attemptData.exam_id);
+            const examData = await findExamById(attemptData.exam_id);
             if (!examData) {
                 setError("Exam details not found.");
                 setLoading(false);

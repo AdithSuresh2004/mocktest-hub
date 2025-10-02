@@ -1,16 +1,21 @@
 const ATTEMPTS_KEY = 'exam_attempts';
+
 function generateAttemptId(examId) {
   const timestamp = Date.now().toString(36);
   return `att_${examId}_${timestamp}`;
 }
-function getAllAttempts() {
+
+// Renamed to avoid conflict with other potential `getAll` functions
+export function getAllAttempts() {
   const attemptsJson = localStorage.getItem(ATTEMPTS_KEY);
   return attemptsJson ? JSON.parse(attemptsJson) : [];
 }
+
 function saveAllAttempts(attempts) {
   localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(attempts));
 }
-function createAttemptLocal(examId, durationMinutes) {
+
+export function createAttempt(examId, durationMinutes) {
   const attempt = {
     attempt_id: generateAttemptId(examId),
     exam_id: examId,
@@ -32,7 +37,8 @@ function createAttemptLocal(examId, durationMinutes) {
   saveAllAttempts(attempts);
   return attempt;
 }
-function getLatestAttemptLocal(examId) {
+
+export function getLatestInProgressAttempt(examId) {
   const attempts = getAllAttempts();
   const inProgressAttempts = attempts.filter(
     att => att.exam_id === examId && att.status === 'in_progress'
@@ -43,7 +49,8 @@ function getLatestAttemptLocal(examId) {
   );
   return inProgressAttempts[0];
 }
-function updateAttemptLocal(attemptId, updates) {
+
+export function updateAttempt(attemptId, updates) {
   const attempts = getAllAttempts();
   const attemptIndex = attempts.findIndex(att => att.attempt_id === attemptId);
   if (attemptIndex === -1) return null;
@@ -51,25 +58,21 @@ function updateAttemptLocal(attemptId, updates) {
   saveAllAttempts(attempts);
   return attempts[attemptIndex];
 }
-function getAttemptById(attemptId) {
+
+export function findAttemptById(attemptId) {
   const attempts = getAllAttempts();
   return attempts.find(att => att.attempt_id === attemptId) || null;
 }
-function getAllAttemptsForExam(examId) {
+
+export function findAllAttemptsByExamId(examId) {
   const attempts = getAllAttempts();
   return attempts.filter(att => att.exam_id === examId);
 }
-function deleteAttempt(attemptId) {
+
+export function removeAttempt(attemptId) {
   const attempts = getAllAttempts();
   const filtered = attempts.filter(att => att.attempt_id !== attemptId);
   saveAllAttempts(filtered);
   return filtered.length < attempts.length;
 }
-export { 
-  createAttemptLocal, 
-  getLatestAttemptLocal, 
-  updateAttemptLocal,
-  getAttemptById,
-  getAllAttemptsForExam,
-  deleteAttempt
-};
+

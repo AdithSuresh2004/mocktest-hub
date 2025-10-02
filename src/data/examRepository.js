@@ -1,14 +1,16 @@
 import { getJSON } from '@/api/http';
-export async function getExamsManifest() {
+
+export async function getManifest() {
   try {
     return await getJSON('/data/exams_manifest.json');
   } catch {
     return { exams: [] };
   }
 }
-export async function getExamById(examId) {
+
+export async function findExamById(examId) {
   try {
-    const manifest = await getExamsManifest();
+    const manifest = await getManifest();
     const allExams = [
       ...(manifest.full_tests || []),
       ...(manifest.topic_tests || []),
@@ -29,16 +31,5 @@ export async function getExamById(examId) {
     }
   } catch (err) {
     throw new Error(`Failed to load exam "${examId}": ${err.message}`);
-  }
-}
-export async function saveAttempt(attempt) {
-  try {
-    const attempts = JSON.parse(localStorage.getItem('exam_attempts') || '[]');
-    attempts.push(attempt);
-    localStorage.setItem('exam_attempts', JSON.stringify(attempts));
-    return attempt;
-  } catch (err) {
-    console.error('Failed to save attempt', err);
-    throw err;
   }
 }

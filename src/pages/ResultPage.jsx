@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaHome, FaChartBar, FaClock, FaCheckCircle, FaTimesCircle, FaTrophy, FaPercentage, FaQuestionCircle } from "react-icons/fa";
-import StatusDisplay from "@/components/ui/StatusDisplay";
-import useResultAnalysis, { getPerformanceLevel } from "@/hooks/useResultAnalysis"; 
-import { formatTime } from "@/utils/examHelpers";
+import StatusDisplay from "@/components/common/StatusDisplay";
+import useResultAnalysis, { getPerformanceLevel } from "@/hooks/useResult/useResultAnalysis"; 
+import { formatTime } from "@/utils/helpers/examHelpers";
 export default function ResultPage() {
     const { attemptId } = useParams();
     const navigate = useNavigate();

@@ -9,14 +9,7 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const getDifficultyColor = (strength) =>
-({
-  Easy: "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400",
-  Medium:
-    "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400",
-  Hard: "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400",
-}[strength] ||
-  "bg-gray-50 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400");
+import { getDifficultyColor } from "@/utils/formatters/formatters";
 const getTestTypeConfig = (type) =>
 ({
   full_tests: {
@@ -63,7 +56,6 @@ export default function TestCard({ test }) {
       const exists = favorites.some(f => f.exam_id === test.exam_id);
       setIsFavorite(exists);
     } catch (error) {
-      console.error('Error checking favorite status:', error);
     }
   };
   const toggleFavorite = (e) => {
@@ -92,7 +84,6 @@ export default function TestCard({ test }) {
         setIsFavorite(true);
       }
     } catch (error) {
-      console.error('Error toggling favorite:', error);
     }
   };
   return (

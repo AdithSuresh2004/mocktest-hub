@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import ThemeToggle from "@/components/common/ThemeToggle";
 export default function Navbar({ toggleSidebar = () => { } }) {
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center z-50

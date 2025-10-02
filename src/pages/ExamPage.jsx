@@ -1,13 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import StatusDisplay from "@/components/ui/StatusDisplay";
+import StatusDisplay from "@/components/common/StatusDisplay";
 import QuestionArea from "@/components/exam/QuestionArea";
 import QuestionNavigator from "@/components/exam/QuestionNavigator";
 import ExamNavigation from "@/components/exam/ExamNavigation";
 import ExamHeader from "@/components/exam/ExamHeader";
 import SubmissionModal from "@/components/modals/SubmissionModal";
 import ExitTestModal from "@/components/modals/ExitTestModal";
-import useExam from "@/hooks/useExam";
+import useExam from "@/hooks/useExam/useExam";
 const ExamPage = () => {
   const { examId } = useParams();
   const navigate = useNavigate();

@@ -12,7 +12,6 @@ export function useSettings() {
       setNotifications(settings.notifications !== false);
       setAutoSave(settings.autoSave !== false);
     } catch (error) {
-      console.error('Error loading settings:', error);
     }
   };
   const saveSettings = (theme) => {
@@ -26,7 +25,6 @@ export function useSettings() {
       setShowSaveSuccess(true);
       setTimeout(() => setShowSaveSuccess(false), 3000);
     } catch (error) {
-      console.error('Error saving settings:', error);
     }
   };
   return {

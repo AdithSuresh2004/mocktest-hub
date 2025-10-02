@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import StatusDisplay from "@/components/ui/StatusDisplay";
+import StatusDisplay from "@/components/common/StatusDisplay";
 export default function ErrorPage() {
   const navigate = useNavigate();
   const [isRetrying, setIsRetrying] = useState(false);

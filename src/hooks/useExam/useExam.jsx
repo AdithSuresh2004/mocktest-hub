@@ -1,9 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
-import { getExamById } from "@/api/examApi";
-import { useExamNavigation } from "@/hooks/useExamNavigation";
-import { useTimer } from "@/hooks/useTimer";
-import { createAttemptLocal, deleteAttempt, getLatestAttemptLocal, updateAttemptLocal } from "@/api/attemptApi";
-import { calculateScore } from "@/utils/examHelpers"
+import { findExamById } from '@/data/examRepository';
+import { 
+  getLatestInProgressAttempt, 
+  createAttempt, 
+  updateAttempt, 
+  removeAttempt 
+} from '@/data/attemptRepository';
+import { useExamNavigation } from "@/hooks/useExam/useExamNavigation";
+import { useTimer } from "@/hooks/useExam/useTimer";
+import { calculateScore } from "@/utils/helpers/examHelpers";
+
 export default function useExam(examId) {
   const [exam, setExam] = useState(null);
   const [attempt, setAttempt] = useState(null);
@@ -12,22 +18,27 @@ export default function useExam(examId) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const navigation = useExamNavigation(exam?.sections || []);
   const { currentSection, currentQuestion, setCurrentSection, setCurrentQuestion } = navigation;
-  const timer = useTimer(0, useCallback(() => {
+
+  const onTimerEnd = useCallback(() => {
     finalizeExam(true);
-  }, []));
+  }, []);
+  const timer = useTimer(0, onTimerEnd);
+
   useEffect(() => {
     if (!examId) {
       setLoading(false);
       setError("Invalid exam ID.");
       return;
     }
+
     const loadExam = async () => {
       setLoading(true);
       setError(null);
       try {
-        const examData = await getExamById(examId);
+        const examData = await findExamById(examId);
         if (!examData) {
           setError("Exam not found.");
           setLoading(false);
@@ -40,12 +51,14 @@ export default function useExam(examId) {
           return;
         }
         setExam(examData);
+
         const examDataId = examData.id || examData.exam_id;
-        let activeAttempt = getLatestAttemptLocal(examDataId);
+        let activeAttempt = getLatestInProgressAttempt(examDataId);
         if (!activeAttempt) {
-          activeAttempt = createAttemptLocal(examDataId, examData.duration_minutes);
+          activeAttempt = createAttempt(examDataId, examData.duration_minutes);
         }
         setAttempt(activeAttempt);
+
         const answersObj = {};
         if (activeAttempt.responses && Array.isArray(activeAttempt.responses)) {
           activeAttempt.responses.forEach(response => {
@@ -54,11 +67,13 @@ export default function useExam(examId) {
         }
         setAnswers(answersObj);
         setMarkedForReview(new Set(activeAttempt._markedForReview || []));
+
         const submitted = activeAttempt.status === 'completed';
         setIsSubmitted(submitted);
         setCurrentSection(activeAttempt._currentSection || 0);
         setCurrentQuestion(activeAttempt._currentQuestion || 0);
         timer.setTime(activeAttempt._timeRemainingSeconds || examData.duration_minutes * 60);
+
         if (activeAttempt.status === 'in_progress') {
           timer.start();
         }
@@ -69,19 +84,24 @@ export default function useExam(examId) {
         setLoading(false);
       }
     };
+
     loadExam();
   }, [examId]);
+
   useEffect(() => {
     if (!attempt?.attempt_id || isSubmitted) return;
+
     const saveState = setTimeout(() => {
-      updateAttemptLocal(attempt.attempt_id, {
+      updateAttempt(attempt.attempt_id, {
         _currentSection: currentSection,
         _currentQuestion: currentQuestion,
         _timeRemainingSeconds: timer.seconds
       });
     }, 5000);
+
     return () => clearTimeout(saveState);
   }, [currentSection, currentQuestion, timer.seconds, attempt?.attempt_id, isSubmitted]);
+
   const saveAndExitExam = useCallback(() => {
     if (isSubmitted || !attempt?.attempt_id || !exam) return;
     timer.stop();
@@ -96,74 +116,98 @@ export default function useExam(examId) {
       _timeRemainingSeconds: timer.seconds,
       responses,
     };
-    updateAttemptLocal(attempt.attempt_id, updates);
+    updateAttempt(attempt.attempt_id, updates);
   }, [isSubmitted, attempt, answers, timer, exam, currentSection, currentQuestion]);
-   const deleteAndExitExam = useCallback(() => {
-    if (!attempt?.attempt_id) return;
-    timer.stop();
-    deleteAttempt(attempt.attempt_id); 
-    setAttempt(null);
-    setAnswers({});
-    setMarkedForReview(new Set());
-    setIsSubmitted(false); 
-  }, [attempt?.attempt_id, timer]);
-  const saveAnswer = useCallback((questionId, answer) => {
-    if (isSubmitted || !attempt?.attempt_id) return;
-    setAnswers(prev => {
-      const newAnswers = { ...prev, [questionId]: answer };
-      const responses = Object.entries(newAnswers).map(([q_id, selected_opt_id]) => ({
-        q_id,
-        selected_opt_id
-      }));
-      updateAttemptLocal(attempt.attempt_id, { responses });
-      return newAnswers;
-    });
-  }, [isSubmitted, attempt?.attempt_id]);
+
+  const handleAnswer = useCallback((questionId, optionId) => {
+    if (isSubmitted) return;
+    setAnswers(prev => ({ ...prev, [questionId]: optionId }));
+    if (attempt) {
+      const currentResponses = attempt.responses || [];
+      const existingResponseIndex = currentResponses.findIndex(r => r.q_id === questionId);
+      let newResponses;
+      if (existingResponseIndex > -1) {
+        newResponses = [...currentResponses];
+        newResponses[existingResponseIndex] = { q_id: questionId, selected_opt_id: optionId };
+      } else {
+        newResponses = [...currentResponses, { q_id: questionId, selected_opt_id: optionId }];
+      }
+      updateAttempt(attempt.attempt_id, { responses: newResponses });
+    }
+  }, [attempt, isSubmitted]);
+
   const toggleMarkForReview = useCallback((questionId) => {
-    if (isSubmitted || !attempt?.attempt_id) return;
+    if (isSubmitted) return;
     setMarkedForReview(prev => {
-      const newSet = new Set(prev);
-      newSet.has(questionId) ? newSet.delete(questionId) : newSet.add(questionId);
-      updateAttemptLocal(attempt.attempt_id, { _markedForReview: Array.from(newSet) });
-      return newSet;
+      const newMarked = new Set(prev);
+      if (newMarked.has(questionId)) {
+        newMarked.delete(questionId);
+      } else {
+        newMarked.add(questionId);
+      }
+      if (attempt) {
+        updateAttempt(attempt.attempt_id, { _markedForReview: Array.from(newMarked) });
+      }
+      return newMarked;
     });
-  }, [isSubmitted, attempt?.attempt_id]);
-  const finalizeExam = useCallback((isTimerFinish = false) => {
-    if (isSubmitted || !attempt?.attempt_id || !exam) return;
+  }, [attempt, isSubmitted]);
+
+  const finalizeExam = useCallback((isAutoSubmit = false) => {
+    if (isSubmitted || !attempt || !exam) return null;
     timer.stop();
-    setIsSubmitted(true);
-    const timeTakenSeconds = attempt._durationMinutes * 60 - (isTimerFinish ? 0 : timer.seconds);
-    const score = calculateScore(exam, answers);
-    const responses = Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+    const finalAnswers = Object.entries(answers).map(([q_id, selected_opt_id]) => ({
       q_id,
       selected_opt_id
     }));
-    const updates = {
+    const { score, correct, incorrect, unattempted } = calculateScore(exam, finalAnswers);
+    const timeTaken = (exam.duration_minutes * 60) - timer.seconds;
+    const finalAttempt = {
+      ...attempt,
       status: 'completed',
-      timestamp: new Date().toISOString(),
-      responses,
+      responses: finalAnswers,
       score,
-      time_taken: timeTakenSeconds,
-      _timeRemainingSeconds: isTimerFinish ? 0 : timer.seconds,
+      correct_count: correct,
+      incorrect_count: incorrect,
+      unattempted_count: unattempted,
+      time_taken: timeTaken,
+      _timeRemainingSeconds: 0,
     };
-    updateAttemptLocal(attempt.attempt_id, updates);
-  }, [isSubmitted, attempt, answers, timer, exam, calculateScore]);
+    updateAttempt(attempt.attempt_id, finalAttempt);
+    setAttempt(finalAttempt);
+    setIsSubmitted(true);
+    return finalAttempt;
+  }, [exam, answers, attempt, timer, isSubmitted]);
+
+  const restartExam = useCallback(() => {
+    if (!exam) return;
+    if (attempt) {
+      removeAttempt(attempt.attempt_id);
+    }
+    const newAttempt = createAttempt(exam.id || exam.exam_id, exam.duration_minutes);
+    setAttempt(newAttempt);
+    setAnswers({});
+    setMarkedForReview(new Set());
+    setIsSubmitted(false);
+    setCurrentSection(0);
+    setCurrentQuestion(0);
+    timer.setTime(exam.duration_minutes * 60);
+    timer.start();
+  }, [exam, attempt, timer, setCurrentSection, setCurrentQuestion]);
+
   return {
     exam,
     attempt,
     answers,
     markedForReview,
     isSubmitted,
-    timeRemaining: timer.seconds,
-    saveAnswer,
-    toggleMarkForReview,
-    finalizeExam,
-    saveAndExitExam,
-    deleteAndExitExam,
     error,
     loading,
-    start: timer.start,
-    stop: timer.stop,
-    ...navigation,
+    navigation,
+    timer,
+    saveAndExitExam,
+    handleAnswer,
+    toggleMarkForReview,
+    finalizeExam,
+    restartExam,
   };
 }
