@@ -5,5 +5,5 @@ import { ThemeProvider } from '@/contexts/ThemeContext.jsx'
 createRoot(document.getElementById('root')).render(
   <ThemeProvider>
     <App />
-  </ThemeProvider>
+  </ThemeProvider>,
 )

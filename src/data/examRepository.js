@@ -1,35 +1,35 @@
-import { getJSON } from '@/api/http';
+import { getJSON } from '@/api/http'
 
 export async function getManifest() {
   try {
-    return await getJSON('/data/exams_manifest.json');
+    return await getJSON('/data/exams_manifest.json')
   } catch {
-    return { exams: [] };
+    return { exams: [] }
   }
 }
 
 export async function findExamById(examId) {
   try {
-    const manifest = await getManifest();
+    const manifest = await getManifest()
     const allExams = [
       ...(manifest.full_tests || []),
       ...(manifest.topic_tests || []),
-      ...(manifest.subject_tests || [])
-    ];
-    const examEntry = allExams.find((exam) => exam.exam_id === examId);
+      ...(manifest.subject_tests || []),
+    ]
+    const examEntry = allExams.find((exam) => exam.exam_id === examId)
     if (!examEntry) {
       throw new Error(
-        `Exam "${examId}" not found in manifest. Make sure it exists in full_tests, topic_tests, or subject_tests.`
-      );
+        `Exam "${examId}" not found in manifest. Make sure it exists in full_tests, topic_tests, or subject_tests.`,
+      )
     }
     if (examEntry.file) {
-      return await getJSON(examEntry.file);
+      return await getJSON(examEntry.file)
     } else {
       throw new Error(
-        `Exam "${examId}" entry exists in manifest but no file path is specified.`
-      );
+        `Exam "${examId}" entry exists in manifest but no file path is specified.`,
+      )
     }
   } catch (err) {
-    throw new Error(`Failed to load exam "${examId}": ${err.message}`);
+    throw new Error(`Failed to load exam "${examId}": ${err.message}`)
   }
 }

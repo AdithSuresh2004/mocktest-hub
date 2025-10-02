@@ -1,49 +1,45 @@
-import { FaExpandArrowsAlt, FaArrowLeft, FaCompress } from "react-icons/fa";
-import ThemeToggle from "@/components/common/ThemeToggle";
-import { useExamHeaderState } from "@/hooks/useExam/useExamHeaderState"; 
-import { formatTime } from "@/utils/helpers/examHelpers";
+import { FaExpandArrowsAlt, FaArrowLeft, FaCompress } from 'react-icons/fa'
+import ThemeToggle from '@/components/common/ThemeToggle'
+import { useExamHeaderState } from '@/hooks/exam/useExamHeaderState'
+import { formatTime } from '@/utils/helpers/examHelpers'
 export default function ExamHeader({ exam, timeRemaining, onExit }) {
-  const { isFullscreen, timeColorClass, toggleFullscreen } = useExamHeaderState(timeRemaining);
+  const { isFullscreen, timeColorClass, toggleFullscreen } =
+    useExamHeaderState(timeRemaining)
   return (
-    <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-3 py-2 sm:px-4 sm:py-3 z-10 shadow-md">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
-        <div className="flex-1 min-w-0">
-          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 truncate">
-            {exam.exam_name} 
+    <header className="z-10 border-b border-gray-200 bg-white px-4 py-2 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate text-lg font-bold text-gray-900 sm:text-xl dark:text-gray-100">
+            {exam.exam_name}
           </h1>
-          <div className="flex flex-wrap gap-2 sm:gap-4 mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-            <span>{exam.duration_minutes} mins</span>
-            <span>{exam.total_marks} Marks</span>
-            <span className="capitalize">{exam.exam_strength}</span>
-          </div>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className={`text-base sm:text-lg font-mono font-bold ${timeColorClass}`}>
-            {formatTime(timeRemaining)} 
+        <div className="flex items-center gap-3">
+          <div
+            className={`rounded-md px-2 py-1 font-mono text-lg font-bold ${timeColorClass}`}
+          >
+            {formatTime(timeRemaining)}
           </div>
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 rounded-md border border-gray-300 hover:bg-gray-100 text-gray-700
-                 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
-            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            className="rounded-md p-2 text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+            aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           >
             {isFullscreen ? (
-              <FaCompress className="h-4 w-4" />
+              <FaCompress className="h-5 w-5" />
             ) : (
-              <FaExpandArrowsAlt className="h-4 w-4" />
+              <FaExpandArrowsAlt className="h-5 w-5" />
             )}
           </button>
           <ThemeToggle />
           <button
             onClick={onExit}
-            className="p-1.5 rounded-md border border-gray-300 hover:bg-gray-100 text-gray-700
-                 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
+            className="rounded-md p-2 text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
             aria-label="Exit exam"
           >
-            <FaArrowLeft className="h-4 w-4" />
+            <FaArrowLeft className="h-5 w-5" />
           </button>
         </div>
       </div>
-    </div>
-  );
+    </header>
+  )
 }

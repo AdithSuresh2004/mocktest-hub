@@ -1,20 +1,24 @@
-import { FaDownload, FaUpload, FaTrash } from "react-icons/fa";
-export default function DataManagementSection({ onExport, onImport, onClearData }) {
+import { FaDownload, FaUpload, FaTrash } from 'react-icons/fa'
+export default function DataManagementSection({
+  onExport,
+  onImport,
+  onClearData,
+}) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
         Data Management
       </h2>
       <div className="space-y-3">
         <button
           onClick={onExport}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
         >
-          <FaDownload className="w-4 h-4" />
+          <FaDownload className="h-4 w-4" />
           Export Data
         </button>
-        <label className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors cursor-pointer">
-          <FaUpload className="w-4 h-4" />
+        <label className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-3 font-medium text-white transition-colors hover:bg-green-700">
+          <FaUpload className="h-4 w-4" />
           Import Data
           <input
             type="file"
@@ -25,12 +29,12 @@ export default function DataManagementSection({ onExport, onImport, onClearData 
         </label>
         <button
           onClick={onClearData}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-3 font-medium text-white transition-colors hover:bg-red-700"
         >
-          <FaTrash className="w-4 h-4" />
+          <FaTrash className="h-4 w-4" />
           Clear All Data
         </button>
       </div>
     </div>
-  );
+  )
 }

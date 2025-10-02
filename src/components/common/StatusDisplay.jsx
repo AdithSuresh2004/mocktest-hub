@@ -1,33 +1,33 @@
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 export default function StatusDisplay({
-  type = "loading", 
+  type = 'loading',
   size = 48,
-  color = "text-blue-600",
-  className = "",
+  color = 'text-blue-600',
+  className = '',
   fullScreen = true,
-  message = "",
+  message = '',
   onRetry,
   showBackHome = false,
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const containerClass = fullScreen
     ? `flex flex-col items-center justify-center min-h-full text-center ${className}`
-    : `inline-flex items-center ${className}`;
+    : `inline-flex items-center ${className}`
   const handleBackHome = () => {
-    navigate("/");
-  };
-  if (type === "error") {
+    navigate('/')
+  }
+  if (type === 'error') {
     return (
       <div className={containerClass}>
-        <p className="text-red-600 dark:text-red-400 text-xl mb-4">
-          {message || "Something went wrong."}
+        <p className="mb-4 text-xl text-red-600 dark:text-red-400">
+          {message || 'Something went wrong.'}
         </p>
-        <div className="flex gap-2 flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center gap-2">
           {onRetry && (
             <button
               onClick={onRetry}
-              className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+              className="rounded-lg bg-red-600 px-5 py-2 text-white transition hover:bg-red-700"
             >
               Retry
             </button>
@@ -35,14 +35,14 @@ export default function StatusDisplay({
           {showBackHome && (
             <button
               onClick={handleBackHome}
-              className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
             >
               Back to Home
             </button>
           )}
         </div>
       </div>
-    );
+    )
   }
   return (
     <div className={containerClass} role="status" aria-label="Loading">
@@ -51,18 +51,18 @@ export default function StatusDisplay({
         size={size}
       />
       {message && (
-        <span className="mt-4 text-gray-700 dark:text-gray-300 text-lg">
+        <span className="mt-4 text-lg text-gray-700 dark:text-gray-300">
           {message}
         </span>
       )}
       {showBackHome && (
         <button
           onClick={handleBackHome}
-          className="mt-6 px-5 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+          className="mt-6 rounded-lg bg-gray-600 px-5 py-2 text-white transition hover:bg-gray-700"
         >
           Back to Home
         </button>
       )}
     </div>
-  );
+  )
 }

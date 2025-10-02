@@ -1,30 +1,38 @@
-export async function getJSON(path, { query, headers = {}, timeout = 10000, signal } = {}) {
-  const url = query ? `${path}${path.includes("?") ? "&" : "?"}${new URLSearchParams(query)}` : path;
-  const controller = new AbortController();
-  const timeoutId = timeout ? setTimeout(() => controller.abort(), timeout) : null;
-  const finalSignal = signal ?? controller.signal;
-  let res;
+export async function getJSON(
+  path,
+  { query, headers = {}, timeout = 10000, signal } = {}
+) {
+  const url = query
+    ? `${path}${path.includes('?') ? '&' : '?'}${new URLSearchParams(query)}`
+    : path
+  const controller = new AbortController()
+  const timeoutId = timeout ? setTimeout(() => controller.abort(), timeout) : null
+  const finalSignal = signal ?? controller.signal
+  let res
   try {
-    res = await fetch(url, { headers: { Accept: "application/json", ...headers }, signal: finalSignal });
+    res = await fetch(url, {
+      headers: { Accept: 'application/json', ...headers },
+      signal: finalSignal,
+    })
   } catch (err) {
-    if (timeoutId) clearTimeout(timeoutId);
-    throw new Error(`Network error for ${url}: ${err.message}`);
+    if (timeoutId) clearTimeout(timeoutId)
+    throw new Error(`Network error for ${url}: ${err.message}`)
   }
-  if (timeoutId) clearTimeout(timeoutId);
-  const text = await res.text().catch(() => "");
-  let data;
+  if (timeoutId) clearTimeout(timeoutId)
+  const text = await res.text().catch(() => '')
+  let data
   if (text) {
     try {
-      data = JSON.parse(text);
+      data = JSON.parse(text)
     } catch {
-      data = text;
+      data = text
     }
   }
   if (!res.ok) {
-    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${url}`);
-    err.status = res.status;
-    err.data = data;
-    throw err;
+    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${url}`)
+    err.status = res.status
+    err.data = data
+    throw err
   }
-  return typeof data === "string" ? { raw: data } : data;
+  return typeof data === 'string' ? { raw: data } : data
 }

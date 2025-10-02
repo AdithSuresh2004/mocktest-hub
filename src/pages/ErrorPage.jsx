@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import StatusDisplay from "@/components/common/StatusDisplay";
+import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import StatusDisplay from '@/components/common/StatusDisplay'
 export default function ErrorPage() {
-  const navigate = useNavigate();
-  const [isRetrying, setIsRetrying] = useState(false);
+  const navigate = useNavigate()
+  const [isRetrying, setIsRetrying] = useState(false)
   const retry = () => {
-    setIsRetrying(true);
+    setIsRetrying(true)
     setTimeout(() => {
-      setIsRetrying(false);
-      navigate(0);
-    }, 500);
-  };
+      setIsRetrying(false)
+      navigate(0)
+    }, 500)
+  }
   return (
     <StatusDisplay
-      type={isRetrying ? "loading" : "error"}
+      type={isRetrying ? 'loading' : 'error'}
       message={
         isRetrying
-          ? "Retrying..."
+          ? 'Retrying...'
           : "404 - Page Not Found. The page you're looking for doesn't exist."
       }
       fullScreen={true}
@@ -24,5 +24,5 @@ export default function ErrorPage() {
       showBackHome={!isRetrying}
       size={48}
     />
-  );
+  )
 }

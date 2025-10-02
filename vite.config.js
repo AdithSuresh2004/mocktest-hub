@@ -9,18 +9,18 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate', 
+      registerType: 'autoUpdate',
       injectRegister: 'auto',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
       },
       manifest: {
         name: 'MockTest Hub',
         short_name: 'MockTest',
         description: 'An offline-first mock test platform.',
-        theme_color: '#ffffff'
-      }
-    })
+        theme_color: '#ffffff',
+      },
+    }),
   ],
   resolve: {
     alias: {

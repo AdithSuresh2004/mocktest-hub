@@ -1,32 +1,44 @@
-import { useDashboardStats } from "@/hooks/useDashboard/useDashboardStats";
-import { useRecentActivity } from "@/hooks/useDashboard/useRecentActivity";
-import StatsGrid from "@/components/dashboard/StatsGrid";
-import RecentActivity from "@/components/dashboard/RecentActivity";
+import { useDashboardStats } from '@/hooks/dashboard/useDashboardStats'
+import { useRecentActivity } from '@/hooks/dashboard/useRecentActivity'
+import StatsGrid from '@/components/dashboard/StatsGrid'
+import RecentActivity from '@/components/dashboard/RecentActivity'
+import PerformanceSnapshot from '@/components/dashboard/PerformanceSnapshot'
+import QuickActions from '@/components/dashboard/QuickActions'
+import { Link } from 'react-router-dom'
 
 export default function DashboardPage() {
-  const { stats, loading: statsLoading } = useDashboardStats();
-  const { recentActivity, loading: activityLoading } = useRecentActivity();
+  const { stats, loading: statsLoading } = useDashboardStats()
+  const { recentActivity, loading: activityLoading } = useRecentActivity()
 
-  const loading = statsLoading || activityLoading;
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
+  const loading = statsLoading || activityLoading
 
   return (
-    <div className="min-h-full bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Track your exam progress and performance</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            Dashboard
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Welcome back! Here's your performance at a glance.
+          </p>
         </div>
-        <StatsGrid stats={stats} />
-        <RecentActivity activities={recentActivity} />
+
+        {loading ? (
+          <div className="flex h-64 items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            <StatsGrid stats={stats} />
+            <QuickActions />
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <RecentActivity activities={recentActivity} />
+              <PerformanceSnapshot stats={stats} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  );
+  )
 }

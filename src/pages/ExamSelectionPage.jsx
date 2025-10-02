@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   FaExclamationCircle,
   FaFileAlt,
@@ -10,18 +10,18 @@ import {
   FaHome,
   FaBook,
   FaBullseye,
-} from "react-icons/fa";
-import TestCard from "@/components/common/TestCard";
-import { useExamSelection } from "@/hooks/useExamSelection/useExamSelection";
+} from 'react-icons/fa'
+import TestCard from '@/components/common/TestCard'
+import { useExamSelection } from '@/hooks/examSelection/useExamSelection'
 const TEST_TYPE_ICONS = {
   all: FaHome,
   full_tests: FaFileAlt,
   subject_tests: FaBook,
   topic_tests: FaBullseye,
-};
+}
 const FilterSelect = ({ label, value, options, onChange }) => (
   <select
-    className="px-3 py-2.5 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 transition-colors"
+    className="rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
     value={value}
     onChange={(e) => onChange(label, e.target.value)}
   >
@@ -31,132 +31,154 @@ const FilterSelect = ({ label, value, options, onChange }) => (
       </option>
     ))}
   </select>
-);
+)
 export default function ExamSelectionPage() {
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
   const {
-    loading, error, allTests, activeTab, searchTerm, selectedExam,
-    selectedTopic, selectedSubject, selectedStrength, tabCounts,
-    examNames, topics, subjects, STRENGTHS, filteredTests,
-    hasActiveFilters, loadManifest, setActiveTab, setSearchTerm,
-    handleFilterChange, clearAllFilters,
-  } = useExamSelection();
+    loading,
+    error,
+    allTests,
+    activeTab,
+    searchTerm,
+    selectedExam,
+    selectedTopic,
+    selectedSubject,
+    selectedStrength,
+    tabCounts,
+    examNames,
+    topics,
+    subjects,
+    STRENGTHS,
+    filteredTests,
+    hasActiveFilters,
+    loadManifest,
+    setActiveTab,
+    setSearchTerm,
+    handleFilterChange,
+    clearAllFilters,
+  } = useExamSelection()
   const toggleMobileFilters = () => {
-    setShowMobileFilters(!showMobileFilters);
-  };
+    setShowMobileFilters(!showMobileFilters)
+  }
   const handleClearFilters = () => {
-    clearAllFilters();
-    setShowMobileFilters(false);
-  };
+    clearAllFilters()
+    setShowMobileFilters(false)
+  }
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-full bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">Loading exams...</p>
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Loading exams...
+          </p>
         </div>
       </div>
-    );
+    )
   }
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-full bg-gray-50 dark:bg-gray-900">
-        <div className="text-center max-w-md mx-auto px-4">
-          <FaExclamationCircle className="mx-auto h-16 w-16 text-red-500 mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+      <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="mx-auto max-w-md px-4 text-center">
+          <FaExclamationCircle className="mx-auto mb-4 h-16 w-16 text-red-500" />
+          <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
             Oops! Something went wrong
           </h3>
-          <p className="text-red-600 dark:text-red-400 mb-6">{error}</p>
+          <p className="mb-6 text-red-600 dark:text-red-400">{error}</p>
           <button
             onClick={loadManifest}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
           >
-            <FaRedo className="w-4 h-4 mr-2" />
+            <FaRedo className="mr-2 h-4 w-4" />
             Try Again
           </button>
         </div>
       </div>
-    );
+    )
   }
   if (!allTests.length) {
     return (
-      <div className="flex items-center justify-center min-h-full bg-gray-50 dark:bg-gray-900">
-        <div className="text-center max-w-md mx-auto px-4">
-          <FaFileAlt className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No Exams Available</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+      <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="mx-auto max-w-md px-4 text-center">
+          <FaFileAlt className="mx-auto mb-4 h-16 w-16 text-gray-400" />
+          <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+            No Exams Available
+          </h3>
+          <p className="mb-6 text-gray-600 dark:text-gray-400">
             We're working hard to add more exams. Please check back later!
           </p>
           <button
             onClick={loadManifest}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
           >
-            <FaRedo className="w-4 h-4 mr-2" />
+            <FaRedo className="mr-2 h-4 w-4" />
             Refresh
           </button>
         </div>
       </div>
-    );
+    )
   }
   return (
     <div className="min-h-full bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6 w-full">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mb-6 w-full rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div className="border-b border-gray-200 dark:border-gray-700">
             <div className="flex justify-between md:justify-start">
               {tabCounts.map((type) => {
-                const Icon = TEST_TYPE_ICONS[type.id];
-                const isActive = activeTab === type.id;
+                const Icon = TEST_TYPE_ICONS[type.id]
+                const isActive = activeTab === type.id
                 return (
                   <button
                     key={type.id}
                     onClick={() => setActiveTab(type.id)}
-                    className={`flex flex-1 items-center justify-center gap-2 px-4 py-4 text-sm font-medium transition-all duration-200 border-b-2 text-center min-w-0 ${
+                    className={`flex min-w-0 flex-1 items-center justify-center gap-2 border-b-2 px-4 py-4 text-center text-sm font-medium transition-all duration-200 ${
                       isActive
-                        ? "text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                        : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                        ? 'border-blue-600 bg-blue-50 text-blue-600 dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-400'
+                        : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-gray-300'
                     }`}
                   >
                     <Icon className="h-5 w-5 flex-shrink-0" />
-                    <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                       {type.label}
                     </span>
                   </button>
-                );
+                )
               })}
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700 lg:hidden">
+        <div className="mb-6 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="border-b border-gray-200 p-4 lg:hidden dark:border-gray-700">
             <button
               onClick={toggleMobileFilters}
-              className="flex items-center justify-between w-full text-left"
+              className="flex w-full items-center justify-between text-left"
             >
-              <span className="flex items-center text-gray-900 dark:text-gray-100 font-medium">
-                <FaFilter className="w-5 h-5 mr-2" />
+              <span className="flex items-center font-medium text-gray-900 dark:text-gray-100">
+                <FaFilter className="mr-2 h-5 w-5" />
                 Filters
                 {hasActiveFilters && (
-                  <span className="ml-2 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs rounded-full">
+                  <span className="ml-2 rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900 dark:text-blue-300">
                     Active
                   </span>
                 )}
               </span>
               <FaTimes
-                className={`w-5 h-5 transition-transform duration-200 ${
-                  !showMobileFilters ? "rotate-45" : ""
+                className={`h-5 w-5 transition-transform duration-200 ${
+                  !showMobileFilters ? 'rotate-45' : ''
                 }`}
               />
             </button>
           </div>
-          <div className={`${showMobileFilters ? "block" : "hidden"} lg:block p-4`}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+          <div
+            className={`${showMobileFilters ? 'block' : 'hidden'} p-4 lg:block`}
+          >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
               <div className="relative sm:col-span-2 lg:col-span-2">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <FaSearch className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search exams..."
-                  className="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 pr-4 pl-10 text-sm text-gray-900 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -187,70 +209,78 @@ export default function ExamSelectionPage() {
               />
             </div>
             {hasActiveFilters && (
-              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
                 <button
                   onClick={handleClearFilters}
-                  className="inline-flex items-center px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="inline-flex items-center px-4 py-2 text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
                 >
-                  <FaTimes className="w-4 h-4 mr-2" />
+                  <FaTimes className="mr-2 h-4 w-4" />
                   Clear all filters
                 </button>
               </div>
             )}
           </div>
         </div>
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {filteredTests.length === 0 ? (
-              "No tests found"
+              'No tests found'
             ) : (
               <>
-                Showing{" "}
+                Showing{' '}
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {filteredTests.length}
                 </span>
                 {filteredTests.length !== allTests.length && (
                   <>
-                    {" "}
+                    {' '}
                     of <span className="font-semibold">{allTests.length}</span>
                   </>
-                )}{" "}
+                )}{' '}
                 tests
               </>
             )}
           </p>
         </div>
         {filteredTests.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-            <FaSearch className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="rounded-lg border border-gray-200 bg-white py-16 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <FaSearch className="mx-auto mb-4 h-16 w-16 text-gray-400" />
+            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
               No tests match your criteria
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+            <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
               Try adjusting your search terms or filters to find the perfect
               practice test for you.
             </p>
             <button
               onClick={handleClearFilters}
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
             >
-              <FaRedo className="w-4 h-4 mr-2" />
+              <FaRedo className="mr-2 h-4 w-4" />
               Clear All Filters
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             {filteredTests.map((test) => (
               <TestCard
-                key={test.uid || test.exam_id || `${test.type}-${test.exam_name}`}
+                key={
+                  test.uid || test.exam_id || `${test.type}-${test.exam_name}`
+                }
                 test={test}
-                selectedTopic={selectedTopic !== "All Topics" ? selectedTopic : undefined}
-                selectedSubject={selectedSubject !== "All Subjects" ? selectedSubject : undefined}
+                selectedTopic={
+                  selectedTopic !== 'All Topics' ? selectedTopic : undefined
+                }
+                selectedSubject={
+                  selectedSubject !== 'All Subjects'
+                    ? selectedSubject
+                    : undefined
+                }
               />
             ))}
           </div>
         )}
       </div>
     </div>
-  );
+  )
 }
