@@ -3,6 +3,7 @@ import { useAttempts, useAttemptStats } from '@/hooks/attempts'
 import AttemptFilter from '@/components/attempts/AttemptFilter'
 import AttemptList from '@/components/attempts/AttemptList'
 import AttemptStats from '@/components/attempts/AttemptStats'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 
 export default function AttemptsPage() {
   const [showStats, setShowStats] = useState(false)
@@ -11,8 +12,9 @@ export default function AttemptsPage() {
     loading,
     sortBy,
     sortOrder,
-    filterScore,
-    setFilterScore,
+    filters,
+    filterOptions,
+    handleFilterChange,
     toggleSort,
     originalAttempts,
   } = useAttempts()
@@ -20,8 +22,14 @@ export default function AttemptsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-full items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 h-10 w-48 animate-pulse rounded bg-gray-300 dark:bg-gray-700"></div>
+          <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <SkeletonLoader type="stats" count={1} />
+          </div>
+          <SkeletonLoader type="list" count={1} />
+        </div>
       </div>
     )
   }
@@ -45,12 +53,12 @@ export default function AttemptsPage() {
         />
 
         <AttemptFilter
-          filterScore={filterScore}
-          setFilterScore={setFilterScore}
+          filters={filters}
+          filterOptions={filterOptions}
+          handleFilterChange={handleFilterChange}
           sortBy={sortBy}
           sortOrder={sortOrder}
           toggleSort={toggleSort}
-          originalAttempts={originalAttempts}
         />
 
         <AttemptList attempts={attempts} />

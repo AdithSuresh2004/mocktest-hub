@@ -145,7 +145,6 @@ export default function useResultAnalysis(attemptId) {
       setAnalysis(analysisData)
       setLoading(false)
     } catch (err) {
-      console.error('Error loading result:', err)
       setError(err.message || 'Failed to load result.')
       setLoading(false)
     }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaExclamationCircle,
@@ -12,6 +12,8 @@ import {
   FaBullseye,
 } from 'react-icons/fa'
 import TestCard from '@/components/common/TestCard'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
+import BackButton from '@/components/common/BackButton'
 import { useExamSelection } from '@/hooks/examSelection/useExamSelection'
 const TEST_TYPE_ICONS = {
   all: FaHome,
@@ -44,6 +46,8 @@ export default function ExamSelectionPage() {
     selectedTopic,
     selectedSubject,
     selectedStrength,
+    selectedAttemptStatus,
+    ATTEMPT_STATUSES,
     tabCounts,
     examNames,
     topics,
@@ -66,12 +70,13 @@ export default function ExamSelectionPage() {
   }
   if (loading) {
     return (
-      <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Loading exams...
-          </p>
+      <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 h-10 w-48 animate-pulse rounded bg-gray-300 dark:bg-gray-700"></div>
+          <div className="mb-6 h-12 w-full animate-pulse rounded-lg bg-gray-300 dark:bg-gray-700"></div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <SkeletonLoader type="card" count={8} />
+          </div>
         </div>
       </div>
     )
@@ -131,14 +136,18 @@ export default function ExamSelectionPage() {
                   <button
                     key={type.id}
                     onClick={() => setActiveTab(type.id)}
-                    className={`flex min-w-0 flex-1 items-center justify-center gap-2 border-b-2 px-4 py-4 text-center text-sm font-medium transition-all duration-200 ${
+                    className={`flex flex-1 items-center justify-center gap-2 border-b-2 px-4 py-4 text-center text-sm font-medium transition-all duration-200 md:flex-initial md:flex-grow ${
                       isActive
                         ? 'border-blue-600 bg-blue-50 text-blue-600 dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-400'
                         : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-gray-300'
                     }`}
                   >
                     <Icon className="h-5 w-5 flex-shrink-0" />
-                    <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                    <span
+                      className={`overflow-hidden text-ellipsis whitespace-nowrap ${
+                        isActive ? 'inline' : 'hidden md:inline'
+                      }`}
+                    >
                       {type.label}
                     </span>
                   </button>
@@ -170,9 +179,11 @@ export default function ExamSelectionPage() {
             </button>
           </div>
           <div
-            className={`${showMobileFilters ? 'block' : 'hidden'} p-4 lg:block`}
+            className={`${
+              showMobileFilters ? 'block' : 'hidden'
+            } p-4 lg:block`}
           >
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-7">
               <div className="relative sm:col-span-2 lg:col-span-2">
                 <FaSearch className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <input
@@ -184,27 +195,33 @@ export default function ExamSelectionPage() {
                 />
               </div>
               <FilterSelect
-                label="examName"
+                label="Exam"
                 value={selectedExam}
                 options={examNames}
                 onChange={handleFilterChange}
               />
               <FilterSelect
-                label="subject"
+                label="Subject"
                 value={selectedSubject}
                 options={subjects}
                 onChange={handleFilterChange}
               />
               <FilterSelect
-                label="topic"
+                label="Topic"
                 value={selectedTopic}
                 options={topics}
                 onChange={handleFilterChange}
               />
               <FilterSelect
-                label="strength"
+                label="Strength"
                 value={selectedStrength}
                 options={STRENGTHS}
+                onChange={handleFilterChange}
+              />
+              <FilterSelect
+                label="Attempt Status"
+                value={selectedAttemptStatus}
+                options={ATTEMPT_STATUSES}
                 onChange={handleFilterChange}
               />
             </div>

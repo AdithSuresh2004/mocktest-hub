@@ -17,11 +17,7 @@ export function useExamHeaderState(timeRemaining) {
   }, [])
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        console.error(
-          `Error attempting to enable full-screen mode: ${err.message}`,
-        )
-      })
+      document.documentElement.requestFullscreen().catch(() => {})
     } else {
       document.exitFullscreen()
     }

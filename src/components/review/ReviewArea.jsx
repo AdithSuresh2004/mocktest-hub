@@ -7,6 +7,7 @@ import {
   FaStar,
   FaUser,
 } from 'react-icons/fa'
+import MathText from '@/components/common/MathText'
 
 const ReviewArea = ({
   question,
@@ -74,9 +75,10 @@ const ReviewArea = ({
             Question {questionIndex + 1} of {totalQuestions}
           </span>
         </div>
-        <h2 className="text-xl font-bold leading-tight text-gray-900 dark:text-gray-100">
-          {question.question_text}
-        </h2>
+        <MathText 
+          text={question.question_text}
+          className="text-xl font-bold leading-tight text-gray-900 dark:text-gray-100"
+        />
       </div>
 
       <div className="flex-1 pr-2 space-y-4 overflow-y-auto">
@@ -87,9 +89,10 @@ const ReviewArea = ({
                 <span className="mr-3 font-bold text-gray-700 dark:text-gray-300">
                   {option.opt_id.toUpperCase()}.
                 </span>
-                <span className="text-gray-900 dark:text-gray-100">
-                  {option.text}
-                </span>
+                <MathText 
+                  text={option.text}
+                  className="text-gray-900 dark:text-gray-100"
+                />
               </div>
             </div>
             {getOptionIcon(option)}

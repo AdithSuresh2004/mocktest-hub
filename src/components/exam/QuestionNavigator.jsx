@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { IoChevronDown, IoGrid, IoClose } from 'react-icons/io5'
 import QuestionLegend from '@/components/exam/QuestionLegend'
+import { getQuestionStatusClasses } from '@/utils/helpers/examHelpers'
 
 export default function QuestionNavigator({
   sections,
@@ -8,7 +9,6 @@ export default function QuestionNavigator({
   currentSectionIndex,
   currentQuestionIndex,
   onQuestionSelect,
-  getQuestionStatusClasses,
   markedForReview = new Set(),
 }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -31,14 +31,16 @@ export default function QuestionNavigator({
 
   const currentSectionData = sections[currentSectionIndex]
 
-  // Compute stats for QuestionLegend
   const stats = {
     total: currentSectionData?.questions.length || 0,
     answered:
       currentSectionData?.questions.filter((q) => answers[q.q_id] != null)
         .length || 0,
-    review:
+    marked:
       currentSectionData?.questions.filter((q) => markedForReview.has(q.q_id))
+        .length || 0,
+    notVisited:
+      currentSectionData?.questions.filter((q) => answers[q.q_id] == null && !markedForReview.has(q.q_id))
         .length || 0,
   }
 
@@ -61,7 +63,7 @@ export default function QuestionNavigator({
       )}
 
       <div
-        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden lg:block'} flex h-full flex-col rounded-lg bg-white lg:relative lg:inset-auto lg:z-auto dark:bg-gray-800`}
+        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden lg:block'} flex h-full flex-col rounded-lg bg-gray-50 shadow-lg lg:relative lg:inset-auto lg:z-auto dark:bg-gray-800`}
       >
         {/* Mobile header */}
         {isMobileOpen && (
@@ -86,7 +88,7 @@ export default function QuestionNavigator({
         >
           <button
             onClick={toggleDropdown}
-            className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-gray-100 p-2 text-sm transition hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+            className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm transition hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
             aria-expanded={isDropdownOpen}
           >
             <span className="truncate font-medium">

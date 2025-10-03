@@ -46,7 +46,14 @@ export function useDashboardStats() {
         averageAccuracy: avgAccuracy,
       })
     } catch (error) {
-      console.error('Error loading dashboard stats:', error)
+      setStats({
+        totalExams: 0,
+        pendingTests: 0,
+        completedTests: 0,
+        averageScore: 0,
+        highScore: 0,
+        averageAccuracy: 0,
+      })
     } finally {
       setLoading(false)
     }

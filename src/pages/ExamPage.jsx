@@ -7,10 +7,14 @@ import ExamNavigation from '@/components/exam/ExamNavigation'
 import ExamHeader from '@/components/exam/ExamHeader'
 import SubmissionModal from '@/components/modals/SubmissionModal'
 import ExitTestModal from '@/components/modals/ExitTestModal'
+import InstructionsPage from '@/components/exam/InstructionsPage'
 import useExam from '@/hooks/exam/useExam'
+
 const ExamPage = () => {
   const { examId } = useParams()
   const navigate = useNavigate()
+  const [showInstructions, setShowInstructions] = useState(true)
+  
   const {
     exam,
     attempt,
@@ -26,8 +30,14 @@ const ExamPage = () => {
     deleteAndExitExam,
     answers,
     markedForReview,
-    restartExam,
+    startExamTimer,
   } = useExam(examId)
+
+  useEffect(() => {
+    if (attempt && Object.keys(answers).length > 0) {
+      setShowInstructions(false)
+    }
+  }, [attempt, answers])
 
   const {
     currentSection,
@@ -37,10 +47,15 @@ const ExamPage = () => {
     goToPrev,
   } = navigation
 
-  const { seconds: timeRemaining, stop } = timer
+  const { seconds: timeRemaining, stop, isWarning, isCritical } = timer
 
   const [showExitModal, setShowExitModal] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)
+
+  const handleStartExam = () => {
+    setShowInstructions(false)
+    startExamTimer()
+  }
 
   useEffect(() => {
     return () => {
@@ -97,7 +112,8 @@ const ExamPage = () => {
       } else if (e.key >= '1' && e.key <= '4' && currentQ) {
         const optionIndex = parseInt(e.key) - 1
         if (currentQ.options[optionIndex]) {
-          saveAnswer(currentQ.q_id, currentQ.options[optionIndex])
+          // Pass option ID, not the option object
+          saveAnswer(currentQ.q_id, currentQ.options[optionIndex].opt_id)
         }
       } else if (e.key === 'm' || e.key === 'M') {
         toggleMarkForReview(currentQ.q_id)
@@ -121,6 +137,10 @@ const ExamPage = () => {
     return <StatusDisplay type="error" message={error} fullScreen />
   }
 
+  if (exam && attempt && showInstructions && Object.keys(answers).length === 0) {
+    return <InstructionsPage exam={exam} onStart={handleStartExam} />
+  }
+
   if (isSubmitted) {
     return (
       <StatusDisplay
@@ -131,7 +151,7 @@ const ExamPage = () => {
     )
   }
 
-  if (!exam || !attempt || !currentQ) {
+  if (!exam || !currentQ) {
     return (
       <StatusDisplay
         type="error"
@@ -142,11 +162,13 @@ const ExamPage = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen flex-col bg-gray-100 dark:bg-gray-900">
       <ExamHeader
         exam={exam}
         timeRemaining={timeRemaining}
         onExit={handleExit}
+        isWarning={isWarning}
+        isCritical={isCritical}
       />
       <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-4">
         <main className="overflow-y-auto lg:col-span-3">
@@ -164,11 +186,11 @@ const ExamPage = () => {
         <aside className="overflow-y-auto border-t border-gray-200 lg:col-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
           <QuestionNavigator
             sections={exam.sections}
-            currentSection={currentSection}
-            currentQuestion={currentQuestion}
+            currentSectionIndex={currentSection}
+            currentQuestionIndex={currentQuestion}
             answers={answers}
             markedForReview={markedForReview}
-            onNavigate={navigateToQuestion}
+            onQuestionSelect={navigateToQuestion}
           />
         </aside>
       </div>

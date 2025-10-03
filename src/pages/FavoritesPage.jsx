@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useConfirmModal } from '@/hooks/common/useConfirmModal'
+import ConfirmModal from '@/components/common/ConfirmModal'
 import {
   FaStar,
   FaTrash,
@@ -12,6 +14,7 @@ export default function FavoritesPage() {
   const navigate = useNavigate()
   const [favorites, setFavorites] = useState([])
   const [loading, setLoading] = useState(true)
+  const { isOpen, config, openConfirm, closeConfirm } = useConfirmModal()
   useEffect(() => {
     loadFavorites()
     const handleStorageChange = () => {
@@ -31,21 +34,29 @@ export default function FavoritesPage() {
       setFavorites(sorted)
       setLoading(false)
     } catch (error) {
-      console.error('Error loading favorites:', error)
+      setFavorites([])
       setLoading(false)
     }
   }
-  const handleRemove = (examId, e) => {
+
+  const handleRemove = (examId, examName, e) => {
     e.stopPropagation()
-    if (confirm('Remove this exam from favorites?')) {
-      try {
-        const filtered = favorites.filter((f) => f.exam_id !== examId)
-        localStorage.setItem('favorites', JSON.stringify(filtered))
-        setFavorites(filtered)
-      } catch (error) {
-        console.error('Error removing favorite:', error)
-      }
-    }
+    openConfirm({
+      title: 'Remove from Favorites?',
+      message: `Are you sure you want to remove "${examName}" from your favorites?`,
+      confirmText: 'Remove',
+      cancelText: 'Cancel',
+      type: 'warning',
+      onConfirm: () => {
+        try {
+          const filtered = favorites.filter((f) => f.exam_id !== examId)
+          localStorage.setItem('favorites', JSON.stringify(filtered))
+          setFavorites(filtered)
+        } catch (error) {
+          setFavorites(favorites)
+        }
+      },
+    })
   }
   const handleStart = (examId) => {
     navigate(`/exam/${examId}`)
@@ -71,6 +82,16 @@ export default function FavoritesPage() {
   }
   return (
     <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+      <ConfirmModal
+        isOpen={isOpen}
+        onClose={closeConfirm}
+        onConfirm={config.onConfirm}
+        title={config.title}
+        message={config.message}
+        confirmText={config.confirmText}
+        cancelText={config.cancelText}
+        type={config.type}
+      />
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
@@ -114,7 +135,7 @@ export default function FavoritesPage() {
                     </span>
                   </div>
                   <button
-                    onClick={(e) => handleRemove(favorite.exam_id, e)}
+                    onClick={(e) => handleRemove(favorite.exam_id, favorite.exam_name, e)}
                     className="rounded p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-700"
                     aria-label="Remove from favorites"
                   >

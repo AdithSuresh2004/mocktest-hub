@@ -4,6 +4,7 @@ import { findExamById } from '@/data/examRepository'
 import { useEffect, useState } from 'react'
 import ReviewArea from '@/components/review/ReviewArea'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 import { getQuestionStatusClasses } from '@/utils/helpers/examHelpers'
 import { formatTime } from '@/utils/helpers/examHelpers'
 import { FaArrowLeft, FaTrophy, FaClock } from 'react-icons/fa'
@@ -38,7 +39,6 @@ export default function ReviewPage() {
         setExam(examData)
       } catch (e) {
         setError('Failed to load review data.')
-        console.error(e)
       } finally {
         setLoading(false)
       }
@@ -48,10 +48,10 @@ export default function ReviewPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading review...</p>
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 h-10 w-48 animate-pulse rounded bg-gray-300 dark:bg-gray-700"></div>
+          <SkeletonLoader type="list" count={1} />
         </div>
       </div>
     )

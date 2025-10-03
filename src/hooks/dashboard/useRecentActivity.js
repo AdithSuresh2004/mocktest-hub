@@ -20,7 +20,7 @@ export function useRecentActivity() {
       )
       setRecentActivity(recentNormalized.filter(Boolean))
     } catch (error) {
-      console.error('Error loading recent activity:', error)
+      setRecentActivity([])
     } finally {
       setLoading(false)
     }

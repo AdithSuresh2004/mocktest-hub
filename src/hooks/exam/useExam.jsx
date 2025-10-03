@@ -18,6 +18,7 @@ export default function useExam(examId) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [hasStarted, setHasStarted] = useState(false)
 
   const navigation = useExamNavigation(exam?.sections || [])
   const {
@@ -63,7 +64,6 @@ export default function useExam(examId) {
           !Array.isArray(examData.sections) ||
           examData.sections.length === 0
         ) {
-          console.error('Exam has no valid sections:', examData)
           setError('Exam data is incomplete or invalid (missing sections).')
           setLoading(false)
           return
@@ -73,12 +73,23 @@ export default function useExam(examId) {
 
         let activeAttempt = getLatestInProgressAttempt(examIdToUse)
         if (!activeAttempt) {
+          const examName = examData.exam_name || examData.name || 'Untitled Exam'
+          const durationMinutes = examData.duration_minutes || 60
+          
           activeAttempt = createAttempt(
             examIdToUse,
-            examData.name,
-            examData.duration_minutes,
+            examName,
+            durationMinutes,
           )
         }
+
+        // Validate attempt was created successfully
+        if (!activeAttempt) {
+          setError('Failed to create exam attempt. Please try again.')
+          setLoading(false)
+          return
+        }
+
         setAttempt(activeAttempt)
 
         const answersObj = {}
@@ -98,12 +109,12 @@ export default function useExam(examId) {
           activeAttempt._timeRemainingSeconds || examData.duration_minutes * 60,
         )
 
-        if (activeAttempt.status === 'in_progress') {
+        if (activeAttempt.status === 'in_progress' && activeAttempt._hasStarted) {
           timer.start()
+          setHasStarted(true)
         }
       } catch (e) {
         setError('Failed to load exam attempt: ' + e.message)
-        console.error('Error loading exam:', e)
       } finally {
         setLoading(false)
       }
@@ -264,9 +275,19 @@ export default function useExam(examId) {
     setIsSubmitted(false)
     setCurrentSection(0)
     setCurrentQuestion(0)
+    setHasStarted(false)
     timer.setTime(exam.duration_minutes * 60)
-    timer.start()
   }, [exam, attempt, timer, setCurrentSection, setCurrentQuestion])
+
+  const startExamTimer = useCallback(() => {
+    if (!hasStarted && attempt) {
+      timer.start()
+      setHasStarted(true)
+      const updatedAttempt = { ...attempt, _hasStarted: true }
+      updateAttempt(attempt.attempt_id, updatedAttempt)
+      setAttempt(updatedAttempt)
+    }
+  }, [hasStarted, attempt, timer])
 
   return {
     exam,
@@ -284,5 +305,6 @@ export default function useExam(examId) {
     saveAndExitExam,
     deleteAndExitExam,
     restartExam,
+    startExamTimer,
   }
 }

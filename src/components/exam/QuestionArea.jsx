@@ -1,4 +1,3 @@
-// QuestionArea.jsx
 import QuestionCard from '@/components/exam/QuestionCard'
 
 export default function QuestionArea({

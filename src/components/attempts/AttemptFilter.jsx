@@ -1,71 +1,81 @@
-import { FaSort, FaSortUp, FaSortDown, FaFilter } from 'react-icons/fa'
+import { FaSortUp, FaSortDown } from 'react-icons/fa'
+
+const FilterSelect = ({
+  label,
+  value,
+  options,
+  onChange,
+  filterName,
+}) => (
+  <div className="w-full sm:w-auto">
+    <label
+      htmlFor={`${filterName}-filter`}
+      className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      {label}
+    </label>
+    <select
+      id={`${filterName}-filter`}
+      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+      value={value}
+      onChange={(e) => onChange(filterName, e.target.value)}
+    >
+      {options.map((option) => (
+        <option
+          key={option.value || option}
+          value={option.value || option}
+          className="text-ellipsis"
+        >
+          {option.label || option}
+        </option>
+      ))}
+    </select>
+  </div>
+)
 
 export default function AttemptFilter({
-  filterScore,
-  setFilterScore,
-  sortBy,
+  filters,
+  filterOptions,
+  handleFilterChange,
   sortOrder,
   toggleSort,
 }) {
-  const sortIcon =
-    sortBy === 'score' ? (
-      sortOrder === 'asc' ? (
-        <FaSortUp />
-      ) : (
-        <FaSortDown />
-      )
-    ) : (
-      <FaSort />
-    )
-
   return (
-    <div className="mb-8 flex flex-col items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-md sm:flex-row dark:bg-gray-800">
-      <div className="flex w-full items-center gap-4 sm:w-auto">
-        <label
-          htmlFor="score-filter"
-          className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          <FaFilter className="text-gray-500" />
-          Filter by Score:
-        </label>
-        <input
-          id="score-filter"
-          type="range"
-          min="0"
-          max="100"
-          value={filterScore}
-          onChange={(e) => setFilterScore(Number(e.target.value))}
-          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 sm:w-48 dark:bg-gray-700"
+    <div className="mb-8 rounded-xl bg-white p-4 shadow-md dark:bg-gray-800">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+        <FilterSelect
+          label="Filter by Category"
+          value={filters.category}
+          options={filterOptions.categories}
+          onChange={handleFilterChange}
+          filterName="category"
         />
-        <span className="w-12 text-center font-semibold text-gray-900 dark:text-gray-100">
-          {filterScore}%
-        </span>
-      </div>
-
-      <div className="flex w-full gap-2 sm:w-auto">
-        <button
-          onClick={() => toggleSort('date')}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 sm:flex-initial ${
-            sortBy === 'date'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-          }`}
-        >
-          Sort by Date
-          {sortBy === 'date' &&
-            (sortOrder === 'asc' ? <FaSortUp /> : <FaSortDown />)}
-        </button>
-        <button
-          onClick={() => toggleSort('score')}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 sm:flex-initial ${
-            sortBy === 'score'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-          }`}
-        >
-          Sort by Score
-          {sortIcon}
-        </button>
+        <FilterSelect
+          label="Filter by Subject"
+          value={filters.subject}
+          options={filterOptions.subjects}
+          onChange={handleFilterChange}
+          filterName="subject"
+        />
+        <FilterSelect
+          label="Filter by Topic"
+          value={filters.topic}
+          options={filterOptions.topics}
+          onChange={handleFilterChange}
+          filterName="topic"
+        />
+        <div className="w-full sm:w-auto md:col-start-4 lg:col-start-5">
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Sort by
+          </label>
+          <button
+            onClick={() => toggleSort()}
+            className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors duration-200 bg-blue-600 text-white`}
+          >
+            Score
+            {sortOrder === 'asc' ? <FaSortUp /> : <FaSortDown />}
+          </button>
+        </div>
       </div>
     </div>
   )

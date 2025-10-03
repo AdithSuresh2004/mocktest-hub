@@ -5,7 +5,7 @@ import { formatDate } from '@/utils/formatters/formatters'
 
 export default function RecentActivity({ activities }) {
   const navigate = useNavigate()
-  const recentActivities = activities.slice(0, 4)
+  const recentActivities = activities.slice(0, 3)
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -13,7 +13,7 @@ export default function RecentActivity({ activities }) {
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Recent Activity
         </h2>
-        {activities.length > 4 && (
+        {activities.length > 3 && (
           <Link
             to="/attempts"
             className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"

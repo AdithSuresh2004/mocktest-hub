@@ -1,13 +1,5 @@
 import { findExamById } from '@/data/examRepository'
 
-/**
- * Normalizes an attempt object to a consistent format.
- * This handles variations in property names (e.g., id vs. attempt_id)
- * and calculates the score percentage.
- *
- * @param {object} attempt - The original attempt object.
- * @returns {Promise<object|null>} A normalized attempt object or null if data is invalid.
- */
 export async function normalizeAttempt(attempt) {
   if (!attempt) return null
 
@@ -53,28 +45,16 @@ export async function normalizeAttempt(attempt) {
       score: getScorePercentage(attempt.score),
       rawScore: attempt.score,
       responses: attempt.responses,
+      // Add exam metadata for filtering
+      category: exam.category,
+      subjects: exam.subjects || (exam.subject ? [exam.subject] : []),
+      topics: exam.topics || (exam.topic ? [exam.topic] : []),
       // Keep internal properties if they exist
       _startedAt: attempt._startedAt,
       _durationMinutes: attempt._durationMinutes,
       _timeRemainingSeconds: attempt._timeRemainingSeconds,
     }
   } catch (error) {
-    console.error(
-      `Failed to normalize attempt for exam ${attempt.exam_id}:`,
-      error,
-    )
-    // Return a partially normalized object so the UI can still display something
-    return {
-      id: attempt.id || attempt.attempt_id,
-      examId: attempt.exam_id,
-      examName: `Exam ${attempt.exam_id} (Data Missing)`,
-      date: attempt.date || attempt.timestamp,
-      status: attempt.status,
-      timeTaken: attempt.time_taken,
-      score: 0,
-      rawScore: attempt.score,
-      responses: attempt.responses,
-      error: 'Exam data could not be loaded.',
-    }
+    return null
   }
 }

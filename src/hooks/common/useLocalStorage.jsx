@@ -6,7 +6,6 @@ export function useLocalStorage(key, initialValue) {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      console.error(`Error reading localStorage key “${key}”:`, error)
       return initialValue
     }
   })
@@ -20,10 +19,10 @@ export function useLocalStorage(key, initialValue) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore))
         window.dispatchEvent(new StorageEvent('storage', { key }))
       } catch (error) {
-        console.error(`Error setting localStorage key “${key}”:`, error)
+        setValue(initialValue)
       }
     },
-    [key, value],
+    [key, value, initialValue],
   )
 
   useEffect(() => {
@@ -33,15 +32,13 @@ export function useLocalStorage(key, initialValue) {
           const item = window.localStorage.getItem(key)
           setValue(item ? JSON.parse(item) : initialValue)
         } catch (error) {
-          console.error(`Error parsing storage change for key “${key}”:`, error)
+          setValue(initialValue)
         }
       }
     }
 
     window.addEventListener('storage', handleStorageChange)
-    return () => {
-      window.removeEventListener('storage', handleStorageChange)
-    }
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [key, initialValue])
 
   return [value, setStoredValue]

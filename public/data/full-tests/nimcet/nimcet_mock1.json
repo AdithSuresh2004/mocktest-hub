@@ -94,7 +94,7 @@
         },
         {
           "q_id": "A7",
-          "question_text": "If A = {1, 2, 3} and B = {2, 3, 4}, what is A \\cup B?",
+          "question_text": "If A = {1, 2, 3} and B = {2, 3, 4}, what is $A \\cup B$?",
           "options": [
             { "opt_id": "1", "text": "{1, 2, 3, 4}" },
             { "opt_id": "2", "text": "{2, 3}" },

@@ -14,7 +14,7 @@ export function usePendingTests() {
         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
       setPendingTests(pending)
     } catch (error) {
-      console.error('Error loading pending tests:', error)
+      setPendingTests([])
     } finally {
       setLoading(false)
     }
@@ -26,13 +26,12 @@ export function usePendingTests() {
 
   const deletePendingTest = useCallback(
     (attemptId) => {
-      if (confirm('Are you sure you want to delete this pending test?')) {
-        try {
-          removeAttempt(attemptId)
-          loadPendingTests() // Reload after deletion
-        } catch (error) {
-          console.error('Error deleting attempt:', error)
-        }
+      try {
+        removeAttempt(attemptId)
+        loadPendingTests()
+        return true
+      } catch (error) {
+        return false
       }
     },
     [loadPendingTests],

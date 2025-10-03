@@ -1,22 +1,99 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+
 function useTimer(initialSeconds, onFinish) {
   const [seconds, setSeconds] = useState(initialSeconds)
   const [running, setRunning] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+  const intervalRef = useRef(null)
+  const onFinishRef = useRef(onFinish)
+
+  // Keep onFinish reference updated
   useEffect(() => {
-    if (!running) return
-    if (seconds <= 0) {
-      setRunning(false)
-      if (onFinish) onFinish()
+    onFinishRef.current = onFinish
+  }, [onFinish])
+
+  // Timer warning states
+  const isWarning = useMemo(() => seconds <= 300 && seconds > 60, [seconds]) // Last 5 minutes
+  const isCritical = useMemo(() => seconds <= 60, [seconds]) // Last minute
+
+  // Main timer effect
+  useEffect(() => {
+    if (!running || isPaused) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
       return
     }
-    const timer = setInterval(() => {
-      setSeconds((prev) => prev - 1)
+
+    if (seconds <= 0) {
+      setRunning(false)
+      if (onFinishRef.current) {
+        onFinishRef.current()
+      }
+      return
+    }
+
+    intervalRef.current = setInterval(() => {
+      setSeconds((prev) => {
+        if (prev <= 1) {
+          setRunning(false)
+          if (onFinishRef.current) {
+            onFinishRef.current()
+          }
+          return 0
+        }
+        return prev - 1
+      })
     }, 1000)
-    return () => clearInterval(timer)
-  }, [seconds, running, onFinish])
-  const start = useCallback(() => setRunning(true), [])
-  const stop = useCallback(() => setRunning(false), [])
-  const setTime = useCallback((newSeconds) => setSeconds(newSeconds), [])
-  return { seconds, start, stop, setTime }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+    }
+  }, [running, isPaused, seconds])
+
+  const start = useCallback(() => {
+    setRunning(true)
+    setIsPaused(false)
+  }, [])
+
+  const stop = useCallback(() => {
+    setRunning(false)
+    setIsPaused(false)
+  }, [])
+
+  const pause = useCallback(() => {
+    setIsPaused(true)
+  }, [])
+
+  const resume = useCallback(() => {
+    setIsPaused(false)
+  }, [])
+
+  const setTime = useCallback((newSeconds) => {
+    setSeconds(Math.max(0, newSeconds))
+  }, [])
+
+  const addTime = useCallback((additionalSeconds) => {
+    setSeconds((prev) => Math.max(0, prev + additionalSeconds))
+  }, [])
+
+  return {
+    seconds,
+    running,
+    isPaused,
+    isWarning,
+    isCritical,
+    start,
+    stop,
+    pause,
+    resume,
+    setTime,
+    addTime,
+  }
 }
+
 export { useTimer }

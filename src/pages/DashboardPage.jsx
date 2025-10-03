@@ -4,6 +4,7 @@ import StatsGrid from '@/components/dashboard/StatsGrid'
 import RecentActivity from '@/components/dashboard/RecentActivity'
 import PerformanceSnapshot from '@/components/dashboard/PerformanceSnapshot'
 import QuickActions from '@/components/dashboard/QuickActions'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 import { Link } from 'react-router-dom'
 
 export default function DashboardPage() {
@@ -25,8 +26,9 @@ export default function DashboardPage() {
         </div>
 
         {loading ? (
-          <div className="flex h-64 items-center justify-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <div className="space-y-8">
+            <SkeletonLoader type="stats" count={1} />
+            <SkeletonLoader type="list" count={1} />
           </div>
         ) : (
           <div className="space-y-8">

@@ -1,6 +1,8 @@
 export const formatDate = (timestamp, format = 'long') => {
   if (!timestamp) return 'N/A'
+  
   const date = new Date(timestamp)
+  
   if (format === 'short') {
     return date.toLocaleDateString('en-US', {
       month: 'short',
@@ -8,6 +10,7 @@ export const formatDate = (timestamp, format = 'long') => {
       year: 'numeric',
     })
   }
+  
   return date.toLocaleString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -17,12 +20,24 @@ export const formatDate = (timestamp, format = 'long') => {
   })
 }
 
+const performanceColorCache = new Map()
+
 export const getPerformanceColor = (score, total) => {
-  const percentage = (score / total) * 100
-  if (percentage >= 80) return 'text-green-600 dark:text-green-400'
-  if (percentage >= 60) return 'text-blue-600 dark:text-blue-400'
-  if (percentage >= 40) return 'text-yellow-600 dark:text-yellow-400'
-  return 'text-red-600 dark:text-red-400'
+  const percentage = total > 0 ? (score / total) * 100 : 0
+  const key = Math.floor(percentage / 10)
+  
+  if (performanceColorCache.has(key)) {
+    return performanceColorCache.get(key)
+  }
+  
+  let color
+  if (percentage >= 80) color = 'text-green-600 dark:text-green-400'
+  else if (percentage >= 60) color = 'text-blue-600 dark:text-blue-400'
+  else if (percentage >= 40) color = 'text-yellow-600 dark:text-yellow-400'
+  else color = 'text-red-600 dark:text-red-400'
+  
+  performanceColorCache.set(key, color)
+  return color
 }
 export const getDifficultyColor = (strength) => {
   const colors = {
