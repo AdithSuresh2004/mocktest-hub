@@ -34,8 +34,11 @@ function extractExamMetadata(filePath, examType) {
     const relativePath = path.relative(DATA_DIR, filePath).replace(/\\/g, '/')
     const fileName = path.basename(filePath, '.json')
     const pathParts = relativePath.split('/')
-    const category = pathParts[1] || 'general'
+    const category = (pathParts[1] || 'general').toLowerCase()
     const publicPath = 'data/' + relativePath
+    
+    const strength = exam.difficulty || exam.strength || exam.exam_strength || 'medium'
+    const normalizedStrength = strength.toLowerCase()
     
     return {
       id: exam.id || exam.exam_id || fileName,
@@ -45,7 +48,7 @@ function extractExamMetadata(filePath, examType) {
       category,
       subject: exam.subject || 'General',
       topic: exam.topic || null,
-      difficulty: exam.difficulty || exam.strength || exam.exam_strength || 'Medium',
+      difficulty: normalizedStrength,
       duration_minutes: exam.duration_minutes || 60,
       total_marks: exam.total_marks || calculateTotalMarks(exam),
       total_questions: exam.total_questions || calculateTotalQuestions(exam),

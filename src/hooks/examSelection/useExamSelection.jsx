@@ -3,6 +3,7 @@ import {
   getManifest as getExamsManifest,
 } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
+import { normalizeStrength } from '@/utils/formatters/formatters'
 
 const TEST_TYPES = [
   { id: 'all', label: 'All Tests' },
@@ -93,6 +94,7 @@ export function useExamSelection() {
         allTests
           .map((t) => t.category)
           .filter(Boolean)
+          .map(cat => cat.toUpperCase())
           .sort(),
       ),
     ],
@@ -139,7 +141,7 @@ export function useExamSelection() {
       })
       .filter((test) => {
         if (selectedExam === 'All Exams') return true
-        return test.category === selectedExam
+        return test.category?.toLowerCase() === selectedExam.toLowerCase()
       })
       .filter((test) => {
         if (selectedTopic === 'All Topics') return true

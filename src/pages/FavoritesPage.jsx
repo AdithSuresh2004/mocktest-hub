@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 import ConfirmModal from '@/components/common/ConfirmModal'
+import { getDifficultyColor as getColor, capitalizeStrength } from '@/utils/formatters/formatters'
 import {
   FaStar,
   FaTrash,
@@ -61,18 +62,7 @@ export default function FavoritesPage() {
   const handleStart = (examId) => {
     navigate(`/exam/${examId}`)
   }
-  const getDifficultyColor = (strength) => {
-    const colors = {
-      Easy: 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400',
-      Medium:
-        'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400',
-      Hard: 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400',
-    }
-    return (
-      colors[strength] ||
-      'bg-gray-50 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400'
-    )
-  }
+  
   if (loading) {
     return (
       <div className="flex min-h-full items-center justify-center">
@@ -153,9 +143,9 @@ export default function FavoritesPage() {
                 {favorite.exam_strength && (
                   <div className="mb-3">
                     <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getDifficultyColor(favorite.exam_strength)}`}
+                      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getColor(favorite.exam_strength)}`}
                     >
-                      {favorite.exam_strength}
+                      {capitalizeStrength(favorite.exam_strength)}
                     </span>
                   </div>
                 )}

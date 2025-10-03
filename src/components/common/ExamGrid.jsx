@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FaClock, FaQuestionCircle, FaStar, FaFileAlt } from 'react-icons/fa'
+import { capitalizeStrength } from '@/utils/formatters/formatters'
 export default function ExamGrid({ exams }) {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -18,8 +19,7 @@ export default function ExamGrid({ exams }) {
                   : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200'
             }`}
           >
-            {exam.exam_strength.charAt(0).toUpperCase() +
-              exam.exam_strength.slice(1)}
+            {capitalizeStrength(exam.exam_strength)}
           </span>
           <div className="mb-4 flex items-center">
             <div className="rounded-xl bg-blue-50 p-3 group-hover:bg-blue-100 dark:bg-blue-900/40 dark:group-hover:bg-blue-900/60">

@@ -9,7 +9,7 @@ import {
   FaStar,
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { getDifficultyColor } from '@/utils/formatters/formatters'
+import { getDifficultyColor, capitalizeStrength, capitalizeText } from '@/utils/formatters/formatters'
 
 const getTestTypeConfig = (type) =>
   ({
@@ -120,7 +120,7 @@ function TestCard({ test }) {
             test.exam_strength,
           )}`}
         >
-          {test.exam_strength || 'Normal'}
+          {capitalizeStrength(test.exam_strength) || 'Normal'}
         </span>
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${testTypeConfig.color}`}
@@ -134,7 +134,7 @@ function TestCard({ test }) {
       </h3>
       {test.category && (
         <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
-          {test.category}
+          {capitalizeText(test.category)}
         </p>
       )}
       <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
