@@ -84,6 +84,7 @@ function QuestionCard({
               src={question.image || question.image_url || question.question_image}
               alt="Question illustration"
               className="max-w-full h-auto rounded-lg border border-gray-300 dark:border-gray-600"
+              draggable={false}
               onError={(e) => { e.target.style.display = 'none' }}
             />
           </div>
@@ -146,12 +147,13 @@ function QuestionCard({
                         src={option.image || option.image_url}
                         alt={`Option ${optionLabel} illustration`}
                         className="max-w-full h-auto rounded border border-gray-300 dark:border-gray-600"
+                        draggable={false}
                         onError={(e) => { e.target.style.display = 'none' }}
                       />
                     </div>
                   )}
                   {index < 4 && (
-                    <span className="ml-1 text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
+                    <span className="ml-1 text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-300">
                       {keyboardShortcut}
                     </span>
                   )}

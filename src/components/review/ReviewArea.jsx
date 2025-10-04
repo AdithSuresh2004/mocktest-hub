@@ -97,6 +97,7 @@ const ReviewArea = ({
                 src={question.image || question.image_url || question.question_image}
                 alt="Question illustration"
                 className="max-w-full h-auto rounded-lg border border-gray-300 dark:border-gray-600"
+                draggable={false}
                 onError={(e) => { e.target.style.display = 'none' }}
               />
             </div>
@@ -123,6 +124,7 @@ const ReviewArea = ({
                           src={option.image || option.image_url}
                           alt={`Option ${option.opt_id.toUpperCase()} illustration`}
                           className="max-w-full h-auto rounded border border-gray-300 dark:border-gray-600"
+                          draggable={false}
                           onError={(e) => { e.target.style.display = 'none' }}
                         />
                       </div>

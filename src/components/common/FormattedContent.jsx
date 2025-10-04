@@ -130,16 +130,15 @@ const formatText = (text, isInMathContext, isLastPart, isFirstPart) => {
     return null
   }
 
-  const hasSignificantNewlines =
-    /\n.*\n/.test(text) ||
-    (text.startsWith('\n') && text.length > 1) ||
-    (text.endsWith('\n') && text.length > 1)
+  // Check for any newlines, not just "significant" ones
+  const hasNewlines = text.includes('\n')
 
-  if (isInMathContext && !hasSignificantNewlines) {
+  if (isInMathContext && !hasNewlines) {
     return trimmed.replace(/\s+/g, ' ')
   }
 
-  if (hasSignificantNewlines) {
+  if (hasNewlines) {
+    // First check for paragraph breaks (double newlines)
     const paragraphs = text.split(/\n\s*\n/)
 
     if (paragraphs.length > 1) {
@@ -156,11 +155,12 @@ const formatText = (text, isInMathContext, isLastPart, isFirstPart) => {
         .filter(Boolean)
     }
 
-    const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+    // Handle single newlines - split into lines and render each as a block
+    const lines = text.split('\n').map(l => l.trim())
     if (lines.length > 1) {
       return lines.map((line, i) => (
         <span key={`line-${i}`} className="block">
-          {line}
+          {line || '\u00A0'} {/* Use non-breaking space for empty lines */}
         </span>
       ))
     }
