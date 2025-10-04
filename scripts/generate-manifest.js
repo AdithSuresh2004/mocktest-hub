@@ -102,6 +102,17 @@ function extractSubjectFromName(name) {
 }
 
 function generateManifest() {
+  // Ensure the data directory exists so writing the manifest won't fail
+  if (!fs.existsSync(DATA_DIR)) {
+    try {
+      fs.mkdirSync(DATA_DIR, { recursive: true })
+      console.log(`Created missing data directory: ${DATA_DIR}`)
+    } catch (err) {
+      console.error(`Failed to create data directory ${DATA_DIR}:`, err.message)
+      process.exit(1)
+    }
+  }
+
   console.log('🔍 Scanning exam directories recursively...\n')
   const manifest = { full_tests: [], subject_tests: [], topic_tests: [], generated_at: new Date().toISOString(), version: '1.0.0' }
   
@@ -127,7 +138,15 @@ function generateManifest() {
   
   const totalExams = manifest.full_tests.length + manifest.subject_tests.length + manifest.topic_tests.length
   
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
+  try {
+    // Ensure parent dir exists (defensive)
+    const outDir = path.dirname(MANIFEST_PATH)
+    if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
+    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
+  } catch (err) {
+    console.error('Failed to write manifest to', MANIFEST_PATH, err.message)
+    process.exit(1)
+  }
   console.log('\n✅ Manifest generated successfully!')
   console.log(`📊 Total exams: ${totalExams}`)
   console.log(`📄 Output: ${MANIFEST_PATH}\n`)
