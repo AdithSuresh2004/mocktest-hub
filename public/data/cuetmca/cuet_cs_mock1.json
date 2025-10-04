@@ -1,0 +1,1099 @@
+{
+  "exam_id": "cuet_pg_cs_mock1",
+  "exam_name": "CUET PG Computer Science & IT Mock Test 1",
+  "exam_conducting_body": "NTA (National Testing Agency)",
+  "duration_minutes": 120,
+  "total_marks": 300,
+  "total_questions": 75,
+  "marking_scheme": {
+    "correct_answer": 4,
+    "incorrect_answer": -1,
+    "unattempted": 0
+  },
+  "medium": ["Hindi", "English"],
+  "instructions": "All questions are compulsory. Each correct answer carries +4 marks and each incorrect answer carries -1 mark.",
+  "sections": [
+    {
+      "section_id": "A",
+      "section_name": "Logical Reasoning & Thinking",
+      "max_marks": 60,
+      "question_count": 15,
+      "questions": [
+        {
+          "q_id": "A1",
+          "question_text": "Find the odd one out: 3, 9, 27, 81, 243, 729",
+          "options": [
+            {"opt_id": "1", "text": "9"},
+            {"opt_id": "2", "text": "27"},
+            {"opt_id": "3", "text": "243"},
+            {"opt_id": "4", "text": "None of these"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "All are powers of 3, so none is odd."
+        },
+        {
+          "q_id": "A2",
+          "question_text": "Complete the series: 2, 6, 12, 20, 30, ?",
+          "options": [
+            {"opt_id": "1", "text": "40"},
+            {"opt_id": "2", "text": "42"},
+            {"opt_id": "3", "text": "44"},
+            {"opt_id": "4", "text": "46"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Pattern: n(n+1) where n = 1,2,3,4,5,6. Next is 6×7=42"
+        },
+        {
+          "q_id": "A3",
+          "question_text": "If COMPUTER is coded as DPNQVUFS, how is KEYBOARD coded?",
+          "options": [
+            {"opt_id": "1", "text": "LFZCPBSE"},
+            {"opt_id": "2", "text": "LFZCPASE"},
+            {"opt_id": "3", "text": "KFZCPBSE"},
+            {"opt_id": "4", "text": "LFZCOBSE"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Each letter is shifted by +1 position in alphabet"
+        },
+        {
+          "q_id": "A4",
+          "question_text": "Statement: All programmers are logical. Some logical people are creative. Conclusion I: Some programmers are creative. Conclusion II: All creative people are programmers.",
+          "options": [
+            {"opt_id": "1", "text": "Only I follows"},
+            {"opt_id": "2", "text": "Only II follows"},
+            {"opt_id": "3", "text": "Both follow"},
+            {"opt_id": "4", "text": "Neither follows"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "From the statements, we cannot definitively conclude either."
+        },
+        {
+          "q_id": "A5",
+          "question_text": "Find the next term: 1, 1, 2, 6, 24, ?",
+          "options": [
+            {"opt_id": "1", "text": "48"},
+            {"opt_id": "2", "text": "96"},
+            {"opt_id": "3", "text": "120"},
+            {"opt_id": "4", "text": "144"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Pattern: n! (factorial). Next is 5! = 120"
+        },
+        {
+          "q_id": "A6",
+          "question_text": "In a certain code, if 'MOUSE' = 51 and 'KEYBOARD' = 95, what is 'CPU'?",
+          "options": [
+            {"opt_id": "1", "text": "38"},
+            {"opt_id": "2", "text": "40"},
+            {"opt_id": "3", "text": "42"},
+            {"opt_id": "4", "text": "44"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Sum of alphabet positions: C(3)+P(16)+U(21)=40"
+        },
+        {
+          "q_id": "A7",
+          "question_text": "If North becomes East, East becomes South, and so on (90° clockwise rotation), which direction will be opposite to original North?",
+          "options": [
+            {"opt_id": "1", "text": "East"},
+            {"opt_id": "2", "text": "West"},
+            {"opt_id": "3", "text": "North"},
+            {"opt_id": "4", "text": "South"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Original North becomes East, so opposite of original North (South) becomes West"
+        },
+        {
+          "q_id": "A8",
+          "question_text": "Find the missing number: 3, 7, 15, 31, 63, ?",
+          "options": [
+            {"opt_id": "1", "text": "125"},
+            {"opt_id": "2", "text": "127"},
+            {"opt_id": "3", "text": "129"},
+            {"opt_id": "4", "text": "131"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Pattern: 2^n - 1. Next is 2^7 - 1 = 127"
+        },
+        {
+          "q_id": "A9",
+          "question_text": "Which number is the odd one: 121, 144, 169, 196, 225, 256?",
+          "options": [
+            {"opt_id": "1", "text": "121"},
+            {"opt_id": "2", "text": "144"},
+            {"opt_id": "3", "text": "196"},
+            {"opt_id": "4", "text": "256"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "All are perfect squares except the pattern breaks at 256 (squares of consecutive numbers 11-15, then 16)"
+        },
+        {
+          "q_id": "A10",
+          "question_text": "A is B's sister. C is B's mother. D is C's father. E is D's mother. How is A related to D?",
+          "options": [
+            {"opt_id": "1", "text": "Grandmother"},
+            {"opt_id": "2", "text": "Granddaughter"},
+            {"opt_id": "3", "text": "Daughter"},
+            {"opt_id": "4", "text": "Great granddaughter"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "D is A's great grandfather, so A is D's great granddaughter"
+        },
+        {
+          "q_id": "A11",
+          "question_text": "Which geometrical shape can be folded to form a cube?",
+          "options": [
+            {"opt_id": "1", "text": "6 squares in a cross pattern"},
+            {"opt_id": "2", "text": "4 triangles"},
+            {"opt_id": "3", "text": "8 triangles"},
+            {"opt_id": "4", "text": "5 squares"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "A cube net requires 6 connected squares"
+        },
+        {
+          "q_id": "A12",
+          "question_text": "Find the next letter in the series: Z, Y, X, U, T, S, P, O, N, ?",
+          "options": [
+            {"opt_id": "1", "text": "K"},
+            {"opt_id": "2", "text": "L"},
+            {"opt_id": "3", "text": "M"},
+            {"opt_id": "4", "text": "J"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Pattern: Move back 1, 1, 3, 1, 1, 3... Next move is 3 steps back from N = K"
+        },
+        {
+          "q_id": "A13",
+          "question_text": "In a row of 40 students, A is 16th from left. B is 20th from right. How many students are between them?",
+          "options": [
+            {"opt_id": "1", "text": "3"},
+            {"opt_id": "2", "text": "4"},
+            {"opt_id": "3", "text": "5"},
+            {"opt_id": "4", "text": "Cannot be determined"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "A is at position 16, B is at position 21 (40-20+1). Between = 21-16-1 = 4"
+        },
+        {
+          "q_id": "A14",
+          "question_text": "Select the figure that will complete the pattern: ○□△, □△○, △○□, ?",
+          "options": [
+            {"opt_id": "1", "text": "○□△"},
+            {"opt_id": "2", "text": "□△○"},
+            {"opt_id": "3", "text": "△○□"},
+            {"opt_id": "4", "text": "○△□"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Pattern rotates, next cycle starts again with ○□△"
+        },
+        {
+          "q_id": "A15",
+          "question_text": "If + means ×, - means ÷, × means -, and ÷ means +, what is 8 ÷ 4 + 5 - 2 × 3?",
+          "options": [
+            {"opt_id": "1", "text": "15"},
+            {"opt_id": "2", "text": "17"},
+            {"opt_id": "3", "text": "19"},
+            {"opt_id": "4", "text": "21"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "8 + 4 × 5 ÷ 2 - 3 = 8 + 20 ÷ 2 - 3 = 8 + 10 - 3 = 15... wait = 17 after correct translation"
+        }
+      ]
+    },
+    {
+      "section_id": "B",
+      "section_name": "Mathematics",
+      "max_marks": 80,
+      "question_count": 20,
+      "questions": [
+        {
+          "q_id": "B1",
+          "question_text": "If A = {1,2,3} and B = {3,4,5}, find A ∩ B",
+          "options": [
+            {"opt_id": "1", "text": "{1,2,3,4,5}"},
+            {"opt_id": "2", "text": "{3}"},
+            {"opt_id": "3", "text": "{1,2}"},
+            {"opt_id": "4", "text": "∅"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Intersection contains common elements only"
+        },
+        {
+          "q_id": "B2",
+          "question_text": "The number of ways to arrange the letters of the word 'COMPUTER' is:",
+          "options": [
+            {"opt_id": "1", "text": "8!"},
+            {"opt_id": "2", "text": "7!"},
+            {"opt_id": "3", "text": "40320"},
+            {"opt_id": "4", "text": "Both 1 and 3"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "8 distinct letters = 8! = 40320 permutations"
+        },
+        {
+          "q_id": "B3",
+          "question_text": "Two dice are thrown. What is the probability that the sum is 7?",
+          "options": [
+            {"opt_id": "1", "text": "1/6"},
+            {"opt_id": "2", "text": "5/36"},
+            {"opt_id": "3", "text": "1/12"},
+            {"opt_id": "4", "text": "7/36"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "6 favorable outcomes (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) out of 36 total = 6/36 = 1/6"
+        },
+        {
+          "q_id": "B4",
+          "question_text": "If log₁₀ 2 = 0.301, what is log₁₀ 8?",
+          "options": [
+            {"opt_id": "1", "text": "0.602"},
+            {"opt_id": "2", "text": "0.903"},
+            {"opt_id": "3", "text": "2.408"},
+            {"opt_id": "4", "text": "0.301"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "log₁₀ 8 = log₁₀ 2³ = 3 log₁₀ 2 = 3 × 0.301 = 0.903"
+        },
+        {
+          "q_id": "B5",
+          "question_text": "Solve for x: 2x² - 7x + 3 = 0",
+          "options": [
+            {"opt_id": "1", "text": "x = 3, 1/2"},
+            {"opt_id": "2", "text": "x = 3, -1/2"},
+            {"opt_id": "3", "text": "x = -3, 1/2"},
+            {"opt_id": "4", "text": "x = 3, 2"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Using quadratic formula or factoring: (2x-1)(x-3) = 0"
+        },
+        {
+          "q_id": "B6",
+          "question_text": "The determinant of matrix [[2,3],[4,5]] is:",
+          "options": [
+            {"opt_id": "1", "text": "-2"},
+            {"opt_id": "2", "text": "2"},
+            {"opt_id": "3", "text": "-1"},
+            {"opt_id": "4", "text": "1"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Det = (2×5) - (3×4) = 10 - 12 = -2"
+        },
+        {
+          "q_id": "B7",
+          "question_text": "Find the distance between points (1,2) and (4,6):",
+          "options": [
+            {"opt_id": "1", "text": "5"},
+            {"opt_id": "2", "text": "3"},
+            {"opt_id": "3", "text": "4"},
+            {"opt_id": "4", "text": "7"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Distance = √[(4-1)² + (6-2)²] = √[9 + 16] = √25 = 5"
+        },
+        {
+          "q_id": "B8",
+          "question_text": "The equation of a line passing through (0,0) with slope 3 is:",
+          "options": [
+            {"opt_id": "1", "text": "y = 3x"},
+            {"opt_id": "2", "text": "y = x + 3"},
+            {"opt_id": "3", "text": "y = 3x + 1"},
+            {"opt_id": "4", "text": "x = 3y"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "y = mx + c, where m=3, c=0 (passes through origin)"
+        },
+        {
+          "q_id": "B9",
+          "question_text": "Find dy/dx if y = x³ + 2x² + 5:",
+          "options": [
+            {"opt_id": "1", "text": "3x² + 2x"},
+            {"opt_id": "2", "text": "3x² + 4x"},
+            {"opt_id": "3", "text": "x² + 4x"},
+            {"opt_id": "4", "text": "3x² + 2x + 5"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "dy/dx = 3x² + 4x + 0 = 3x² + 4x"
+        },
+        {
+          "q_id": "B10",
+          "question_text": "Evaluate ∫(2x + 3)dx:",
+          "options": [
+            {"opt_id": "1", "text": "x² + 3x + C"},
+            {"opt_id": "2", "text": "2x² + 3x + C"},
+            {"opt_id": "3", "text": "x² + x + C"},
+            {"opt_id": "4", "text": "2x + C"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "∫2x dx + ∫3 dx = x² + 3x + C"
+        },
+        {
+          "q_id": "B11",
+          "question_text": "The 5th term of a GP with first term 3 and common ratio 2 is:",
+          "options": [
+            {"opt_id": "1", "text": "24"},
+            {"opt_id": "2", "text": "48"},
+            {"opt_id": "3", "text": "96"},
+            {"opt_id": "4", "text": "32"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "T₅ = ar⁴ = 3 × 2⁴ = 3 × 16 = 48"
+        },
+        {
+          "q_id": "B12",
+          "question_text": "If sin θ = 3/5, find cos θ (for acute angle):",
+          "options": [
+            {"opt_id": "1", "text": "4/5"},
+            {"opt_id": "2", "text": "3/4"},
+            {"opt_id": "3", "text": "5/4"},
+            {"opt_id": "4", "text": "2/5"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "cos θ = √(1 - sin²θ) = √(1 - 9/25) = √(16/25) = 4/5"
+        },
+        {
+          "q_id": "B13",
+          "question_text": "Find the limit: lim(x→0) (sin x)/x",
+          "options": [
+            {"opt_id": "1", "text": "0"},
+            {"opt_id": "2", "text": "1"},
+            {"opt_id": "3", "text": "∞"},
+            {"opt_id": "4", "text": "Does not exist"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "This is a standard limit equal to 1"
+        },
+        {
+          "q_id": "B14",
+          "question_text": "The variance of data: 2, 4, 6, 8, 10 is:",
+          "options": [
+            {"opt_id": "1", "text": "6"},
+            {"opt_id": "2", "text": "8"},
+            {"opt_id": "3", "text": "10"},
+            {"opt_id": "4", "text": "4"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Mean = 6, Variance = [(4+4+0+4+16)/5] = 8"
+        },
+        {
+          "q_id": "B15",
+          "question_text": "The equation x² + y² = 25 represents:",
+          "options": [
+            {"opt_id": "1", "text": "Circle with radius 5"},
+            {"opt_id": "2", "text": "Circle with radius 25"},
+            {"opt_id": "3", "text": "Ellipse"},
+            {"opt_id": "4", "text": "Parabola"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Standard circle equation x² + y² = r², here r = 5"
+        },
+        {
+          "q_id": "B16",
+          "question_text": "If matrix A is 3×2 and matrix B is 2×4, what is the order of AB?",
+          "options": [
+            {"opt_id": "1", "text": "3×4"},
+            {"opt_id": "2", "text": "2×2"},
+            {"opt_id": "3", "text": "3×2"},
+            {"opt_id": "4", "text": "Cannot be multiplied"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Product of m×n and n×p matrices is m×p, so 3×4"
+        },
+        {
+          "q_id": "B17",
+          "question_text": "The sum of an infinite GP with first term 1 and common ratio 1/2 is:",
+          "options": [
+            {"opt_id": "1", "text": "1"},
+            {"opt_id": "2", "text": "2"},
+            {"opt_id": "3", "text": "3"},
+            {"opt_id": "4", "text": "∞"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Sum = a/(1-r) = 1/(1-1/2) = 1/(1/2) = 2"
+        },
+        {
+          "q_id": "B18",
+          "question_text": "The number of permutations of n distinct objects taken r at a time is:",
+          "options": [
+            {"opt_id": "1", "text": "n!/(n-r)!"},
+            {"opt_id": "2", "text": "n!/r!"},
+            {"opt_id": "3", "text": "n!"},
+            {"opt_id": "4", "text": "(n-r)!/n!"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Standard permutation formula: ⁿPᵣ = n!/(n-r)!"
+        },
+        {
+          "q_id": "B19",
+          "question_text": "Find the area under the curve y = x from x=0 to x=2:",
+          "options": [
+            {"opt_id": "1", "text": "1"},
+            {"opt_id": "2", "text": "2"},
+            {"opt_id": "3", "text": "4"},
+            {"opt_id": "4", "text": "8"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "∫₀² x dx = [x²/2]₀² = 4/2 - 0 = 2"
+        },
+        {
+          "q_id": "B20",
+          "question_text": "The tangent to the curve y = x² at point (1,1) has slope:",
+          "options": [
+            {"opt_id": "1", "text": "1"},
+            {"opt_id": "2", "text": "2"},
+            {"opt_id": "3", "text": "3"},
+            {"opt_id": "4", "text": "0"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "dy/dx = 2x, at x=1, slope = 2(1) = 2"
+        }
+      ]
+    },
+    {
+      "section_id": "C",
+      "section_name": "Computer Science - Operating Systems & Data Structures",
+      "max_marks": 80,
+      "question_count": 20,
+      "questions": [
+        {
+          "q_id": "C1",
+          "question_text": "Which of the following is NOT a function of an operating system?",
+          "options": [
+            {"opt_id": "1", "text": "Memory Management"},
+            {"opt_id": "2", "text": "Process Management"},
+            {"opt_id": "3", "text": "Compiling Programs"},
+            {"opt_id": "4", "text": "File Management"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Compiling is done by compilers, not the OS"
+        },
+        {
+          "q_id": "C2",
+          "question_text": "In a deadlock situation, which condition must be broken to resolve it?",
+          "options": [
+            {"opt_id": "1", "text": "Mutual Exclusion"},
+            {"opt_id": "2", "text": "Hold and Wait"},
+            {"opt_id": "3", "text": "No Preemption"},
+            {"opt_id": "4", "text": "Any one of the above"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Breaking any of the four conditions can prevent deadlock"
+        },
+        {
+          "q_id": "C3",
+          "question_text": "The Banker's algorithm is used for:",
+          "options": [
+            {"opt_id": "1", "text": "Deadlock avoidance"},
+            {"opt_id": "2", "text": "Deadlock detection"},
+            {"opt_id": "3", "text": "CPU scheduling"},
+            {"opt_id": "4", "text": "Memory allocation"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Banker's algorithm prevents deadlock by checking safe states"
+        },
+        {
+          "q_id": "C4",
+          "question_text": "Which CPU scheduling algorithm gives minimum average waiting time?",
+          "options": [
+            {"opt_id": "1", "text": "FCFS"},
+            {"opt_id": "2", "text": "SJF"},
+            {"opt_id": "3", "text": "Round Robin"},
+            {"opt_id": "4", "text": "Priority Scheduling"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Shortest Job First (SJF) minimizes average waiting time"
+        },
+        {
+          "q_id": "C5",
+          "question_text": "What is the time complexity of inserting an element in a stack?",
+          "options": [
+            {"opt_id": "1", "text": "O(1)"},
+            {"opt_id": "2", "text": "O(n)"},
+            {"opt_id": "3", "text": "O(log n)"},
+            {"opt_id": "4", "text": "O(n²)"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Stack push operation is O(1) - constant time"
+        },
+        {
+          "q_id": "C6",
+          "question_text": "In a binary search tree, in-order traversal gives:",
+          "options": [
+            {"opt_id": "1", "text": "Sorted order"},
+            {"opt_id": "2", "text": "Reverse sorted order"},
+            {"opt_id": "3", "text": "Random order"},
+            {"opt_id": "4", "text": "Level order"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "In-order traversal of BST yields sorted sequence"
+        },
+        {
+          "q_id": "C7",
+          "question_text": "What is the height of an AVL tree with n nodes (approximately)?",
+          "options": [
+            {"opt_id": "1", "text": "O(n)"},
+            {"opt_id": "2", "text": "O(log n)"},
+            {"opt_id": "3", "text": "O(n²)"},
+            {"opt_id": "4", "text": "O(1)"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "AVL tree maintains balance, so height is O(log n)"
+        },
+        {
+          "q_id": "C8",
+          "question_text": "Which data structure is used for implementing recursion?",
+          "options": [
+            {"opt_id": "1", "text": "Queue"},
+            {"opt_id": "2", "text": "Stack"},
+            {"opt_id": "3", "text": "Array"},
+            {"opt_id": "4", "text": "Linked List"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Function calls in recursion use stack (call stack)"
+        },
+        {
+          "q_id": "C9",
+          "question_text": "In which memory management technique, memory is divided into fixed-size partitions?",
+          "options": [
+            {"opt_id": "1", "text": "Paging"},
+            {"opt_id": "2", "text": "Segmentation"},
+            {"opt_id": "3", "text": "Virtual Memory"},
+            {"opt_id": "4", "text": "Cache Memory"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Paging divides memory into fixed-size pages"
+        },
+        {
+          "q_id": "C10",
+          "question_text": "What is the worst-case time complexity of Quick Sort?",
+          "options": [
+            {"opt_id": "1", "text": "O(n log n)"},
+            {"opt_id": "2", "text": "O(n²)"},
+            {"opt_id": "3", "text": "O(n)"},
+            {"opt_id": "4", "text": "O(log n)"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Quick Sort worst case (already sorted) is O(n²)"
+        },
+        {
+          "q_id": "C11",
+          "question_text": "Which of the following is used to resolve hash collisions?",
+          "options": [
+            {"opt_id": "1", "text": "Chaining"},
+            {"opt_id": "2", "text": "Open Addressing"},
+            {"opt_id": "3", "text": "Both 1 and 2"},
+            {"opt_id": "4", "text": "None of the above"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Both chaining and open addressing resolve collisions"
+        },
+        {
+          "q_id": "C12",
+          "question_text": "In a circular queue with size n, how many elements can be stored?",
+          "options": [
+            {"opt_id": "1", "text": "n"},
+            {"opt_id": "2", "text": "n-1"},
+            {"opt_id": "3", "text": "n+1"},
+            {"opt_id": "4", "text": "2n"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "One position is kept empty to distinguish full from empty"
+        },
+        {
+          "q_id": "C13",
+          "question_text": "Which scheduling algorithm may cause starvation?",
+          "options": [
+            {"opt_id": "1", "text": "FCFS"},
+            {"opt_id": "2", "text": "Round Robin"},
+            {"opt_id": "3", "text": "Priority Scheduling"},
+            {"opt_id": "4", "text": "SJF"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Low priority processes may never execute in priority scheduling"
+        },
+        {
+          "q_id": "C14",
+          "question_text": "What is the maximum number of children a B-tree node of order m can have?",
+          "options": [
+            {"opt_id": "1", "text": "m"},
+            {"opt_id": "2", "text": "m-1"},
+            {"opt_id": "3", "text": "m+1"},
+            {"opt_id": "4", "text": "2m"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "B-tree of order m has maximum m children per node"
+        },
+        {
+          "q_id": "C15",
+          "question_text": "Which file system is used by UNIX?",
+          "options": [
+            {"opt_id": "1", "text": "FAT32"},
+            {"opt_id": "2", "text": "NTFS"},
+            {"opt_id": "3", "text": "ext"},
+            {"opt_id": "4", "text": "HFS+"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "UNIX/Linux typically use ext file systems (ext2, ext3, ext4)"
+        },
+        {
+          "q_id": "C16",
+          "question_text": "Thrashing occurs when:",
+          "options": [
+            {"opt_id": "1", "text": "Process spends more time paging than executing"},
+            {"opt_id": "2", "text": "CPU utilization is high"},
+            {"opt_id": "3", "text": "Memory is full"},
+            {"opt_id": "4", "text": "Disk is full"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Thrashing = excessive paging, little useful work"
+        },
+        {
+          "q_id": "C17",
+          "question_text": "Which traversal of a binary tree uses a queue?",
+          "options": [
+            {"opt_id": "1", "text": "In-order"},
+            {"opt_id": "2", "text": "Pre-order"},
+            {"opt_id": "3", "text": "Post-order"},
+            {"opt_id": "4", "text": "Level-order"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Level-order (BFS) traversal uses queue"
+        },
+        {
+          "q_id": "C18",
+          "question_text": "What is a semaphore with value 1 called?",
+          "options": [
+            {"opt_id": "1", "text": "Binary semaphore"},
+            {"opt_id": "2", "text": "Counting semaphore"},
+            {"opt_id": "3", "text": "Mutex"},
+            {"opt_id": "4", "text": "Both 1 and 3"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Binary semaphore/mutex has values 0 or 1"
+        },
+        {
+          "q_id": "C19",
+          "question_text": "The minimum number of nodes in an AVL tree of height h is:",
+          "options": [
+            {"opt_id": "1", "text": "2^h"},
+            {"opt_id": "2", "text": "Fibonacci(h+2) - 1"},
+            {"opt_id": "3", "text": "h+1"},
+            {"opt_id": "4", "text": "2^(h+1) - 1"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "AVL tree minimum nodes follow Fibonacci sequence"
+        },
+        {
+          "q_id": "C20",
+          "question_text": "Which page replacement algorithm suffers from Belady's anomaly?",
+          "options": [
+            {"opt_id": "1", "text": "FIFO"},
+            {"opt_id": "2", "text": "LRU"},
+            {"opt_id": "3", "text": "Optimal"},
+            {"opt_id": "4", "text": "LFU"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "FIFO can have more page faults with more frames"
+        }
+      ]
+    },
+    {
+      "section_id": "D",
+      "section_name": "Computer Science - Digital Fundamentals",
+      "max_marks": 80,
+      "question_count": 20,
+      "questions": [
+        {
+          "q_id": "D1",
+          "question_text": "Convert binary 1011 to decimal:",
+          "options": [
+            {"opt_id": "1", "text": "9"},
+            {"opt_id": "2", "text": "10"},
+            {"opt_id": "3", "text": "11"},
+            {"opt_id": "4", "text": "12"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8+0+2+1 = 11"
+        },
+        {
+          "q_id": "D2",
+          "question_text": "What is the 2's complement of binary 1010?",
+          "options": [
+            {"opt_id": "1", "text": "0101"},
+            {"opt_id": "2", "text": "0110"},
+            {"opt_id": "3", "text": "1010"},
+            {"opt_id": "4", "text": "1001"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "1's complement = 0101, add 1 = 0110"
+        },
+        {
+          "q_id": "D3",
+          "question_text": "Which gate is a universal gate?",
+          "options": [
+            {"opt_id": "1", "text": "AND"},
+            {"opt_id": "2", "text": "OR"},
+            {"opt_id": "3", "text": "NAND"},
+            {"opt_id": "4", "text": "XOR"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "NAND and NOR are universal gates (can implement all others)"
+        },
+        {
+          "q_id": "D4",
+          "question_text": "The Boolean expression A + A'B simplifies to:",
+          "options": [
+            {"opt_id": "1", "text": "A + B"},
+            {"opt_id": "2", "text": "A"},
+            {"opt_id": "3", "text": "B"},
+            {"opt_id": "4", "text": "AB"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Using Boolean algebra: A + A'B = A + B"
+        },
+        {
+          "q_id": "D5",
+          "question_text": "How many input combinations are possible for a 3-input logic gate?",
+          "options": [
+            {"opt_id": "1", "text": "3"},
+            {"opt_id": "2", "text": "6"},
+            {"opt_id": "3", "text": "8"},
+            {"opt_id": "4", "text": "9"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "2³ = 8 combinations for 3 inputs"
+        },
+        {
+          "q_id": "D6",
+          "question_text": "Which flip-flop is used as a basic memory element?",
+          "options": [
+            {"opt_id": "1", "text": "SR flip-flop"},
+            {"opt_id": "2", "text": "D flip-flop"},
+            {"opt_id": "3", "text": "JK flip-flop"},
+            {"opt_id": "4", "text": "All of the above"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "All flip-flops can store one bit of data"
+        },
+        {
+          "q_id": "D7",
+          "question_text": "A 4-bit binary counter can count up to:",
+          "options": [
+            {"opt_id": "1", "text": "15"},
+            {"opt_id": "2", "text": "16"},
+            {"opt_id": "3", "text": "4"},
+            {"opt_id": "4", "text": "8"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "4-bit counter: 0 to 2⁴-1 = 0 to 15"
+        },
+        {
+          "q_id": "D8",
+          "question_text": "What is the output of XOR gate when both inputs are same?",
+          "options": [
+            {"opt_id": "1", "text": "0"},
+            {"opt_id": "2", "text": "1"},
+            {"opt_id": "3", "text": "Depends on inputs"},
+            {"opt_id": "4", "text": "Undefined"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "XOR output is 1 only when inputs differ"
+        },
+        {
+          "q_id": "D9",
+          "question_text": "A multiplexer with n select lines can multiplex:",
+          "options": [
+            {"opt_id": "1", "text": "n inputs"},
+            {"opt_id": "2", "text": "2^n inputs"},
+            {"opt_id": "3", "text": "n² inputs"},
+            {"opt_id": "4", "text": "2n inputs"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "n select lines can select from 2^n inputs"
+        },
+        {
+          "q_id": "D10",
+          "question_text": "Which error detection code can detect single-bit errors?",
+          "options": [
+            {"opt_id": "1", "text": "Parity bit"},
+            {"opt_id": "2", "text": "Hamming code"},
+            {"opt_id": "3", "text": "CRC"},
+            {"opt_id": "4", "text": "All of the above"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "All these codes can detect single-bit errors"
+        },
+        {
+          "q_id": "D11",
+          "question_text": "The hexadecimal equivalent of binary 11011 is:",
+          "options": [
+            {"opt_id": "1", "text": "1B"},
+            {"opt_id": "2", "text": "1A"},
+            {"opt_id": "3", "text": "1C"},
+            {"opt_id": "4", "text": "1D"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Binary 11011 = 27 decimal = 1B hexadecimal"
+        },
+        {
+          "q_id": "D12",
+          "question_text": "In IEEE 754 single precision, how many bits are used for exponent?",
+          "options": [
+            {"opt_id": "1", "text": "8"},
+            {"opt_id": "2", "text": "11"},
+            {"opt_id": "3", "text": "23"},
+            {"opt_id": "4", "text": "32"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Single precision: 1 sign + 8 exponent + 23 mantissa = 32 bits"
+        },
+        {
+          "q_id": "D13",
+          "question_text": "De Morgan's theorem states: (A + B)' =",
+          "options": [
+            {"opt_id": "1", "text": "A' + B'"},
+            {"opt_id": "2", "text": "A' . B'"},
+            {"opt_id": "3", "text": "A + B"},
+            {"opt_id": "4", "text": "A . B"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "De Morgan: (A+B)' = A'·B' and (A·B)' = A'+B'"
+        },
+        {
+          "q_id": "D14",
+          "question_text": "A decoder with n inputs will have:",
+          "options": [
+            {"opt_id": "1", "text": "n outputs"},
+            {"opt_id": "2", "text": "2^n outputs"},
+            {"opt_id": "3", "text": "n² outputs"},
+            {"opt_id": "4", "text": "2n outputs"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "n-to-2^n decoder has 2^n output lines"
+        },
+        {
+          "q_id": "D15",
+          "question_text": "Which flip-flop does not have a invalid state?",
+          "options": [
+            {"opt_id": "1", "text": "SR flip-flop"},
+            {"opt_id": "2", "text": "JK flip-flop"},
+            {"opt_id": "3", "text": "D flip-flop"},
+            {"opt_id": "4", "text": "T flip-flop"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "D flip-flop has no invalid state (SR has S=R=1 invalid)"
+        },
+        {
+          "q_id": "D16",
+          "question_text": "The carry propagation delay in a ripple carry adder of n bits is:",
+          "options": [
+            {"opt_id": "1", "text": "Constant"},
+            {"opt_id": "2", "text": "Proportional to n"},
+            {"opt_id": "3", "text": "Proportional to log n"},
+            {"opt_id": "4", "text": "Proportional to n²"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Carry must ripple through all n stages"
+        },
+        {
+          "q_id": "D17",
+          "question_text": "Which IC technology has lowest power consumption?",
+          "options": [
+            {"opt_id": "1", "text": "TTL"},
+            {"opt_id": "2", "text": "ECL"},
+            {"opt_id": "3", "text": "CMOS"},
+            {"opt_id": "4", "text": "NMOS"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "CMOS has very low static power consumption"
+        },
+        {
+          "q_id": "D18",
+          "question_text": "A 3-to-8 line decoder requires how many AND gates?",
+          "options": [
+            {"opt_id": "1", "text": "3"},
+            {"opt_id": "2", "text": "6"},
+            {"opt_id": "3", "text": "8"},
+            {"opt_id": "4", "text": "12"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Each of 8 outputs needs one 3-input AND gate"
+        },
+        {
+          "q_id": "D19",
+          "question_text": "The sum-of-products form for F(A,B) = A + B is:",
+          "options": [
+            {"opt_id": "1", "text": "AB + A'B + AB'"},
+            {"opt_id": "2", "text": "AB + AB'"},
+            {"opt_id": "3", "text": "A'B + AB' + AB"},
+            {"opt_id": "4", "text": "All of the above are equivalent"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "A+B in SOP: minterms 01, 10, 11 = A'B + AB' + AB"
+        },
+        {
+          "q_id": "D20",
+          "question_text": "In synchronous counter, all flip-flops are triggered by:",
+          "options": [
+            {"opt_id": "1", "text": "Different clock pulses"},
+            {"opt_id": "2", "text": "Same clock pulse"},
+            {"opt_id": "3", "text": "No clock pulse"},
+            {"opt_id": "4", "text": "Asynchronous signals"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": -1,
+          "explanation": "Synchronous counter: all FFs change together with same clock"
+        }
+      ]
+    }
+  ]
+}

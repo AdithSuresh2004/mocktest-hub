@@ -1,6 +1,21 @@
 {
   "full_tests": [
     {
+      "id": "cuet_pg_cs_mock1",
+      "name": "CUET PG Computer Science & IT Mock Test 1",
+      "path": "data/cuetmca/cuet_cs_mock1.json",
+      "exam_type": "full_tests",
+      "category": "cuetmca",
+      "subject": "General",
+      "topic": null,
+      "difficulty": "medium",
+      "duration_minutes": 120,
+      "total_marks": 300,
+      "total_questions": 75,
+      "description": "CUET PG Computer Science & IT Mock Test 1 exam",
+      "tags": []
+    },
+    {
       "id": "nimcet_mock1",
       "name": "NIMCET MCA Entrance Mock Test 1",
       "path": "data/nimcet/nimcet_mock1.json",
@@ -33,6 +48,6 @@
   ],
   "subject_tests": [],
   "topic_tests": [],
-  "generated_at": "2025-10-04T12:00:26.292Z",
+  "generated_at": "2025-10-04T15:11:56.967Z",
   "version": "1.0.0"
 }
