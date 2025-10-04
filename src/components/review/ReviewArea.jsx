@@ -64,84 +64,127 @@ const ReviewArea = ({
   }
 
   return (
-    <div className="flex flex-col p-6">
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <div className="inline-flex items-center">
-            <span
-              className="inline-block max-w-[60vw] sm:max-w-xs truncate px-3 py-1 text-sm font-medium text-blue-800 rounded-md bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300"
-              title={sectionName}
-            >
-              {sectionName}
-            </span>
+    <div className="flex flex-col h-full">
+      {/* Scrollable content area */}
+      <div className="flex-1 overflow-y-auto p-6">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <div className="inline-flex items-center">
+              <span
+                className="inline-block max-w-[60vw] sm:max-w-xs truncate px-3 py-1 text-sm font-medium text-blue-800 rounded-md bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300"
+                title={sectionName}
+              >
+                {sectionName}
+              </span>
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="hidden sm:inline" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
+                Question {questionIndex + 1} of {totalQuestions}
+              </span>
+              <span className="inline sm:hidden font-semibold" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
+                {questionIndex + 1}
+              </span>
+            </div>
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            <span className="hidden sm:inline" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
-              Question {questionIndex + 1} of {totalQuestions}
-            </span>
-            <span className="inline sm:hidden font-semibold" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
-              {questionIndex + 1}
-            </span>
-          </div>
+          <FormattedContent 
+            text={question.question_text}
+            className="text-xl font-bold leading-tight text-gray-900 dark:text-gray-100"
+          />
+          {/* Question Image */}
+          {(question.image || question.image_url || question.question_image) && (
+            <div className="mt-4">
+              <img 
+                src={question.image || question.image_url || question.question_image}
+                alt="Question illustration"
+                className="max-w-full h-auto rounded-lg border border-gray-300 dark:border-gray-600"
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
+            </div>
+          )}
         </div>
-        <FormattedContent 
-          text={question.question_text}
-          className="text-xl font-bold leading-tight text-gray-900 dark:text-gray-100"
-        />
-      </div>
 
-      <div className="space-y-4">
-        {question.options.map((option) => (
-          <div key={option.opt_id} className={getOptionClasses(option)}>
-            <div className="flex-1">
-              <div className="flex items-start">
-                <span className="mr-3 font-bold text-gray-700 dark:text-gray-300">
-                  {option.opt_id.toUpperCase()}.
+        <div className="space-y-4 mb-6">
+          {question.options.map((option) => (
+            <div key={option.opt_id} className={getOptionClasses(option)}>
+              <div className="flex-1">
+                <div className="flex items-start">
+                  <span className="mr-3 font-bold text-gray-700 dark:text-gray-300">
+                    {option.opt_id.toUpperCase()}.
+                  </span>
+                  <div className="flex-1">
+                    <FormattedContent 
+                      text={option.text}
+                      className="text-gray-900 dark:text-gray-100"
+                    />
+                    {/* Option Image */}
+                    {(option.image || option.image_url) && (
+                      <div className="mt-2">
+                        <img 
+                          src={option.image || option.image_url}
+                          alt={`Option ${option.opt_id.toUpperCase()} illustration`}
+                          className="max-w-full h-auto rounded border border-gray-300 dark:border-gray-600"
+                          onError={(e) => { e.target.style.display = 'none' }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {getOptionIcon(option)}
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-gray-100 rounded-lg dark:bg-gray-700/50">
+            <h3 className="mb-2 text-base font-bold text-gray-900 dark:text-gray-100">
+              Answer Summary
+            </h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center">
+                <FaUser className="mr-2 text-blue-500" />
+                <span className="font-medium">Your Answer:</span>
+                <span className="ml-2 text-gray-700 dark:text-gray-300">
+                  {userAnswer
+                    ? `${userAnswer.toUpperCase()}. ${
+                        question.options.find((o) => o.opt_id === userAnswer)
+                          ?.text
+                      }`
+                    : 'Not Answered'}
                 </span>
-                <FormattedContent 
-                  text={option.text}
-                  className="text-gray-900 dark:text-gray-100"
-                />
+              </div>
+              <div className="flex items-center">
+                <FaStar className="mr-2 text-green-500" />
+                <span className="font-medium">Correct Answer:</span>
+                <span className="ml-2 text-gray-700 dark:text-gray-300">
+                  {correctOptionId
+                    ? `${correctOptionId.toUpperCase()}. ${
+                        question.options.find((o) => o.opt_id === correctOptionId)
+                          ?.text
+                      }`
+                    : 'N/A'}
+                </span>
               </div>
             </div>
-            {getOptionIcon(option)}
           </div>
-        ))}
+
+          {/* Explanation section */}
+          {question.explanation && (
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h3 className="mb-2 text-base font-bold text-blue-900 dark:text-blue-100">
+                Explanation
+              </h3>
+              <FormattedContent
+                text={question.explanation}
+                className="text-sm text-blue-800 dark:text-blue-200"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="mt-6">
-        <div className="p-4 mb-4 bg-gray-100 rounded-lg dark:bg-gray-700/50">
-          <h3 className="mb-2 text-base font-bold text-gray-900 dark:text-gray-100">
-            Answer Summary
-          </h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex items-center">
-              <FaUser className="mr-2 text-blue-500" />
-              <span className="font-medium">Your Answer:</span>
-              <span className="ml-2 text-gray-700 dark:text-gray-300">
-                {userAnswer
-                  ? `${userAnswer.toUpperCase()}. ${
-                      question.options.find((o) => o.opt_id === userAnswer)
-                        ?.text
-                    }`
-                  : 'Not Answered'}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <FaStar className="mr-2 text-green-500" />
-              <span className="font-medium">Correct Answer:</span>
-              <span className="ml-2 text-gray-700 dark:text-gray-300">
-                {correctOptionId
-                  ? `${correctOptionId.toUpperCase()}. ${
-                      question.options.find((o) => o.opt_id === correctOptionId)
-                        ?.text
-                    }`
-                  : 'N/A'}
-              </span>
-            </div>
-          </div>
-        </div>
-
+      {/* Fixed navigation at bottom */}
+      <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-center justify-between">
           <button
             onClick={onPrev}

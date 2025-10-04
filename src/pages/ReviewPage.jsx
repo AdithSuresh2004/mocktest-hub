@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import ReviewArea from '@/components/review/ReviewArea'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
-import { getQuestionStatusClasses } from '@/utils/helpers/examHelpers'
 import { formatTime } from '@/utils/helpers/examHelpers'
 import { FaArrowLeft, FaTrophy, FaClock, FaHome } from 'react-icons/fa'
 
@@ -168,8 +167,8 @@ export default function ReviewPage() {
       </header>
 
       {/* Main Content */}
-      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-4">
-        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
+      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-4 lg:h-[calc(100vh-5rem)]">
+        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 lg:h-full lg:overflow-hidden dark:bg-gray-800">
           <ReviewArea
             question={currentQuestion}
             sectionName={currentSection.section_name}
@@ -187,14 +186,14 @@ export default function ReviewPage() {
         </main>
 
         {/* Question Navigator */}
-        <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] dark:bg-gray-800">
+        <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 lg:h-full dark:bg-gray-800">
           <QuestionNavigator
             sections={exam.sections}
             answers={answers}
             currentSectionIndex={currentSectionIndex}
             currentQuestionIndex={currentQuestionIndex}
             onQuestionSelect={navigateToQuestion}
-            getQuestionStatusClasses={getQuestionStatusClasses}
+            isReviewMode={true}
           />
         </aside>
       </div>

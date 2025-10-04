@@ -77,6 +77,17 @@ function QuestionCard({
           text={question.question_text}
           className="text-base leading-relaxed text-gray-800 md:text-lg dark:text-gray-200"
         />
+        {/* Question Image */}
+        {(question.image || question.image_url || question.question_image) && (
+          <div className="mt-4">
+            <img 
+              src={question.image || question.image_url || question.question_image}
+              alt="Question illustration"
+              className="max-w-full h-auto rounded-lg border border-gray-300 dark:border-gray-600"
+              onError={(e) => { e.target.style.display = 'none' }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Options */}
@@ -128,6 +139,17 @@ function QuestionCard({
                     text={option.text}
                     className="text-sm text-gray-800 sm:text-base dark:text-gray-100"
                   />
+                  {/* Option Image */}
+                  {(option.image || option.image_url) && (
+                    <div className="mt-2">
+                      <img 
+                        src={option.image || option.image_url}
+                        alt={`Option ${optionLabel} illustration`}
+                        className="max-w-full h-auto rounded border border-gray-300 dark:border-gray-600"
+                        onError={(e) => { e.target.style.display = 'none' }}
+                      />
+                    </div>
+                  )}
                   {index < 4 && (
                     <span className="ml-1 text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
                       {keyboardShortcut}

@@ -10,6 +10,7 @@ export default function QuestionNavigator({
   currentQuestionIndex,
   onQuestionSelect,
   markedForReview = new Set(),
+  isReviewMode = false,
 }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -134,6 +135,7 @@ export default function QuestionNavigator({
                     markedForReview,
                     currentSectionIndex,
                     currentQuestionIndex,
+                    isReviewMode,
                   },
                 )}`}
                 aria-current={

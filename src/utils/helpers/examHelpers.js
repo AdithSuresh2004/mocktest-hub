@@ -24,12 +24,21 @@ export function getQuestionStatusClasses({
   answers,
   markedForReview,
   currentQuestionIndex,
+  isReviewMode = false,
 }) {
   const qId = question.q_id
   const isAnswered = answers.hasOwnProperty(qId) && answers[qId] !== null
   const isMarked = markedForReview.has(qId)
   const isCurrent = qIndex === currentQuestionIndex
+  
   if (isCurrent) return 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-300'
+  
+  if (isReviewMode && isAnswered) {
+    const isCorrect = answers[qId] === question.correct_opt_id
+    if (isCorrect) return 'bg-green-600 hover:bg-green-700 text-white'
+    return 'bg-red-600 hover:bg-red-700 text-white'
+  }
+  
   if (isMarked) return 'bg-purple-600 hover:bg-purple-700 text-white'
   if (isAnswered) return 'bg-green-600 hover:bg-green-700 text-white'
   return 'bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
