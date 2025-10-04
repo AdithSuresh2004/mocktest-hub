@@ -1,7 +1,7 @@
-import React from 'react'
+import { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
     this.state = { hasError: false, error: null, errorInfo: null }
@@ -14,11 +14,6 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught error:', error, errorInfo)
     this.setState({ errorInfo })
-    
-    // Log to external service in production if needed
-    if (process.env.NODE_ENV === 'production') {
-      // Example: logErrorToService(error, errorInfo)
-    }
   }
 
   handleReset = () => {

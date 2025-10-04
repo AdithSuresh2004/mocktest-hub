@@ -66,11 +66,40 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
     </div>
   )
 
+  const ExamSkeleton = () => (
+    <div className="animate-pulse">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <div className="mb-4 h-8 w-1/2 rounded bg-gray-300 dark:bg-gray-700"></div>
+            <div className="mb-3 h-6 w-3/4 rounded bg-gray-300 dark:bg-gray-700"></div>
+            <div className="mb-6 h-40 w-full rounded bg-gray-300 dark:bg-gray-700"></div>
+            <div className="flex gap-3">
+              <div className="h-10 w-24 rounded bg-gray-300 dark:bg-gray-700"></div>
+              <div className="h-10 w-24 rounded bg-gray-300 dark:bg-gray-700"></div>
+            </div>
+          </div>
+        </div>
+        <aside className="lg:col-span-1">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="mb-3 h-6 w-3/4 rounded bg-gray-300 dark:bg-gray-700"></div>
+            <div className="space-y-3">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-8 w-full rounded bg-gray-300 dark:bg-gray-700"></div>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  )
+
   const skeletonTypes = {
     card: CardSkeleton,
     list: ListSkeleton,
     stats: StatsSkeleton,
     table: TableSkeleton,
+    exam: ExamSkeleton,
   }
 
   const SkeletonComponent = skeletonTypes[type] || CardSkeleton

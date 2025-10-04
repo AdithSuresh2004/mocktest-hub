@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { findExamById } from '@/data/examRepository'
 import {
   getLatestInProgressAttempt,
@@ -28,9 +28,14 @@ export default function useExam(examId) {
     setCurrentQuestion,
   } = navigation
 
+  const finalizeExamRef = useRef(null)
+  
   const onTimerEnd = useCallback(() => {
-    finalizeExam(true)
+    if (finalizeExamRef.current) {
+      finalizeExamRef.current(true)
+    }
   }, [])
+  
   const timer = useTimer(0, onTimerEnd)
 
   useEffect(() => {
@@ -141,6 +146,34 @@ export default function useExam(examId) {
     timer.seconds,
     attempt?.attempt_id,
     isSubmitted,
+  ])
+
+  useEffect(() => {
+    if (!attempt?.attempt_id || isSubmitted) return
+
+    const handleBeforeUnload = () => {
+      updateAttempt(attempt.attempt_id, {
+        _currentSection: currentSection,
+        _currentQuestion: currentQuestion,
+        _timeRemainingSeconds: timer.seconds,
+        _markedForReview: Array.from(markedForReview),
+        responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+          q_id,
+          selected_opt_id,
+        })),
+      })
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [
+    attempt?.attempt_id,
+    isSubmitted,
+    currentSection,
+    currentQuestion,
+    timer.seconds,
+    markedForReview,
+    answers,
   ])
 
   const saveAndExitExam = useCallback(() => {
@@ -260,6 +293,10 @@ export default function useExam(examId) {
     [exam, answers, attempt, timer, isSubmitted],
   )
 
+  useEffect(() => {
+    finalizeExamRef.current = finalizeExam
+  }, [finalizeExam])
+
   const restartExam = useCallback(() => {
     if (!exam) return
     if (attempt) {
@@ -295,6 +332,7 @@ export default function useExam(examId) {
     answers,
     markedForReview,
     isSubmitted,
+    hasStarted,
     error,
     loading,
     navigation,

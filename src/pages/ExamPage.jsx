@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import StatusDisplay from '@/components/common/StatusDisplay'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 import QuestionArea from '@/components/exam/QuestionArea'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import ExamNavigation from '@/components/exam/ExamNavigation'
@@ -21,6 +22,7 @@ const ExamPage = () => {
     loading,
     error,
     isSubmitted,
+    hasStarted,
     navigation,
     timer,
     handleAnswer: saveAnswer,
@@ -130,14 +132,20 @@ const ExamPage = () => {
   }, [currentQ, goToPrev, goToNext, saveAnswer, toggleMarkForReview])
 
   if (loading) {
-    return <StatusDisplay type="loading" message="Loading exam..." fullScreen />
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="p-6">
+          <SkeletonLoader type="exam" count={1} />
+        </div>
+      </div>
+    )
   }
 
   if (error) {
     return <StatusDisplay type="error" message={error} fullScreen />
   }
 
-  if (exam && attempt && showInstructions && Object.keys(answers).length === 0) {
+  if (exam && attempt && showInstructions && !hasStarted) {
     return <InstructionsPage exam={exam} onStart={handleStartExam} />
   }
 
@@ -162,16 +170,18 @@ const ExamPage = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-gray-100 dark:bg-gray-900">
-      <ExamHeader
-        exam={exam}
-        timeRemaining={timeRemaining}
-        onExit={handleExit}
-        isWarning={isWarning}
-        isCritical={isCritical}
-      />
-      <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-4">
-        <main className="overflow-y-auto lg:col-span-3">
+    <div className="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900">
+      <div className="sticky top-0 z-20 bg-gray-100 dark:bg-gray-900">
+        <ExamHeader
+          exam={exam}
+          timeRemaining={timeRemaining}
+          onExit={handleExit}
+          isWarning={isWarning}
+          isCritical={isCritical}
+        />
+      </div>
+      <div className="grid flex-1 grid-cols-1 lg:grid-cols-4">
+        <main className="lg:col-span-3">
           <QuestionArea
             question={currentQ}
             section={currentSectionObj.section_name}
@@ -183,7 +193,7 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="overflow-y-auto border-t border-gray-200 lg:col-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
+        <aside className="overflow-y-auto border-t border-gray-200 lg:col-span-1 lg:border-t-0 lg:border-l dark:border-gray-700 lg:sticky lg:top-16 lg:h-[calc(100vh-8rem)]">
           <QuestionNavigator
             sections={exam.sections}
             currentSectionIndex={currentSection}
@@ -194,16 +204,18 @@ const ExamPage = () => {
           />
         </aside>
       </div>
-      <ExamNavigation
-        canGoPrev={currentSection > 0 || currentQuestion > 0}
-        canGoNext={
-          currentSection < exam.sections.length - 1 ||
-          currentQuestion < currentSectionObj.questions.length - 1
-        }
-        onPrev={goToPrev}
-        onNext={goToNext}
-        onSubmit={handleSubmit}
-      />
+      <div className="sticky bottom-0 z-20 bg-gray-100 dark:bg-gray-900">
+        <ExamNavigation
+          canGoPrev={currentSection > 0 || currentQuestion > 0}
+          canGoNext={
+            currentSection < exam.sections.length - 1 ||
+            currentQuestion < currentSectionObj.questions.length - 1
+          }
+          onPrev={goToPrev}
+          onNext={goToNext}
+          onSubmit={handleSubmit}
+        />
+      </div>
       {showExitModal && (
         <ExitTestModal
           hasAnswers={Object.keys(answers).length > 0}

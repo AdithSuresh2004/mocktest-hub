@@ -5,7 +5,6 @@ import RecentActivity from '@/components/dashboard/RecentActivity'
 import PerformanceSnapshot from '@/components/dashboard/PerformanceSnapshot'
 import QuickActions from '@/components/dashboard/QuickActions'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
-import { Link } from 'react-router-dom'
 
 export default function DashboardPage() {
   const { stats, loading: statsLoading } = useDashboardStats()

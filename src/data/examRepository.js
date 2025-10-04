@@ -2,7 +2,8 @@ import { getJSON } from '@/api/http'
 import { 
   getCombinedManifest, 
   mergeManifests, 
-  fetchRemoteExam 
+  fetchRemoteExam,
+  getExamSources,
 } from '@/data/examSourceManager'
 
 // Cache for manifest to avoid repeated fetches
@@ -34,18 +35,33 @@ export async function getManifest(forceRefresh = false) {
       console.error('Failed to load manifest:', error)
     }
     
-    // Fallback to local manifest only
+    // Fallback: try served local manifest, then localStorage generated manifest, then cached manifest
     try {
       const data = await getJSON('/data/exams_manifest.json')
       manifestCache = data
       manifestCacheTime = now
       return data
     } catch (fallbackError) {
+      try {
+        const localCached = localStorage.getItem('local_exams_manifest')
+        if (localCached) {
+          const parsed = JSON.parse(localCached)
+          manifestCache = parsed
+          manifestCacheTime = now
+          return parsed
+        }
+      } catch (lsErr) {
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Failed to load local_exams_manifest from localStorage:', lsErr)
+        }
+      }
+
       // Return cached data if available, even if expired
       if (manifestCache) {
         return manifestCache
       }
-      // Return empty structure as fallback
+
+      // Return empty structure as the final fallback
       return { full_tests: [], subject_tests: [], topic_tests: [] }
     }
   }
@@ -78,20 +94,39 @@ export async function findExamById(examId) {
     // Determine how to load exam based on source
     let examData
     
-    if (examEntry._source && examEntry._source.type === 'remote') {
-      // Load from remote source
-      const examPath = examEntry.path || examEntry.file
-      if (!examPath) {
-        throw new Error('Exam path is missing')
+    const examPath = examEntry.path || examEntry.file
+    if (!examPath) {
+      throw new Error('Exam path is missing')
+    }
+
+    // If entry explicitly marks remote and provides a URL, try it first
+    if (examEntry._source && examEntry._source.type === 'remote' && examEntry._source.url) {
+      try {
+        examData = await fetchRemoteExam(examEntry._source.url, examPath)
+      } catch (err) {
+        // continue to try other remote sources
+        examData = null
       }
-      
-      examData = await fetchRemoteExam(examEntry._source.url, examPath)
-    } else {
-      const examPath = examEntry.path || examEntry.file
-      if (!examPath) {
-        throw new Error('Exam data is incomplete. Please contact support.')
+    }
+
+    // If we still don't have examData, try all enabled remote sources as a fallback
+    if (!examData) {
+      const sources = getExamSources().filter(s => s.enabled && s.type === 'remote')
+      for (const src of sources) {
+        try {
+          examData = await fetchRemoteExam(src.url, examPath)
+          // set the source info for the examEntry
+          examEntry._source = { id: src.id, name: src.name, type: 'remote', url: src.url }
+          break
+        } catch (err) {
+          // try next source
+          examData = null
+        }
       }
-      
+    }
+
+    // Finally fallback to local served file
+    if (!examData) {
       const fullPath = examPath.startsWith('/') ? examPath : `/${examPath}`
       examData = await getJSON(fullPath)
     }

@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 import MathText from '@/components/common/MathText'
 
@@ -12,20 +12,22 @@ function QuestionCard({
   markedForReview,
   onMarkForReview,
 }) {
+  const questionId = useMemo(() => question?.q_id, [question?.q_id])
+  
   const handleOptionSelect = useCallback(
     (optionId) => {
-      if (onAnswer && question?.q_id) {
-        onAnswer(question.q_id, optionId)
+      if (onAnswer && questionId) {
+        onAnswer(questionId, optionId)
       }
     },
-    [onAnswer, question?.q_id]
+    [onAnswer, questionId]
   )
 
   const handleMarkToggle = useCallback(() => {
-    if (onMarkForReview && question?.q_id) {
-      onMarkForReview(question.q_id)
+    if (onMarkForReview && questionId) {
+      onMarkForReview(questionId)
     }
-  }, [onMarkForReview, question?.q_id])
+  }, [onMarkForReview, questionId])
 
   if (!question) {
     return (
@@ -37,7 +39,7 @@ function QuestionCard({
 
   return (
     <div 
-      className="flex h-full flex-1 flex-col rounded-lg bg-white shadow-md dark:bg-gray-800"
+      className="flex min-h-full flex-col rounded-lg bg-white shadow-md dark:bg-gray-800"
       role="article"
       aria-labelledby="question-header"
     >
@@ -70,16 +72,16 @@ function QuestionCard({
       </div>
 
       {/* Question */}
-      <div className="overflow-auto border-b border-gray-200 bg-blue-50 p-6 dark:border-gray-700 dark:bg-gray-900">
+      <div className="border-b border-gray-200 bg-blue-50 p-6 dark:border-gray-700 dark:bg-gray-900">
         <MathText 
           text={question.question_text}
-          className="text-lg leading-relaxed text-gray-800 md:text-xl lg:text-2xl dark:text-gray-200"
+          className="text-base leading-relaxed text-gray-800 md:text-lg dark:text-gray-200"
         />
       </div>
 
       {/* Options */}
       <div 
-        className="flex-1 space-y-4 overflow-auto bg-white p-6 dark:bg-gray-800"
+        className="space-y-4 bg-white p-6 dark:bg-gray-800"
         role="radiogroup"
         aria-labelledby="question-header"
       >
@@ -99,7 +101,7 @@ function QuestionCard({
             >
               <input
                 type="radio"
-                name={`question-${question.q_id}`}
+                name={`question-${questionId}`}
                 value={option.opt_id}
                 checked={isSelected}
                 onChange={() => handleOptionSelect(option.opt_id)}
@@ -124,7 +126,7 @@ function QuestionCard({
                 <div className="flex-1">
                   <MathText 
                     text={option.text}
-                    className="text-base text-gray-800 sm:text-lg md:text-xl dark:text-gray-100"
+                    className="text-sm text-gray-800 sm:text-base dark:text-gray-100"
                   />
                   {index < 4 && (
                     <span className="ml-1 text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
@@ -136,12 +138,6 @@ function QuestionCard({
             </label>
           )
         })}
-      </div>
-
-      {/* Keyboard Shortcuts Hint */}
-      <div className="border-t border-gray-200 bg-gray-50 px-6 py-2 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400">
-        <span className="hidden sm:inline">💡 Tip: Use keys 1-4 to select, M to mark, ← → to navigate</span>
-        <span className="sm:hidden">💡 Shortcuts available</span>
       </div>
     </div>
   )

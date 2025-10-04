@@ -3,7 +3,7 @@
     {
       "id": "nimcet_mock1",
       "name": "NIMCET MCA Entrance Mock Test 1",
-      "path": "data/full-tests/nimcet/nimcet_mock1.json",
+      "path": "data/nimcet/nimcet_mock1.json",
       "exam_type": "full_tests",
       "category": "nimcet",
       "subject": "General",
@@ -18,7 +18,7 @@
     {
       "id": "nimcet_mock2",
       "name": "NIMCET MCA Mock Test 2",
-      "path": "data/full-tests/nimcet/nimcet_mock2.json",
+      "path": "data/nimcet/nimcet_mock2.json",
       "exam_type": "full_tests",
       "category": "nimcet",
       "subject": "General",
@@ -33,6 +33,6 @@
   ],
   "subject_tests": [],
   "topic_tests": [],
-  "generated_at": "2025-10-03T19:30:35.997Z",
+  "generated_at": "2025-10-04T12:00:26.292Z",
   "version": "1.0.0"
 }

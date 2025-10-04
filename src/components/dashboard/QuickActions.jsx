@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaBook, FaHourglassHalf } from 'react-icons/fa'
 

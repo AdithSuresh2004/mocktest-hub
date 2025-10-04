@@ -23,17 +23,15 @@ export default function QuestionArea({
   const handleMarkToggle = () => onMarkForReview(question.q_id)
 
   return (
-    <div className="flex h-full flex-1 flex-col bg-gray-50 dark:bg-gray-900">
-      <QuestionCard
-        question={question}
-        questionNumber={displayQuestionNumber}
-        totalQuestions={totalQuestions}
-        sectionName={section}
-        selected={selected}
-        markedForReview={isMarked}
-        onAnswer={onAnswer}
-        onMarkForReview={handleMarkToggle}
-      />
-    </div>
+    <QuestionCard
+      question={question}
+      questionNumber={displayQuestionNumber}
+      totalQuestions={totalQuestions}
+      sectionName={section}
+      selected={selected}
+      markedForReview={isMarked}
+      onAnswer={onAnswer}
+      onMarkForReview={handleMarkToggle}
+    />
   )
 }

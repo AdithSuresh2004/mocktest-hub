@@ -47,6 +47,7 @@ export default function ExamSourcesSection() {
       setShowAddForm(false)
       setTestResult(null)
       loadSources()
+
       clearExamCache() // Clear cache to reload with new source
     } catch (error) {
       addToast({
@@ -103,7 +104,7 @@ export default function ExamSourcesSection() {
     setTestResult(null)
 
     try {
-      const manifest = await fetchRemoteManifest(newSource.url)
+  const manifest = await fetchRemoteManifest(newSource.url)
       const totalExams = 
         (manifest.full_tests?.length || 0) +
         (manifest.subject_tests?.length || 0) +

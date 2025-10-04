@@ -7,7 +7,7 @@ import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import { getQuestionStatusClasses } from '@/utils/helpers/examHelpers'
 import { formatTime } from '@/utils/helpers/examHelpers'
-import { FaArrowLeft, FaTrophy, FaClock } from 'react-icons/fa'
+import { FaArrowLeft, FaTrophy, FaClock, FaHome } from 'react-icons/fa'
 
 export default function ReviewPage() {
   const { attemptId } = useParams()
@@ -135,6 +135,14 @@ export default function ReviewPage() {
             <FaArrowLeft className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Back to Results</span>
           </Link>
+          <Link
+            to="/"
+            className="ml-2 inline-flex items-center rounded-md bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200"
+            aria-label="Go to Home"
+          >
+            <FaHome className="mr-2 h-4 w-4" />
+            Home
+          </Link>
         </div>
         <div className="min-w-0 flex-1 px-4">
           <h1 className="truncate text-center text-base font-bold text-gray-900 sm:text-lg dark:text-gray-100">
@@ -160,9 +168,8 @@ export default function ReviewPage() {
       </header>
 
       {/* Main Content */}
-      <div className="grid flex-1 grid-cols-1 gap-4 overflow-hidden p-4 lg:grid-cols-4">
-        {/* Review Area */}
-        <main className="flex flex-col overflow-hidden rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
+      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-4">
+        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
           <ReviewArea
             question={currentQuestion}
             sectionName={currentSection.section_name}
@@ -180,7 +187,7 @@ export default function ReviewPage() {
         </main>
 
         {/* Question Navigator */}
-        <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 dark:bg-gray-800">
+        <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] dark:bg-gray-800">
           <QuestionNavigator
             sections={exam.sections}
             answers={answers}

@@ -9,17 +9,17 @@ const __dirname = path.dirname(__filename)
 
 const DATA_DIR = path.join(__dirname, '..', 'public', 'data')
 const MANIFEST_PATH = path.join(DATA_DIR, 'exams_manifest.json')
-const EXAM_TYPES = ['full-tests', 'subject-tests', 'topic-tests']
 
-function getJsonFiles(dir) {
+function getAllJsonFiles(dir) {
   const files = []
   if (!fs.existsSync(dir)) return files
   const items = fs.readdirSync(dir)
   for (const item of items) {
+    if (item === 'exams_manifest.json') continue
     const fullPath = path.join(dir, item)
     const stat = fs.statSync(fullPath)
     if (stat.isDirectory()) {
-      files.push(...getJsonFiles(fullPath))
+      files.push(...getAllJsonFiles(fullPath))
     } else if (item.endsWith('.json') && !item.startsWith('.')) {
       files.push(fullPath)
     }
@@ -27,15 +27,20 @@ function getJsonFiles(dir) {
   return files
 }
 
-function extractExamMetadata(filePath, examType) {
+function extractExamMetadata(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf-8')
     const exam = JSON.parse(content)
+    
     const relativePath = path.relative(DATA_DIR, filePath).replace(/\\/g, '/')
     const fileName = path.basename(filePath, '.json')
-    const pathParts = relativePath.split('/')
-    const category = (pathParts[1] || 'general').toLowerCase()
     const publicPath = 'data/' + relativePath
+    
+    const pathParts = relativePath.split('/')
+    const folderName = pathParts[0] || 'general'
+    const category = (exam.category || folderName).toLowerCase()
+    
+    const examType = exam.exam_type || exam.type || detectExamType(exam, pathParts)
     
     const strength = exam.difficulty || exam.strength || exam.exam_strength || 'medium'
     const normalizedStrength = strength.toLowerCase()
@@ -44,7 +49,7 @@ function extractExamMetadata(filePath, examType) {
       id: exam.id || exam.exam_id || fileName,
       name: exam.name || exam.exam_name || fileName.replace(/_/g, ' '),
       path: publicPath,
-      exam_type: examType.replace('-', '_'),
+      exam_type: examType,
       category,
       subject: exam.subject || 'General',
       topic: exam.topic || null,
@@ -59,6 +64,23 @@ function extractExamMetadata(filePath, examType) {
     console.error(`Error processing ${filePath}:`, error.message)
     return null
   }
+}
+
+function detectExamType(exam, pathParts) {
+  if (exam.sections && exam.sections.length > 3) return 'full_tests'
+  
+  for (const part of pathParts) {
+    const lower = part.toLowerCase()
+    if (lower.includes('full') || lower.includes('mock')) return 'full_tests'
+    if (lower.includes('subject')) return 'subject_tests'
+    if (lower.includes('topic')) return 'topic_tests'
+  }
+  
+  if (exam.total_questions >= 50) return 'full_tests'
+  if (exam.subject && !exam.topic) return 'subject_tests'
+  if (exam.topic) return 'topic_tests'
+  
+  return 'full_tests'
 }
 
 function calculateTotalMarks(exam) {
@@ -80,24 +102,33 @@ function extractSubjectFromName(name) {
 }
 
 function generateManifest() {
-  console.log('🔍 Scanning exam directories...\n')
+  console.log('🔍 Scanning exam directories recursively...\n')
   const manifest = { full_tests: [], subject_tests: [], topic_tests: [], generated_at: new Date().toISOString(), version: '1.0.0' }
-  let totalExams = 0
   
-  for (const examType of EXAM_TYPES) {
-    const examDir = path.join(DATA_DIR, examType)
-    const jsonFiles = getJsonFiles(examDir)
-    console.log(`📁 ${examType}: Found ${jsonFiles.length} files`)
-    const exams = jsonFiles.map(file => extractExamMetadata(file, examType)).filter(exam => exam !== null)
-    const manifestKey = examType.replace('-', '_')
-    manifest[manifestKey] = exams
-    totalExams += exams.length
-    exams.forEach(exam => console.log(`  ✓ ${exam.name} (${exam.category})`))
-    console.log('')
+  const allJsonFiles = getAllJsonFiles(DATA_DIR)
+  console.log(`📁 Found ${allJsonFiles.length} exam files total\n`)
+  
+  const examsByType = { full_tests: [], subject_tests: [], topic_tests: [] }
+  
+  for (const filePath of allJsonFiles) {
+    const exam = extractExamMetadata(filePath)
+    if (exam) {
+      const typeKey = exam.exam_type
+      if (examsByType[typeKey]) {
+        examsByType[typeKey].push(exam)
+        console.log(`  ✓ ${exam.name} [${typeKey}] (${exam.category})`)
+      }
+    }
   }
   
+  manifest.full_tests = examsByType.full_tests
+  manifest.subject_tests = examsByType.subject_tests
+  manifest.topic_tests = examsByType.topic_tests
+  
+  const totalExams = manifest.full_tests.length + manifest.subject_tests.length + manifest.topic_tests.length
+  
   fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
-  console.log('✅ Manifest generated successfully!')
+  console.log('\n✅ Manifest generated successfully!')
   console.log(`📊 Total exams: ${totalExams}`)
   console.log(`📄 Output: ${MANIFEST_PATH}\n`)
   console.log(`Summary:\n  Full Tests: ${manifest.full_tests.length}\n  Subject Tests: ${manifest.subject_tests.length}\n  Topic Tests: ${manifest.topic_tests.length}`)

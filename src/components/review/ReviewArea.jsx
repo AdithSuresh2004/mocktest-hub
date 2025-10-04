@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -65,15 +64,25 @@ const ReviewArea = ({
   }
 
   return (
-    <div className="flex flex-col h-full p-6">
-      <div className="flex-shrink-0 mb-6">
+    <div className="flex flex-col p-6">
+      <div className="mb-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="inline-flex items-center px-3 py-1 text-sm font-medium text-blue-800 rounded-full bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300">
-            {sectionName}
-          </span>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            Question {questionIndex + 1} of {totalQuestions}
-          </span>
+          <div className="inline-flex items-center">
+            <span
+              className="inline-block max-w-[60vw] sm:max-w-xs truncate px-3 py-1 text-sm font-medium text-blue-800 rounded-md bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300"
+              title={sectionName}
+            >
+              {sectionName}
+            </span>
+          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="hidden sm:inline" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
+              Question {questionIndex + 1} of {totalQuestions}
+            </span>
+            <span className="inline sm:hidden font-semibold" title={`Question ${questionIndex + 1} of ${totalQuestions}`}>
+              {questionIndex + 1}
+            </span>
+          </div>
         </div>
         <MathText 
           text={question.question_text}
@@ -81,7 +90,7 @@ const ReviewArea = ({
         />
       </div>
 
-      <div className="flex-1 pr-2 space-y-4 overflow-y-auto">
+      <div className="space-y-4">
         {question.options.map((option) => (
           <div key={option.opt_id} className={getOptionClasses(option)}>
             <div className="flex-1">
@@ -100,7 +109,7 @@ const ReviewArea = ({
         ))}
       </div>
 
-      <div className="flex-shrink-0 mt-6">
+      <div className="mt-6">
         <div className="p-4 mb-4 bg-gray-100 rounded-lg dark:bg-gray-700/50">
           <h3 className="mb-2 text-base font-bold text-gray-900 dark:text-gray-100">
             Answer Summary
