@@ -6,7 +6,7 @@ import {
   FaStar,
   FaUser,
 } from 'react-icons/fa'
-import MathText from '@/components/common/MathText'
+import FormattedContent from '@/components/common/FormattedContent'
 
 const ReviewArea = ({
   question,
@@ -84,7 +84,7 @@ const ReviewArea = ({
             </span>
           </div>
         </div>
-        <MathText 
+        <FormattedContent 
           text={question.question_text}
           className="text-xl font-bold leading-tight text-gray-900 dark:text-gray-100"
         />
@@ -98,7 +98,7 @@ const ReviewArea = ({
                 <span className="mr-3 font-bold text-gray-700 dark:text-gray-300">
                   {option.opt_id.toUpperCase()}.
                 </span>
-                <MathText 
+                <FormattedContent 
                   text={option.text}
                   className="text-gray-900 dark:text-gray-100"
                 />

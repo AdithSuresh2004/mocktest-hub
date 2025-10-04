@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
-import MathText from '@/components/common/MathText'
+import FormattedContent from '@/components/common/FormattedContent'
 
 function QuestionCard({
   question,
@@ -73,7 +73,7 @@ function QuestionCard({
 
       {/* Question */}
       <div className="border-b border-gray-200 bg-blue-50 p-6 dark:border-gray-700 dark:bg-gray-900">
-        <MathText 
+        <FormattedContent
           text={question.question_text}
           className="text-base leading-relaxed text-gray-800 md:text-lg dark:text-gray-200"
         />
@@ -124,7 +124,7 @@ function QuestionCard({
                 </div>
                 {/* Option text */}
                 <div className="flex-1">
-                  <MathText 
+                  <FormattedContent 
                     text={option.text}
                     className="text-sm text-gray-800 sm:text-base dark:text-gray-100"
                   />
