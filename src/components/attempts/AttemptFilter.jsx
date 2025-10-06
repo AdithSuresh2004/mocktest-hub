@@ -90,14 +90,6 @@ function AttemptFilter({
           onChange={handleFilterChange}
           filterName="topic"
         />
-        <div className="w-full sm:w-auto md:col-start-4 lg:col-start-5">
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Exam status
-          </label>
-          <p className="rounded-lg border border-dashed border-gray-300 px-3 py-2 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
-            Completed attempts only
-          </p>
-        </div>
       </div>
     </section>
   )
