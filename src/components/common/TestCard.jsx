@@ -1,44 +1,13 @@
 import { useState, useEffect, useMemo, useCallback, memo } from 'react'
-import {
-  FaBullseye,
-  FaAward,
-  FaBook,
-  FaStar,
-  FaFileAlt,
-  FaClock,
-  FaListAlt,
-} from 'react-icons/fa'
+import { FaClock, FaListAlt, FaAward, FaStar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { capitalizeText } from '@/utils/formatters/formatters'
 import {
   getDifficultyColor,
   capitalizeStrength,
-  capitalizeText,
-} from '@/utils/formatters/formatters'
-
-const getTestTypeConfig = (type) =>
-  ({
-    full_tests: {
-      color: 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400',
-      icon: FaFileAlt,
-      label: 'Mock Test',
-    },
-    subject_tests: {
-      color:
-        'bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400',
-      icon: FaBook,
-      label: 'Subject Test',
-    },
-    topic_tests: {
-      color:
-        'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400',
-      icon: FaBullseye,
-      label: 'Topic Test',
-    },
-  })[type] || {
-    color: 'bg-gray-50 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400',
-    icon: FaFileAlt,
-    label: 'Test',
-  }
+  getTestTypeConfig,
+} from '@/utils/testHelpers'
+import { FavoritesStorage } from '@/utils/storage'
 
 function TestCard({ test }) {
   const [isFavorite, setIsFavorite] = useState(false)
@@ -65,50 +34,29 @@ function TestCard({ test }) {
     }, [test.subjects, test.subject, test.topics, test.topic])
 
   useEffect(() => {
-    const checkFavoriteStatus = () => {
-      try {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-        const exists = favorites.some((f) => f.exam_id === test.exam_id)
-        setIsFavorite(exists)
-      } catch (error) {
-        setIsFavorite(false)
-      }
-    }
-    checkFavoriteStatus()
+    setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
   }, [test.exam_id])
 
   const toggleFavorite = useCallback(
     (e) => {
       e.preventDefault()
       e.stopPropagation()
-      try {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-        if (isFavorite) {
-          const filtered = favorites.filter((f) => f.exam_id !== test.exam_id)
-          localStorage.setItem('favorites', JSON.stringify(filtered))
-          setIsFavorite(false)
-        } else {
-          const favoriteData = {
-            exam_id: test.exam_id,
-            exam_name: test.exam_name,
-            type: testTypeConfig.label,
-            subject: subjects[0] || test.category || '',
-            duration_minutes: test.duration_minutes,
-            total_questions: test.total_questions,
-            total_marks: test.total_marks,
-            exam_strength: test.exam_strength,
-            addedAt: new Date().toISOString(),
-          }
-          favorites.push(favoriteData)
-          localStorage.setItem('favorites', JSON.stringify(favorites))
-          setIsFavorite(true)
-        }
-      } catch (error) {
-        setIsFavorite(false)
+      const favoriteData = {
+        exam_id: test.exam_id,
+        exam_name: test.exam_name,
+        type: testTypeConfig.label,
+        subject: subjects[0] || test.category || '',
+        duration_minutes: test.duration_minutes,
+        total_questions: test.total_questions,
+        total_marks: test.total_marks,
+        exam_strength: test.exam_strength,
       }
+      const newStatus = FavoritesStorage.toggle(test.exam_id, favoriteData)
+      setIsFavorite(newStatus)
     },
-    [isFavorite, test, testTypeConfig.label, subjects]
+    [test, testTypeConfig.label, subjects]
   )
+
   return (
     <div className="relative flex h-72 flex-col rounded-lg border border-gray-200 bg-white p-4 transition-shadow duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
       <button
@@ -126,9 +74,7 @@ function TestCard({ test }) {
       </button>
       <div className="mb-3 flex flex-wrap gap-2 pr-10">
         <span
-          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getDifficultyColor(
-            test.exam_strength
-          )}`}
+          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getDifficultyColor(test.exam_strength)}`}
         >
           {capitalizeStrength(test.exam_strength) || 'Normal'}
         </span>

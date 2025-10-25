@@ -5,6 +5,8 @@ import AttemptFilter from '@/components/attempts/AttemptFilter'
 import AttemptList from '@/components/attempts/AttemptList'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import PageHeader from '@/components/common/PageHeader'
+import Pagination from '@/components/common/Pagination'
+import { usePagination } from '@/hooks/common/usePagination'
 
 export default function AttemptsPage() {
   const [showStats, setShowStats] = useState(false)
@@ -20,6 +22,7 @@ export default function AttemptsPage() {
     resetFilters,
   } = useAttempts()
   const stats = useAttemptStats(originalAttempts)
+  const pagination = usePagination(attempts, 10)
 
   if (loading) {
     return (
@@ -55,7 +58,24 @@ export default function AttemptsPage() {
           toggleSort={toggleSort}
           onResetFilters={resetFilters}
         />
-        <AttemptList attempts={attempts} />
+        <AttemptList attempts={pagination.paginatedItems} />
+        {pagination.totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              totalItems={pagination.totalItems}
+              pageSize={pagination.pageSize}
+              startIndex={pagination.startIndex}
+              endIndex={pagination.endIndex}
+              onPageChange={pagination.goToPage}
+              onPageSizeChange={pagination.changePageSize}
+              hasNextPage={pagination.hasNextPage}
+              hasPrevPage={pagination.hasPrevPage}
+              pageSizeOptions={[10, 20, 30, 50]}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

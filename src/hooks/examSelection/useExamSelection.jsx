@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { getManifest as getExamsManifest } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
-import { normalizeStrength } from '@/utils/formatters/formatters'
 
 const TEST_TYPES = [
   { id: 'all', label: 'All Tests' },

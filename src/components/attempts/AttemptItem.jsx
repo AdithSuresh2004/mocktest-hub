@@ -8,20 +8,24 @@ import {
   FaMedal,
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { formatAttemptDate, formatDuration } from '@/utils/formatters/formatters'
+import {
+  formatAttemptDate,
+  formatDuration,
+} from '@/utils/formatters/formatters'
+import { PERFORMANCE_THRESHOLDS } from '@/constants/testConfig'
 
 function AttemptItem({ attempt }) {
   const score = attempt.score || 0
   const scoreLabel = useMemo(() => score.toFixed(1), [score])
 
   const scoreBadge = useMemo(() => {
-    if (score >= 80) {
+    if (score >= PERFORMANCE_THRESHOLDS.EXCELLENT) {
       return 'bg-green-500/10 text-green-700 dark:bg-green-900/40 dark:text-green-200'
     }
-    if (score >= 60) {
+    if (score >= PERFORMANCE_THRESHOLDS.GOOD) {
       return 'bg-blue-500/10 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
     }
-    if (score >= 40) {
+    if (score >= PERFORMANCE_THRESHOLDS.AVERAGE) {
       return 'bg-yellow-500/10 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-200'
     }
     return 'bg-red-500/10 text-red-700 dark:bg-red-900/40 dark:text-red-200'

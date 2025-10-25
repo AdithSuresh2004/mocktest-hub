@@ -1,10 +1,17 @@
+import {
+  AttemptsStorage,
+  FavoritesStorage,
+  SettingsStorage,
+} from '@/utils/storage'
+import { STORAGE_KEYS } from '@/constants/testConfig'
+
 export function useDataManagement() {
   const handleExportData = () => {
     try {
       const data = {
-        attempts: JSON.parse(localStorage.getItem('exam_attempts') || '[]'),
-        favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
-        settings: JSON.parse(localStorage.getItem('settings') || '{}'),
+        attempts: AttemptsStorage.getAll(),
+        favorites: FavoritesStorage.getAll(),
+        settings: SettingsStorage.get(),
       }
       const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: 'application/json',
@@ -21,6 +28,7 @@ export function useDataManagement() {
       return false
     }
   }
+
   const handleImportData = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -28,12 +36,9 @@ export function useDataManagement() {
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target?.result)
-        if (data.attempts)
-          localStorage.setItem('exam_attempts', JSON.stringify(data.attempts))
-        if (data.favorites)
-          localStorage.setItem('favorites', JSON.stringify(data.favorites))
-        if (data.settings)
-          localStorage.setItem('settings', JSON.stringify(data.settings))
+        if (data.attempts) AttemptsStorage.setAll(data.attempts)
+        if (data.favorites) FavoritesStorage.setAll(data.favorites)
+        if (data.settings) SettingsStorage.set(data.settings)
         window.location.reload()
       } catch {
         console.error('Invalid file format')
@@ -41,17 +46,19 @@ export function useDataManagement() {
     }
     reader.readAsText(file)
   }
+
   const handleClearData = () => {
     try {
-      localStorage.removeItem('exam_attempts')
-      localStorage.removeItem('favorites')
-      localStorage.removeItem('settings')
+      AttemptsStorage.deleteAll()
+      FavoritesStorage.setAll([])
+      SettingsStorage.reset()
       window.location.reload()
       return true
     } catch {
       return false
     }
   }
+
   return {
     handleExportData,
     handleImportData,

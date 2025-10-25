@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import StorageManager from '@/utils/storage'
+import { STORAGE_KEYS } from '@/constants/testConfig'
 
 const ThemeContext = createContext({ theme: 'light', setTheme: () => {} })
 
 export function ThemeProvider({ children }) {
   const getPreferred = () => {
-    const stored = localStorage.getItem('theme')
+    const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
     if (stored === 'light' || stored === 'dark') return stored
     const prefersDark = window.matchMedia?.(
       '(prefers-color-scheme: dark)'
@@ -18,14 +20,14 @@ export function ThemeProvider({ children }) {
     const root = document.documentElement
     if (theme === 'dark') root.classList.add('dark')
     else root.classList.remove('dark')
-    localStorage.setItem('theme', theme)
+    StorageManager.setItem(STORAGE_KEYS.THEME, theme)
   }, [theme])
 
   useEffect(() => {
     const mq = window.matchMedia?.('(prefers-color-scheme: dark)')
     if (!mq) return
     const handler = (e) => {
-      const stored = localStorage.getItem('theme')
+      const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
       if (!stored) setTheme(e.matches ? 'dark' : 'light')
     }
     mq.addEventListener?.('change', handler)
@@ -42,7 +44,6 @@ export function ThemeProvider({ children }) {
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
-// eslint-disable-next-line react-refresh/only-export-components
 
 export function useTheme() {
   return useContext(ThemeContext)

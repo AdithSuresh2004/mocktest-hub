@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaExclamationCircle,
@@ -13,7 +13,9 @@ import {
 } from 'react-icons/fa'
 import TestCard from '@/components/common/TestCard'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
+import Pagination from '@/components/common/Pagination'
 import { useExamSelection } from '@/hooks/examSelection/useExamSelection'
+import { usePagination } from '@/hooks/common/usePagination'
 
 const TEST_TYPE_ICONS = {
   all: FaHome,
@@ -63,6 +65,12 @@ export default function ExamSelectionPage() {
     handleFilterChange,
     clearAllFilters,
   } = useExamSelection()
+
+  const pagination = usePagination(filteredTests, 12)
+
+  useEffect(() => {
+    pagination.resetPagination()
+  }, [filteredTests.length, activeTab, searchTerm, selectedExam, selectedTopic, selectedSubject, selectedStrength, selectedAttemptStatus])
 
   const toggleMobileFilters = () => {
     setShowMobileFilters(!showMobileFilters)
@@ -282,24 +290,42 @@ export default function ExamSelectionPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-            {filteredTests.map((test) => (
-              <TestCard
-                key={
-                  test.uid || test.exam_id || `${test.type}-${test.exam_name}`
-                }
-                test={test}
-                selectedTopic={
-                  selectedTopic !== 'All Topics' ? selectedTopic : undefined
-                }
-                selectedSubject={
-                  selectedSubject !== 'All Subjects'
-                    ? selectedSubject
-                    : undefined
-                }
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+              {pagination.paginatedItems.map((test) => (
+                <TestCard
+                  key={
+                    test.uid || test.exam_id || `${test.type}-${test.exam_name}`
+                  }
+                  test={test}
+                  selectedTopic={
+                    selectedTopic !== 'All Topics' ? selectedTopic : undefined
+                  }
+                  selectedSubject={
+                    selectedSubject !== 'All Subjects'
+                      ? selectedSubject
+                      : undefined
+                  }
+                />
+              ))}
+            </div>
+            {pagination.totalPages > 1 && (
+              <div className="mt-8">
+                <Pagination
+                  currentPage={pagination.currentPage}
+                  totalPages={pagination.totalPages}
+                  totalItems={pagination.totalItems}
+                  pageSize={pagination.pageSize}
+                  startIndex={pagination.startIndex}
+                  endIndex={pagination.endIndex}
+                  onPageChange={pagination.goToPage}
+                  onPageSizeChange={pagination.changePageSize}
+                  hasNextPage={pagination.hasNextPage}
+                  hasPrevPage={pagination.hasPrevPage}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-const ATTEMPTS_KEY = 'exam_attempts'
+import { AttemptsStorage } from '@/utils/storage'
 
 function isValidAttempt(attempt) {
   return (
@@ -18,51 +18,17 @@ function generateAttemptId(examId) {
 }
 
 export function getAllAttempts() {
-  try {
-    const attemptsJson = localStorage.getItem(ATTEMPTS_KEY)
-    if (!attemptsJson) return []
-    const attempts = JSON.parse(attemptsJson)
-    if (!Array.isArray(attempts)) {
-      return []
-    }
-    const validAttempts = attempts.filter(isValidAttempt)
-    if (validAttempts.length !== attempts.length) {
-      saveAllAttempts(validAttempts)
-    }
-    return validAttempts
-  } catch {
-    return []
+  const attempts = AttemptsStorage.getAll()
+  if (!Array.isArray(attempts)) return []
+  const validAttempts = attempts.filter(isValidAttempt)
+  if (validAttempts.length !== attempts.length) {
+    AttemptsStorage.setAll(validAttempts)
   }
-}
-
-function saveAllAttempts(attempts) {
-  try {
-    if (!Array.isArray(attempts)) {
-      return false
-    }
-    localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(attempts))
-    return true
-  } catch (error) {
-    if (error.name === 'QuotaExceededError') {
-      const cleanedAttempts = attempts
-        .filter(
-          (a) =>
-            a.status === 'in_progress' ||
-            (a.status === 'completed' &&
-              Date.now() - new Date(a.timestamp).getTime() <
-                30 * 24 * 60 * 60 * 1000)
-        )
-        .slice(-50)
-      localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(cleanedAttempts))
-    }
-    return false
-  }
+  return validAttempts
 }
 
 export function createAttempt(examId, examName, durationMinutes) {
-  if (!examId || !examName || !durationMinutes) {
-    return null
-  }
+  if (!examId || !examName || !durationMinutes) return null
   const attempt = {
     attempt_id: generateAttemptId(examId),
     exam_id: examId,
@@ -81,12 +47,7 @@ export function createAttempt(examId, examName, durationMinutes) {
     _markedForReview: [],
     _hasStarted: false,
   }
-  const attempts = getAllAttempts()
-  attempts.push(attempt)
-  if (saveAllAttempts(attempts)) {
-    return attempt
-  }
-  return null
+  return AttemptsStorage.add(attempt) ? attempt : null
 }
 
 export function getLatestInProgressAttempt(examId) {
@@ -102,14 +63,10 @@ export function getLatestInProgressAttempt(examId) {
 }
 
 export function updateAttempt(attemptId, updates) {
-  if (!attemptId || !updates || typeof updates !== 'object') {
-    return null
-  }
+  if (!attemptId || !updates || typeof updates !== 'object') return null
   const attempts = getAllAttempts()
   const attemptIndex = attempts.findIndex((att) => att.attempt_id === attemptId)
-  if (attemptIndex === -1) {
-    return null
-  }
+  if (attemptIndex === -1) return null
   attempts[attemptIndex] = {
     ...attempts[attemptIndex],
     ...updates,
@@ -119,13 +76,12 @@ export function updateAttempt(attemptId, updates) {
   if (!isValidAttempt(attempts[attemptIndex])) {
     return attempts[attemptIndex]
   }
-  saveAllAttempts(attempts)
+  AttemptsStorage.setAll(attempts)
   return attempts[attemptIndex]
 }
 
 export function findAttemptById(attemptId) {
-  const attempts = getAllAttempts()
-  return attempts.find((att) => att.attempt_id === attemptId) || null
+  return AttemptsStorage.getById(attemptId)
 }
 
 export function findAllAttemptsByExamId(examId) {
@@ -134,8 +90,5 @@ export function findAllAttemptsByExamId(examId) {
 }
 
 export function removeAttempt(attemptId) {
-  const attempts = getAllAttempts()
-  const filtered = attempts.filter((att) => att.attempt_id !== attemptId)
-  saveAllAttempts(filtered)
-  return filtered.length < attempts.length
+  return AttemptsStorage.deleteById(attemptId)
 }

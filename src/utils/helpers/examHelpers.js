@@ -1,3 +1,9 @@
+import {
+  QUESTION_STATUS_CLASSES,
+  QUESTION_STATUS,
+  DEFAULT_MARKS,
+} from '@/constants/testConfig'
+
 export function calculateSectionStats(
   questions = [],
   answers = {},
@@ -31,15 +37,16 @@ export function getQuestionStatusClasses({
     Object.prototype.hasOwnProperty.call(answers, qId) && answers[qId] !== null
   const isMarked = markedForReview.has(qId)
   const isCurrent = qIndex === currentQuestionIndex
-  if (isCurrent) return 'bg-blue-600 text-white shadow-lg ring-2 ring-blue-300'
+  if (isCurrent) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.CURRENT]
   if (isReviewMode && isAnswered) {
     const isCorrect = answers[qId] === question.correct_opt_id
-    if (isCorrect) return 'bg-green-600 hover:bg-green-700 text-white'
-    return 'bg-red-600 hover:bg-red-700 text-white'
+    return QUESTION_STATUS_CLASSES[
+      isCorrect ? QUESTION_STATUS.CORRECT : QUESTION_STATUS.INCORRECT
+    ]
   }
-  if (isMarked) return 'bg-purple-600 hover:bg-purple-700 text-white'
-  if (isAnswered) return 'bg-green-600 hover:bg-green-700 text-white'
-  return 'bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
+  if (isMarked) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.MARKED]
+  if (isAnswered) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.ANSWERED]
+  return QUESTION_STATUS_CLASSES[QUESTION_STATUS.NOT_VISITED]
 }
 
 export const calculateScore = (examData, answersObj) => {
@@ -57,10 +64,10 @@ export const calculateScore = (examData, answersObj) => {
       const userAnswer = answersObj[question.q_id]
       if (userAnswer !== undefined && userAnswer !== null) {
         if (userAnswer === question.correct_opt_id) {
-          score += question.marks || 4
+          score += question.marks || DEFAULT_MARKS.POSITIVE
           correct++
         } else {
-          score -= question.negative_marks || 1
+          score -= question.negative_marks || DEFAULT_MARKS.NEGATIVE
           incorrect++
         }
       }

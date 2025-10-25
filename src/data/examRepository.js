@@ -1,14 +1,9 @@
 import { getJSON } from '@/api/http'
-import {
-  getCombinedManifest,
-  mergeManifests,
-  fetchRemoteExam,
-  getExamSources,
-} from '@/data/examSourceManager'
+import { CACHE_DURATION, STORAGE_KEYS } from '@/constants/testConfig'
+import StorageManager from '@/utils/storage'
 
 let manifestCache = null
 let manifestCacheTime = 0
-const CACHE_DURATION = 5 * 60 * 1000
 const examCache = new Map()
 
 export async function getManifest(forceRefresh = false) {
@@ -16,39 +11,24 @@ export async function getManifest(forceRefresh = false) {
   if (
     !forceRefresh &&
     manifestCache &&
-    now - manifestCacheTime < CACHE_DURATION
+    now - manifestCacheTime < CACHE_DURATION.MANIFEST
   ) {
     return manifestCache
   }
   try {
-    const manifestsData = await getCombinedManifest()
-    const merged = mergeManifests(manifestsData)
-    manifestCache = merged
+    const data = await getJSON('/data/exams_manifest.json')
+    manifestCache = data
     manifestCacheTime = now
-    return merged
+    return data
   } catch {
-    try {
-      const data = await getJSON('/data/exams_manifest.json')
-      manifestCache = data
+    const cached = StorageManager.getItem(STORAGE_KEYS.MANIFEST)
+    if (cached) {
+      manifestCache = cached
       manifestCacheTime = now
-      return data
-    } catch {
-      try {
-        const localCached = localStorage.getItem('local_exams_manifest')
-        if (localCached) {
-          const parsed = JSON.parse(localCached)
-          manifestCache = parsed
-          manifestCacheTime = now
-          return parsed
-        }
-      } catch {
-        // Ignore localStorage errors
-      }
-      if (manifestCache) {
-        return manifestCache
-      }
-      return { full_tests: [], subject_tests: [], topic_tests: [] }
+      return cached
     }
+    if (manifestCache) return manifestCache
+    return { full_tests: [], subject_tests: [], topic_tests: [] }
   }
 }
 
@@ -72,45 +52,12 @@ export async function findExamById(examId) {
     if (!examEntry) {
       throw new Error(`Exam not found. Please check the exam ID and try again.`)
     }
-    let examData
     const examPath = examEntry.path || examEntry.file
     if (!examPath) {
       throw new Error('Exam path is missing')
     }
-    if (
-      examEntry._source &&
-      examEntry._source.type === 'remote' &&
-      examEntry._source.url
-    ) {
-      try {
-        examData = await fetchRemoteExam(examEntry._source.url, examPath)
-      } catch {
-        examData = null
-      }
-    }
-    if (!examData) {
-      const sources = getExamSources().filter(
-        (s) => s.enabled && s.type === 'remote'
-      )
-      for (const src of sources) {
-        try {
-          examData = await fetchRemoteExam(src.url, examPath)
-          examEntry._source = {
-            id: src.id,
-            name: src.name,
-            type: 'remote',
-            url: src.url,
-          }
-          break
-        } catch {
-          examData = null
-        }
-      }
-    }
-    if (!examData) {
-      const fullPath = examPath.startsWith('/') ? examPath : `/${examPath}`
-      examData = await getJSON(fullPath)
-    }
+    const fullPath = examPath.startsWith('/') ? examPath : `/${examPath}`
+    const examData = await getJSON(fullPath)
     const mergedData = {
       ...examData,
       id: examData.exam_id || examData.id || examEntry.id,
@@ -128,7 +75,6 @@ export async function findExamById(examId) {
       subjects:
         examEntry.subjects || (examEntry.subject ? [examEntry.subject] : []),
       topics: examEntry.topics || (examEntry.topic ? [examEntry.topic] : []),
-      _source: examEntry._source,
     }
     examCache.set(examId, mergedData)
     return mergedData

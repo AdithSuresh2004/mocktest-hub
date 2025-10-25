@@ -1,4 +1,4 @@
-const SOURCES_KEY = 'exam_sources'
+import { SourcesStorage } from '@/utils/storage'
 
 const DEFAULT_SOURCE = {
   id: 'local',
@@ -9,76 +9,50 @@ const DEFAULT_SOURCE = {
 }
 
 export function getExamSources() {
-  try {
-    const sourcesJson = localStorage.getItem(SOURCES_KEY)
-    const sources = sourcesJson ? JSON.parse(sourcesJson) : [DEFAULT_SOURCE]
-    if (!sources.find((s) => s.id === 'local')) sources.unshift(DEFAULT_SOURCE)
-    return sources.sort((a, b) => (a.priority || 999) - (b.priority || 999))
-  } catch {
-    return [DEFAULT_SOURCE]
-  }
-}
-
-export function saveExamSources(sources) {
-  try {
-    localStorage.setItem(SOURCES_KEY, JSON.stringify(sources))
-    return true
-  } catch {
-    return false
-  }
+  const sources = SourcesStorage.getAll()
+  if (!sources.find((s) => s.id === 'local')) sources.unshift(DEFAULT_SOURCE)
+  return sources.sort((a, b) => (a.priority || 999) - (b.priority || 999))
 }
 
 export function addExamSource(source) {
-  const sources = getExamSources()
   if (!source.name || !source.url)
     throw new Error('Source must have name and URL')
-  if (!source.id) source.id = `source_${Date.now()}`
-  if (sources.find((s) => s.id === source.id))
-    throw new Error('Source with this ID already exists')
+  const sources = getExamSources()
   const newSource = {
-    id: source.id,
     name: source.name,
     type: 'remote',
     url: source.url,
     enabled: source.enabled !== false,
     priority: source.priority || sources.length + 1,
-    addedAt: new Date().toISOString(),
   }
-  sources.push(newSource)
-  saveExamSources(sources)
-  return newSource
+  return SourcesStorage.add(newSource)
 }
 
 export function updateExamSource(id, updates) {
-  const sources = getExamSources()
-  const index = sources.findIndex((s) => s.id === id)
-  if (index === -1) throw new Error('Source not found')
   if (id === 'local' && (updates.id || updates.type))
     throw new Error('Cannot modify local source ID or type')
-  sources[index] = { ...sources[index], ...updates }
-  saveExamSources(sources)
-  return sources[index]
+  const result = SourcesStorage.update(id, updates)
+  if (!result) throw new Error('Source not found')
+  return getExamSources().find((s) => s.id === id)
 }
 
 export function deleteExamSource(id) {
   if (id === 'local') throw new Error('Cannot delete local source')
-  const sources = getExamSources()
-  const filtered = sources.filter((s) => s.id !== id)
-  saveExamSources(filtered)
-  return true
+  return SourcesStorage.remove(id)
 }
 
 export function toggleExamSource(id) {
   const sources = getExamSources()
   const source = sources.find((s) => s.id === id)
   if (!source) throw new Error('Source not found')
-  source.enabled = !source.enabled
-  saveExamSources(sources)
-  return source
+  SourcesStorage.update(id, { enabled: !source.enabled })
+  return { ...source, enabled: !source.enabled }
 }
 
 export async function fetchRemoteManifest(url) {
-  const manifestUrl = url.endsWith('.json') ? url : `${url}/exams_manifest.json`
+  const manifestUrl = url.endsWith('.json')
+    ? url
+    : `${url}/exams_manifest.json`
   const resp = await fetch(manifestUrl, {
     headers: { Accept: 'application/json' },
     cache: 'no-cache',

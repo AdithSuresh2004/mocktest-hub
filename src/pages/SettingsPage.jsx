@@ -7,7 +7,6 @@ import { useToast } from '@/hooks/common/useToast'
 import ConfirmModal from '@/components/common/ConfirmModal'
 import SuccessAlert from '@/components/settings/SuccessAlert'
 import AppearanceSection from '@/components/settings/AppearanceSection'
-import ExamSourcesSection from '@/components/settings/ExamSourcesSection'
 import PreferencesSection from '@/components/settings/PreferencesSection'
 import DataManagementSection from '@/components/settings/DataManagementSection'
 
@@ -79,7 +78,6 @@ export default function SettingsPage() {
         <SuccessAlert show={showSaveSuccess} />
         <div className="space-y-6">
           <AppearanceSection theme={theme} onThemeChange={toggleTheme} />
-          <ExamSourcesSection />
           <PreferencesSection
             notifications={notifications}
             autoSave={autoSave}

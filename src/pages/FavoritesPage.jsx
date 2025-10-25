@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ConfirmModal from '@/components/common/ConfirmModal'
+import Pagination from '@/components/common/Pagination'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
-
+import { usePagination } from '@/hooks/common/usePagination'
 import {
-  getDifficultyColor as getColor,
+  getDifficultyColor,
   capitalizeStrength,
-} from '@/utils/formatters/formatters'
-
+} from '@/utils/testHelpers'
+import { FavoritesStorage } from '@/utils/storage'
 import {
   FaPlay,
   FaListAlt,
@@ -22,6 +23,7 @@ export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([])
   const [loading, setLoading] = useState(true)
   const { isOpen, config, openConfirm, closeConfirm } = useConfirmModal()
+  const pagination = usePagination(favorites, 12)
 
   useEffect(() => {
     loadFavorites()
@@ -33,19 +35,12 @@ export default function FavoritesPage() {
   }, [])
 
   const loadFavorites = () => {
-    try {
-      const savedFavorites = JSON.parse(
-        localStorage.getItem('favorites') || '[]'
-      )
-      const sorted = savedFavorites.sort(
-        (a, b) => new Date(b.addedAt || 0) - new Date(a.addedAt || 0)
-      )
-      setFavorites(sorted)
-      setLoading(false)
-    } catch {
-      setFavorites([])
-      setLoading(false)
-    }
+    const savedFavorites = FavoritesStorage.getAll()
+    const sorted = savedFavorites.sort(
+      (a, b) => new Date(b.addedAt || 0) - new Date(a.addedAt || 0)
+    )
+    setFavorites(sorted)
+    setLoading(false)
   }
 
   const handleRemove = (examId, examName, e) => {
@@ -57,13 +52,8 @@ export default function FavoritesPage() {
       cancelText: 'Cancel',
       type: 'warning',
       onConfirm: () => {
-        try {
-          const filtered = favorites.filter((f) => f.exam_id !== examId)
-          localStorage.setItem('favorites', JSON.stringify(filtered))
-          setFavorites(filtered)
-        } catch {
-          setFavorites(favorites)
-        }
+        FavoritesStorage.remove(examId)
+        setFavorites((prev) => prev.filter((f) => f.exam_id !== examId))
       },
     })
   }
@@ -120,77 +110,95 @@ export default function FavoritesPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {favorites.map((favorite) => (
-              <div
-                key={favorite.exam_id}
-                className="cursor-pointer rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
-                onClick={() => handleStart(favorite.exam_id)}
-              >
-                <div className="mb-4 flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    <FaStar className="h-5 w-5 fill-yellow-500 text-yellow-500" />
-                    <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-                      {favorite.type || 'Exam'}
-                    </span>
+          <>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {pagination.paginatedItems.map((favorite) => (
+                <div
+                  key={favorite.exam_id}
+                  className="cursor-pointer rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                  onClick={() => handleStart(favorite.exam_id)}
+                >
+                  <div className="mb-4 flex items-start justify-between">
+                    <div className="flex items-center gap-2">
+                      <FaStar className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+                      <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                        {favorite.type || 'Exam'}
+                      </span>
+                    </div>
+                    <button
+                      onClick={(e) =>
+                        handleRemove(favorite.exam_id, favorite.exam_name, e)
+                      }
+                      className="rounded p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-700"
+                      aria-label="Remove from favorites"
+                    >
+                      <FaTrash className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    {favorite.exam_name || `Exam ${favorite.exam_id}`}
+                  </h3>
+                  {favorite.subject && (
+                    <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
+                      {favorite.subject}
+                    </p>
+                  )}
+                  {favorite.exam_strength && (
+                    <div className="mb-3">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getDifficultyColor(favorite.exam_strength)}`}
+                      >
+                        {capitalizeStrength(favorite.exam_strength)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
+                    {favorite.duration_minutes && (
+                      <div className="flex items-center gap-1.5">
+                        <FaClock className="h-4 w-4" />
+                        <span>{favorite.duration_minutes} mins</span>
+                      </div>
+                    )}
+                    {favorite.total_questions && (
+                      <div className="flex items-center gap-1.5">
+                        <FaListAlt className="h-4 w-4" />
+                        <span>{favorite.total_questions} ques</span>
+                      </div>
+                    )}
+                    {favorite.total_marks && (
+                      <div className="flex items-center gap-1.5">
+                        <FaAward className="h-4 w-4" />
+                        <span>{favorite.total_marks} marks</span>
+                      </div>
+                    )}
                   </div>
                   <button
-                    onClick={(e) =>
-                      handleRemove(favorite.exam_id, favorite.exam_name, e)
-                    }
-                    className="rounded p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-700"
-                    aria-label="Remove from favorites"
+                    onClick={() => handleStart(favorite.exam_id)}
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-blue-700"
                   >
-                    <FaTrash className="h-4 w-4" />
+                    <FaPlay className="h-4 w-4" />
+                    Start Exam
                   </button>
                 </div>
-                <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  {favorite.exam_name || `Exam ${favorite.exam_id}`}
-                </h3>
-                {favorite.subject && (
-                  <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
-                    {favorite.subject}
-                  </p>
-                )}
-                {favorite.exam_strength && (
-                  <div className="mb-3">
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getColor(favorite.exam_strength)}`}
-                    >
-                      {capitalizeStrength(favorite.exam_strength)}
-                    </span>
-                  </div>
-                )}
-                <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
-                  {favorite.duration_minutes && (
-                    <div className="flex items-center gap-1.5">
-                      <FaClock className="h-4 w-4" />
-                      <span>{favorite.duration_minutes} mins</span>
-                    </div>
-                  )}
-                  {favorite.total_questions && (
-                    <div className="flex items-center gap-1.5">
-                      <FaListAlt className="h-4 w-4" />
-                      <span>{favorite.total_questions} ques</span>
-                    </div>
-                  )}
-                  {favorite.total_marks && (
-                    <div className="flex items-center gap-1.5">
-                      <FaAward className="h-4 w-4" />
-                      <span>{favorite.total_marks} marks</span>
-                    </div>
-                  )}
-                </div>
-                <button
-                  onClick={() => handleStart(favorite.exam_id)}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-blue-700"
-                >
-                  <FaPlay className="h-4 w-4" />
-                  Start Exam
-                </button>
+              ))}
+            </div>
+            {pagination.totalPages > 1 && (
+              <div className="mt-8">
+                <Pagination
+                  currentPage={pagination.currentPage}
+                  totalPages={pagination.totalPages}
+                  totalItems={pagination.totalItems}
+                  pageSize={pagination.pageSize}
+                  startIndex={pagination.startIndex}
+                  endIndex={pagination.endIndex}
+                  onPageChange={pagination.goToPage}
+                  onPageSizeChange={pagination.changePageSize}
+                  hasNextPage={pagination.hasNextPage}
+                  hasPrevPage={pagination.hasPrevPage}
+                />
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -1,5 +1,14 @@
-import { FaClock } from 'react-icons/fa'
-import { capitalizeStrength } from '@/utils/formatters/formatters'
+import {
+  FaClock,
+  FaFileAlt,
+  FaQuestionCircle,
+  FaStar,
+} from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import {
+  capitalizeStrength,
+  getDifficultyBadgeColor,
+} from '@/utils/testHelpers'
 
 export default function ExamGrid({ exams }) {
   return (
@@ -11,13 +20,7 @@ export default function ExamGrid({ exams }) {
           className="group relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-md hover:border-blue-300 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:shadow-black/20 dark:hover:border-blue-600"
         >
           <span
-            className={`absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-semibold ${
-              exam.exam_strength === 'easy'
-                ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200'
-                : exam.exam_strength === 'medium'
-                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200'
-                  : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200'
-            }`}
+            className={`absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-semibold ${getDifficultyBadgeColor(exam.exam_strength)}`}
           >
             {capitalizeStrength(exam.exam_strength)}
           </span>
