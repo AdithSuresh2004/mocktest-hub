@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, Outlet } from 'react-router-dom'
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
+import Navbar from '@/components/layout/Navbar'
+import Sidebar from '@/components/layout/Sidebar'
 
 const Layout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
