@@ -2,14 +2,38 @@ import {
   FaCheckCircle,
   FaTimesCircle,
   FaQuestionCircle,
-  FaPercentage,
+  FaBullseye,
 } from 'react-icons/fa'
+import ResultCard from './ResultCard'
 
-const StatBox = ({ icon: Icon, value, label, bgColor, textColor, iconColor }) => (
-  <div className={`rounded-xl border ${bgColor} p-4 text-center`}>
-    <Icon className={`mx-auto mb-2 h-8 w-8 ${iconColor}`} />
-    <p className={`text-2xl font-bold ${textColor}`}>{value}</p>
-    <p className="text-xs text-gray-600 dark:text-gray-400">{label}</p>
+const StatItem = ({ icon: Icon, value, label, color }) => (
+  <div className="flex items-center rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50">
+    <Icon className={`mr-3 h-6 w-6 ${color}`} />
+    <div>
+      <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
+        {value}
+      </p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
+    </div>
+  </div>
+)
+
+const AccuracyBar = ({ accuracy }) => (
+  <div>
+    <div className="mb-1 flex justify-between">
+      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Accuracy
+      </span>
+      <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+        {accuracy}%
+      </span>
+    </div>
+    <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+      <div
+        className="h-2.5 rounded-full bg-blue-500"
+        style={{ width: `${accuracy}%` }}
+      ></div>
+    </div>
   </div>
 )
 
@@ -17,45 +41,36 @@ const ResultQuickOverview = ({ analysis }) => {
   if (!analysis) return null
 
   return (
-    <div className="mb-6 mt-6 rounded-2xl bg-white p-6 shadow-lg sm:p-8 dark:bg-gray-800">
-      <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">
-        Quick Overview
-      </h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatBox
-          icon={FaCheckCircle}
-          value={analysis.overall.correct}
-          label="Correct"
-          bgColor="border-green-200 bg-green-50 dark:border-green-700 dark:bg-green-900/20"
-          textColor="text-green-700 dark:text-green-400"
-          iconColor="text-green-500"
-        />
-        <StatBox
-          icon={FaTimesCircle}
-          value={analysis.overall.incorrect}
-          label="Incorrect"
-          bgColor="border-red-200 bg-red-50 dark:border-red-700 dark:bg-red-900/20"
-          textColor="text-red-700 dark:text-red-400"
-          iconColor="text-red-500"
-        />
-        <StatBox
-          icon={FaQuestionCircle}
-          value={analysis.overall.unanswered}
-          label="Unanswered"
-          bgColor="border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700/50"
-          textColor="text-gray-700 dark:text-gray-300"
-          iconColor="text-gray-500 dark:text-gray-400"
-        />
-        <StatBox
-          icon={FaPercentage}
-          value={`${analysis.overall.accuracy}%`}
-          label="Accuracy"
-          bgColor="border-blue-200 bg-blue-50 dark:border-blue-700 dark:bg-blue-900/20"
-          textColor="text-blue-700 dark:text-blue-400"
-          iconColor="text-blue-500"
-        />
+    <ResultCard
+      title="Quick Overview"
+      icon={FaBullseye}
+      iconBgColor="bg-green-100 dark:bg-green-900/50"
+      iconColor="text-green-600 dark:text-green-400"
+    >
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <StatItem
+            icon={FaCheckCircle}
+            value={analysis.overall.correct}
+            label="Correct"
+            color="text-green-500"
+          />
+          <StatItem
+            icon={FaTimesCircle}
+            value={analysis.overall.incorrect}
+            label="Incorrect"
+            color="text-red-500"
+          />
+          <StatItem
+            icon={FaQuestionCircle}
+            value={analysis.overall.unanswered}
+            label="Unanswered"
+            color="text-gray-500 dark:text-gray-400"
+          />
+        </div>
+        <AccuracyBar accuracy={analysis.overall.accuracy} />
       </div>
-    </div>
+    </ResultCard>
   )
 }
 

@@ -1,42 +1,54 @@
-import { FaChartBar, FaHome } from 'react-icons/fa'
+import { FaChartPie, FaRedo, FaHome } from 'react-icons/fa'
+import ResultCard from './ResultCard'
 
-const ResultActions = ({ showAnalysis, onToggleAnalysis, onNavigateHome, onNavigateReview, attemptId }) => {
+const ActionButton = ({
+  icon: Icon,
+  label,
+  onClick,
+  primary = false,
+  className = '',
+}) => (
+  <button
+    onClick={onClick}
+    className={`flex w-full items-center justify-center rounded-lg px-4 py-3 font-semibold transition-all duration-200 ${
+      primary
+        ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
+        : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+    } ${className}`}
+  >
+    <Icon className="mr-2 h-5 w-5" />
+    {label}
+  </button>
+)
+
+const ResultActions = ({
+  showAnalysis,
+  onToggleAnalysis,
+  onNavigateHome,
+  onNavigateReview,
+}) => {
   return (
-    <>
-      <div className="flex flex-col items-center justify-between rounded-2xl bg-white p-6 shadow-lg sm:flex-row sm:p-8 dark:bg-gray-800">
-        <div className="mb-4 text-center sm:mb-0 sm:text-left">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-            Review Your Answers
-          </h2>
-          <p className="mt-1 text-gray-600 dark:text-gray-400">
-            Check your responses and see detailed explanations.
-          </p>
-        </div>
-        <button
-          onClick={() => onNavigateReview(attemptId)}
-          className="transform rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition-transform hover:scale-105 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-        >
-          Review Answers
-        </button>
-      </div>
-
-      <div className="flex flex-col gap-4 sm:flex-row">
-        <button
+    <ResultCard
+      title="Next Steps"
+      icon={FaChartPie}
+      iconBgColor="bg-purple-100 dark:bg-purple-900/50"
+      iconColor="text-purple-600 dark:text-purple-400"
+    >
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <ActionButton
+          icon={FaRedo}
+          label="Review Answers"
+          onClick={onNavigateReview}
+          primary
+        />
+        <ActionButton
+          icon={FaChartPie}
+          label={showAnalysis ? 'Hide Analysis' : 'Show Analysis'}
           onClick={onToggleAnalysis}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 font-semibold text-white shadow-md transition-all duration-200 hover:bg-blue-700"
-        >
-          <FaChartBar className="h-5 w-5" />
-          {showAnalysis ? 'Hide Analysis' : 'View Detailed Analysis'}
-        </button>
-        <button
-          onClick={onNavigateHome}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-200 px-6 py-4 font-semibold text-gray-800 shadow-md transition-all duration-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-        >
-          <FaHome className="h-5 w-5" />
-          Back to Home
-        </button>
+        />
+        <ActionButton icon={FaHome} label="Go to Home" onClick={onNavigateHome} />
       </div>
-    </>
+    </ResultCard>
   )
 }
 

@@ -19,11 +19,17 @@ const ResultPage = () => {
     useResultAnalysis(attemptId)
 
   if (loading) {
-    return <LoadingSpinner fullScreen message="Loading results..." />
+    return <LoadingSpinner fullScreen message="Finalizing your results..." />
   }
 
   if (error) {
-    return <StatusDisplay type="error" message={error} />
+    return (
+      <StatusDisplay
+        type="error"
+        message={error}
+        onRetry={() => window.location.reload()}
+      />
+    )
   }
 
   const percentage =
@@ -32,7 +38,9 @@ const ResultPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8 dark:bg-gray-900">
-      <div className="mx-auto max-w-6xl">
+      <div
+        className="mx-auto max-w-5xl space-y-8"
+      >
         <ResultHeader examName={exam.exam_name} />
 
         <ResultScoreCards
@@ -43,17 +51,19 @@ const ResultPage = () => {
           performance={performance}
         />
 
-        <ResultActions
-          showAnalysis={showAnalysis}
-          onToggleAnalysis={() => setShowAnalysis(!showAnalysis)}
-          onNavigateHome={() => navigate('/')}
-          onNavigateReview={() => navigate(`/review/${attemptId}`)}
-          attemptId={attemptId}
-        />
-
         <ResultQuickOverview analysis={analysis} />
 
-        <ResultSectionAnalysis analysis={analysis} showAnalysis={showAnalysis} />
+        <ResultActions
+          showAnalysis={showAnalysis}
+          onToggleAnalysis={() => setShowAnalysis(prev => !prev)}
+          onNavigateHome={() => navigate('/')}
+          onNavigateReview={() => navigate(`/review/${attemptId}`)}
+        />
+
+        <ResultSectionAnalysis
+          analysis={analysis}
+          showAnalysis={showAnalysis}
+        />
       </div>
     </div>
   )
