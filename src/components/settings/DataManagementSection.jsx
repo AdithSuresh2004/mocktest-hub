@@ -1,6 +1,6 @@
 import { FaDownload, FaTrash, FaUpload } from 'react-icons/fa'
 
-function DataManagementSection({ onExport, onImport, onClearData }) {
+const DataManagementSection = ({ onExport, onImport, onClearData }) => {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -36,5 +36,5 @@ function DataManagementSection({ onExport, onImport, onClearData }) {
   )
 }
 
-export { DataManagementSection }
+export default DataManagementSection
 

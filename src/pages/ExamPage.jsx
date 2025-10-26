@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExam from '@/hooks/exam/useExam'
-import InstructionsPage from '@/components/exam/InstructionsPage'
+import InstructionsPage from '@/pages/InstructionsPage'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import ExamHeader from '@/components/exam/ExamHeader'
 import QuestionArea from '@/components/exam/QuestionArea'

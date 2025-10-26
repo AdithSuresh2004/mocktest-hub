@@ -1,6 +1,6 @@
 import { FaCog, FaMoon, FaSun } from 'react-icons/fa'
 
-function AppearanceSection({ theme, onThemeChange }) {
+const AppearanceSection = ({ theme, onThemeChange }) => {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -44,4 +44,4 @@ function AppearanceSection({ theme, onThemeChange }) {
   )
 }
 
-export { AppearanceSection }
+export default AppearanceSection
