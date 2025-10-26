@@ -5,7 +5,7 @@ import {
   FaUndoAlt,
   FaTimes,
 } from 'react-icons/fa'
-import FilterSelect from '@/components/attempts/FilterSelect'
+import FilterSelect from '@/components/common/FilterSelect'
 
 const AttemptFilter = ({
   filters,
@@ -57,39 +57,27 @@ const AttemptFilter = ({
         </div>
         
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <select
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+          <FilterSelect
+            label="Category"
             value={filters.category}
-            onChange={(e) => handleFilterChange('category', e.target.value)}
-          >
-            {filterOptions.categories.map((option) => (
-              <option key={option.value || option} value={option.value || option}>
-                {option.label || option}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            options={filterOptions.categories}
+            onChange={handleFilterChange}
+            filterName="category"
+          />
+          <FilterSelect
+            label="Subject"
             value={filters.subject}
-            onChange={(e) => handleFilterChange('subject', e.target.value)}
-          >
-            {filterOptions.subjects.map((option) => (
-              <option key={option.value || option} value={option.value || option}>
-                {option.label || option}
-              </option>
-            ))}
-          </select>
-          <select
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+            options={filterOptions.subjects}
+            onChange={handleFilterChange}
+            filterName="subject"
+          />
+          <FilterSelect
+            label="Topic"
             value={filters.topic}
-            onChange={(e) => handleFilterChange('topic', e.target.value)}
-          >
-            {filterOptions.topics.map((option) => (
-              <option key={option.value || option} value={option.value || option}>
-                {option.label || option}
-              </option>
-            ))}
-          </select>
+            options={filterOptions.topics}
+            onChange={handleFilterChange}
+            filterName="topic"
+          />
         </div>
         
         {activeFilters.length > 0 && (

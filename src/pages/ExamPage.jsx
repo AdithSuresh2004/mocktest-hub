@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExam from '@/hooks/exam/useExam'
+import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
+import { useModalState } from '@/hooks/exam/useModalState'
 import InstructionsPage from '@/pages/InstructionsPage'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import ExamHeader from '@/components/exam/ExamHeader'
@@ -14,7 +16,6 @@ import StatusDisplay from '@/components/common/StatusDisplay'
 const ExamPage = () => {
   const { examId } = useParams()
   const navigate = useNavigate()
-  const [showInstructions, setShowInstructions] = useState(true)
   const {
     exam,
     attempt,
@@ -48,41 +49,51 @@ const ExamPage = () => {
     goToPrev,
   } = navigation
   const { seconds: timeRemaining, stop, isWarning, isCritical } = timer
-  const [showExitModal, setShowExitModal] = useState(false)
-  const [showSubmitModal, setShowSubmitModal] = useState(false)
+  const [showInstructions, setShowInstructions] = useState(true)
+  
+  const modalState = useModalState()
+  const { 
+    showExitModal, 
+    showSubmitModal, 
+    handleExit, 
+    cancelExit, 
+    handleSubmit, 
+    cancelSubmit 
+  } = modalState
+  
   const handleStartExam = () => {
     setShowInstructions(false)
     startExamTimer()
   }
 
+  // Cleanup timer on unmount
   useEffect(() => {
     return () => {
       if (stop) stop()
     }
   }, [stop])
 
+  // Navigate to result page on submit
   useEffect(() => {
     if (isSubmitted && attempt?.attempt_id) {
       setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
     }
   }, [isSubmitted, attempt?.attempt_id, navigate])
 
-  const handleSubmit = () => setShowSubmitModal(true)
-  const cancelSubmit = () => setShowSubmitModal(false)
   const confirmSubmit = () => {
-    setShowSubmitModal(false)
+    cancelSubmit()
     finalizeExam()
   }
-  const handleExit = () => setShowExitModal(true)
-  const cancelExit = () => setShowExitModal(false)
+  
   const saveAndExit = () => {
     saveAndExitExam()
-    setShowExitModal(false)
+    cancelExit()
     navigate('/')
   }
+  
   const exitWithoutSaving = () => {
     deleteAndExitExam()
-    setShowExitModal(false)
+    cancelExit()
     navigate('/')
   }
 
@@ -90,41 +101,29 @@ const ExamPage = () => {
   const currentQ = currentSectionObj.questions[currentQuestion] || null
   const totalQuestions = exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
   
-  useEffect(() => {
-    const handleKeyPress = (e) => {
-      const target = e.target
-      const tagName = target?.tagName || ''
-      const type = target?.type || ''
-      const isEditableField =
-        target?.isContentEditable ||
-        (tagName === 'INPUT' && type !== 'radio') ||
-        tagName === 'TEXTAREA'
-      if (isEditableField) return
-      const isRadioTarget = tagName === 'INPUT' && type === 'radio'
-      if (e.key === 'ArrowLeft' && !e.shiftKey) {
-        if (isRadioTarget) e.preventDefault()
-        goToPrev()
-      } else if (e.key === 'ArrowRight' && !e.shiftKey) {
-        if (isRadioTarget) e.preventDefault()
-        goToNext()
-      } else if (e.key >= '1' && e.key <= '4' && currentQ) {
-        const optionIndex = parseInt(e.key) - 1
-        if (currentQ.options[optionIndex]) {
-          saveAnswer(currentQ.q_id, currentQ.options[optionIndex].opt_id)
-        }
-      } else if (e.key === 'm' || e.key === 'M') {
-        toggleMarkForReview(currentQ.q_id)
-      } else if (e.key === 'f' || e.key === 'F') {
-        if (document.fullscreenElement) {
-          document.exitFullscreen()
-        } else {
-          document.documentElement.requestFullscreen()
-        }
-      }
+  // Keyboard shortcuts
+  const handleSelectOption = (optionIndex) => {
+    if (currentQ?.options[optionIndex]) {
+      saveAnswer(currentQ.q_id, currentQ.options[optionIndex].opt_id)
     }
-    window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentQ, goToPrev, goToNext, saveAnswer, toggleMarkForReview])
+  }
+  
+  const handleToggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      document.documentElement.requestFullscreen()
+    }
+  }
+  
+  useKeyboardShortcuts({
+    onPrevQuestion: goToPrev,
+    onNextQuestion: goToNext,
+    onSelectOption: handleSelectOption,
+    onMarkForReview: () => currentQ && toggleMarkForReview(currentQ.q_id),
+    onToggleFullscreen: handleToggleFullscreen,
+    enabled: !showInstructions && !loading,
+  })
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
