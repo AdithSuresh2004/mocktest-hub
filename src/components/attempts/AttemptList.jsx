@@ -1,6 +1,6 @@
 import AttemptItem from '@/components/attempts/AttemptItem'
 
-function AttemptList({ attempts = [] }) {
+const AttemptList = ({ attempts = [] }) => {
   if (attempts.length === 0) {
     return (
       <div className="rounded-lg bg-white py-12 text-center shadow dark:bg-gray-800">

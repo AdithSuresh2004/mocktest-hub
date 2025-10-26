@@ -1,4 +1,4 @@
-function PageHeader({ title, description, actions }) {
+const PageHeader = ({ title, description, actions }) => {
   return (
     <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
       <div>
@@ -11,7 +11,7 @@ function PageHeader({ title, description, actions }) {
       </div>
       {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default PageHeader
+export default PageHeader;

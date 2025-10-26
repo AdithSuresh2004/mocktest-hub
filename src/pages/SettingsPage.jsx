@@ -10,8 +10,7 @@ import AppearanceSection from '@/components/settings/AppearanceSection'
 import PreferencesSection from '@/components/settings/PreferencesSection'
 import DataManagementSection from '@/components/settings/DataManagementSection'
 
-export default function SettingsPage() {
-  useTheme()
+const SettingsPage = () => {
   const { theme, toggleTheme } = useTheme()
   const { isOpen, config, openConfirm, closeConfirm } = useConfirmModal()
   const { addToast } = useToast()
@@ -101,3 +100,5 @@ export default function SettingsPage() {
     </div>
   )
 }
+
+export default SettingsPage

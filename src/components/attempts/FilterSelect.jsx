@@ -1,4 +1,4 @@
-function FilterSelect({ label, value, options, onChange, filterName }) {
+const FilterSelect = ({ label, value, options, onChange, filterName }) => {
   return (
     <div className="w-full sm:w-auto">
       <label

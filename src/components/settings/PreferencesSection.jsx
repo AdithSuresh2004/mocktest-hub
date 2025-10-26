@@ -1,4 +1,4 @@
-export default function PreferencesSection({
+function PreferencesSection({
   notifications,
   autoSave,
   onNotificationsChange,
@@ -46,3 +46,5 @@ export default function PreferencesSection({
     </div>
   )
 }
+
+export { PreferencesSection }

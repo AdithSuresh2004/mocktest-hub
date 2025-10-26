@@ -15,7 +15,7 @@ import SettingsPage from '@/pages/SettingsPage'
 import PendingTestsPage from '@/pages/PendingTestsPage'
 import ReviewPage from '@/pages/ReviewPage'
 
-function App() {
+const App = () => {
   useEffect(() => {
     document.body.classList.add('loaded')
   }, [])

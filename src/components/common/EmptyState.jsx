@@ -1,11 +1,11 @@
-function EmptyState({
+const EmptyState = ({
   icon: Icon,
   title,
   description,
   actionLabel,
   onAction,
   actionIcon: ActionIcon,
-}) {
+}) => {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
       {Icon && <Icon className="mx-auto mb-4 h-16 w-16 text-gray-400" />}

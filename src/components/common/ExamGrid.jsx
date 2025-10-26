@@ -1,16 +1,9 @@
-import {
-  FaClock,
-  FaFileAlt,
-  FaQuestionCircle,
-  FaStar,
-} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import {
-  capitalizeStrength,
-  getDifficultyBadgeColor,
-} from '@/utils/testHelpers'
+import React from 'react';
+import { FaClock, FaFileAlt, FaQuestionCircle, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { capitalizeStrength, getDifficultyBadgeColor } from '@/utils/testHelpers';
 
-export default function ExamGrid({ exams }) {
+const ExamGrid = ({ exams }) => {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {exams.map((exam) => (
@@ -49,5 +42,7 @@ export default function ExamGrid({ exams }) {
         </Link>
       ))}
     </div>
-  )
-}
+  );
+};
+
+export default ExamGrid;

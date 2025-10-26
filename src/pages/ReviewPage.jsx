@@ -8,7 +8,7 @@ import SkeletonLoader from '@/components/common/SkeletonLoader'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import ReviewArea from '@/components/review/ReviewArea'
 
-export default function ReviewPage() {
+const ReviewPage = () => {
   const { attemptId } = useParams()
   const [attempt, setAttempt] = useState(null)
   const [exam, setExam] = useState(null)
@@ -197,3 +197,5 @@ export default function ReviewPage() {
     </div>
   )
 }
+
+export default ReviewPage

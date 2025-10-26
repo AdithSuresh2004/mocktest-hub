@@ -17,7 +17,7 @@ import useResultAnalysis, {
 } from '@/hooks/result/useResultAnalysis'
 import { formatTime } from '@/utils/formatters/formatters'
 
-export default function ResultPage() {
+const ResultPage = () => {
   const { attemptId } = useParams()
   const navigate = useNavigate()
   const [showAnalysis, setShowAnalysis] = useState(false)
@@ -238,3 +238,5 @@ export default function ResultPage() {
     </div>
   )
 }
+
+export default ResultPage

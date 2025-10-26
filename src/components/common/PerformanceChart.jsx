@@ -1,7 +1,7 @@
 import { Line } from 'recharts'
 import { getAllAttempts } from '@/data/attemptRepository'
 
-export default function PerformanceChart({ attempts, days = 30 }) {
+const PerformanceChart = ({ attempts, days = 30 }) => {
   const allAttempts = getAllAttempts()
     .filter((a) => a.status === 'completed')
     .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
@@ -37,3 +37,5 @@ export default function PerformanceChart({ attempts, days = 30 }) {
     </div>
   )
 }
+
+export default PerformanceChart

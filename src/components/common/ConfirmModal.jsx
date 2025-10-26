@@ -1,7 +1,12 @@
-import { useEffect, useRef } from 'react'
-import { FaExclamationTriangle, FaCheckCircle, FaTimes } from 'react-icons/fa'
 
-export default function ConfirmModal({
+import { useEffect, useRef } from 'react'
+import {
+  FaExclamationTriangle,
+  FaCheckCircle,
+  FaTimes,
+} from 'react-icons/fa'
+
+const ConfirmModal = ({
   isOpen,
   onClose,
   onConfirm,
@@ -10,7 +15,7 @@ export default function ConfirmModal({
   confirmText = 'Confirm',
   cancelText = 'Cancel',
   type = 'warning',
-}) {
+}) => {
   const modalRef = useRef(null)
 
   useEffect(() => {
@@ -122,3 +127,5 @@ export default function ConfirmModal({
     </div>
   )
 }
+
+export default ConfirmModal

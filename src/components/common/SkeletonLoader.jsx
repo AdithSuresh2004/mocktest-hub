@@ -1,6 +1,6 @@
-export default function SkeletonLoader({ type = 'card', count = 1 }) {
-  const shimmerClass = 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/60 dark:before:via-white/10 before:to-transparent'
-  
+const SkeletonLoader = ({ type = 'card', count = 1 }) => {
+  const shimmerClass = 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/60 dark:before:via-white/10 before:to-transparent';
+
   const CardSkeleton = () => (
     <div className="animate-fadeIn rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
       <div className="mb-3 flex gap-2">
@@ -20,8 +20,8 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
       </div>
       <div className={`mt-4 h-10 w-full rounded-lg bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
     </div>
-  )
-  
+  );
+
   const ListSkeleton = () => (
     <div className="animate-fadeIn space-y-3">
       {[...Array(3)].map((_, i) => (
@@ -39,8 +39,8 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
         </div>
       ))}
     </div>
-  )
-  
+  );
+
   const StatsSkeleton = () => (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {[...Array(4)].map((_, i) => (
@@ -53,8 +53,8 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
         </div>
       ))}
     </div>
-  )
-  
+  );
+
   const TableSkeleton = () => (
     <div className="animate-fadeIn">
       <div className={`mb-4 h-10 w-full rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
@@ -66,8 +66,8 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
         </div>
       ))}
     </div>
-  )
-  
+  );
+
   const ExamSkeleton = () => (
     <div className="animate-fadeIn">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
@@ -97,23 +97,25 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
         </aside>
       </div>
     </div>
-  )
-  
+  );
+
   const skeletonTypes = {
     card: CardSkeleton,
     list: ListSkeleton,
     stats: StatsSkeleton,
     table: TableSkeleton,
     exam: ExamSkeleton,
-  }
-  
-  const SkeletonComponent = skeletonTypes[type] || CardSkeleton
-  
+  };
+
+  const SkeletonComponent = skeletonTypes[type] || CardSkeleton;
+
   return (
     <div className="space-y-4">
       {[...Array(count)].map((_, i) => (
         <SkeletonComponent key={i} />
       ))}
     </div>
-  )
-}
+  );
+};
+
+export default SkeletonLoader;

@@ -7,7 +7,7 @@ import QuickActions from '@/components/dashboard/QuickActions'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import PageHeader from '@/components/common/PageHeader'
 
-export default function DashboardPage() {
+const DashboardPage = () => {
   const { stats, loading: statsLoading } = useDashboardStats()
   const { recentActivity, loading: activityLoading } = useRecentActivity()
   const loading = statsLoading || activityLoading
@@ -48,3 +48,5 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+export default DashboardPage

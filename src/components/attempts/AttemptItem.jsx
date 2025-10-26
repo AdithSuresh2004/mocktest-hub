@@ -13,7 +13,7 @@ import {
 } from '@/utils/formatters/formatters'
 import { PERFORMANCE_THRESHOLDS } from '@/constants/testConfig'
 
-function AttemptItem({ attempt }) {
+const AttemptItem = ({ attempt }) => {
   const score = attempt.score || 0
   const scoreLabel = score.toFixed(1)
 

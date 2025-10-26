@@ -24,7 +24,7 @@ const bgMap = {
   info: 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800',
 }
 
-function Toast({ toast, onClose }) {
+const Toast = ({ toast, onClose }) => {
   const { icon: Icon, className: iconClass } =
     iconMap[toast.type] || iconMap.info
   const bgClass = bgMap[toast.type] || bgMap.info
@@ -60,7 +60,7 @@ function Toast({ toast, onClose }) {
   )
 }
 
-export default function ToastContainer() {
+const ToastContainer = () => {
   const { toasts, removeToast } = useToast()
 
   if (toasts.length === 0) return null
@@ -78,3 +78,5 @@ export default function ToastContainer() {
     </div>
   )
 }
+
+export default ToastContainer

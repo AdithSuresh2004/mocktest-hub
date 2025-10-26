@@ -1,11 +1,11 @@
-function Card({
+const Card = ({
   children,
   className = '',
   variant = 'default',
   padding = 'p-6',
   hover = false,
   onClick,
-}) {
+}) => {
   const variants = {
     default:
       'rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800',

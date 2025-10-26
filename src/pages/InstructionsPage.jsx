@@ -6,7 +6,7 @@ import {
   FaExclamationTriangle,
 } from 'react-icons/fa'
 
-export default function InstructionsPage({ exam, onStart }) {
+const InstructionsPage = ({ exam, onStart }) => {
   if (!exam) return null
   const totalQuestions =
     exam.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
@@ -171,3 +171,5 @@ export default function InstructionsPage({ exam, onStart }) {
     </div>
   )
 }
+
+export default InstructionsPage

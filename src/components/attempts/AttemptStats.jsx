@@ -50,7 +50,7 @@ const StatCard = ({ icon, label, value, color, unit }) => (
   </div>
 )
 
-function AttemptStats({ stats, showDetails = false, onToggle }) {
+const AttemptStats = ({ stats, showDetails = false, onToggle }) => {
   const formatScore = (value) =>
     Number.isFinite(value) ? `${Number(value).toFixed(1)}%` : '0.0%'
 
