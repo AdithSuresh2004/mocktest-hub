@@ -1,4 +1,4 @@
-import { FaCog, FaMoon, FaSun } from 'react-icons/fa'
+import { FaCog, FaMoon, FaSun, FaDesktop } from 'react-icons/fa'
 
 const AppearanceSection = ({ theme, onThemeChange }) => {
   return (
@@ -8,10 +8,7 @@ const AppearanceSection = ({ theme, onThemeChange }) => {
         Appearance
       </h2>
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Theme
-        </label>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <button
             onClick={() => onThemeChange('light')}
             className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all ${
@@ -36,6 +33,19 @@ const AppearanceSection = ({ theme, onThemeChange }) => {
             <FaMoon className="h-6 w-6 text-blue-500" />
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Dark
+            </span>
+          </button>
+          <button
+            onClick={() => onThemeChange('system')}
+            className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all ${
+              theme === 'system'
+                ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30'
+                : 'border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600'
+            }`}
+          >
+            <FaDesktop className="h-6 w-6 text-purple-500" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              System
             </span>
           </button>
         </div>

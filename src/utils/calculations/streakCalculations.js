@@ -18,7 +18,6 @@ export function calculateStreakData() {
   const now = new Date()
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-  // Calculate current streak
   let currentStreak = 0
   let currentDate = new Date(today)
 
@@ -29,7 +28,6 @@ export function calculateStreakData() {
     dateExists[dateKey] = true
   })
 
-  // Check for consecutive days (working backward from today)
   while (true) {
     const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`
     if (dateExists[dateKey]) {
@@ -40,7 +38,6 @@ export function calculateStreakData() {
     }
   }
 
-  // Calculate longest streak
   let longestStreak = 0
   let tempStreak = 0
 
@@ -51,8 +48,7 @@ export function calculateStreakData() {
     const previousDate = i > 0 ? new Date(attempts[i - 1].timestamp) : null
 
     if (!previousDate ||
-        (currentDate.getTime() - previousDate.getTime()) === 86400000 || // 1 day
-        (currentDate.getTime() - previousDate.getTime()) === 0) { // Same day
+      (currentDate.getTime() - previousDate.getTime()) <= 24 * 60 * 60 * 1000) {
       tempStreak++
     } else {
       longestStreak = Math.max(longestStreak, tempStreak)
@@ -61,19 +57,15 @@ export function calculateStreakData() {
   }
   longestStreak = Math.max(longestStreak, tempStreak)
 
-  // Calculate today's attempts
   const todayAttempts = attempts.filter(attempt =>
     new Date(attempt.timestamp) >= today
   ).length
 
-  // Calculate this week's attempts
   const weekStart = new Date(today)
-  weekStart.setDate(today.getDate() - today.getDay()) // Start of week (Sunday)
   const weekAttempts = attempts.filter(attempt =>
     new Date(attempt.timestamp) >= weekStart
   ).length
 
-  // Calculate this month's attempts
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1)
   const monthAttempts = attempts.filter(attempt =>
     new Date(attempt.timestamp) >= monthStart

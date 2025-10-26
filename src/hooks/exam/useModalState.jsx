@@ -1,9 +1,5 @@
 import { useState, useCallback } from 'react'
 
-/**
- * Custom hook to manage modal state
- * @returns {Object} Modal state and handlers
- */
 export const useModalState = () => {
   const [showExitModal, setShowExitModal] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)

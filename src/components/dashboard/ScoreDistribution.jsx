@@ -1,10 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
 
 const COLORS = {
-  excellent: '#10b981', // green-500
-  good: '#3b82f6',      // blue-500
-  average: '#f59e0b',   // amber-500
-  poor: '#ef4444'       // red-500
 }
 
 const ScoreDistribution = ({ stats }) => {
@@ -23,8 +19,6 @@ const ScoreDistribution = ({ stats }) => {
     )
   }
 
-  // Calculate distribution based on sample data or real logic
-  // This would typically come from the backend
   const completedExams = stats.completedTests || 0
   const distribution = [
     { name: '90-100%', value: Math.floor(completedExams * 0.2), color: COLORS.excellent },

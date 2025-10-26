@@ -168,13 +168,19 @@ const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) =>
         </div>
       </div>
       {chartData.length > 0 ? (
-        <div className="h-64">
+        <div
+          className="h-64 w-full"
+          style={{ minHeight: '256px', minWidth: '320px' }}
+        >
           <ResponsiveContainer width="100%" height="100%">
             {renderChart()}
           </ResponsiveContainer>
         </div>
       ) : (
-        <div className="flex h-64 items-center justify-center">
+        <div
+          className="flex h-64 w-full items-center justify-center"
+          style={{ minHeight: '256px', minWidth: '320px' }}
+        >
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
               No data available for this period

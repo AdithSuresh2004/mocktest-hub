@@ -6,20 +6,20 @@ const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} })
 
 const getInitialTheme = () => {
   const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
-  if (stored === 'light' || stored === 'dark') return stored
+  if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
+  return 'system'
+}
 
-  if (document.documentElement.classList.contains('dark')) return 'dark'
-
-  if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark'
-
-  return 'light'
+const getSystemTheme = () => {
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 const initialTheme = getInitialTheme()
 const root = document.documentElement
-if (initialTheme === 'dark' && !root.classList.contains('dark')) {
+const actualTheme = initialTheme === 'system' ? getSystemTheme() : initialTheme
+if (actualTheme === 'dark' && !root.classList.contains('dark')) {
   root.classList.add('dark')
-} else if (initialTheme === 'light' && root.classList.contains('dark')) {
+} else if (actualTheme === 'light' && root.classList.contains('dark')) {
   root.classList.remove('dark')
 }
 
@@ -27,7 +27,8 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(initialTheme)
 
   useEffect(() => {
-    const isDark = theme === 'dark'
+    const actualTheme = theme === 'system' ? getSystemTheme() : theme
+    const isDark = actualTheme === 'dark'
 
     if (isDark) {
       root.classList.add('dark')
@@ -42,19 +43,24 @@ export function ThemeProvider({ children }) {
     const mq = window.matchMedia?.('(prefers-color-scheme: dark)')
     if (!mq) return
 
-    const handler = (e) => {
-      const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
-      if (!stored) {
-        setTheme(e.matches ? 'dark' : 'light')
+    const handler = () => {
+      if (theme === 'system') {
+        const actualTheme = getSystemTheme()
+        const isDark = actualTheme === 'dark'
+        if (isDark) {
+          root.classList.add('dark')
+        } else {
+          root.classList.remove('dark')
+        }
       }
     }
 
     mq.addEventListener?.('change', handler)
     return () => mq.removeEventListener?.('change', handler)
-  }, [])
+  }, [theme])
 
-  const toggleTheme = () => {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+  const toggleTheme = (newTheme) => {
+    setTheme(newTheme)
   }
 
   const value = { theme, toggleTheme }

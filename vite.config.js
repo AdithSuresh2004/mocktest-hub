@@ -41,6 +41,16 @@ export default defineConfig({
             if (id.includes('react-icons')) {
               return 'icons'
             }
+            if (id.includes('recharts')) {
+              return 'charts'
+            }
+            if (
+              id.includes('katex') ||
+              id.includes('ka-tex') ||
+              id.includes('@vscode/markdown-it-katex')
+            ) {
+              return 'math'
+            }
             return 'vendor'
           }
         },

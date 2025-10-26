@@ -183,7 +183,6 @@ export default function ExamSourcesSection() {
                 onChange={(e) =>
                   setNewSource({ ...newSource, url: e.target.value })
                 }
-                placeholder="https://example.com/exams.json"
                 className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
               />
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">

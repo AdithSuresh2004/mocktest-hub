@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useExam from '@/hooks/exam/useExam'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
 import { useModalState } from '@/hooks/exam/useModalState'
+import { useExamState } from '@/hooks/exam/useExamState'
 import InstructionsPage from '@/pages/InstructionsPage'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import ExamHeader from '@/components/exam/ExamHeader'
@@ -95,12 +96,8 @@ const ExamPage = () => {
     navigate('/')
   }
 
-  const currentSectionObj = exam?.sections?.[currentSection] || {
-    questions: [],
-  }
-  const currentQ = currentSectionObj.questions[currentQuestion] || null
-  const totalQuestions =
-    exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
+  const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
+    useExamState(exam, currentSection, currentQuestion)
 
   const handleSelectOption = (optionIndex) => {
     if (currentQ?.options[optionIndex]) {

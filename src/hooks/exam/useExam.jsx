@@ -68,7 +68,6 @@ const useExam = (examId) => {
     setCurrentSection,
     setCurrentQuestion,
     exam,
-    timer,
   ])
 
   useEffect(() => {

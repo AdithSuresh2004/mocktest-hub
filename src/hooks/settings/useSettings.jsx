@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { SettingsStorage } from '@/utils/storage'
 
 export function useSettings() {
@@ -23,15 +23,15 @@ export function useSettings() {
 
   const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
+  const [firstSaveDone, setFirstSaveDone] = useState(false)
   const autoSaveTimeoutRef = useRef(null)
 
-  const autoSaveSettings = useCallback(() => {
+  useEffect(() => {
     if (!isInitialized) return
 
     clearTimeout(autoSaveTimeoutRef.current)
     autoSaveTimeoutRef.current = setTimeout(() => {
       const settingsToSave = {
-        theme: 'light', // Default theme, will be overridden by settings page
         notifications,
         autoSave,
         streakGoals,
@@ -40,16 +40,13 @@ export function useSettings() {
       }
       SettingsStorage.set(settingsToSave)
 
-      setShowSaveSuccess(true)
-      setTimeout(() => setShowSaveSuccess(false), 2000)
-    }, 1000) // Auto-save after 1 second of inactivity
+      if (firstSaveDone) {
+        setShowSaveSuccess(true)
+        setTimeout(() => setShowSaveSuccess(false), 2000)
+      }
+      setFirstSaveDone(true)
+    }, 1000)
   }, [isInitialized, notifications, autoSave, streakGoals, focusExams, dashboardWidgets])
-
-  useEffect(() => {
-    if (isInitialized) {
-      autoSaveSettings()
-    }
-  }, [notifications, autoSave, streakGoals, focusExams, dashboardWidgets, autoSaveSettings, isInitialized])
 
   useEffect(() => {
     const settings = SettingsStorage.get()
@@ -69,7 +66,6 @@ export function useSettings() {
       setDashboardWidgets(settings.dashboardWidgets)
     }
 
-    // Mark as initialized after loading settings
     setTimeout(() => setIsInitialized(true), 100)
   }, [])
 
