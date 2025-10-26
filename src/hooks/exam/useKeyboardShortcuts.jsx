@@ -1,19 +1,19 @@
 import { useEffect, useCallback } from 'react'
-import { 
-  KEYBOARD_SHORTCUTS, 
-  isKeyInShortcuts, 
-  getOptionIndexFromKey 
+import {
+  KEYBOARD_SHORTCUTS,
+  isKeyInShortcuts,
+  getOptionIndexFromKey,
 } from '@/utils/constants/keyboardShortcuts'
 
 const isEditableField = (target) => {
   if (!target) return true
-  
+
   const tagName = target.tagName || ''
   const type = target.type || ''
   const isContentEditable = target.isContentEditable || false
   const isInputField = tagName === 'INPUT' && type !== 'radio'
   const isTextarea = tagName === 'TEXTAREA'
-  
+
   return isContentEditable || isInputField || isTextarea
 }
 
@@ -28,14 +28,14 @@ export const useKeyboardShortcuts = ({
   const handleKeyPress = useCallback(
     (e) => {
       if (!enabled) return
-      
+
       const target = e.target
       if (isEditableField(target)) return
-      
+
       const { key } = e
-      const isRadioTarget = target?.tagName === 'INPUT' && target?.type === 'radio'
-      
-      // Handle arrow key navigation
+      const isRadioTarget =
+        target?.tagName === 'INPUT' && target?.type === 'radio'
+
       if (isKeyInShortcuts(key, KEYBOARD_SHORTCUTS.PREV_QUESTION)) {
         if (isRadioTarget) e.preventDefault()
         if (!e.shiftKey) {
@@ -43,7 +43,7 @@ export const useKeyboardShortcuts = ({
         }
         return
       }
-      
+
       if (isKeyInShortcuts(key, KEYBOARD_SHORTCUTS.NEXT_QUESTION)) {
         if (isRadioTarget) e.preventDefault()
         if (!e.shiftKey) {
@@ -51,40 +51,43 @@ export const useKeyboardShortcuts = ({
         }
         return
       }
-      
-      // Handle mark for review
+
       if (isKeyInShortcuts(key, KEYBOARD_SHORTCUTS.MARK_REVIEW)) {
         onMarkForReview?.()
         return
       }
-      
-      // Handle fullscreen toggle
+
       if (isKeyInShortcuts(key, KEYBOARD_SHORTCUTS.TOGGLE_FULLSCREEN)) {
         onToggleFullscreen?.()
         return
       }
-      
-      // Handle option selection (1-4)
+
       const optionIndex = getOptionIndexFromKey(key)
       if (optionIndex !== null) {
         onSelectOption?.(optionIndex)
         return
       }
     },
-    [enabled, onPrevQuestion, onNextQuestion, onSelectOption, onMarkForReview, onToggleFullscreen]
+    [
+      enabled,
+      onPrevQuestion,
+      onNextQuestion,
+      onSelectOption,
+      onMarkForReview,
+      onToggleFullscreen,
+    ]
   )
-  
+
   useEffect(() => {
     if (!enabled) return
-    
+
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [handleKeyPress, enabled])
-  
+
   return {
     shortcuts: KEYBOARD_SHORTCUTS,
   }
 }
 
 export { KEYBOARD_SHORTCUTS }
-

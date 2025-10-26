@@ -80,7 +80,6 @@ export function updateAttempt(attemptId, updates) {
   return attempts[attemptIndex]
 }
 
-
 export function findAttemptById(attemptId) {
   return AttemptsStorage.getById(attemptId)
 }
@@ -89,7 +88,6 @@ export function findAllAttemptsByExamId(examId) {
   const attempts = getAllAttempts()
   return attempts.filter((att) => att.exam_id === examId)
 }
-
 
 export function removeAttempt(attemptId) {
   return AttemptsStorage.deleteById(attemptId)

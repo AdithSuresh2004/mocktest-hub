@@ -4,7 +4,7 @@ import { getAllAttempts, removeAttempt } from '@/data/attemptRepository'
 export function usePendingTests() {
   const [pendingTests, setPendingTests] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
   const loadPendingTests = () => {
     setLoading(true)
     try {
@@ -19,11 +19,11 @@ export function usePendingTests() {
       setLoading(false)
     }
   }
-  
+
   useEffect(() => {
     loadPendingTests()
   }, [])
-  
+
   const deletePendingTest = (attemptId) => {
     try {
       removeAttempt(attemptId)
@@ -33,6 +33,6 @@ export function usePendingTests() {
       return false
     }
   }
-  
+
   return { pendingTests, loading, deletePendingTest }
 }

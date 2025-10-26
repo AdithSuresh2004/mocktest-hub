@@ -6,14 +6,14 @@ function useTimer(initialSeconds, onFinish) {
   const [isPaused, setIsPaused] = useState(false)
   const intervalRef = useRef(null)
   const onFinishRef = useRef(onFinish)
-  
+
   useEffect(() => {
     onFinishRef.current = onFinish
   }, [onFinish])
-  
+
   const isWarning = seconds <= 300 && seconds > 60
   const isCritical = seconds <= 60
-  
+
   useEffect(() => {
     if (!running || isPaused) {
       if (intervalRef.current) {
@@ -48,33 +48,33 @@ function useTimer(initialSeconds, onFinish) {
       }
     }
   }, [running, isPaused])
-  
+
   const start = () => {
     setRunning(true)
     setIsPaused(false)
   }
-  
+
   const stop = () => {
     setRunning(false)
     setIsPaused(false)
   }
-  
+
   const pause = () => {
     setIsPaused(true)
   }
-  
+
   const resume = () => {
     setIsPaused(false)
   }
-  
+
   const setTime = (newSeconds) => {
     setSeconds(Math.max(0, newSeconds))
   }
-  
+
   const addTime = (additionalSeconds) => {
     setSeconds((prev) => Math.max(0, prev + additionalSeconds))
   }
-  
+
   return {
     seconds,
     running,

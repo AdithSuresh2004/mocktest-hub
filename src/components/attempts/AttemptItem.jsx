@@ -52,15 +52,18 @@ const AttemptItem = ({ attempt }) => {
             <FaClock className="h-3 w-3" />
             <span>{timeLabel}</span>
           </div>
-          {attempt.rawScore?.actual !== undefined && attempt.rawScore?.total !== undefined && (
-            <div className="flex items-center gap-1">
-              <FaChartLine className="h-3 w-3" />
-              <span>{attempt.rawScore.actual}/{attempt.rawScore.total}</span>
-            </div>
-          )}
+          {attempt.rawScore?.actual !== undefined &&
+            attempt.rawScore?.total !== undefined && (
+              <div className="flex items-center gap-1">
+                <FaChartLine className="h-3 w-3" />
+                <span>
+                  {attempt.rawScore.actual}/{attempt.rawScore.total}
+                </span>
+              </div>
+            )}
         </div>
       </div>
-      
+
       <div className="flex items-center gap-3">
         <div className="text-right">
           <div className={`text-2xl font-bold ${scoreColor}`}>

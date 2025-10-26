@@ -18,10 +18,9 @@ const ReviewPage = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
-  // Arrow key navigation - must be before any conditional useEffect
   useEffect(() => {
     if (!exam) return
-    
+
     const handleKeyNavigation = (e) => {
       if (e.key === 'ArrowLeft') {
         if (currentQuestionIndex > 0) {
@@ -32,7 +31,10 @@ const ReviewPage = () => {
           setCurrentQuestionIndex(prevSection.questions.length - 1)
         }
       } else if (e.key === 'ArrowRight') {
-        if (currentQuestionIndex < exam.sections[currentSectionIndex].questions.length - 1) {
+        if (
+          currentQuestionIndex <
+          exam.sections[currentSectionIndex].questions.length - 1
+        ) {
           setCurrentQuestionIndex(currentQuestionIndex + 1)
         } else if (currentSectionIndex < exam.sections.length - 1) {
           setCurrentSectionIndex(currentSectionIndex + 1)
@@ -179,10 +181,12 @@ const ReviewPage = () => {
 
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <FaClock className="h-4 w-4" />
-              <span className="hidden sm:inline">{formatTime(attempt.time_taken)}</span>
+              <span className="hidden sm:inline">
+                {formatTime(attempt.time_taken)}
+              </span>
               <span className="sm:hidden">
-                {attempt.time_taken < 60 
-                  ? `${attempt.time_taken}s` 
+                {attempt.time_taken < 60
+                  ? `${attempt.time_taken}s`
                   : `${Math.floor(attempt.time_taken / 60)}m`}
               </span>
             </div>

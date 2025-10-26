@@ -18,16 +18,18 @@ export default function ExamHeader({
 }) {
   const { isFullscreen, timeColorClass, toggleFullscreen } =
     useExamHeaderState(timeRemaining)
-  
+
   let timerStyles
   if (isCritical) {
-    timerStyles = 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 animate-pulse ring-2 ring-red-500'
+    timerStyles =
+      'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 animate-pulse ring-2 ring-red-500'
   } else if (isWarning) {
-    timerStyles = 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 ring-1 ring-yellow-500'
+    timerStyles =
+      'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 ring-1 ring-yellow-500'
   } else {
     timerStyles = timeColorClass
   }
-  
+
   return (
     <header
       className="z-10 border-b border-gray-200 bg-white px-4 py-2 shadow-md transition-colors duration-200 dark:border-gray-700 dark:bg-gray-800"

@@ -35,7 +35,7 @@ const AttemptsPage = () => {
       </div>
     )
   }
-  
+
   return (
     <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl">

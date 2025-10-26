@@ -55,7 +55,9 @@ export function useAttempts() {
   }
   let sortedAndFiltered = [...attempts]
   if (filters.category !== 'all') {
-    sortedAndFiltered = sortedAndFiltered.filter((a) => a.category === filters.category)
+    sortedAndFiltered = sortedAndFiltered.filter(
+      (a) => a.category === filters.category
+    )
   }
   if (filters.subject !== 'all') {
     sortedAndFiltered = sortedAndFiltered.filter(

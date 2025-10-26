@@ -104,7 +104,10 @@ const useExamSelection = () => {
       t.subjects.forEach((subject) => subjectSet.add(subject))
     if (t.subject) subjectSet.add(t.subject)
   })
-  const subjects = ['All Subjects', ...Array.from(subjectSet).filter(Boolean).sort()]
+  const subjects = [
+    'All Subjects',
+    ...Array.from(subjectSet).filter(Boolean).sort(),
+  ]
   const tabCounts = TEST_TYPES.map((type) => {
     const count =
       type.id === 'all'

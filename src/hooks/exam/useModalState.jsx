@@ -7,23 +7,23 @@ import { useState, useCallback } from 'react'
 export const useModalState = () => {
   const [showExitModal, setShowExitModal] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)
-  
+
   const handleExit = useCallback(() => {
     setShowExitModal(true)
   }, [])
-  
+
   const cancelExit = useCallback(() => {
     setShowExitModal(false)
   }, [])
-  
+
   const handleSubmit = useCallback(() => {
     setShowSubmitModal(true)
   }, [])
-  
+
   const cancelSubmit = useCallback(() => {
     setShowSubmitModal(false)
   }, [])
-  
+
   return {
     showExitModal,
     showSubmitModal,
@@ -33,4 +33,3 @@ export const useModalState = () => {
     cancelSubmit,
   }
 }
-

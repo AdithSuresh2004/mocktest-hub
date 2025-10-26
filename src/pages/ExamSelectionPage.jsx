@@ -57,7 +57,16 @@ const ExamSelectionPage = () => {
 
   useEffect(() => {
     pagination.resetPagination()
-  }, [filteredTests.length, activeTab, searchTerm, selectedExam, selectedTopic, selectedSubject, selectedStrength, selectedAttemptStatus])
+  }, [
+    filteredTests.length,
+    activeTab,
+    searchTerm,
+    selectedExam,
+    selectedTopic,
+    selectedSubject,
+    selectedStrength,
+    selectedAttemptStatus,
+  ])
 
   const toggleMobileFilters = () => {
     setShowMobileFilters(!showMobileFilters)

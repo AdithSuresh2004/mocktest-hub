@@ -15,7 +15,7 @@ const DEFAULT_STATS = {
 export function useDashboardStats() {
   const [stats, setStats] = useState(DEFAULT_STATS)
   const [loading, setLoading] = useState(true)
-  
+
   const loadStats = async () => {
     setLoading(true)
     try {
@@ -37,21 +37,29 @@ export function useDashboardStats() {
           return Number.isFinite(numeric) ? numeric : 0
         }
         const scores = validCompleted.map((attempt) => toNumber(attempt.score))
-        avgScore = scores.reduce((sum, score) => sum + score, 0) / validCompleted.length
+        avgScore =
+          scores.reduce((sum, score) => sum + score, 0) / validCompleted.length
         highScore = Math.max(...scores)
         const times = validCompleted.map((attempt) => {
           const seconds = Math.max(0, toNumber(attempt.timeTaken))
           return seconds / 60
         })
-        avgTime = times.reduce((sum, time) => sum + time, 0) / validCompleted.length
+        avgTime =
+          times.reduce((sum, time) => sum + time, 0) / validCompleted.length
       }
       const newStats = {
         totalExams: attempts.length,
         pendingTests: pending,
         completedTests: validCompleted.length,
-        averageScore: Number.isFinite(avgScore) ? parseFloat(avgScore.toFixed(1)) : 0,
-        highScore: Number.isFinite(highScore) ? parseFloat(highScore.toFixed(1)) : 0,
-        averageTime: Number.isFinite(avgTime) ? parseFloat(avgTime.toFixed(1)) : 0,
+        averageScore: Number.isFinite(avgScore)
+          ? parseFloat(avgScore.toFixed(1))
+          : 0,
+        highScore: Number.isFinite(highScore)
+          ? parseFloat(highScore.toFixed(1))
+          : 0,
+        averageTime: Number.isFinite(avgTime)
+          ? parseFloat(avgTime.toFixed(1))
+          : 0,
       }
       setStats(newStats)
     } catch {
@@ -60,7 +68,7 @@ export function useDashboardStats() {
       setLoading(false)
     }
   }
-  
+
   useEffect(() => {
     loadStats()
     const handleStorageChange = (e) => {
@@ -78,6 +86,6 @@ export function useDashboardStats() {
       window.removeEventListener('refreshDashboardStats', handleRefreshStats)
     }
   }, [])
-  
+
   return { stats, loading, refreshStats: loadStats }
 }

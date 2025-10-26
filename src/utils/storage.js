@@ -94,7 +94,6 @@ export class AttemptsStorage {
     return this.setAll(attempts)
   }
 
-
   static getById(attemptId) {
     const attempts = this.getAll()
     return attempts.find((a) => a.attempt_id === attemptId) || null

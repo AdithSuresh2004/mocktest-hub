@@ -1,4 +1,10 @@
-const StatCard = ({ icon: Icon, label, value, color = 'blue', variant = 'gradient' }) => {
+const StatCard = ({
+  icon: Icon,
+  label,
+  value,
+  color = 'blue',
+  variant = 'gradient',
+}) => {
   const colorSchemes = {
     blue: {
       border: 'border-blue-200 dark:border-blue-700',
@@ -36,9 +42,9 @@ const StatCard = ({ icon: Icon, label, value, color = 'blue', variant = 'gradien
       text: 'text-gray-900 dark:text-gray-100',
       iconColor: 'text-gray-500 dark:text-gray-400',
     },
-  };
+  }
 
-  const scheme = colorSchemes[color] || colorSchemes.blue;
+  const scheme = colorSchemes[color] || colorSchemes.blue
 
   return (
     <div
@@ -50,7 +56,7 @@ const StatCard = ({ icon: Icon, label, value, color = 'blue', variant = 'gradien
       </div>
       <p className={`text-2xl font-bold ${scheme.text}`}>{value}</p>
     </div>
-  );
-};
+  )
+}
 
-export default StatCard;
+export default StatCard

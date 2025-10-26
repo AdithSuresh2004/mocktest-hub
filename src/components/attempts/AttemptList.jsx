@@ -8,7 +8,8 @@ const AttemptList = ({ attempts = [] }) => {
           No Attempts Found
         </h3>
         <p className="mt-2 text-gray-500 dark:text-gray-400">
-          Looks like you haven't completed any tests that match the current filters.
+          Looks like you haven't completed any tests that match the current
+          filters.
         </p>
       </div>
     )

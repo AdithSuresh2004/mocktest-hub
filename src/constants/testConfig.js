@@ -1,9 +1,4 @@
-import {
-  FaBullseye,
-  FaAward,
-  FaBook,
-  FaFileAlt,
-} from 'react-icons/fa'
+import { FaBullseye, FaAward, FaBook, FaFileAlt } from 'react-icons/fa'
 
 export const TEST_TYPES = {
   FULL: 'full_tests',
@@ -101,7 +96,8 @@ export const CARD_CLASSES = {
   BASE: 'rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800',
   INTERACTIVE:
     'rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800',
-  SECTION: 'rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800',
+  SECTION:
+    'rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800',
 }
 
 export const STORAGE_KEYS = {

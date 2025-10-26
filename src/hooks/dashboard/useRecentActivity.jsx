@@ -6,7 +6,7 @@ import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
 export function useRecentActivity() {
   const [recentActivity, setRecentActivity] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
   const loadRecentActivity = async () => {
     setLoading(true)
     try {
@@ -25,10 +25,10 @@ export function useRecentActivity() {
       setLoading(false)
     }
   }
-  
+
   useEffect(() => {
     loadRecentActivity()
   }, [])
-  
+
   return { recentActivity, loading }
 }

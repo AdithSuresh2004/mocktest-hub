@@ -4,10 +4,7 @@ import ConfirmModal from '@/components/common/ConfirmModal'
 import Pagination from '@/components/common/Pagination'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 import { usePagination } from '@/hooks/common/usePagination'
-import {
-  getDifficultyColor,
-  capitalizeStrength,
-} from '@/utils/testHelpers'
+import { getDifficultyColor, capitalizeStrength } from '@/utils/testHelpers'
 import { FavoritesStorage } from '@/utils/storage'
 import {
   FaPlay,

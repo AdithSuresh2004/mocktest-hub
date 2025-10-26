@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { FaServer, FaPlus, FaCheckCircle, FaToggleOn, FaToggleOff } from 'react-icons/fa'
+import {
+  FaServer,
+  FaPlus,
+  FaCheckCircle,
+  FaToggleOn,
+  FaToggleOff,
+} from 'react-icons/fa'
 
 import {
   getExamSources,

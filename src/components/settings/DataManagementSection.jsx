@@ -37,4 +37,3 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
 }
 
 export default DataManagementSection
-

@@ -1,4 +1,9 @@
-const PreferencesSection = ({ notifications, autoSave, onNotificationsChange, onAutoSaveChange }) => {
+const PreferencesSection = ({
+  notifications,
+  autoSave,
+  onNotificationsChange,
+  onAutoSaveChange,
+}) => {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -39,7 +44,7 @@ const PreferencesSection = ({ notifications, autoSave, onNotificationsChange, on
         </label>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PreferencesSection;
+export default PreferencesSection

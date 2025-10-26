@@ -50,9 +50,7 @@ export function toggleExamSource(id) {
 }
 
 export async function fetchRemoteManifest(url) {
-  const manifestUrl = url.endsWith('.json')
-    ? url
-    : `${url}/exams_manifest.json`
+  const manifestUrl = url.endsWith('.json') ? url : `${url}/exams_manifest.json`
   const resp = await fetch(manifestUrl, {
     headers: { Accept: 'application/json' },
     cache: 'no-cache',

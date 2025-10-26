@@ -11,7 +11,7 @@ const PageHeader = ({ title, description, actions }) => {
       </div>
       {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
     </div>
-  );
-};
+  )
+}
 
-export default PageHeader;
+export default PageHeader

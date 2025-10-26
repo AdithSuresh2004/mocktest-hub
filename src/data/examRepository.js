@@ -10,11 +10,11 @@ const examLoadingPromises = new Map()
 
 export async function getManifest(forceRefresh = false) {
   const now = Date.now()
-  
+
   if (manifestPromise && !forceRefresh) {
     return manifestPromise
   }
-  
+
   if (
     !forceRefresh &&
     manifestCache &&
@@ -22,7 +22,7 @@ export async function getManifest(forceRefresh = false) {
   ) {
     return manifestCache
   }
-  
+
   manifestPromise = (async () => {
     try {
       const data = await getJSON('/data/exams_manifest.json')
@@ -43,7 +43,7 @@ export async function getManifest(forceRefresh = false) {
       manifestPromise = null
     }
   })()
-  
+
   return manifestPromise
 }
 
@@ -51,15 +51,15 @@ export async function findExamById(examId) {
   if (!examId || examId === 'undefined' || examId === 'null') {
     throw new Error('Invalid exam ID. Please select a valid exam.')
   }
-  
+
   if (examCache.has(examId)) {
     return examCache.get(examId)
   }
-  
+
   if (examLoadingPromises.has(examId)) {
     return examLoadingPromises.get(examId)
   }
-  
+
   const loadPromise = (async () => {
     try {
       const manifest = await getManifest()
@@ -72,7 +72,9 @@ export async function findExamById(examId) {
         (exam) => exam.id === examId || exam.exam_id === examId
       )
       if (!examEntry) {
-        throw new Error(`Exam not found. Please check the exam ID and try again.`)
+        throw new Error(
+          `Exam not found. Please check the exam ID and try again.`
+        )
       }
       const examPath = examEntry.path || examEntry.file
       if (!examPath) {
@@ -86,7 +88,8 @@ export async function findExamById(examId) {
         exam_id: examData.exam_id || examData.id || examEntry.id,
         name: examData.exam_name || examData.name || examEntry.name,
         exam_name: examData.exam_name || examData.name || examEntry.name,
-        duration_minutes: examData.duration_minutes || examEntry.duration_minutes,
+        duration_minutes:
+          examData.duration_minutes || examEntry.duration_minutes,
         total_marks: examData.total_marks || examEntry.total_marks,
         total_questions: examData.total_questions || examEntry.total_questions,
         difficulty:
@@ -108,7 +111,7 @@ export async function findExamById(examId) {
       examLoadingPromises.delete(examId)
     }
   })()
-  
+
   examLoadingPromises.set(examId, loadPromise)
   return loadPromise
 }

@@ -24,7 +24,10 @@ export function useExamHeaderState(timeRemaining) {
       document.exitFullscreen()
     }
   }
-  const timeColorClass = useMemo(() => getTimeColor(timeRemaining), [timeRemaining])
+  const timeColorClass = useMemo(
+    () => getTimeColor(timeRemaining),
+    [timeRemaining]
+  )
   return {
     isFullscreen,
     timeColorClass,

@@ -1,10 +1,5 @@
-
 import { useEffect, useRef } from 'react'
-import {
-  FaExclamationTriangle,
-  FaCheckCircle,
-  FaTimes,
-} from 'react-icons/fa'
+import { FaExclamationTriangle, FaCheckCircle, FaTimes } from 'react-icons/fa'
 
 const ConfirmModal = ({
   isOpen,

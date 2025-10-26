@@ -6,11 +6,11 @@ const DEFAULT_ERROR_MESSAGE = 'An unexpected error occurred'
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      hasError: false, 
-      error: null, 
+    this.state = {
+      hasError: false,
+      error: null,
       errorInfo: null,
-      errorId: null
+      errorId: null,
     }
   }
 
@@ -19,17 +19,15 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    // Generate error ID for tracking
     const errorId = `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    
+
     console.error('ErrorBoundary caught error:', error, errorInfo)
-    
-    this.setState({ 
+
+    this.setState({
       errorInfo,
-      errorId
+      errorId,
     })
 
-    // Log error to console in development
     if (import.meta.env?.DEV) {
       console.group('🚨 Error Details')
       console.error('Error:', error)
@@ -40,17 +38,16 @@ class ErrorBoundary extends Component {
   }
 
   handleReset = () => {
-    this.setState({ 
-      hasError: false, 
-      error: null, 
+    this.setState({
+      hasError: false,
+      error: null,
       errorInfo: null,
-      errorId: null 
+      errorId: null,
     })
   }
 
   render() {
     if (this.state.hasError) {
-      // Inline error UI for smaller components
       if (this.props.fallbackUI === 'inline') {
         return (
           <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border-2 border-red-300 bg-red-50 p-8 dark:border-red-700 dark:bg-red-900/20">
@@ -85,9 +82,8 @@ class ErrorBoundary extends Component {
         )
       }
 
-      // Full-page error UI
       return (
-        <div 
+        <div
           className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
           role="alert"
         >
@@ -108,25 +104,28 @@ class ErrorBoundary extends Component {
                 />
               </svg>
             </div>
-            
+
             <h1 className="mb-4 text-4xl font-bold text-red-500">
               Something went wrong
             </h1>
-            
+
             <p className="mb-2 text-lg text-gray-600 dark:text-gray-400">
               {this.state.error?.message || DEFAULT_ERROR_MESSAGE}
             </p>
-            
+
             <p className="mb-8 text-gray-500 dark:text-gray-500">
               Don't worry, your data is safe. Try one of the options below:
             </p>
-            
+
             {this.state.errorId && (
               <p className="mb-4 text-sm text-gray-400 dark:text-gray-500">
-                Error ID: <code className="rounded bg-gray-200 px-2 py-1 dark:bg-gray-700">{this.state.errorId}</code>
+                Error ID:{' '}
+                <code className="rounded bg-gray-200 px-2 py-1 dark:bg-gray-700">
+                  {this.state.errorId}
+                </code>
               </p>
             )}
-            
+
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => window.location.reload()}
@@ -135,7 +134,7 @@ class ErrorBoundary extends Component {
               >
                 🔄 Refresh Page
               </button>
-              
+
               <button
                 onClick={this.handleReset}
                 className="rounded-lg bg-green-600 px-6 py-2 font-semibold text-white shadow-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
@@ -143,7 +142,7 @@ class ErrorBoundary extends Component {
               >
                 ↻ Try Again
               </button>
-              
+
               <Link
                 to="/"
                 className="rounded-lg bg-gray-600 px-6 py-2 font-semibold text-white shadow-md hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
@@ -152,7 +151,7 @@ class ErrorBoundary extends Component {
                 🏠 Go Home
               </Link>
             </div>
-            
+
             {import.meta.env?.DEV && this.state.errorInfo && (
               <details className="mt-8 w-full rounded-lg bg-gray-200 p-4 text-left dark:bg-gray-800">
                 <summary className="cursor-pointer font-semibold text-red-600 dark:text-red-400">

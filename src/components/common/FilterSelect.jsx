@@ -1,7 +1,10 @@
 import { forwardRef } from 'react'
 
 const FilterSelect = forwardRef(
-  ({ label, value, options, onChange, filterName, className = '', ...props }, ref) => {
+  (
+    { label, value, options, onChange, filterName, className = '', ...props },
+    ref
+  ) => {
     const handleChange = (e) => {
       const newValue = e.target.value
       if (filterName) {
@@ -34,7 +37,7 @@ const FilterSelect = forwardRef(
           {options.map((option) => {
             const optionValue = option.value ?? option
             const optionLabel = option.label ?? option
-            
+
             return (
               <option key={optionValue} value={optionValue}>
                 {optionLabel}

@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react'
-import { FaClock, FaListAlt, FaAward, FaStar, FaCheckCircle, FaPlay } from 'react-icons/fa'
+import {
+  FaClock,
+  FaListAlt,
+  FaAward,
+  FaStar,
+  FaCheckCircle,
+  FaPlay,
+} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
 import {
@@ -30,11 +37,12 @@ const TestCard = ({ test }) => {
 
   useEffect(() => {
     setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
-    
-    // Check attempt status
+
     const attempts = findAllAttemptsByExamId(test.exam_id)
     if (attempts.length > 0) {
-      const completedAttempts = attempts.filter(att => att.status === 'completed')
+      const completedAttempts = attempts.filter(
+        (att) => att.status === 'completed'
+      )
       if (completedAttempts.length > 0) {
         setAttemptStatus('completed')
       } else {
@@ -95,8 +103,8 @@ const TestCard = ({ test }) => {
               attemptStatus === 'completed'
                 ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
                 : attemptStatus === 'in_progress'
-                ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300'
-                : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                  ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300'
+                  : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
             }`}
           >
             {attemptStatus === 'completed' ? (
@@ -165,7 +173,11 @@ const TestCard = ({ test }) => {
           to={`/exam/${test.exam_id}`}
           className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-700 active:bg-blue-800"
         >
-          {attemptStatus === 'completed' ? 'Retake Test' : attemptStatus === 'in_progress' ? 'Continue Test' : 'Start Test'}
+          {attemptStatus === 'completed'
+            ? 'Retake Test'
+            : attemptStatus === 'in_progress'
+              ? 'Continue Test'
+              : 'Start Test'}
         </Link>
       </div>
     </div>

@@ -50,30 +50,28 @@ const ExamPage = () => {
   } = navigation
   const { seconds: timeRemaining, stop, isWarning, isCritical } = timer
   const [showInstructions, setShowInstructions] = useState(true)
-  
+
   const modalState = useModalState()
-  const { 
-    showExitModal, 
-    showSubmitModal, 
-    handleExit, 
-    cancelExit, 
-    handleSubmit, 
-    cancelSubmit 
+  const {
+    showExitModal,
+    showSubmitModal,
+    handleExit,
+    cancelExit,
+    handleSubmit,
+    cancelSubmit,
   } = modalState
-  
+
   const handleStartExam = () => {
     setShowInstructions(false)
     startExamTimer()
   }
 
-  // Cleanup timer on unmount
   useEffect(() => {
     return () => {
       if (stop) stop()
     }
   }, [stop])
 
-  // Navigate to result page on submit
   useEffect(() => {
     if (isSubmitted && attempt?.attempt_id) {
       setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
@@ -84,30 +82,32 @@ const ExamPage = () => {
     cancelSubmit()
     finalizeExam()
   }
-  
+
   const saveAndExit = () => {
     saveAndExitExam()
     cancelExit()
     navigate('/')
   }
-  
+
   const exitWithoutSaving = () => {
     deleteAndExitExam()
     cancelExit()
     navigate('/')
   }
 
-  const currentSectionObj = exam?.sections?.[currentSection] || { questions: [] }
+  const currentSectionObj = exam?.sections?.[currentSection] || {
+    questions: [],
+  }
   const currentQ = currentSectionObj.questions[currentQuestion] || null
-  const totalQuestions = exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
-  
-  // Keyboard shortcuts
+  const totalQuestions =
+    exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
+
   const handleSelectOption = (optionIndex) => {
     if (currentQ?.options[optionIndex]) {
       saveAnswer(currentQ.q_id, currentQ.options[optionIndex].opt_id)
     }
   }
-  
+
   const handleToggleFullscreen = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen()
@@ -115,7 +115,7 @@ const ExamPage = () => {
       document.documentElement.requestFullscreen()
     }
   }
-  
+
   useKeyboardShortcuts({
     onPrevQuestion: goToPrev,
     onNextQuestion: goToNext,
@@ -138,7 +138,7 @@ const ExamPage = () => {
       <div className="flex min-h-full flex-col items-center justify-center gap-4 text-center">
         <p className="text-xl text-red-600 dark:text-red-400">{error}</p>
         <button
-          onClick={() => window.location.href = '/'}
+          onClick={() => (window.location.href = '/')}
           className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
         >
           Back to Home
