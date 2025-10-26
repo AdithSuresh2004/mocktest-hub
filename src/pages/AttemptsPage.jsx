@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useAttempts, useAttemptStats } from '@/hooks/attempts'
 import AttemptStats from '@/components/attempts/AttemptStats'
 import AttemptFilter from '@/components/attempts/AttemptFilter'
@@ -8,8 +7,7 @@ import PageHeader from '@/components/common/PageHeader'
 import Pagination from '@/components/common/Pagination'
 import { usePagination } from '@/hooks/common/usePagination'
 
-export default function AttemptsPage() {
-  const [showStats, setShowStats] = useState(false)
+const AttemptsPage = () => {
   const {
     attempts,
     loading,
@@ -45,11 +43,7 @@ export default function AttemptsPage() {
           title="Test Results"
           description="View your completed exam results"
         />
-        <AttemptStats
-          stats={stats}
-          showDetails={showStats}
-          onToggle={() => setShowStats((prev) => !prev)}
-        />
+        <AttemptStats stats={stats} />
         <AttemptFilter
           filters={filters}
           filterOptions={filterOptions}
@@ -80,3 +74,5 @@ export default function AttemptsPage() {
     </div>
   )
 }
+
+export default AttemptsPage

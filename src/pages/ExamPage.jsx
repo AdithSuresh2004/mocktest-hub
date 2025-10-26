@@ -179,8 +179,8 @@ const ExamPage = () => {
           isCritical={isCritical}
         />
       </div>
-      <div className="grid flex-1 grid-cols-1 lg:grid-cols-4">
-        <main className="lg:col-span-3">
+      <div className="grid flex-1 grid-cols-1 lg:grid-cols-4 lg:grid-rows-1">
+        <main className="lg:col-span-3 lg:row-span-1">
           <QuestionArea
             question={currentQ}
             section={currentSectionObj.section_name}
@@ -192,7 +192,7 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="overflow-y-auto border-t border-gray-200 transition-colors duration-200 lg:sticky lg:top-16 lg:col-span-1 lg:h-[calc(100vh-8rem)] lg:border-t-0 lg:border-l dark:border-gray-700">
+        <aside className="overflow-y-auto border-t border-gray-200 transition-colors duration-200 lg:col-span-1 lg:row-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
           <QuestionNavigator
             sections={exam.sections}
             currentSectionIndex={currentSection}

@@ -22,7 +22,7 @@ const ATTEMPT_STATUSES = [
   { value: 'unattempted', label: 'Unattempted' },
 ]
 
-export function useExamSelection() {
+const useExamSelection = () => {
   const [manifest, setManifest] = useState({
     full_tests: [],
     subject_tests: [],
@@ -204,3 +204,5 @@ export function useExamSelection() {
     clearAllFilters,
   }
 }
+
+export { useExamSelection }

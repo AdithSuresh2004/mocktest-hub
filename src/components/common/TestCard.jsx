@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FaClock, FaListAlt, FaAward, FaStar } from 'react-icons/fa'
+import { FaClock, FaListAlt, FaAward, FaStar, FaCheckCircle, FaPlay } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
 import {
@@ -8,9 +8,11 @@ import {
   getTestTypeConfig,
 } from '@/utils/testHelpers'
 import { FavoritesStorage } from '@/utils/storage'
+import { findAllAttemptsByExamId } from '@/data/attemptRepository'
 
-function TestCard({ test }) {
+const TestCard = ({ test }) => {
   const [isFavorite, setIsFavorite] = useState(false)
+  const [attemptStatus, setAttemptStatus] = useState(null)
 
   const testTypeConfig = getTestTypeConfig(test.type)
 
@@ -28,6 +30,19 @@ function TestCard({ test }) {
 
   useEffect(() => {
     setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
+    
+    // Check attempt status
+    const attempts = findAllAttemptsByExamId(test.exam_id)
+    if (attempts.length > 0) {
+      const completedAttempts = attempts.filter(att => att.status === 'completed')
+      if (completedAttempts.length > 0) {
+        setAttemptStatus('completed')
+      } else {
+        setAttemptStatus('in_progress')
+      }
+    } else {
+      setAttemptStatus('not_attempted')
+    }
   }, [test.exam_id])
 
   const toggleFavorite = (e) => {
@@ -74,6 +89,31 @@ function TestCard({ test }) {
           <TestIcon className="mr-1.5 h-3 w-3" />
           {testTypeConfig.label}
         </span>
+        {attemptStatus && (
+          <span
+            className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
+              attemptStatus === 'completed'
+                ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
+                : attemptStatus === 'in_progress'
+                ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+            }`}
+          >
+            {attemptStatus === 'completed' ? (
+              <>
+                <FaCheckCircle className="mr-1 h-3 w-3" />
+                Completed
+              </>
+            ) : attemptStatus === 'in_progress' ? (
+              <>
+                <FaPlay className="mr-1 h-3 w-3" />
+                In Progress
+              </>
+            ) : (
+              'Not Attempted'
+            )}
+          </span>
+        )}
       </div>
       <h3 className="mb-2 line-clamp-1 truncate text-lg leading-snug font-semibold text-gray-900 dark:text-gray-100">
         {test.exam_name}
@@ -125,7 +165,7 @@ function TestCard({ test }) {
           to={`/exam/${test.exam_id}`}
           className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-700 active:bg-blue-800"
         >
-          Start Test
+          {attemptStatus === 'completed' ? 'Retake Test' : attemptStatus === 'in_progress' ? 'Continue Test' : 'Start Test'}
         </Link>
       </div>
     </div>

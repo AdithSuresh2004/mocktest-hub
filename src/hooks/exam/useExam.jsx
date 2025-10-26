@@ -12,7 +12,7 @@ import { useTimer } from '@/hooks/exam/useTimer'
 
 import { calculateScore } from '@/utils/helpers/examHelpers'
 
-export default function useExam(examId) {
+const useExam = (examId) => {
   const [exam, setExam] = useState(null)
   const [attempt, setAttempt] = useState(null)
   const [answers, setAnswers] = useState({})
@@ -109,6 +109,12 @@ export default function useExam(examId) {
     }
     loadExam()
   }, [examId])
+
+  useEffect(() => {
+    if (hasStarted && attempt?.status === 'in_progress' && attempt?._hasStarted) {
+      timer.start()
+    }
+  }, [hasStarted, attempt?.status, attempt?._hasStarted, timer])
 
   useEffect(() => {
     if (!attempt?.attempt_id || isSubmitted) return
@@ -295,3 +301,5 @@ export default function useExam(examId) {
     startExamTimer,
   }
 }
+
+export default useExam

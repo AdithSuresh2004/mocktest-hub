@@ -3,7 +3,7 @@ import { useLocation, Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 
-export default function Layout() {
+const Layout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const location = useLocation()
 
@@ -66,3 +66,5 @@ export default function Layout() {
     </div>
   )
 }
+
+export default Layout
