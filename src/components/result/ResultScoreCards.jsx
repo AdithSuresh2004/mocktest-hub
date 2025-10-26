@@ -5,7 +5,7 @@ import {
   FaChartLine,
 } from 'react-icons/fa'
 import { formatTime } from '@/utils/formatters/formatters'
-import ResultCard from './ResultCard'
+import ResultCard from '@/components/result/ResultCard'
 
 const StatTile = ({
   icon: Icon,

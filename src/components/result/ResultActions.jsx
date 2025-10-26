@@ -1,5 +1,5 @@
 import { FaChartPie, FaRedo, FaHome } from 'react-icons/fa'
-import ResultCard from './ResultCard'
+import ResultCard from '@/components/result/ResultCard'
 
 const ActionButton = ({
   icon: Icon,

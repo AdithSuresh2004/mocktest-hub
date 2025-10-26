@@ -1,53 +1,49 @@
-import { FaChartLine, FaTrophy, FaClock } from 'react-icons/fa'
-import Card from '@/components/common/Card'
-
-const StatCard = ({ icon: Icon, label, value, iconColor }) => (
-  <div className="flex flex-col items-center justify-center rounded-lg bg-gray-50 p-4 text-center dark:bg-gray-700/50">
-    <Icon className={`mb-2 h-8 w-8 ${iconColor}`} />
-    <div>
-      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
-      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-        {label === 'Average Time'
-          ? `${value.toFixed(1)}m`
-          : `${value.toFixed(1)}%`}
-      </p>
-    </div>
-  </div>
-)
+import { FaTrophy, FaCheckDouble, FaClock } from 'react-icons/fa'
+import MetricCard from '@/components/dashboard/MetricCard'
 
 const PerformanceSnapshot = ({ stats }) => {
-  const metrics = [
-    {
-      icon: FaTrophy,
-      label: 'Average Score',
-      value: stats?.averageScore ?? 0,
-      iconColor: 'text-yellow-500',
-    },
-    {
-      icon: FaChartLine,
-      label: 'Best Score',
-      value: stats?.highScore ?? 0,
-      iconColor: 'text-green-500',
-    },
-    {
-      icon: FaClock,
-      label: 'Average Time',
-      value: stats?.averageTime ?? 0,
-      iconColor: 'text-blue-500',
-    },
-  ]
+  const passRate =
+    stats?.completedTests > 0
+      ? ((stats?.completedTests / stats?.totalExams) * 100).toFixed(0)
+      : 0
 
   return (
-    <Card className="flex h-full flex-col">
-      <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">
-        Performance Snapshot
-      </h2>
-      <div className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-3">
-        {metrics.map((metric, index) => (
-          <StatCard key={index} {...metric} />
-        ))}
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Performance Snapshot
+        </h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Track how your preparation is progressing across completed tests.
+        </p>
       </div>
-    </Card>
+      <div className="grid gap-4">
+        <MetricCard
+          icon={FaTrophy}
+          label="Best Score"
+          value={stats?.highScore?.toFixed(1) ?? 0}
+          suffix="%"
+          color="green"
+          variant="prominent"
+        />
+        <MetricCard
+          icon={FaCheckDouble}
+          label="Completion Rate"
+          value={passRate}
+          suffix="%"
+          color="blue"
+          variant="prominent"
+        />
+        <MetricCard
+          icon={FaClock}
+          label="Avg Time Per Test"
+          value={stats?.averageTime?.toFixed(0) ?? 0}
+          suffix=" min"
+          color="purple"
+          variant="prominent"
+        />
+      </div>
+    </div>
   )
 }
 

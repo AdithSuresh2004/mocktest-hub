@@ -1,15 +1,22 @@
 import { useDashboardStats } from '@/hooks/dashboard/useDashboardStats'
 import { useRecentActivity } from '@/hooks/dashboard/useRecentActivity'
+import { useAttempts, useAttemptStats } from '@/hooks/attempts'
 import StatsGrid from '@/components/dashboard/StatsGrid'
 import RecentActivity from '@/components/dashboard/RecentActivity'
 import PerformanceSnapshot from '@/components/dashboard/PerformanceSnapshot'
+import ProgressTracking from '@/components/dashboard/ProgressTracking'
+import ScoreDistribution from '@/components/dashboard/ScoreDistribution'
 import QuickActions from '@/components/dashboard/QuickActions'
+import AttemptStats from '@/components/attempts/AttemptStats'
+import PerformanceChart from '@/components/common/PerformanceChart'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import PageHeader from '@/components/common/PageHeader'
 
 const DashboardPage = () => {
   const { stats, loading: statsLoading } = useDashboardStats()
   const { recentActivity, loading: activityLoading } = useRecentActivity()
+  const { originalAttempts } = useAttempts()
+  const attemptStats = useAttemptStats(originalAttempts)
   const loading = statsLoading || activityLoading
 
   if (loading) {
@@ -36,13 +43,17 @@ const DashboardPage = () => {
           title="Dashboard"
           description="Welcome back! Here's your performance at a glance."
         />
-        <div className="space-y-8">
+        <div className="space-y-10">
           <StatsGrid stats={stats} />
           <QuickActions />
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <PerformanceChart />
+          <AttemptStats stats={attemptStats} />
+          <ProgressTracking stats={stats} />
+          <div className="grid grid-cols-1 gap-10 xl:grid-cols-2">
             <RecentActivity activities={recentActivity} />
             <PerformanceSnapshot stats={stats} />
           </div>
+          <ScoreDistribution stats={stats} />
         </div>
       </div>
     </div>

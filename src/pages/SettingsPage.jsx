@@ -8,6 +8,7 @@ import ConfirmModal from '@/components/common/ConfirmModal'
 import SuccessAlert from '@/components/settings/SuccessAlert'
 import AppearanceSection from '@/components/settings/AppearanceSection'
 import PreferencesSection from '@/components/settings/PreferencesSection'
+import PersonalizationSection from '@/components/settings/PersonalizationSection'
 import DataManagementSection from '@/components/settings/DataManagementSection'
 
 const SettingsPage = () => {
@@ -20,6 +21,12 @@ const SettingsPage = () => {
     setNotifications,
     autoSave,
     setAutoSave,
+    streakGoals,
+    setStreakGoals,
+    focusExams,
+    setFocusExams,
+    dashboardWidgets,
+    setDashboardWidgets,
     showSaveSuccess,
     saveSettings,
   } = useSettings()
@@ -75,27 +82,32 @@ const SettingsPage = () => {
           </p>
         </div>
         <SuccessAlert show={showSaveSuccess} />
-        <div className="space-y-6">
+        <div className="space-y-8">
+
           <AppearanceSection theme={theme} onThemeChange={toggleTheme} />
+
           <PreferencesSection
             notifications={notifications}
             autoSave={autoSave}
+            streakGoals={streakGoals}
             onNotificationsChange={setNotifications}
             onAutoSaveChange={setAutoSave}
+            onStreakGoalsChange={setStreakGoals}
           />
+
+          <PersonalizationSection
+            focusExams={focusExams}
+            dashboardWidgets={dashboardWidgets}
+            onFocusExamsChange={setFocusExams}
+            onDashboardWidgetsChange={setDashboardWidgets}
+          />
+
           <DataManagementSection
             onExport={handleExportData}
             onImport={handleImportData}
             onClearData={handleClearWithConfirm}
           />
         </div>
-        <button
-          onClick={handleSave}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:from-blue-700 hover:to-blue-800"
-        >
-          <FaCheck className="h-5 w-5" />
-          Save Settings
-        </button>
       </div>
     </div>
   )

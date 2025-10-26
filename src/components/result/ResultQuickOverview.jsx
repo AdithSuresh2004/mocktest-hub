@@ -4,7 +4,7 @@ import {
   FaQuestionCircle,
   FaBullseye,
 } from 'react-icons/fa'
-import ResultCard from './ResultCard'
+import ResultCard from '@/components/result/ResultCard'
 
 const StatItem = ({ icon: Icon, value, label, color }) => (
   <div className="flex items-center rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50">

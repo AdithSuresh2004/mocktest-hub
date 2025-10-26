@@ -1,5 +1,5 @@
 import { FaBookOpen } from 'react-icons/fa'
-import ResultCard from './ResultCard'
+import ResultCard from '@/components/result/ResultCard'
 
 const SectionRow = ({ section }) => {
   const accuracyColor =
