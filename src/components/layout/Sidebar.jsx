@@ -24,7 +24,7 @@ export default function Sidebar({ isMobile }) {
     <aside
       className={`flex flex-col bg-white dark:bg-gray-800 dark:shadow-black/20 ${
         isMobile
-          ? 'fixed top-0 left-0 z-50 h-full w-full shadow-lg'
+          ? 'h-full w-full'
           : 'w-64 border-r border-gray-200 md:flex-shrink-0 dark:border-gray-700'
       }`}
     >

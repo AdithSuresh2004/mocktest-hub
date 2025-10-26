@@ -18,6 +18,33 @@ const ReviewPage = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
+  // Arrow key navigation - must be before any conditional useEffect
+  useEffect(() => {
+    if (!exam) return
+    
+    const handleKeyNavigation = (e) => {
+      if (e.key === 'ArrowLeft') {
+        if (currentQuestionIndex > 0) {
+          setCurrentQuestionIndex(currentQuestionIndex - 1)
+        } else if (currentSectionIndex > 0) {
+          const prevSection = exam.sections[currentSectionIndex - 1]
+          setCurrentSectionIndex(currentSectionIndex - 1)
+          setCurrentQuestionIndex(prevSection.questions.length - 1)
+        }
+      } else if (e.key === 'ArrowRight') {
+        if (currentQuestionIndex < exam.sections[currentSectionIndex].questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1)
+        } else if (currentSectionIndex < exam.sections.length - 1) {
+          setCurrentSectionIndex(currentSectionIndex + 1)
+          setCurrentQuestionIndex(0)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyNavigation)
+    return () => window.removeEventListener('keydown', handleKeyNavigation)
+  }, [currentSectionIndex, currentQuestionIndex, exam])
+
   useEffect(() => {
     const loadData = async () => {
       try {
