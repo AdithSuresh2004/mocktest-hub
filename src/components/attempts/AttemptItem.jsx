@@ -1,4 +1,3 @@
-import { memo, useMemo } from 'react'
 import {
   FaClock,
   FaCalendarAlt,
@@ -16,46 +15,32 @@ import { PERFORMANCE_THRESHOLDS } from '@/constants/testConfig'
 
 function AttemptItem({ attempt }) {
   const score = attempt.score || 0
-  const scoreLabel = useMemo(() => score.toFixed(1), [score])
+  const scoreLabel = score.toFixed(1)
 
-  const scoreBadge = useMemo(() => {
-    if (score >= PERFORMANCE_THRESHOLDS.EXCELLENT) {
-      return 'bg-green-500/10 text-green-700 dark:bg-green-900/40 dark:text-green-200'
-    }
-    if (score >= PERFORMANCE_THRESHOLDS.GOOD) {
-      return 'bg-blue-500/10 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
-    }
-    if (score >= PERFORMANCE_THRESHOLDS.AVERAGE) {
-      return 'bg-yellow-500/10 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-200'
-    }
-    return 'bg-red-500/10 text-red-700 dark:bg-red-900/40 dark:text-red-200'
-  }, [score])
+  let scoreBadge
+  if (score >= PERFORMANCE_THRESHOLDS.EXCELLENT) {
+    scoreBadge = 'bg-green-500/10 text-green-700 dark:bg-green-900/40 dark:text-green-200'
+  } else if (score >= PERFORMANCE_THRESHOLDS.GOOD) {
+    scoreBadge = 'bg-blue-500/10 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
+  } else if (score >= PERFORMANCE_THRESHOLDS.AVERAGE) {
+    scoreBadge = 'bg-yellow-500/10 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-200'
+  } else {
+    scoreBadge = 'bg-red-500/10 text-red-700 dark:bg-red-900/40 dark:text-red-200'
+  }
 
-  const dateLabel = useMemo(
-    () => formatAttemptDate(attempt.date),
-    [attempt.date]
-  )
+  const dateLabel = formatAttemptDate(attempt.date)
+  const timeLabel = formatDuration(attempt.timeTaken)
+  
+  const examDuration = attempt._durationMinutes ? `${attempt._durationMinutes} min exam` : null
 
-  const timeLabel = useMemo(
-    () => formatDuration(attempt.timeTaken),
-    [attempt.timeTaken]
-  )
-
-  const examDuration = useMemo(() => {
-    if (!attempt._durationMinutes) return null
-    return `${attempt._durationMinutes} min exam`
-  }, [attempt._durationMinutes])
-
-  const subjectBadges = useMemo(() => {
-    if (!Array.isArray(attempt.subjects) || attempt.subjects.length === 0) {
-      return []
-    }
+  const subjectBadges = []
+  if (Array.isArray(attempt.subjects) && attempt.subjects.length > 0) {
     const trimmed = attempt.subjects.slice(0, 3)
     if (attempt.subjects.length > 3) {
       trimmed.push(`+${attempt.subjects.length - 3} more`)
     }
-    return trimmed
-  }, [attempt.subjects])
+    subjectBadges.push(...trimmed)
+  }
 
   return (
     <article className="flex h-full flex-col gap-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
@@ -176,4 +161,4 @@ function AttemptItem({ attempt }) {
   )
 }
 
-export default memo(AttemptItem)
+export default AttemptItem

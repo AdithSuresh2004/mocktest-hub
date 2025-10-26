@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { getAllAttempts } from '@/data/attemptRepository'
 
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
@@ -14,7 +14,7 @@ export function useAttempts() {
   const [loading, setLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState('desc')
   const [filters, setFilters] = useState(createDefaultFilters)
-  const loadAttempts = useCallback(async () => {
+  const loadAttempts = async () => {
     setLoading(true)
     try {
       const rawAttempts = getAllAttempts()
@@ -27,18 +27,14 @@ export function useAttempts() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
   useEffect(() => {
     loadAttempts()
-  }, [loadAttempts])
-  const { categories, subjects, topics } = useMemo(() => {
-    if (attempts.length === 0) {
-      return {
-        categories: ['all'],
-        subjects: ['all'],
-        topics: ['all'],
-      }
-    }
+  }, [])
+  let categories = ['all']
+  let subjects = ['all']
+  let topics = ['all']
+  if (attempts.length > 0) {
     const categoriesSet = new Set()
     const subjectsSet = new Set()
     const topicsSet = new Set()
@@ -53,37 +49,32 @@ export function useAttempts() {
         attempt.topics.forEach((t) => topicsSet.add(t))
       }
     })
-    return {
-      categories: ['all', ...Array.from(categoriesSet).sort()],
-      subjects: ['all', ...Array.from(subjectsSet).sort()],
-      topics: ['all', ...Array.from(topicsSet).sort()],
-    }
-  }, [attempts])
-  const sortedAndFiltered = useMemo(() => {
-    let filtered = [...attempts]
-    if (filters.category !== 'all') {
-      filtered = filtered.filter((a) => a.category === filters.category)
-    }
-    if (filters.subject !== 'all') {
-      filtered = filtered.filter(
-        (a) => a.subjects && a.subjects.includes(filters.subject)
-      )
-    }
-    if (filters.topic !== 'all') {
-      filtered = filtered.filter(
-        (a) => a.topics && a.topics.includes(filters.topic)
-      )
-    }
-    filtered.sort((a, b) => {
-      const compareValue = (b.score || 0) - (a.score || 0)
-      return sortOrder === 'asc' ? -compareValue : compareValue
-    })
-    return filtered
-  }, [attempts, sortOrder, filters])
-  const toggleSort = useCallback(() => {
+    categories = ['all', ...Array.from(categoriesSet).sort()]
+    subjects = ['all', ...Array.from(subjectsSet).sort()]
+    topics = ['all', ...Array.from(topicsSet).sort()]
+  }
+  let sortedAndFiltered = [...attempts]
+  if (filters.category !== 'all') {
+    sortedAndFiltered = sortedAndFiltered.filter((a) => a.category === filters.category)
+  }
+  if (filters.subject !== 'all') {
+    sortedAndFiltered = sortedAndFiltered.filter(
+      (a) => a.subjects && a.subjects.includes(filters.subject)
+    )
+  }
+  if (filters.topic !== 'all') {
+    sortedAndFiltered = sortedAndFiltered.filter(
+      (a) => a.topics && a.topics.includes(filters.topic)
+    )
+  }
+  sortedAndFiltered.sort((a, b) => {
+    const compareValue = (b.score || 0) - (a.score || 0)
+    return sortOrder === 'asc' ? -compareValue : compareValue
+  })
+  const toggleSort = () => {
     setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-  }, [])
-  const handleFilterChange = useCallback((filterName, value) => {
+  }
+  const handleFilterChange = (filterName, value) => {
     setFilters((prev) => {
       const next = { ...prev, [filterName]: value }
       if (filterName === 'category') {
@@ -95,10 +86,10 @@ export function useAttempts() {
       }
       return next
     })
-  }, [])
-  const resetFilters = useCallback(() => {
+  }
+  const resetFilters = () => {
     setFilters(createDefaultFilters())
-  }, [])
+  }
   return {
     attempts: sortedAndFiltered,
     loading,

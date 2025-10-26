@@ -94,14 +94,15 @@ export class AttemptsStorage {
     return this.setAll(attempts)
   }
 
+
   static getById(attemptId) {
     const attempts = this.getAll()
-    return attempts.find((a) => a.id === attemptId) || null
+    return attempts.find((a) => a.attempt_id === attemptId) || null
   }
 
   static deleteById(attemptId) {
     const attempts = this.getAll()
-    const filtered = attempts.filter((a) => a.id !== attemptId)
+    const filtered = attempts.filter((a) => a.attempt_id !== attemptId)
     return this.setAll(filtered)
   }
 

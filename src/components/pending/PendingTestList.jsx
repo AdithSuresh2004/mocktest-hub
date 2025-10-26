@@ -6,7 +6,7 @@ export default function PendingTestList({ tests, onDelete, onResume }) {
     <div className="space-y-4">
       {tests.map((test) => (
         <div
-          key={test.id || test.attempt_id}
+          key={test.attempt_id}
           className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -36,7 +36,7 @@ export default function PendingTestList({ tests, onDelete, onResume }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation()
-                  onDelete(test.id || test.attempt_id)
+                  onDelete(test.attempt_id)
                 }}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
               >

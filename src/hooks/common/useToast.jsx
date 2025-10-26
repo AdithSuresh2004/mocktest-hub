@@ -1,38 +1,35 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const ToastContext = createContext(null)
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([])
 
-  const removeToast = useCallback((id) => {
+  const removeToast = (id) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id))
-  }, [])
+  }
 
-  const addToast = useCallback(
-    (toast) => {
-      const id = `toast-${Date.now()}-${Math.random()}`
-      const newToast = {
-        id,
-        message: '',
-        type: 'info',
-        duration: 3000,
-        ...toast,
-      }
-      setToasts((prev) => [...prev, newToast])
-      if (newToast.duration) {
-        setTimeout(() => {
-          removeToast(id)
-        }, newToast.duration)
-      }
-      return id
-    },
-    [removeToast]
-  )
+  const addToast = (toast) => {
+    const id = `toast-${Date.now()}-${Math.random()}`
+    const newToast = {
+      id,
+      message: '',
+      type: 'info',
+      duration: 3000,
+      ...toast,
+    }
+    setToasts((prev) => [...prev, newToast])
+    if (newToast.duration) {
+      setTimeout(() => {
+        removeToast(id)
+      }, newToast.duration)
+    }
+    return id
+  }
 
-  const clearAll = useCallback(() => {
+  const clearAll = () => {
     setToasts([])
-  }, [])
+  }
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast, clearAll }}>
@@ -40,7 +37,6 @@ export function ToastProvider({ children }) {
     </ToastContext.Provider>
   )
 }
-// eslint-disable-next-line react-refresh/only-export-components
 
 export function useToast() {
   const context = useContext(ToastContext)
@@ -49,6 +45,5 @@ export function useToast() {
   }
   return context
 }
-// eslint-disable-next-line react-refresh/only-export-components
 
 export default useToast

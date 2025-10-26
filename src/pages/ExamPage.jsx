@@ -1,8 +1,8 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExam from '@/hooks/exam/useExam'
-import SkeletonLoader from '@/components/common/SkeletonLoader'
 import InstructionsPage from '@/components/exam/InstructionsPage'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 import ExamHeader from '@/components/exam/ExamHeader'
 import QuestionArea from '@/components/exam/QuestionArea'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
@@ -33,11 +33,13 @@ const ExamPage = () => {
     markedForReview,
     startExamTimer,
   } = useExam(examId)
+
   useEffect(() => {
     if (attempt && Object.keys(answers).length > 0) {
       setShowInstructions(false)
     }
   }, [attempt, answers])
+
   const {
     currentSection,
     currentQuestion,
@@ -52,16 +54,19 @@ const ExamPage = () => {
     setShowInstructions(false)
     startExamTimer()
   }
+
   useEffect(() => {
     return () => {
       if (stop) stop()
     }
   }, [stop])
+
   useEffect(() => {
     if (isSubmitted && attempt?.attempt_id) {
       setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
     }
   }, [isSubmitted, attempt?.attempt_id, navigate])
+
   const handleSubmit = () => setShowSubmitModal(true)
   const cancelSubmit = () => setShowSubmitModal(false)
   const confirmSubmit = () => {
@@ -71,27 +76,20 @@ const ExamPage = () => {
   const handleExit = () => setShowExitModal(true)
   const cancelExit = () => setShowExitModal(false)
   const saveAndExit = () => {
-    setShowExitModal(false)
     saveAndExitExam()
+    setShowExitModal(false)
     navigate('/')
   }
   const exitWithoutSaving = () => {
-    setShowExitModal(false)
     deleteAndExitExam()
+    setShowExitModal(false)
     navigate('/')
   }
-  const currentSectionObj = useMemo(
-    () => exam?.sections?.[currentSection] || { questions: [] },
-    [exam?.sections, currentSection]
-  )
-  const currentQ = useMemo(
-    () => currentSectionObj.questions[currentQuestion] || null,
-    [currentSectionObj.questions, currentQuestion]
-  )
-  const totalQuestions = useMemo(
-    () => exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0,
-    [exam?.sections]
-  )
+
+  const currentSectionObj = exam?.sections?.[currentSection] || { questions: [] }
+  const currentQ = currentSectionObj.questions[currentQuestion] || null
+  const totalQuestions = exam?.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
+  
   useEffect(() => {
     const handleKeyPress = (e) => {
       const target = e.target
@@ -171,8 +169,8 @@ const ExamPage = () => {
     )
   }
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 dark:bg-gray-900">
-      <div className="sticky top-0 z-20 bg-gray-100 dark:bg-gray-900">
+    <div className="flex min-h-screen flex-col bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
+      <div className="sticky top-0 z-20 bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
         <ExamHeader
           exam={exam}
           timeRemaining={timeRemaining}
@@ -194,7 +192,7 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="overflow-y-auto border-t border-gray-200 lg:sticky lg:top-16 lg:col-span-1 lg:h-[calc(100vh-8rem)] lg:border-t-0 lg:border-l dark:border-gray-700">
+        <aside className="overflow-y-auto border-t border-gray-200 transition-colors duration-200 lg:sticky lg:top-16 lg:col-span-1 lg:h-[calc(100vh-8rem)] lg:border-t-0 lg:border-l dark:border-gray-700">
           <QuestionNavigator
             sections={exam.sections}
             currentSectionIndex={currentSection}
@@ -205,7 +203,7 @@ const ExamPage = () => {
           />
         </aside>
       </div>
-      <div className="sticky bottom-0 z-20 bg-gray-100 dark:bg-gray-900">
+      <div className="sticky bottom-0 z-20 bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
         <ExamNavigation
           canGoPrev={currentSection > 0 || currentQuestion > 0}
           canGoNext={

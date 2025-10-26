@@ -1,4 +1,3 @@
-import { memo } from 'react'
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -140,4 +139,4 @@ function Pagination({
   )
 }
 
-export default memo(Pagination)
+export default Pagination

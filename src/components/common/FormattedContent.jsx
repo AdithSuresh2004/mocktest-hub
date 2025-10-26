@@ -1,4 +1,3 @@
-import { memo, useMemo } from 'react'
 import { InlineMath, BlockMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 
@@ -151,9 +150,11 @@ const formatText = (text, isInMathContext, isLastPart, isFirstPart) => {
 }
 
 function FormattedContent({ text, className = '' }) {
-  const parts = useMemo(() => parseMathAndText(text), [text])
-  const mathHeavy = useMemo(() => isMathHeavy(parts), [parts])
+  const parts = parseMathAndText(text)
+  const mathHeavy = isMathHeavy(parts)
+  
   if (!text) return null
+  
   return (
     <div className={className}>
       {parts.map((part, index) => {
@@ -258,4 +259,4 @@ function FormattedContent({ text, className = '' }) {
   )
 }
 
-export default memo(FormattedContent)
+export default FormattedContent

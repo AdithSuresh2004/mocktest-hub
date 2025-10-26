@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 export function useConfirmModal() {
   const [isOpen, setIsOpen] = useState(false)
@@ -9,17 +9,14 @@ export function useConfirmModal() {
     type: 'warning',
   })
 
-  const openConfirm = useCallback(
-    ({ title, message, onConfirm, type = 'warning' }) => {
-      setConfig({ title, message, onConfirm, type })
-      setIsOpen(true)
-    },
-    []
-  )
+  const openConfirm = ({ title, message, onConfirm, type = 'warning' }) => {
+    setConfig({ title, message, onConfirm, type })
+    setIsOpen(true)
+  }
 
-  const closeConfirm = useCallback(() => {
+  const closeConfirm = () => {
     setIsOpen(false)
-  }, [])
+  }
 
   return {
     isOpen,

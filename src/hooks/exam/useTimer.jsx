@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 function useTimer(initialSeconds, onFinish) {
   const [seconds, setSeconds] = useState(initialSeconds)
@@ -6,11 +6,14 @@ function useTimer(initialSeconds, onFinish) {
   const [isPaused, setIsPaused] = useState(false)
   const intervalRef = useRef(null)
   const onFinishRef = useRef(onFinish)
+  
   useEffect(() => {
     onFinishRef.current = onFinish
   }, [onFinish])
-  const isWarning = useMemo(() => seconds <= 300 && seconds > 60, [seconds])
-  const isCritical = useMemo(() => seconds <= 60, [seconds])
+  
+  const isWarning = seconds <= 300 && seconds > 60
+  const isCritical = seconds <= 60
+  
   useEffect(() => {
     if (!running || isPaused) {
       if (intervalRef.current) {
@@ -44,27 +47,34 @@ function useTimer(initialSeconds, onFinish) {
         intervalRef.current = null
       }
     }
-  }, [running, isPaused, seconds])
-  const start = useCallback(() => {
+  }, [running, isPaused])
+  
+  const start = () => {
     setRunning(true)
     setIsPaused(false)
-  }, [])
-  const stop = useCallback(() => {
+  }
+  
+  const stop = () => {
     setRunning(false)
     setIsPaused(false)
-  }, [])
-  const pause = useCallback(() => {
+  }
+  
+  const pause = () => {
     setIsPaused(true)
-  }, [])
-  const resume = useCallback(() => {
+  }
+  
+  const resume = () => {
     setIsPaused(false)
-  }, [])
-  const setTime = useCallback((newSeconds) => {
+  }
+  
+  const setTime = (newSeconds) => {
     setSeconds(Math.max(0, newSeconds))
-  }, [])
-  const addTime = useCallback((additionalSeconds) => {
+  }
+  
+  const addTime = (additionalSeconds) => {
     setSeconds((prev) => Math.max(0, prev + additionalSeconds))
-  }, [])
+  }
+  
   return {
     seconds,
     running,

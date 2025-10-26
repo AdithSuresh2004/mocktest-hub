@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { findExamById } from '@/data/examRepository'
 
 import {
@@ -29,11 +29,11 @@ export default function useExam(examId) {
     setCurrentQuestion,
   } = navigation
   const finalizeExamRef = useRef(null)
-  const onTimerEnd = useCallback(() => {
+  const onTimerEnd = () => {
     if (finalizeExamRef.current) {
       finalizeExamRef.current(true)
     }
-  }, [])
+  }
   const timer = useTimer(0, onTimerEnd)
   useEffect(() => {
     if (!examId) {
@@ -95,12 +95,11 @@ export default function useExam(examId) {
         timer.setTime(
           activeAttempt._timeRemainingSeconds || examData.duration_minutes * 60
         )
-        if (
-          activeAttempt.status === 'in_progress' &&
-          activeAttempt._hasStarted
-        ) {
-          timer.start()
+
+        if (activeAttempt.status === 'in_progress' && activeAttempt._hasStarted) {
           setHasStarted(true)
+        } else {
+          setHasStarted(false)
         }
       } catch (e) {
         setError('Failed to load exam attempt: ' + e.message)
@@ -147,7 +146,7 @@ export default function useExam(examId) {
     markedForReview,
     answers,
   ])
-  const saveAndExitExam = useCallback(() => {
+  const saveAndExitExam = () => {
     if (isSubmitted || !attempt?.attempt_id || !exam) return
     timer.stop()
     const responses = Object.entries(answers).map(
@@ -164,70 +163,55 @@ export default function useExam(examId) {
       responses,
     }
     updateAttempt(attempt.attempt_id, updates)
-  }, [
-    isSubmitted,
-    attempt,
-    answers,
-    timer,
-    exam,
-    currentSection,
-    currentQuestion,
-  ])
-  const deleteAndExitExam = useCallback(() => {
+  }
+  const deleteAndExitExam = () => {
     if (attempt) {
       removeAttempt(attempt.attempt_id)
     }
     timer.stop()
-  }, [attempt, timer])
-  const handleAnswer = useCallback(
-    (questionId, optionId) => {
-      if (isSubmitted) return
-      setAnswers((prev) => ({ ...prev, [questionId]: optionId }))
-      if (attempt) {
-        const currentResponses = attempt.responses || []
-        const existingResponseIndex = currentResponses.findIndex(
-          (r) => r.q_id === questionId
-        )
-        let newResponses
-        if (existingResponseIndex > -1) {
-          newResponses = [...currentResponses]
-          newResponses[existingResponseIndex] = {
-            q_id: questionId,
-            selected_opt_id: optionId,
-          }
-        } else {
-          newResponses = [
-            ...currentResponses,
-            { q_id: questionId, selected_opt_id: optionId },
-          ]
+  }
+  const handleAnswer = (questionId, optionId) => {
+    if (isSubmitted) return
+    setAnswers((prev) => ({ ...prev, [questionId]: optionId }))
+    if (attempt) {
+      const currentResponses = attempt.responses || []
+      const existingResponseIndex = currentResponses.findIndex(
+        (r) => r.q_id === questionId
+      )
+      let newResponses
+      if (existingResponseIndex > -1) {
+        newResponses = [...currentResponses]
+        newResponses[existingResponseIndex] = {
+          q_id: questionId,
+          selected_opt_id: optionId,
         }
-        updateAttempt(attempt.attempt_id, { responses: newResponses })
+      } else {
+        newResponses = [
+          ...currentResponses,
+          { q_id: questionId, selected_opt_id: optionId },
+        ]
       }
-    },
-    [attempt, isSubmitted]
-  )
-  const toggleMarkForReview = useCallback(
-    (questionId) => {
-      if (isSubmitted) return
-      setMarkedForReview((prev) => {
-        const newMarked = new Set(prev)
-        if (newMarked.has(questionId)) {
-          newMarked.delete(questionId)
-        } else {
-          newMarked.add(questionId)
-        }
-        if (attempt) {
-          updateAttempt(attempt.attempt_id, {
-            _markedForReview: Array.from(newMarked),
-          })
-        }
-        return newMarked
-      })
-    },
-    [attempt, isSubmitted]
-  )
-  const finalizeExam = useCallback(
-    (isAutoSubmit = false) => {
+      updateAttempt(attempt.attempt_id, { responses: newResponses })
+    }
+  }
+  const toggleMarkForReview = (questionId) => {
+    if (isSubmitted) return
+    setMarkedForReview((prev) => {
+      const newMarked = new Set(prev)
+      if (newMarked.has(questionId)) {
+        newMarked.delete(questionId)
+      } else {
+        newMarked.add(questionId)
+      }
+      if (attempt) {
+        updateAttempt(attempt.attempt_id, {
+          _markedForReview: Array.from(newMarked),
+        })
+      }
+      return newMarked
+    })
+  }
+  const finalizeExam = () => {
       if (isSubmitted || !attempt || !exam) return null
       timer.stop()
       const finalAnswers = Object.entries(answers).map(
@@ -256,13 +240,13 @@ export default function useExam(examId) {
       setAttempt(finalAttempt)
       setIsSubmitted(true)
       return finalAttempt
-    },
-    [exam, answers, attempt, timer, isSubmitted]
-  )
+  }
+
   useEffect(() => {
     finalizeExamRef.current = finalizeExam
   }, [finalizeExam])
-  const restartExam = useCallback(() => {
+
+  const restartExam = () => {
     if (!exam) return
     if (attempt) {
       removeAttempt(attempt.attempt_id)
@@ -279,8 +263,9 @@ export default function useExam(examId) {
     setCurrentQuestion(0)
     setHasStarted(false)
     timer.setTime(exam.duration_minutes * 60)
-  }, [exam, attempt, timer, setCurrentSection, setCurrentQuestion])
-  const startExamTimer = useCallback(() => {
+  }
+
+  const startExamTimer = () => {
     if (!hasStarted && attempt) {
       timer.start()
       setHasStarted(true)
@@ -288,7 +273,8 @@ export default function useExam(examId) {
       updateAttempt(attempt.attempt_id, updatedAttempt)
       setAttempt(updatedAttempt)
     }
-  }, [hasStarted, attempt, timer])
+  }
+
   return {
     exam,
     attempt,

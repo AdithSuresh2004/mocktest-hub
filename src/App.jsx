@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import ErrorBoundary from '@/components/common/ErrorBoundary'
 import Layout from '@/components/layout/Layout'
 import { ToastProvider } from '@/hooks/common/useToast'
@@ -15,6 +16,10 @@ import PendingTestsPage from '@/pages/PendingTestsPage'
 import ReviewPage from '@/pages/ReviewPage'
 
 function App() {
+  useEffect(() => {
+    document.body.classList.add('loaded')
+  }, [])
+
   return (
     <ToastProvider>
       <Router>

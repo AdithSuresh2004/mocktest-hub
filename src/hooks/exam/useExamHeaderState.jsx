@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 const getTimeColor = (timeRemaining) => {
   if (timeRemaining <= 300) return 'text-red-600 dark:text-red-400'
@@ -17,17 +17,14 @@ export function useExamHeaderState(timeRemaining) {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
     }
   }, [])
-  const toggleFullscreen = useCallback(() => {
+  const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {})
     } else {
       document.exitFullscreen()
     }
-  }, [])
-  const timeColorClass = useMemo(
-    () => getTimeColor(timeRemaining),
-    [timeRemaining]
-  )
+  }
+  const timeColorClass = useMemo(() => getTimeColor(timeRemaining), [timeRemaining])
   return {
     isFullscreen,
     timeColorClass,

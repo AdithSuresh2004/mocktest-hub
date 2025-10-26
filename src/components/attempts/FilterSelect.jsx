@@ -1,5 +1,3 @@
-import { memo } from 'react'
-
 function FilterSelect({ label, value, options, onChange, filterName }) {
   return (
     <div className="w-full sm:w-auto">
@@ -29,4 +27,4 @@ function FilterSelect({ label, value, options, onChange, filterName }) {
   )
 }
 
-export default memo(FilterSelect)
+export default FilterSelect

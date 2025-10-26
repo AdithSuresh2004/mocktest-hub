@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { getAllAttempts } from '@/data/attemptRepository'
 
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
@@ -6,7 +6,8 @@ import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
 export function useRecentActivity() {
   const [recentActivity, setRecentActivity] = useState([])
   const [loading, setLoading] = useState(true)
-  const loadRecentActivity = useCallback(async () => {
+  
+  const loadRecentActivity = async () => {
     setLoading(true)
     try {
       const attempts = getAllAttempts()
@@ -23,9 +24,11 @@ export function useRecentActivity() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
+  
   useEffect(() => {
     loadRecentActivity()
-  }, [loadRecentActivity])
+  }, [])
+  
   return { recentActivity, loading }
 }

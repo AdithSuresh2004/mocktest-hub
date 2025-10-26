@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { getAllAttempts, removeAttempt } from '@/data/attemptRepository'
 
 export function usePendingTests() {
   const [pendingTests, setPendingTests] = useState([])
   const [loading, setLoading] = useState(true)
-  const loadPendingTests = useCallback(() => {
+  
+  const loadPendingTests = () => {
     setLoading(true)
     try {
       const attempts = getAllAttempts()
@@ -17,21 +18,21 @@ export function usePendingTests() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
+  
   useEffect(() => {
     loadPendingTests()
-  }, [loadPendingTests])
-  const deletePendingTest = useCallback(
-    (attemptId) => {
-      try {
-        removeAttempt(attemptId)
-        loadPendingTests()
-        return true
-      } catch (error) {
-        return false
-      }
-    },
-    [loadPendingTests]
-  )
+  }, [])
+  
+  const deletePendingTest = (attemptId) => {
+    try {
+      removeAttempt(attemptId)
+      loadPendingTests()
+      return true
+    } catch (error) {
+      return false
+    }
+  }
+  
   return { pendingTests, loading, deletePendingTest }
 }

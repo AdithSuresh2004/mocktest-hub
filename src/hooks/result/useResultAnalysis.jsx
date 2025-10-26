@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { findAttemptById } from '@/data/attemptRepository'
 
 import { findExamById } from '@/data/examRepository'
@@ -124,7 +124,7 @@ export default function useResultAnalysis(attemptId) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [analysis, setAnalysis] = useState(null)
-  const loadResult = useCallback(async () => {
+  const loadResult = async () => {
     setLoading(true)
     setError(null)
     try {
@@ -154,10 +154,10 @@ export default function useResultAnalysis(attemptId) {
       setError(err.message || 'Failed to load result.')
       setLoading(false)
     }
-  }, [attemptId])
+  }
   useEffect(() => {
     loadResult()
-  }, [loadResult])
+  }, [attemptId])
   const totalMarks = exam ? getTotalMarks(exam) : 0
   const actualScore = attempt ? getScore(attempt) : 0
   return {

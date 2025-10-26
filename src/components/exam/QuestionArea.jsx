@@ -12,7 +12,7 @@ export default function QuestionArea({
 }) {
   if (!question) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-gray-50 p-8 dark:bg-gray-900">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 p-8 transition-colors duration-200 dark:bg-gray-900">
         <p className="text-gray-500 dark:text-gray-400">Loading question...</p>
       </div>
     )

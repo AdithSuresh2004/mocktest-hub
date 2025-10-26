@@ -49,28 +49,28 @@ export default function QuestionNavigator({
     <>
       <button
         onClick={toggleMobileOpen}
-        className="fixed right-4 bottom-20 z-50 rounded-full bg-blue-600 p-3 text-white shadow-lg transition hover:bg-blue-700 lg:hidden"
+        className="fixed right-4 bottom-20 z-50 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all duration-200 hover:bg-blue-700 lg:hidden"
         aria-label="Toggle Question Navigator"
       >
         <IoGrid className="h-5 w-5" />
       </button>
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-gray-900/50 lg:hidden dark:bg-gray-900/80"
+          className="fixed inset-0 z-40 bg-gray-900/50 transition-opacity duration-200 lg:hidden dark:bg-gray-900/80"
           onClick={closeMobile}
         ></div>
       )}
       <div
-        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden lg:block'} flex h-full flex-col rounded-lg bg-gray-50 shadow-lg lg:relative lg:inset-auto lg:z-auto dark:bg-gray-800`}
+        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden lg:block'} flex h-full flex-col rounded-lg bg-gray-50 shadow-lg transition-colors duration-200 lg:relative lg:inset-auto lg:z-auto dark:bg-gray-800`}
       >
         {isMobileOpen && (
-          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4 lg:hidden dark:border-gray-700">
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4 transition-colors duration-200 lg:hidden dark:border-gray-700">
             <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
               Question Navigator
             </h3>
             <button
               onClick={closeMobile}
-              className="rounded-lg p-2 text-gray-500 transition hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="rounded-lg p-2 text-gray-500 transition-colors duration-200 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               aria-label="Close Navigator"
             >
               <IoClose className="h-6 w-6" />
@@ -78,12 +78,12 @@ export default function QuestionNavigator({
           </div>
         )}
         <div
-          className="relative flex-shrink-0 border-b border-gray-200 p-3 dark:border-gray-700"
+          className="relative flex-shrink-0 border-b border-gray-200 p-3 transition-colors duration-200 dark:border-gray-700"
           ref={dropdownRef}
         >
           <button
             onClick={toggleDropdown}
-            className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm transition hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+            className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm transition-colors duration-200 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
             aria-expanded={isDropdownOpen}
           >
             <span className="truncate font-medium">
@@ -94,12 +94,12 @@ export default function QuestionNavigator({
             />
           </button>
           {isDropdownOpen && (
-            <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-60 overflow-y-auto rounded-md border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-60 overflow-y-auto rounded-md border border-gray-200 bg-white shadow-xl transition-colors duration-200 dark:border-gray-700 dark:bg-gray-800">
               {sections.map((section, sIndex) => (
                 <button
                   key={section.section_id}
                   onClick={() => handleSectionChange(sIndex)}
-                  className={`w-full px-3 py-2 text-left text-sm transition-colors ${
+                  className={`w-full px-3 py-2 text-left text-sm transition-colors duration-200 ${
                     sIndex === currentSectionIndex
                       ? 'bg-blue-50 font-medium text-blue-800 dark:bg-blue-900/40 dark:text-blue-300'
                       : 'text-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'

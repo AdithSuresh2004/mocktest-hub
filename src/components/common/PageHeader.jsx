@@ -1,10 +1,4 @@
-import { memo } from 'react'
-
-/**
- * Reusable PageHeader component
- * Consolidates duplicate page header patterns
- */
-const PageHeader = memo(({ title, description, actions }) => {
+function PageHeader({ title, description, actions }) {
   return (
     <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
       <div>
@@ -18,8 +12,6 @@ const PageHeader = memo(({ title, description, actions }) => {
       {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
     </div>
   )
-})
-
-PageHeader.displayName = 'PageHeader'
+}
 
 export default PageHeader

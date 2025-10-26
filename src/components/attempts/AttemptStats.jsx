@@ -1,4 +1,3 @@
-import { memo, useMemo } from 'react'
 import {
   FaThumbsDown,
   FaHourglassHalf,
@@ -55,56 +54,50 @@ function AttemptStats({ stats, showDetails = false, onToggle }) {
   const formatScore = (value) =>
     Number.isFinite(value) ? `${Number(value).toFixed(1)}%` : '0.0%'
 
-  const highlights = useMemo(() => {
-    if (!stats) return []
-    return [
-      {
-        icon: <FaCheckCircle />,
-        label: 'Completed Tests',
-        value: stats.count ?? 0,
-        caption: 'Total exams you have finished',
-        accent: 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-300',
-      },
-      {
-        icon: <FaChartLine />,
-        label: 'Average Score',
-        value: formatScore(stats.avgScore),
-        caption: 'Consistent performance across attempts',
-        accent: 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300',
-      },
-      {
-        icon: <FaClock />,
-        label: 'Typical Time Spent',
-        value: formatDuration(stats.avgTime ?? 0),
-        caption: 'Average completion time per exam',
-        accent: 'bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-300',
-      },
-    ]
-  }, [stats])
+  const highlights = !stats ? [] : [
+    {
+      icon: <FaCheckCircle />,
+      label: 'Completed Tests',
+      value: stats.count ?? 0,
+      caption: 'Total exams you have finished',
+      accent: 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-300',
+    },
+    {
+      icon: <FaChartLine />,
+      label: 'Average Score',
+      value: formatScore(stats.avgScore),
+      caption: 'Consistent performance across attempts',
+      accent: 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300',
+    },
+    {
+      icon: <FaClock />,
+      label: 'Typical Time Spent',
+      value: formatDuration(stats.avgTime ?? 0),
+      caption: 'Average completion time per exam',
+      accent: 'bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-300',
+    },
+  ]
 
-  const detailCards = useMemo(() => {
-    if (!stats) return []
-    return [
-      {
-        icon: <FaTrophy className="text-green-500" />,
-        label: 'Best Score',
-        value: formatScore(stats.bestScore),
-        color: 'border-green-500',
-      },
-      {
-        icon: <FaThumbsDown className="text-red-500" />,
-        label: 'Lowest Score',
-        value: formatScore(stats.worstScore),
-        color: 'border-red-500',
-      },
-      {
-        icon: <FaHourglassHalf className="text-yellow-500" />,
-        label: 'Total Time Invested',
-        value: formatDuration(stats.totalTime ?? 0),
-        color: 'border-yellow-500',
-      },
-    ]
-  }, [stats])
+  const detailCards = !stats ? [] : [
+    {
+      icon: <FaTrophy className="text-green-500" />,
+      label: 'Best Score',
+      value: formatScore(stats.bestScore),
+      color: 'border-green-500',
+    },
+    {
+      icon: <FaThumbsDown className="text-red-500" />,
+      label: 'Lowest Score',
+      value: formatScore(stats.worstScore),
+      color: 'border-red-500',
+    },
+    {
+      icon: <FaHourglassHalf className="text-yellow-500" />,
+      label: 'Total Time Invested',
+      value: formatDuration(stats.totalTime ?? 0),
+      color: 'border-yellow-500',
+    },
+  ]
 
   if (!highlights.length) return null
 
@@ -146,4 +139,4 @@ function AttemptStats({ stats, showDetails = false, onToggle }) {
   )
 }
 
-export default memo(AttemptStats)
+export default AttemptStats

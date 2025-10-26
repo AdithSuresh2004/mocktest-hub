@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { getAllAttempts } from '@/data/attemptRepository'
 
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
@@ -15,7 +15,8 @@ const DEFAULT_STATS = {
 export function useDashboardStats() {
   const [stats, setStats] = useState(DEFAULT_STATS)
   const [loading, setLoading] = useState(true)
-  const loadStats = useCallback(async () => {
+  
+  const loadStats = async () => {
     setLoading(true)
     try {
       const attempts = getAllAttempts()
@@ -58,7 +59,8 @@ export function useDashboardStats() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
+  
   useEffect(() => {
     loadStats()
     const handleStorageChange = (e) => {
@@ -75,6 +77,7 @@ export function useDashboardStats() {
       window.removeEventListener('storage', handleStorageChange)
       window.removeEventListener('refreshDashboardStats', handleRefreshStats)
     }
-  }, [loadStats])
+  }, [])
+  
   return { stats, loading, refreshStats: loadStats }
 }

@@ -11,8 +11,8 @@ export default function InstructionsPage({ exam, onStart }) {
   const totalQuestions =
     exam.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4 dark:bg-gray-900">
-      <div className="w-full max-w-4xl rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4 transition-colors duration-200 dark:bg-gray-900">
+      <div className="w-full max-w-4xl rounded-lg bg-white p-8 shadow-lg transition-colors duration-200 2xl:max-w-6xl dark:bg-gray-800">
         <div className="mb-6 text-center">
           <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
             {exam.exam_name}

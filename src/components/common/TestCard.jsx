@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, memo } from 'react'
+import { useState, useEffect } from 'react'
 import { FaClock, FaListAlt, FaAward, FaStar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
@@ -12,50 +12,40 @@ import { FavoritesStorage } from '@/utils/storage'
 function TestCard({ test }) {
   const [isFavorite, setIsFavorite] = useState(false)
 
-  const testTypeConfig = useMemo(
-    () => getTestTypeConfig(test.type),
-    [test.type]
-  )
+  const testTypeConfig = getTestTypeConfig(test.type)
 
   const TestIcon = testTypeConfig.icon
   const maxVisibleTags = 3
 
-  const { subjects, topics, allTags, visibleTags, remainingCount } =
-    useMemo(() => {
-      const subjects = test.subjects || (test.subject ? [test.subject] : [])
-      const topics = test.topics || (test.topic ? [test.topic] : [])
-      const allTags = [
-        ...subjects.map((s) => ({ text: s, type: 'subject' })),
-        ...topics.map((t) => ({ text: t, type: 'topic' })),
-      ]
-      const visibleTags = allTags.slice(0, maxVisibleTags)
-      const remainingCount = allTags.length - maxVisibleTags
-      return { subjects, topics, allTags, visibleTags, remainingCount }
-    }, [test.subjects, test.subject, test.topics, test.topic])
+  const subjects = test.subjects || (test.subject ? [test.subject] : [])
+  const topics = test.topics || (test.topic ? [test.topic] : [])
+  const allTags = [
+    ...subjects.map((s) => ({ text: s, type: 'subject' })),
+    ...topics.map((t) => ({ text: t, type: 'topic' })),
+  ]
+  const visibleTags = allTags.slice(0, maxVisibleTags)
+  const remainingCount = allTags.length - maxVisibleTags
 
   useEffect(() => {
     setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
   }, [test.exam_id])
 
-  const toggleFavorite = useCallback(
-    (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      const favoriteData = {
-        exam_id: test.exam_id,
-        exam_name: test.exam_name,
-        type: testTypeConfig.label,
-        subject: subjects[0] || test.category || '',
-        duration_minutes: test.duration_minutes,
-        total_questions: test.total_questions,
-        total_marks: test.total_marks,
-        exam_strength: test.exam_strength,
-      }
-      const newStatus = FavoritesStorage.toggle(test.exam_id, favoriteData)
-      setIsFavorite(newStatus)
-    },
-    [test, testTypeConfig.label, subjects]
-  )
+  const toggleFavorite = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const favoriteData = {
+      exam_id: test.exam_id,
+      exam_name: test.exam_name,
+      type: testTypeConfig.label,
+      subject: subjects[0] || test.category || '',
+      duration_minutes: test.duration_minutes,
+      total_questions: test.total_questions,
+      total_marks: test.total_marks,
+      exam_strength: test.exam_strength,
+    }
+    const newStatus = FavoritesStorage.toggle(test.exam_id, favoriteData)
+    setIsFavorite(newStatus)
+  }
 
   return (
     <div className="relative flex h-72 flex-col rounded-lg border border-gray-200 bg-white p-4 transition-shadow duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
@@ -142,4 +132,4 @@ function TestCard({ test }) {
   )
 }
 
-export default memo(TestCard)
+export default TestCard

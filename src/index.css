@@ -5,11 +5,20 @@
 html {
   height: 100%;
   color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   height: 100%;
   scrollbar-gutter: stable;
+  overscroll-behavior: none;
+  transition: background-color 0s, color 0s;
+}
+
+body.loaded {
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
 }
 
 #root {
@@ -18,32 +27,31 @@ body {
 }
 
 @layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+
   body {
-    @apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
-    transition:
-      background-color 0.2s ease-in-out,
-      color 0.2s ease-in-out;
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-200 dark:bg-gray-800;
+    @apply bg-gray-100 dark:bg-gray-800;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-400 dark:bg-gray-600;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-500 dark:bg-gray-500;
+    @apply rounded-full bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500;
+    transition: background-color 0.2s;
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: theme('colors.gray.400') theme('colors.gray.200');
+    scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
   }
 
   .dark * {
@@ -67,6 +75,14 @@ body {
 
   .katex {
     font-size: 1em !important;
+  }
+
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input, textarea, select {
+    @apply transition-colors duration-200;
   }
 }
 
@@ -113,6 +129,17 @@ body {
     }
   }
 
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
   @keyframes scaleIn {
     from {
       transform: scale(0.95);
@@ -121,6 +148,15 @@ body {
     to {
       transform: scale(1);
       opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
     }
   }
 
@@ -140,11 +176,99 @@ body {
     animation: slideInRight 0.3s ease-out;
   }
 
+  .animate-slideInLeft {
+    animation: slideInLeft 0.3s ease-out;
+  }
+
   .animate-scaleIn {
     animation: scaleIn 0.2s ease-out;
   }
 
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 1000px 100%;
+  }
+
+  .dark .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
   .transition-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-fast {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-shadow {
+    @apply shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  .card-shadow-lg {
+    @apply shadow-md hover:shadow-lg transition-shadow duration-200;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-in {
+    animation-duration: 200ms;
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation-name: fade-in;
+  }
+
+  .zoom-in-95 {
+    animation-name: zoom-in;
+  }
+
+  @media (max-width: 640px) {
+    .text-responsive {
+      font-size: clamp(0.875rem, 2.5vw, 1rem);
+    }
+    .heading-responsive {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

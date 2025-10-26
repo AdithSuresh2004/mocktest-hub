@@ -1,8 +1,7 @@
-import { memo, useCallback, useMemo } from 'react'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 import FormattedContent from '@/components/common/FormattedContent'
 
-function QuestionCard({
+export default function QuestionCard({
   question,
   questionNumber,
   totalQuestions,
@@ -12,34 +11,31 @@ function QuestionCard({
   markedForReview,
   onMarkForReview,
 }) {
-  const questionId = useMemo(() => question?.q_id, [question?.q_id])
-  const handleOptionSelect = useCallback(
-    (optionId) => {
-      if (onAnswer && questionId) {
-        onAnswer(questionId, optionId)
-      }
-    },
-    [onAnswer, questionId]
-  )
-  const handleMarkToggle = useCallback(() => {
+  const questionId = question?.q_id
+  const handleOptionSelect = (optionId) => {
+    if (onAnswer && questionId) {
+      onAnswer(questionId, optionId)
+    }
+  }
+  const handleMarkToggle = () => {
     if (onMarkForReview && questionId) {
       onMarkForReview(questionId)
     }
-  }, [onMarkForReview, questionId])
+  }
   if (!question) {
     return (
-      <div className="flex h-full items-center justify-center rounded-lg bg-white p-8 shadow-md dark:bg-gray-800">
+      <div className="flex h-full items-center justify-center rounded-lg bg-white p-8 shadow-md transition-colors duration-200 dark:bg-gray-800">
         <p className="text-gray-500 dark:text-gray-400">Loading question...</p>
       </div>
     )
   }
   return (
     <div
-      className="flex min-h-full flex-col rounded-lg bg-white shadow-md dark:bg-gray-800"
+      className="flex min-h-full flex-col rounded-lg bg-white shadow-md transition-colors duration-200 dark:bg-gray-800"
       role="article"
       aria-labelledby="question-header"
     >
-      <div className="flex items-center justify-between border-b border-gray-200 bg-blue-50 p-4 dark:border-gray-700 dark:bg-gray-900">
+      <div className="flex items-center justify-between border-b border-gray-200 bg-blue-50 p-4 transition-colors duration-200 dark:border-gray-700 dark:bg-gray-900">
         <div>
           <h3
             id="question-header"
@@ -74,7 +70,7 @@ function QuestionCard({
           )}
         </button>
       </div>
-      <div className="border-b border-gray-200 bg-blue-50 p-6 dark:border-gray-700 dark:bg-gray-900">
+      <div className="border-b border-gray-200 bg-blue-50 p-6 transition-colors duration-200 dark:border-gray-700 dark:bg-gray-900">
         <FormattedContent
           text={question.question_text}
           className="text-base leading-relaxed text-gray-800 md:text-lg dark:text-gray-200"
@@ -96,7 +92,7 @@ function QuestionCard({
         )}
       </div>
       <div
-        className="space-y-4 bg-white p-6 dark:bg-gray-800"
+        className="space-y-4 bg-white p-6 transition-colors duration-200 dark:bg-gray-800"
         role="radiogroup"
         aria-labelledby="question-header"
       >
@@ -167,5 +163,3 @@ function QuestionCard({
     </div>
   )
 }
-
-export default memo(QuestionCard)

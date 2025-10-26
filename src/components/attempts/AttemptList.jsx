@@ -1,4 +1,3 @@
-import { memo } from 'react'
 import AttemptItem from '@/components/attempts/AttemptItem'
 
 function AttemptList({ attempts = [] }) {
@@ -24,4 +23,4 @@ function AttemptList({ attempts = [] }) {
   )
 }
 
-export default memo(AttemptList)
+export default AttemptList

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { calculateSectionStats } from '@/utils/helpers/examHelpers'
 
 export function useQuestionNavigator({
@@ -24,40 +24,27 @@ export function useQuestionNavigator({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-  const currentSectionData = useMemo(
-    () => sections[visibleSectionIndex] || { questions: [] },
-    [sections, visibleSectionIndex]
+  const currentSectionData = sections[visibleSectionIndex] || { questions: [] }
+  const stats = calculateSectionStats(
+    currentSectionData.questions,
+    answers,
+    markedForReview
   )
-  const stats = useMemo(
-    () =>
-      calculateSectionStats(
-        currentSectionData.questions,
-        answers,
-        markedForReview
-      ),
-    [currentSectionData.questions, answers, markedForReview]
-  )
-  const handleSectionChange = useCallback(
-    (sectionIndex) => {
-      setVisibleSectionIndex(sectionIndex)
-      setIsDropdownOpen(false)
-      onNavigate(sectionIndex, 0)
-    },
-    [onNavigate]
-  )
-  const handleQuestionClick = useCallback(
-    (qIndex) => {
-      onNavigate(visibleSectionIndex, qIndex)
-      setIsMobileOpen(false)
-    },
-    [onNavigate, visibleSectionIndex]
-  )
-  const toggleMobileOpen = useCallback(() => {
+  const handleSectionChange = (sectionIndex) => {
+    setVisibleSectionIndex(sectionIndex)
+    setIsDropdownOpen(false)
+    onNavigate(sectionIndex, 0)
+  }
+  const handleQuestionClick = (qIndex) => {
+    onNavigate(visibleSectionIndex, qIndex)
+    setIsMobileOpen(false)
+  }
+  const toggleMobileOpen = () => {
     setIsMobileOpen((prev) => !prev)
-  }, [])
-  const toggleDropdown = useCallback(() => {
+  }
+  const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev)
-  }, [])
+  }
   return {
     isMobileOpen,
     isDropdownOpen,

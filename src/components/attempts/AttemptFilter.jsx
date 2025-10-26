@@ -1,29 +1,33 @@
-import { memo, useMemo } from 'react'
-import { FaSortUp, FaSortDown, FaFilter, FaUndoAlt } from 'react-icons/fa'
+import {
+  FaSortUp,
+  FaSortDown,
+  FaFilter,
+  FaUndoAlt,
+} from 'react-icons/fa'
 import FilterSelect from '@/components/attempts/FilterSelect'
 
-function AttemptFilter({
+const AttemptFilter = ({
   filters,
   filterOptions,
   handleFilterChange,
   sortOrder,
   toggleSort,
   onResetFilters,
-}) {
-  const activeFilters = useMemo(() => {
-    const entries = []
-    if (filters.category !== 'all') {
-      entries.push({ label: 'Category', value: filters.category })
-    }
-    if (filters.subject !== 'all') {
-      entries.push({ label: 'Subject', value: filters.subject })
-    }
-    if (filters.topic !== 'all') {
-      entries.push({ label: 'Topic', value: filters.topic })
-    }
-    return entries
-  }, [filters])
+}) => {
+  const entries = []
+  if (filters.category !== 'all') {
+    entries.push({ label: 'Category', value: filters.category })
+  }
+  if (filters.subject !== 'all') {
+    entries.push({ label: 'Subject', value: filters.subject })
+  }
+  if (filters.topic !== 'all') {
+    entries.push({ label: 'Topic', value: filters.topic })
+  }
+  const activeFilters = entries
+  
   const sortLabel = sortOrder === 'asc' ? 'Score: Low → High' : 'Score: High → Low'
+  
   return (
     <section className="mb-10 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -95,4 +99,4 @@ function AttemptFilter({
   )
 }
 
-export default memo(AttemptFilter)
+export default AttemptFilter

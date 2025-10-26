@@ -44,7 +44,8 @@ export async function normalizeAttempt(attempt) {
       return 0
     }
     return {
-      id: attempt.id || attempt.attempt_id,
+      id: attempt.attempt_id,
+      attempt_id: attempt.attempt_id,
       examId: attempt.exam_id,
       examName: exam.title || attempt.exam_name || `Exam ${attempt.exam_id}`,
       date: attempt.date || attempt.timestamp,
