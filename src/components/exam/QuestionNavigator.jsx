@@ -112,7 +112,7 @@ export default function QuestionNavigator({
           )}
           <QuestionLegend stats={stats} />
         </div>
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 p-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(40px,1fr))] justify-items-center gap-3">
             {currentSectionData?.questions.map((question, qIndex) => (
               <button

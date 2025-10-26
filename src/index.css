@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 html {
   height: 100%;
   color-scheme: light dark;
@@ -17,6 +20,11 @@ body {
 
 body.loaded {
   transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+/* Prevent flickering during route transitions */
+html.transitioning * {
+  transition-duration: 0ms !important;
 }
 
 #root {
@@ -49,11 +57,11 @@ body.loaded {
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+    scrollbar-color: rgb(209 213 219) rgb(243 244 246);
   }
 
   .dark * {
-    scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+    scrollbar-color: rgb(75 85 99) rgb(31 41 55);
   }
 
   .katex-display {
@@ -61,12 +69,12 @@ body.loaded {
     margin: 0.5em 0 !important;
     display: block !important;
   }
-  
+
   .katex-display > .katex {
     text-align: left !important;
     display: block !important;
   }
-  
+
   .text-left .katex-display {
     text-align: left !important;
   }

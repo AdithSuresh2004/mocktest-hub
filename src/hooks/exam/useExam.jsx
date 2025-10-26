@@ -128,25 +128,6 @@ const useExam = (examId) => {
     finalizeExamRef.current = finalizeExam
   }, [finalizeExam])
 
-  const restartExam = () => {
-    if (!exam) return
-    if (attempt) {
-      removeAttempt(attempt.attempt_id)
-    }
-    const newAttempt = createAttempt(
-      exam.id || exam.exam_id,
-      exam.duration_minutes
-    )
-    setAttempt(newAttempt)
-    setAnswers({})
-    setMarkedForReview(new Set())
-    setIsSubmitted(false)
-    setCurrentSection(0)
-    setCurrentQuestion(0)
-    setHasStarted(false)
-    timer.setTime(exam.duration_minutes * 60)
-  }
-
   const startExamTimer = () => {
     if (!hasStarted && attempt) {
       timer.start()

@@ -13,7 +13,7 @@ export default function RecentActivity({ activities }) {
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Recent Activity
         </h2>
-        {activities.length > 3 && (
+        {activities.length > 4 && (
           <Link
             to="/attempts"
             className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"

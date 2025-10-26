@@ -150,25 +150,41 @@ const ReviewArea = ({
                 <FaUser className="mr-2 text-blue-500" />
                 <span className="font-medium">Your Answer:</span>
                 <span className="ml-2 text-gray-700 dark:text-gray-300">
-                  {userAnswer
-                    ? `${userAnswer.toUpperCase()}. ${
-                        question.options.find((o) => o.opt_id === userAnswer)
-                          ?.text
-                      }`
-                    : 'Not Answered'}
+                  {userAnswer ? (
+                    <>
+                      {userAnswer.toUpperCase()}.{' '}
+                      <FormattedContent
+                        text={
+                          question.options.find((o) => o.opt_id === userAnswer)
+                            ?.text
+                        }
+                        className="inline text-gray-700 dark:text-gray-300"
+                      />
+                    </>
+                  ) : (
+                    'Not Answered'
+                  )}
                 </span>
               </div>
               <div className="flex items-center">
                 <FaStar className="mr-2 text-green-500" />
                 <span className="font-medium">Correct Answer:</span>
                 <span className="ml-2 text-gray-700 dark:text-gray-300">
-                  {correctOptionId
-                    ? `${correctOptionId.toUpperCase()}. ${
-                        question.options.find(
-                          (o) => o.opt_id === correctOptionId
-                        )?.text
-                      }`
-                    : 'N/A'}
+                  {correctOptionId ? (
+                    <>
+                      {correctOptionId.toUpperCase()}.{' '}
+                      <FormattedContent
+                        text={
+                          question.options.find(
+                            (o) => o.opt_id === correctOptionId
+                          )?.text
+                        }
+                        className="inline text-gray-700 dark:text-gray-300"
+                      />
+                    </>
+                  ) : (
+                    'N/A'
+                  )}
                 </span>
               </div>
             </div>

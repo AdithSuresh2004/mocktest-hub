@@ -1,6 +1,10 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
 
 const COLORS = {
+  excellent: '#10b981',
+  good: '#3b82f6',      
+  average: '#f59e0b',  
+  poor: '#ef4444'   
 }
 
 const ScoreDistribution = ({ stats }) => {

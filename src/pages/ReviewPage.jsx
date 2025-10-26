@@ -195,8 +195,8 @@ const ReviewPage = () => {
       </header>
 
       {/* Main Content */}
-      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:h-[calc(100vh-5rem)] lg:grid-cols-4">
-        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 lg:h-full lg:overflow-hidden dark:bg-gray-800">
+      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-4">
+        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
           <ReviewArea
             question={currentQuestion}
             sectionName={currentSection.section_name}

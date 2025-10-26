@@ -85,15 +85,15 @@ const ExamPage = () => {
   }
 
   const saveAndExit = () => {
+    navigate('/')
     saveAndExitExam()
     cancelExit()
-    navigate('/')
   }
 
   const exitWithoutSaving = () => {
+    navigate('/')
     deleteAndExitExam()
     cancelExit()
-    navigate('/')
   }
 
   const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
@@ -188,7 +188,7 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="overflow-y-auto border-t border-gray-200 transition-colors duration-200 lg:col-span-1 lg:row-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
+        <aside className="border-t border-gray-200 transition-colors duration-200 lg:col-span-1 lg:row-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
           <QuestionNavigator
             sections={exam.sections}
             currentSectionIndex={currentSection}

@@ -1,3 +1,4 @@
+import { useEffect} from 'react'
 import QuestionHeader from './QuestionHeader'
 import QuestionContent from './QuestionContent'
 import QuestionOption from './QuestionOption'
@@ -56,7 +57,7 @@ export default function QuestionCard({
       />
 
       <div
-        className="space-y-4 bg-white p-6 transition-colors duration-200 dark:bg-gray-800"
+        className="flex-1 min-h-0 overflow-y-auto space-y-4 bg-white p-6 transition-colors duration-200 dark:bg-gray-800"
         role="radiogroup"
         aria-labelledby="question-header"
       >
