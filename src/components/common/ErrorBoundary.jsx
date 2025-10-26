@@ -29,11 +29,9 @@ class ErrorBoundary extends Component {
     })
 
     if (import.meta.env?.DEV) {
-      console.group('🚨 Error Details')
-      console.error('Error:', error)
-      console.error('Error Info:', errorInfo)
-      console.error('Error ID:', errorId)
-      console.groupEnd()
+      console.warn('Error:', error)
+      console.warn('Error Info:', errorInfo)
+      console.warn('Error ID:', errorId)
     }
   }
 

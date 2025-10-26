@@ -157,6 +157,7 @@ export default function useResultAnalysis(attemptId) {
   }
   useEffect(() => {
     loadResult()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attemptId])
   const totalMarks = exam ? getTotalMarks(exam) : 0
   const actualScore = attempt ? getScore(attempt) : 0

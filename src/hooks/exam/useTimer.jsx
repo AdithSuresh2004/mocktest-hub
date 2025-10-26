@@ -47,7 +47,7 @@ function useTimer(initialSeconds, onFinish) {
         intervalRef.current = null
       }
     }
-  }, [running, isPaused])
+  }, [running, isPaused, seconds])
 
   const start = () => {
     setRunning(true)

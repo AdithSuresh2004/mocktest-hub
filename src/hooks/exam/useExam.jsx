@@ -61,7 +61,15 @@ const useExam = (examId) => {
     timer.setTime(attempt._timeRemainingSeconds || exam.duration_minutes * 60)
 
     setHasStarted(attempt.status === 'in_progress' && attempt._hasStarted)
-  }, [attempt, setAnswers, setMarkedForReview, setCurrentSection, setCurrentQuestion, exam, timer])
+  }, [
+    attempt,
+    setAnswers,
+    setMarkedForReview,
+    setCurrentSection,
+    setCurrentQuestion,
+    exam,
+    timer,
+  ])
 
   useEffect(() => {
     if (

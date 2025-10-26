@@ -1,9 +1,4 @@
-import {
-  FaSortUp,
-  FaSortDown,
-  FaUndoAlt,
-  FaTimes,
-} from 'react-icons/fa'
+import { FaSortUp, FaSortDown, FaUndoAlt, FaTimes } from 'react-icons/fa'
 import FilterSelect from '@/components/common/FilterSelect'
 
 const AttemptFilter = ({

@@ -66,6 +66,7 @@ const ExamSelectionPage = () => {
     selectedSubject,
     selectedStrength,
     selectedAttemptStatus,
+    pagination,
   ])
 
   const toggleMobileFilters = () => {
