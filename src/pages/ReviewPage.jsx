@@ -7,6 +7,7 @@ import { FaTrophy, FaHome, FaClock, FaArrowLeft } from 'react-icons/fa'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import ReviewArea from '@/components/review/ReviewArea'
+import Button from '@/components/common/Button'
 
 const ReviewPage = () => {
   const { attemptId } = useParams()
@@ -152,23 +153,27 @@ const ReviewPage = () => {
       <header className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-4">
-            <Link
+            <Button
+              as={Link}
               to="/"
-              className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+              variant="secondary"
+              size="sm"
+              icon={FaHome}
               aria-label="Go to home"
             >
-              <FaHome className="h-4 w-4" />
               <span className="hidden sm:inline">Home</span>
-            </Link>
+            </Button>
 
-            <Link
+            <Button
+              as={Link}
               to={`/result/${attemptId}`}
-              className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+              variant="secondary"
+              size="sm"
+              icon={FaArrowLeft}
               aria-label="Back to results"
             >
-              <FaArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Results</span>
-            </Link>
+            </Button>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4">

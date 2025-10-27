@@ -37,7 +37,7 @@ export default function QuestionCard({
 
   return (
     <article
-      className="flex min-h-full flex-col rounded-lg bg-white shadow-md transition-colors duration-200 dark:bg-gray-800"
+      className="flex min-h-full flex-col overflow-hidden rounded-none bg-white shadow-none transition-[background-color] duration-300 dark:bg-gray-800 sm:rounded-none"
       role="article"
       aria-labelledby="question-header"
     >
@@ -57,7 +57,7 @@ export default function QuestionCard({
       />
 
       <div
-        className="flex-1 min-h-0 overflow-y-auto space-y-4 bg-white p-6 transition-colors duration-200 dark:bg-gray-800"
+        className="flex-1 min-h-0 space-y-3 overflow-y-auto bg-gradient-to-b from-white via-white to-blue-50/20 px-4 py-4 transition-[background-color] duration-300 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 sm:space-y-4 sm:px-6 sm:py-6"
         role="radiogroup"
         aria-labelledby="question-header"
       >

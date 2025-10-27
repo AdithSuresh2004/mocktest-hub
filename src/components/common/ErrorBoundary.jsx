@@ -1,5 +1,6 @@
-import { Component, Suspense } from 'react'
+import { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Button from '@/components/common/Button'
 
 const DEFAULT_ERROR_MESSAGE = 'An unexpected error occurred'
 
@@ -61,20 +62,21 @@ class ErrorBoundary extends Component {
               </p>
             )}
             <div className="flex gap-3">
-              <button
+              <Button
                 onClick={this.handleReset}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition-colors"
+                variant="primary"
                 aria-label="Try again to reload content"
               >
                 Try Again
-              </button>
-              <Link
+              </Button>
+              <Button
+                as={Link}
                 to="/"
-                className="rounded-lg bg-gray-600 px-4 py-2 text-white hover:bg-gray-700 transition-colors"
+                variant="secondary"
                 aria-label="Navigate to home page"
               >
                 Go Home
-              </Link>
+              </Button>
             </div>
           </div>
         )
@@ -125,29 +127,33 @@ class ErrorBoundary extends Component {
             )}
 
             <div className="flex flex-wrap justify-center gap-3">
-              <button
+              <Button
                 onClick={() => window.location.reload()}
-                className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                variant="primary"
+                size="lg"
                 aria-label="Reload the entire page"
               >
                 🔄 Refresh Page
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={this.handleReset}
-                className="rounded-lg bg-green-600 px-6 py-2 font-semibold text-white shadow-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                variant="success"
+                size="lg"
                 aria-label="Try to recover from the error"
               >
                 ↻ Try Again
-              </button>
+              </Button>
 
-              <Link
+              <Button
+                as={Link}
                 to="/"
-                className="rounded-lg bg-gray-600 px-6 py-2 font-semibold text-white shadow-md hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                variant="secondary"
+                size="lg"
                 aria-label="Go to home page"
               >
                 🏠 Go Home
-              </Link>
+              </Button>
             </div>
 
             {import.meta.env?.DEV && this.state.errorInfo && (

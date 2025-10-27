@@ -1,4 +1,5 @@
 import { getAllAttempts } from '@/data/attemptRepository'
+import { getDateKey, getStartOfDay, getStartOfWeek, getStartOfMonth } from '@/utils/helpers/dateHelpers'
 
 export function calculateStreakData() {
   const attempts = getAllAttempts()
@@ -15,21 +16,18 @@ export function calculateStreakData() {
     }
   }
 
-  const now = new Date()
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-
+  const today = getStartOfDay()
   let currentStreak = 0
   let currentDate = new Date(today)
 
   const dateExists = {}
   attempts.forEach(attempt => {
-    const attemptDate = new Date(attempt.timestamp)
-    const dateKey = `${attemptDate.getFullYear()}-${attemptDate.getMonth()}-${attemptDate.getDate()}`
+    const dateKey = getDateKey(attempt.timestamp)
     dateExists[dateKey] = true
   })
 
   while (true) {
-    const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`
+    const dateKey = getDateKey(currentDate)
     if (dateExists[dateKey]) {
       currentStreak++
       currentDate.setDate(currentDate.getDate() - 1)
@@ -61,12 +59,12 @@ export function calculateStreakData() {
     new Date(attempt.timestamp) >= today
   ).length
 
-  const weekStart = new Date(today)
+  const weekStart = getStartOfWeek(today)
   const weekAttempts = attempts.filter(attempt =>
     new Date(attempt.timestamp) >= weekStart
   ).length
 
-  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1)
+  const monthStart = getStartOfMonth(today)
   const monthAttempts = attempts.filter(attempt =>
     new Date(attempt.timestamp) >= monthStart
   ).length

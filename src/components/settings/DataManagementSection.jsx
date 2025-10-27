@@ -1,4 +1,5 @@
 import { FaDownload, FaTrash, FaUpload, FaCloudDownloadAlt, FaHistory, FaExclamationTriangle, FaDatabase, FaShieldAlt } from 'react-icons/fa'
+import Button from '@/components/common/Button'
 
 const DataManagementSection = ({ onExport, onImport, onClearData }) => {
   const handleExportSettings = () => {
@@ -39,13 +40,15 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
                 <p className="text-xs text-gray-600 dark:text-gray-400">Settings + all test attempts</p>
               </div>
             </div>
-            <button
+            <Button
               onClick={handleExportAll}
-              className="w-full flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700 text-sm"
+              variant="primary"
+              className="w-full"
+              icon={FaDownload}
+              size="sm"
             >
-              <FaDownload className="h-4 w-4" />
               Export Complete Backup
-            </button>
+            </Button>
           </div>
 
           <div className="space-y-3">
@@ -56,13 +59,15 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
                 <p className="text-xs text-gray-600 dark:text-gray-400">Preferences & configuration</p>
               </div>
             </div>
-            <button
+            <Button
               onClick={handleExportSettings}
-              className="w-full flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-3 font-medium text-white transition-colors hover:bg-green-700 text-sm"
+              variant="success"
+              className="w-full"
+              icon={FaDownload}
+              size="sm"
             >
-              <FaDownload className="h-4 w-4" />
               Export Settings
-            </button>
+            </Button>
           </div>
         </div>
       </div>

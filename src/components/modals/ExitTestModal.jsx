@@ -2,6 +2,7 @@ import {
   HiOutlineExclamationTriangle,
   HiInformationCircle,
 } from 'react-icons/hi2'
+import Button from '@/components/common/Button'
 
 const ExitTestModal = ({
   hasAnswers,
@@ -44,25 +45,20 @@ const ExitTestModal = ({
         </div>
         <div className="flex flex-col gap-3">
           {hasAnswers && (
-            <button
-              onClick={onSaveAndExit}
-              className="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-all duration-200 hover:bg-blue-700"
-            >
+            <Button onClick={onSaveAndExit} variant="primary" className="w-full">
               Save Progress & Exit
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             onClick={onExitWithoutSaving}
-            className="w-full rounded-lg bg-red-600 px-4 py-3 font-medium text-white transition-all duration-200 hover:bg-red-700"
+            variant="danger"
+            className="w-full"
           >
             {hasAnswers ? 'Exit Without Saving' : 'Exit Exam'}
-          </button>
-          <button
-            onClick={onCancel}
-            className="w-full rounded-lg bg-gray-200 px-4 py-3 font-medium text-gray-800 transition-all duration-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-          >
+          </Button>
+          <Button onClick={onCancel} variant="secondary" className="w-full">
             Continue Exam
-          </button>
+          </Button>
         </div>
       </div>
     </div>

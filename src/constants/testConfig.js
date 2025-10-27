@@ -70,13 +70,13 @@ export const QUESTION_STATUS = {
 
 export const QUESTION_STATUS_CLASSES = {
   [QUESTION_STATUS.CURRENT]:
-    'bg-blue-600 text-white shadow-lg ring-2 ring-blue-300',
+    'bg-blue-600 text-white shadow-lg border-2 border-blue-400',
   [QUESTION_STATUS.CORRECT]: 'bg-green-600 hover:bg-green-700 text-white',
   [QUESTION_STATUS.INCORRECT]: 'bg-red-600 hover:bg-red-700 text-white',
   [QUESTION_STATUS.MARKED]: 'bg-purple-600 hover:bg-purple-700 text-white',
   [QUESTION_STATUS.ANSWERED]: 'bg-green-600 hover:bg-green-700 text-white',
   [QUESTION_STATUS.NOT_VISITED]:
-    'bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200',
+    'bg-gray-200 hover:bg-gray-300 text-gray-700 border-0 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200',
 }
 
 export const PERFORMANCE_THRESHOLDS = {

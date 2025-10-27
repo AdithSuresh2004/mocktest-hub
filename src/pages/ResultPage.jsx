@@ -37,9 +37,9 @@ const ResultPage = () => {
   const performance = getPerformanceLevel(percentage)
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 px-3 py-6 sm:px-4 sm:py-8 lg:px-8 dark:bg-gray-900">
       <div
-        className="mx-auto max-w-5xl space-y-8"
+        className="mx-auto max-w-5xl space-y-4 sm:space-y-6 md:space-y-8"
       >
         <ResultHeader examName={exam.exam_name} />
 

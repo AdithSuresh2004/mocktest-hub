@@ -49,22 +49,22 @@ export default function QuestionNavigator({
     <>
       <button
         onClick={toggleMobileOpen}
-        className="fixed right-4 bottom-20 z-50 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all duration-200 hover:bg-blue-700 lg:hidden"
+        className="fixed right-4 bottom-24 z-50 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all duration-200 hover:bg-blue-700 md:hidden"
         aria-label="Toggle Question Navigator"
       >
         <IoGrid className="h-5 w-5" />
       </button>
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-gray-900/50 transition-opacity duration-200 lg:hidden dark:bg-gray-900/80"
+          className="fixed inset-0 z-40 bg-gray-900/50 transition-opacity duration-200 md:hidden dark:bg-gray-900/80"
           onClick={closeMobile}
         ></div>
       )}
       <div
-        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden lg:block'} flex h-full flex-col rounded-lg bg-gray-50 shadow-lg transition-colors duration-200 lg:relative lg:inset-auto lg:z-auto dark:bg-gray-800`}
+        className={`${isMobileOpen ? 'fixed inset-0 z-50' : 'hidden md:block'} flex h-full flex-col bg-gray-50 shadow-lg transition-colors duration-200 md:relative md:inset-auto md:z-auto dark:bg-gray-800`}
       >
         {isMobileOpen && (
-          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4 transition-colors duration-200 lg:hidden dark:border-gray-700">
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4 transition-colors duration-200 dark:border-gray-700">
             <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
               Question Navigator
             </h3>

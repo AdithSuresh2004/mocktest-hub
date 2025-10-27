@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import Button from '@/components/common/Button'
 
 export default function StatusDisplay({
   type = 'loading',
@@ -26,20 +27,14 @@ export default function StatusDisplay({
         </p>
         <div className="flex flex-wrap justify-center gap-2">
           {onRetry && (
-            <button
-              onClick={onRetry}
-              className="rounded-lg bg-red-600 px-5 py-2 text-white transition hover:bg-red-700"
-            >
+            <Button onClick={onRetry} variant="danger">
               Retry
-            </button>
+            </Button>
           )}
           {showBackHome && (
-            <button
-              onClick={handleBackHome}
-              className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
-            >
+            <Button onClick={handleBackHome} variant="primary">
               Back to Home
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -57,12 +52,13 @@ export default function StatusDisplay({
         </span>
       )}
       {showBackHome && (
-        <button
+        <Button
           onClick={handleBackHome}
-          className="mt-6 rounded-lg bg-gray-600 px-5 py-2 text-white transition hover:bg-gray-700"
+          variant="secondary"
+          className="mt-6"
         >
           Back to Home
-        </button>
+        </Button>
       )}
     </div>
   )

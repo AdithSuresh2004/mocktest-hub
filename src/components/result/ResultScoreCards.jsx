@@ -6,27 +6,7 @@ import {
 } from 'react-icons/fa'
 import { formatTime } from '@/utils/formatters/formatters'
 import ResultCard from '@/components/result/ResultCard'
-
-const StatTile = ({
-  icon: Icon,
-  label,
-  value,
-  iconBgColor,
-  iconColor,
-  valueColor,
-}) => (
-  <div className="flex items-center">
-    <div
-      className={`mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg ${iconBgColor}`}
-    >
-      <Icon className={`h-6 w-6 ${iconColor}`} />
-    </div>
-    <div>
-      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
-      <p className={`text-xl font-bold ${valueColor}`}>{value}</p>
-    </div>
-  </div>
-)
+import StatTile from '@/components/common/StatTile'
 
 const ResultScoreCards = ({
   actualScore,
@@ -37,7 +17,7 @@ const ResultScoreCards = ({
 }) => {
   return (
     <ResultCard>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-6">
         <StatTile
           icon={FaTrophy}
           label="Score"

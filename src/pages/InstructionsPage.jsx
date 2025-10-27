@@ -5,6 +5,7 @@ import {
   FaListAlt,
   FaExclamationTriangle,
 } from 'react-icons/fa'
+import Button from '@/components/common/Button'
 
 const InstructionsPage = ({ exam, onStart }) => {
   if (!exam) return null
@@ -154,18 +155,20 @@ const InstructionsPage = ({ exam, onStart }) => {
           </div>
         </div>
         <div className="flex justify-center gap-4">
-          <button
+          <Button
             onClick={() => window.history.back()}
-            className="rounded-lg border-2 border-gray-300 bg-white px-8 py-3 font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+            variant="secondary"
+            size="lg"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onStart}
-            className="rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
+            variant="primary"
+            size="lg"
           >
             Start Exam
-          </button>
+          </Button>
         </div>
       </div>
     </div>

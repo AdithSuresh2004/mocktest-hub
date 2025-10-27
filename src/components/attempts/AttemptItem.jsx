@@ -11,6 +11,8 @@ import {
   formatDuration,
 } from '@/utils/formatters/formatters'
 import { PERFORMANCE_THRESHOLDS } from '@/constants/testConfig'
+import Badge from '@/components/common/Badge'
+import Button from '@/components/common/Button'
 
 const AttemptItem = ({ attempt }) => {
   const score = attempt.score || 0
@@ -35,9 +37,7 @@ const AttemptItem = ({ attempt }) => {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-2">
           {attempt.category && (
-            <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
-              {attempt.category}
-            </span>
+            <Badge variant="primary">{attempt.category}</Badge>
           )}
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
             {attempt.examName}
@@ -71,20 +71,24 @@ const AttemptItem = ({ attempt }) => {
           </div>
         </div>
         <div className="flex gap-2">
-          <Link
+          <Button
+            as={Link}
             to={`/review/${attempt.id}`}
-            className="inline-flex items-center gap-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-blue-500 hover:text-blue-600 dark:border-gray-600 dark:text-gray-200 dark:hover:border-blue-400 dark:hover:text-blue-300"
+            variant="secondary"
+            icon={FaEye}
+            size="sm"
           >
-            <FaEye className="h-3 w-3" />
             Review
-          </Link>
-          <Link
+          </Button>
+          <Button
+            as={Link}
             to={`/result/${attempt.id}`}
-            className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+            variant="primary"
+            icon={FaFileAlt}
+            size="sm"
           >
-            <FaFileAlt className="h-3 w-3" />
             Result
-          </Link>
+          </Button>
         </div>
       </div>
     </article>

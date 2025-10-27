@@ -1,25 +1,22 @@
 import { findExamById } from '@/data/examRepository'
+import { getQuestionMarks, calculateTotalMarks } from '@/utils/calculations'
 
+/**
+ * Normalize attempt data with calculated score percentage
+ */
 export async function normalizeAttempt(attempt) {
   if (!attempt) return null
   try {
     const exam = await findExamById(attempt.exam_id)
     if (!exam) return null
+    
     const totalQuestions = exam.sections.reduce((sum, section) => {
       if (!Array.isArray(section.questions)) return sum
       return sum + section.questions.length
     }, 0)
-    const totalMarks = exam.sections.reduce((sum, section) => {
-      if (!Array.isArray(section.questions)) return sum
-      return (
-        sum +
-        section.questions.reduce((sectionSum, question) => {
-          const rawMarks = Number(question?.marks)
-          const marks = Number.isFinite(rawMarks) ? rawMarks : 4
-          return sectionSum + Math.max(marks, 0)
-        }, 0)
-      )
-    }, 0)
+    
+    const totalMarks = calculateTotalMarks(exam)
+
     const getScorePercentage = (score) => {
       if (score === null || score === undefined) return 0
       if (typeof score === 'number') {
@@ -43,6 +40,7 @@ export async function normalizeAttempt(attempt) {
       }
       return 0
     }
+    
     return {
       id: attempt.attempt_id,
       attempt_id: attempt.attempt_id,
@@ -63,5 +61,20 @@ export async function normalizeAttempt(attempt) {
     }
   } catch {
     return null
+  }
+}
+
+/**
+ * Format attempt data for display
+ */
+export function formatAttemptForDisplay(attempt) {
+  return {
+    id: attempt.attempt_id,
+    examId: attempt.exam_id,
+    examName: attempt.examName || attempt.exam_name,
+    date: attempt.date || attempt.timestamp,
+    score: attempt.score || 0,
+    status: attempt.status,
+    timeTaken: attempt.time_taken || 0,
   }
 }

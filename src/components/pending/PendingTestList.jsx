@@ -1,5 +1,6 @@
 import { FaPlay, FaCalendar, FaClock, FaTrash } from 'react-icons/fa'
 import { formatDate, formatTime } from '@/utils/formatters/formatters'
+import Button from '@/components/common/Button'
 
 export default function PendingTestList({ tests, onDelete, onResume }) {
   return (
@@ -26,23 +27,19 @@ export default function PendingTestList({ tests, onDelete, onResume }) {
               </div>
             </div>
             <div className="mt-4 flex items-center gap-3 sm:mt-0">
-              <button
-                onClick={() => onResume(test.exam_id)}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-              >
-                <FaPlay />
+              <Button onClick={() => onResume(test.exam_id)} variant="primary" icon={FaPlay}>
                 Resume
-              </button>
-              <button
+              </Button>
+              <Button 
                 onClick={(e) => {
                   e.stopPropagation()
                   onDelete(test.attempt_id)
-                }}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+                }} 
+                variant="danger" 
+                icon={FaTrash}
               >
-                <FaTrash />
                 Delete
-              </button>
+              </Button>
             </div>
           </div>
         </div>

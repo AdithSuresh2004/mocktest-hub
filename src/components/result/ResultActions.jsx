@@ -10,13 +10,13 @@ const ActionButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`flex w-full items-center justify-center rounded-lg px-4 py-3 font-semibold transition-all duration-200 ${
+    className={`flex w-full items-center justify-center rounded-lg px-3 py-2.5 text-sm font-semibold transition-all duration-200 sm:px-4 sm:py-3 sm:text-base ${
       primary
         ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
         : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
     } ${className}`}
   >
-    <Icon className="mr-2 h-5 w-5" />
+    <Icon className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
     {label}
   </button>
 )
@@ -34,7 +34,7 @@ const ResultActions = ({
       iconBgColor="bg-purple-100 dark:bg-purple-900/50"
       iconColor="text-purple-600 dark:text-purple-400"
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
         <ActionButton
           icon={FaRedo}
           label="Review Answers"

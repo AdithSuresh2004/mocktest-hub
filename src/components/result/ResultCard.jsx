@@ -11,20 +11,20 @@ const ResultCard = ({
       className={`overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 ${className}`}
     >
       {title && (
-        <div className="flex items-center border-b border-gray-200 p-4 dark:border-gray-700">
+        <div className="flex items-center border-b border-gray-200 p-3 dark:border-gray-700 sm:p-4">
           {Icon && (
             <div
-              className={`mr-4 flex h-10 w-10 items-center justify-center rounded-lg ${iconBgColor}`}
+              className={`mr-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg sm:mr-4 sm:h-10 sm:w-10 ${iconBgColor}`}
             >
-              <Icon className={`h-5 w-5 ${iconColor}`} />
+              <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
             </div>
           )}
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+          <h2 className="text-base font-semibold text-gray-800 sm:text-lg dark:text-gray-100">
             {title}
           </h2>
         </div>
       )}
-      <div className="p-6">{children}</div>
+      <div className="p-4 sm:p-6">{children}</div>
     </div>
   )
 }

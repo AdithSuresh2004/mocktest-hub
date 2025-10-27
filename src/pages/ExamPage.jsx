@@ -13,6 +13,7 @@ import ExamNavigation from '@/components/exam/ExamNavigation'
 import ExitTestModal from '@/components/modals/ExitTestModal'
 import SubmissionModal from '@/components/modals/SubmissionModal'
 import StatusDisplay from '@/components/common/StatusDisplay'
+import Button from '@/components/common/Button'
 
 const ExamPage = () => {
   const { examId } = useParams()
@@ -36,12 +37,6 @@ const ExamPage = () => {
     startExamTimer,
   } = useExam(examId)
 
-  useEffect(() => {
-    if (attempt && Object.keys(answers).length > 0) {
-      setShowInstructions(false)
-    }
-  }, [attempt, answers])
-
   const {
     currentSection,
     currentQuestion,
@@ -61,6 +56,12 @@ const ExamPage = () => {
     handleSubmit,
     cancelSubmit,
   } = modalState
+
+  useEffect(() => {
+    if (attempt && (hasStarted || Object.keys(answers).length > 0)) {
+      setShowInstructions(false)
+    }
+  }, [attempt, answers, hasStarted])
 
   const handleStartExam = () => {
     setShowInstructions(false)
@@ -114,38 +115,37 @@ const ExamPage = () => {
   }
 
   useKeyboardShortcuts({
-    onPrevQuestion: goToPrev,
-    onNextQuestion: goToNext,
+    onPrevQuestion: canGoPrev ? goToPrev : null,
+    onNextQuestion: canGoNext ? goToNext : null,
     onSelectOption: handleSelectOption,
     onMarkForReview: () => currentQ && toggleMarkForReview(currentQ.q_id),
     onToggleFullscreen: handleToggleFullscreen,
-    enabled: !showInstructions && !loading,
+    enabled: !showInstructions && !loading && !showExitModal && !showSubmitModal,
   })
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <div className="p-6">
-          <SkeletonLoader type="exam" count={1} />
-        </div>
+      <div className="min-h-screen bg-gray-100 p-4 sm:p-6 dark:bg-gray-900">
+        <SkeletonLoader type="exam" count={1} />
       </div>
     )
   }
+
   if (error) {
     return (
-      <div className="flex min-h-full flex-col items-center justify-center gap-4 text-center">
-        <p className="text-xl text-red-600 dark:text-red-400">{error}</p>
-        <button
-          onClick={() => (window.location.href = '/')}
-          className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
-        >
+      <div className="flex min-h-full flex-col items-center justify-center gap-4 p-4 text-center">
+        <p className="text-lg text-red-600 sm:text-xl dark:text-red-400">{error}</p>
+        <Button onClick={() => (window.location.href = '/')} variant="primary">
           Back to Home
-        </button>
+        </Button>
       </div>
     )
   }
-  if (exam && attempt && showInstructions && !hasStarted) {
+
+  if (showInstructions && exam && attempt && Object.keys(answers).length === 0 && !hasStarted) {
     return <InstructionsPage exam={exam} onStart={handleStartExam} />
   }
+
   if (isSubmitted) {
     return (
       <StatusDisplay
@@ -155,6 +155,7 @@ const ExamPage = () => {
       />
     )
   }
+
   if (!exam || !currentQ) {
     return (
       <StatusDisplay
@@ -164,9 +165,10 @@ const ExamPage = () => {
       />
     )
   }
+
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
-      <div className="sticky top-0 z-20 bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
+    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50/30 transition-[background-color] duration-300 dark:from-gray-950 dark:via-gray-950 dark:to-gray-950">
+      <div className="flex-shrink-0 border-b border-blue-200 bg-white shadow-md backdrop-blur-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900/95 dark:backdrop-blur-sm">
         <ExamHeader
           exam={exam}
           timeRemaining={timeRemaining}
@@ -175,8 +177,8 @@ const ExamPage = () => {
           isCritical={isCritical}
         />
       </div>
-      <div className="grid flex-1 grid-cols-1 lg:grid-cols-4 lg:grid-rows-1">
-        <main className="lg:col-span-3 lg:row-span-1">
+      <div className="flex flex-1 overflow-hidden">
+        <main className="flex-1 overflow-y-auto custom-scrollbar transition-colors duration-300">
           <QuestionArea
             question={currentQ}
             section={currentSectionObj.section_name}
@@ -188,18 +190,20 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="border-t border-gray-200 transition-colors duration-200 lg:col-span-1 lg:row-span-1 lg:border-t-0 lg:border-l dark:border-gray-700">
-          <QuestionNavigator
-            sections={exam.sections}
-            currentSectionIndex={currentSection}
-            currentQuestionIndex={currentQuestion}
-            answers={answers}
-            markedForReview={markedForReview}
-            onQuestionSelect={navigateToQuestion}
-          />
+        <aside className="hidden w-full border-l border-gray-200 transition-colors duration-300 dark:border-gray-800 lg:block lg:w-72 xl:w-80">
+          <div className="h-full overflow-y-auto custom-scrollbar">
+            <QuestionNavigator
+              sections={exam.sections}
+              currentSectionIndex={currentSection}
+              currentQuestionIndex={currentQuestion}
+              answers={answers}
+              markedForReview={markedForReview}
+              onQuestionSelect={navigateToQuestion}
+            />
+          </div>
         </aside>
       </div>
-      <div className="sticky bottom-0 z-20 bg-gray-100 transition-colors duration-200 dark:bg-gray-900">
+      <div className="flex-shrink-0 border-t border-blue-200 bg-white shadow-md backdrop-blur-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900/95 dark:backdrop-blur-sm">
         <ExamNavigation
           canGoPrev={currentSection > 0 || currentQuestion > 0}
           canGoNext={

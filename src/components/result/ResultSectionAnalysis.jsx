@@ -17,13 +17,13 @@ const SectionRow = ({ section }) => {
       : 'text-red-600 dark:text-red-400'
 
   return (
-    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700/50">
+    <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50 sm:p-4">
       <div className="mb-3">
-        <div className="mb-1 flex items-center justify-between">
-          <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+        <div className="mb-1.5 flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-800 sm:text-base dark:text-gray-100">
             {section.sectionName}
           </h3>
-          <span className={`text-sm font-bold ${accuracyTextColor}`}>
+          <span className={`text-xs font-bold sm:text-sm ${accuracyTextColor}`}>
             {section.accuracy}%
           </span>
         </div>
@@ -34,28 +34,28 @@ const SectionRow = ({ section }) => {
           ></div>
         </div>
       </div>
-      <div className="grid grid-cols-4 pt-2 text-center">
+      <div className="grid grid-cols-2 gap-2 pt-2 text-center sm:grid-cols-4 sm:gap-0">
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Correct</p>
-          <p className="font-semibold text-green-600 dark:text-green-400">
+          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">Correct</p>
+          <p className="text-sm font-semibold text-green-600 sm:text-base dark:text-green-400">
             {section.correct}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Incorrect</p>
-          <p className="font-semibold text-red-600 dark:text-red-400">
+          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">Incorrect</p>
+          <p className="text-sm font-semibold text-red-600 sm:text-base dark:text-red-400">
             {section.incorrect}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Unanswered</p>
-          <p className="font-semibold text-gray-600 dark:text-gray-300">
+          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">Unanswered</p>
+          <p className="text-sm font-semibold text-gray-600 sm:text-base dark:text-gray-300">
             {section.unanswered}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Total</p>
-          <p className="font-semibold text-gray-800 dark:text-gray-100">
+          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">Total</p>
+          <p className="text-sm font-semibold text-gray-800 sm:text-base dark:text-gray-100">
             {section.totalQuestions}
           </p>
         </div>

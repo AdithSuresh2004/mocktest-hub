@@ -7,15 +7,17 @@ const QuestionHeader = ({
   markedForReview,
   onMarkForReview
 }) => (
-  <div className="flex items-center justify-between border-b border-gray-200 bg-blue-50 p-4 transition-colors duration-200 dark:border-gray-700 dark:bg-gray-900">
-    <div>
-      <h3
-        id="question-header"
-        className="text-lg font-semibold text-gray-900 sm:text-xl md:text-2xl dark:text-gray-100"
-      >
-        Q{questionNumber} of {totalQuestions}
-      </h3>
-      <span className="text-sm text-gray-500 sm:text-base dark:text-gray-400">
+  <div className="relative flex items-center justify-between border-b border-blue-100 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/40 px-4 py-3 transition-[background-color,border-color] duration-300 dark:border-blue-900/30 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20 sm:px-6 sm:py-4">
+    <div className="flex-1">
+      <div className="mb-1">
+        <h3
+          id="question-header"
+          className="text-base font-bold text-gray-900 transition-colors sm:text-lg dark:text-white md:text-xl"
+        >
+          Question {questionNumber} of {totalQuestions}
+        </h3>
+      </div>
+      <span className="text-xs font-medium text-gray-600 transition-colors sm:text-sm dark:text-gray-300">
         {sectionName}
       </span>
     </div>
@@ -30,15 +32,19 @@ const QuestionHeader = ({
         markedForReview ? 'Remove review mark' : 'Mark for review'
       }
       aria-pressed={markedForReview}
-      className="rounded-md p-2 text-gray-500 transition hover:bg-blue-100 hover:text-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none dark:hover:bg-gray-700"
+      className={`rounded-xl p-2.5 transition-all duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
+        markedForReview
+          ? 'bg-yellow-100 text-yellow-600 shadow-sm hover:bg-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-400 dark:hover:bg-yellow-900/60'
+          : 'text-gray-500 hover:bg-white/60 hover:text-yellow-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-yellow-400'
+      }`}
     >
       {markedForReview ? (
         <IoBookmark
-          className="h-6 w-6 text-yellow-600 dark:text-yellow-500"
+          className="h-5 w-5 sm:h-6 sm:w-6"
           aria-hidden="true"
         />
       ) : (
-        <IoBookmarkOutline className="h-6 w-6" aria-hidden="true" />
+        <IoBookmarkOutline className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
       )}
     </button>
   </div>

@@ -14,6 +14,7 @@ import {
   YAxis
 } from 'recharts'
 import { getAllAttempts } from '@/data/attemptRepository'
+import ToggleButtons from './ToggleButtons'
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -134,38 +135,15 @@ const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) =>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Performance Trend (Last {days} days)
         </h3>
-        <div className="flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-          <button
-            onClick={() => setChartType('area')}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-all ${
-              chartType === 'area'
-                ? 'bg-white text-blue-700 shadow-sm dark:bg-gray-600 dark:text-blue-400'
-                : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
-            }`}
-          >
-            Area
-          </button>
-          <button
-            onClick={() => setChartType('line')}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-all ${
-              chartType === 'line'
-                ? 'bg-white text-blue-700 shadow-sm dark:bg-gray-600 dark:text-blue-400'
-                : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
-            }`}
-          >
-            Line
-          </button>
-          <button
-            onClick={() => setChartType('bar')}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-all ${
-              chartType === 'bar'
-                ? 'bg-white text-blue-700 shadow-sm dark:bg-gray-600 dark:text-blue-400'
-                : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
-            }`}
-          >
-            Bar
-          </button>
-        </div>
+        <ToggleButtons
+          options={[
+            { value: 'area', label: 'Area' },
+            { value: 'line', label: 'Line' },
+            { value: 'bar', label: 'Bar' },
+          ]}
+          value={chartType}
+          onChange={setChartType}
+        />
       </div>
       {chartData.length > 0 ? (
         <div

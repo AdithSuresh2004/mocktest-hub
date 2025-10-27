@@ -18,10 +18,10 @@ const QuestionContent = ({ questionText, image, image_url, question_image }) => 
   const imageSrc = image || image_url || question_image
 
   return (
-    <div className="border-b border-gray-200 bg-blue-50 p-6 transition-colors duration-200 dark:border-gray-700 dark:bg-gray-900">
+    <div className="overflow-x-auto border-b border-blue-50 bg-white px-4 py-5 transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900 sm:px-6 sm:py-7">
       <FormattedContent
         text={questionText}
-        className="text-base leading-relaxed text-gray-800 md:text-lg dark:text-gray-200"
+        className="text-sm leading-relaxed text-gray-900 transition-colors sm:text-base dark:text-gray-50 md:text-lg"
       />
       {imageSrc && (
         <QuestionImage

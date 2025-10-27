@@ -1,29 +1,34 @@
-const EmptyState = ({
-  icon: Icon,
-  title,
-  description,
+import { FaFileAlt, FaSearch, FaRedo } from 'react-icons/fa'
+import { theme } from '@/utils/theme'
+
+const EmptyState = ({ 
+  icon: Icon = FaFileAlt,
+  title = 'No data available',
+  message,
   actionLabel,
   onAction,
-  actionIcon: ActionIcon,
+  className = '' 
 }) => {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      {Icon && <Icon className="mx-auto mb-4 h-16 w-16 text-gray-400" />}
-      <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-        {title}
-      </h3>
-      {description && (
-        <p className="mb-6 text-gray-600 dark:text-gray-400">{description}</p>
-      )}
-      {actionLabel && onAction && (
-        <button
-          onClick={onAction}
-          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
-        >
-          {ActionIcon && <ActionIcon />}
-          {actionLabel}
-        </button>
-      )}
+    <div className={`flex min-h-full items-center justify-center bg-gray-50 ${className} dark:bg-gray-900`}>
+      <div className="mx-auto max-w-md px-4 text-center">
+        <Icon className="mx-auto mb-4 h-16 w-16 text-gray-400" />
+        <h3 className={`mb-2 text-xl font-semibold ${theme.text.primary}`}>
+          {title}
+        </h3>
+        <p className={`mb-6 ${theme.text.secondary}`}>
+          {message || 'There\'s nothing to display here yet.'}
+        </p>
+        {onAction && actionLabel && (
+          <button
+            onClick={onAction}
+            className={`inline-flex items-center rounded-lg px-6 py-3 font-medium text-white transition-colors ${theme.button.primary} ${theme.interactive.focus}`}
+          >
+            <FaRedo className="mr-2 h-4 w-4" />
+            {actionLabel}
+          </button>
+        )}
+      </div>
     </div>
   )
 }

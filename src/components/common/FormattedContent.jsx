@@ -1,4 +1,3 @@
-import React from 'react'
 import MathRenderer from './contentProcessing/MathRenderer'
 import TableRenderer from './contentProcessing/TableRenderer'
 import TextRenderer from './contentProcessing/TextRenderer'
@@ -11,7 +10,7 @@ const FormattedContent = ({ text, className = '' }) => {
   if (!text) return null
 
   return (
-    <div className={className}>
+    <div className={`min-w-0 ${className}`}>
       {parts.map((part, index) => {
         switch (part.type) {
           case 'block':

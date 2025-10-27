@@ -32,7 +32,7 @@ export default function ExamHeader({
 
   return (
     <header
-      className="z-10 border-b border-gray-200 bg-white px-4 py-2 shadow-md transition-colors duration-200 dark:border-gray-700 dark:bg-gray-800"
+      className="z-10 border-b border-blue-200 bg-white px-3 py-2.5 shadow-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900 sm:px-4"
       role="banner"
     >
       <div className="flex items-center justify-between gap-4">

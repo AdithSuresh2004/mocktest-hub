@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useFocusTrap } from '@/hooks/common/useFocusTrap'
 import { HiOutlineExclamationTriangle } from 'react-icons/hi2'
+import Button from '@/components/common/Button'
 
 const SubmissionModal = ({
   answeredCount,
@@ -77,21 +78,23 @@ const SubmissionModal = ({
           </div>
         </div>
         <div className="flex gap-3">
-          <button
+          <Button
             onClick={onCancel}
-            className="flex-1 rounded-lg bg-gray-200 px-4 py-3 font-medium text-gray-800 transition-all duration-200 hover:bg-gray-300 focus:ring-2 focus:ring-gray-500 focus:outline-none dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+            variant="secondary"
+            className="flex-1"
             aria-label="Cancel submission and continue exam"
           >
             Continue Exam
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onConfirm}
-            className="flex-1 rounded-lg bg-red-600 px-4 py-3 font-medium text-white transition-all duration-200 hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+            variant="danger"
+            className="flex-1"
             aria-label="Submit exam now"
             autoFocus
           >
             Submit Now
-          </button>
+          </Button>
         </div>
       </div>
     </div>

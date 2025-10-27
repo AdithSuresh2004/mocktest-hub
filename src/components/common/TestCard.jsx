@@ -10,175 +10,132 @@ import {
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
 import {
-  getDifficultyColor,
   capitalizeStrength,
   getTestTypeConfig,
 } from '@/utils/testHelpers'
 import { FavoritesStorage } from '@/utils/storage'
-import { findAllAttemptsByExamId } from '@/data/attemptRepository'
+import Badge from '@/components/common/Badge'
+import Button from '@/components/common/Button'
+import { getAttemptStatus, getAllTags, toggleFavoriteStatus, getFavoriteData } from '@/services/testService'
 
 const TestCard = ({ test }) => {
   const [isFavorite, setIsFavorite] = useState(false)
   const [attemptStatus, setAttemptStatus] = useState(null)
 
   const testTypeConfig = getTestTypeConfig(test.type)
-
   const TestIcon = testTypeConfig.icon
   const maxVisibleTags = 3
 
-  const subjects = test.subjects || (test.subject ? [test.subject] : [])
-  const topics = test.topics || (test.topic ? [test.topic] : [])
-  const allTags = [
-    ...subjects.map((s) => ({ text: s, type: 'subject' })),
-    ...topics.map((t) => ({ text: t, type: 'topic' })),
-  ]
+  const allTags = getAllTags(test)
   const visibleTags = allTags.slice(0, maxVisibleTags)
   const remainingCount = allTags.length - maxVisibleTags
 
   useEffect(() => {
     setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
-
-    const attempts = findAllAttemptsByExamId(test.exam_id)
-    if (attempts.length > 0) {
-      const completedAttempts = attempts.filter(
-        (att) => att.status === 'completed'
-      )
-      if (completedAttempts.length > 0) {
-        setAttemptStatus('completed')
-      } else {
-        setAttemptStatus('in_progress')
-      }
-    } else {
-      setAttemptStatus('not_attempted')
-    }
+    setAttemptStatus(getAttemptStatus(test.exam_id))
   }, [test.exam_id])
 
   const toggleFavorite = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const favoriteData = {
-      exam_id: test.exam_id,
-      exam_name: test.exam_name,
-      type: testTypeConfig.label,
-      subject: subjects[0] || test.category || '',
-      duration_minutes: test.duration_minutes,
-      total_questions: test.total_questions,
-      total_marks: test.total_marks,
-      exam_strength: test.exam_strength,
-    }
-    const newStatus = FavoritesStorage.toggle(test.exam_id, favoriteData)
+    const favoriteData = getFavoriteData(test)
+    const newStatus = toggleFavoriteStatus(test.exam_id, favoriteData)
     setIsFavorite(newStatus)
   }
 
   return (
-    <div className="relative flex h-72 flex-col rounded-lg border border-gray-200 bg-white p-4 transition-shadow duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+    <div className="relative flex min-h-[280px] flex-col rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-all duration-200 sm:min-h-[320px] sm:p-4 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
       <button
         onClick={toggleFavorite}
-        className="absolute top-3 right-3 z-10 rounded-full p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="absolute top-2 right-2 z-10 rounded-full p-1.5 transition-colors sm:top-3 sm:right-3 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
         aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <FaStar
-          className={`h-5 w-5 transition-colors ${
+          className={`h-4 w-4 transition-colors sm:h-5 sm:w-5 ${
             isFavorite
               ? 'fill-yellow-500 text-yellow-500'
               : 'text-gray-400 hover:text-yellow-500 dark:text-gray-500'
           }`}
         />
       </button>
-      <div className="mb-3 flex flex-wrap gap-2 pr-10">
-        <span
-          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getDifficultyColor(test.exam_strength)}`}
-        >
+      <div className="mb-2.5 flex flex-wrap gap-1.5 pr-8 sm:mb-3 sm:gap-2 sm:pr-10">
+        <Badge variant="warning" icon={testTypeConfig.icon} className="text-xs sm:text-sm">
           {capitalizeStrength(test.exam_strength) || 'Normal'}
-        </span>
-        <span
-          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${testTypeConfig.color}`}
-        >
-          <TestIcon className="mr-1.5 h-3 w-3" />
+        </Badge>
+        <Badge variant="primary" icon={TestIcon} className="text-xs sm:text-sm">
           {testTypeConfig.label}
-        </span>
+        </Badge>
         {attemptStatus && (
-          <span
-            className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
-              attemptStatus === 'completed'
-                ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
-                : attemptStatus === 'in_progress'
-                  ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300'
-                  : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-            }`}
+          <Badge 
+            variant={
+              attemptStatus === 'completed' ? 'success' :
+              attemptStatus === 'in_progress' ? 'warning' : 'default'
+            }
+            icon={
+              attemptStatus === 'completed' ? FaCheckCircle :
+              attemptStatus === 'in_progress' ? FaPlay : null
+            }
+            className="text-xs sm:text-sm"
           >
-            {attemptStatus === 'completed' ? (
-              <>
-                <FaCheckCircle className="mr-1 h-3 w-3" />
-                Completed
-              </>
-            ) : attemptStatus === 'in_progress' ? (
-              <>
-                <FaPlay className="mr-1 h-3 w-3" />
-                In Progress
-              </>
-            ) : (
-              'Not Attempted'
-            )}
-          </span>
+            {attemptStatus === 'completed' ? 'Completed' :
+             attemptStatus === 'in_progress' ? 'In Progress' :
+             'Not Attempted'}
+          </Badge>
         )}
       </div>
-      <h3 className="mb-2 line-clamp-1 truncate text-lg leading-snug font-semibold text-gray-900 dark:text-gray-100">
+      <h3 className="mb-1.5 line-clamp-1 truncate text-base font-semibold leading-snug text-gray-900 sm:mb-2 sm:text-lg dark:text-gray-100">
         {test.exam_name}
       </h3>
       {test.category && (
-        <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
+        <p className="mb-2.5 truncate text-xs text-gray-600 sm:mb-3 sm:text-sm dark:text-gray-400">
           {capitalizeText(test.category)}
         </p>
       )}
-      <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
-        <div className="flex items-center gap-1.5">
-          <FaClock className="h-4 w-4" />
-          <span>{test.duration_minutes} mins</span>
+      <div className="mb-3 flex flex-wrap gap-2 text-xs text-gray-600 sm:mb-4 sm:gap-3 sm:text-sm dark:text-gray-400">
+        <div className="flex items-center gap-1">
+          <FaClock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <span>{test.duration_minutes}m</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <FaListAlt className="h-4 w-4" />
-          <span>{test.total_questions} ques</span>
+        <div className="flex items-center gap-1">
+          <FaListAlt className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <span>{test.total_questions}</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <FaAward className="h-4 w-4" />
-          <span>{test.total_marks} marks</span>
+        <div className="flex items-center gap-1">
+          <FaAward className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <span>{test.total_marks}</span>
         </div>
       </div>
       {allTags.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
+        <div className="mb-3 flex flex-wrap gap-1.5 sm:mb-4 sm:gap-2">
           {visibleTags.map((tag, idx) => (
             <span
               key={`${tag.type}-${idx}`}
-              className="rounded-md bg-gray-100 px-2.5 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+              className="rounded-md bg-gray-100 px-2 py-0.5 text-[0.65rem] text-gray-700 sm:px-2.5 sm:py-1 sm:text-xs dark:bg-gray-700 dark:text-gray-300"
             >
               {tag.text}
             </span>
           ))}
           {remainingCount > 0 && (
             <span
-              className="rounded-md bg-gray-100 px-2.5 py-1 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+              className="rounded-md bg-gray-100 px-2 py-0.5 text-[0.65rem] text-gray-500 sm:px-2.5 sm:py-1 sm:text-xs dark:bg-gray-700 dark:text-gray-400"
               title={allTags
                 .slice(maxVisibleTags)
                 .map((t) => t.text)
                 .join(', ')}
             >
-              +{remainingCount} more
+              +{remainingCount}
             </span>
           )}
         </div>
       )}
       <div className="mt-auto">
-        <Link
-          to={`/exam/${test.exam_id}`}
-          className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-700 active:bg-blue-800"
-        >
+        <Button as={Link} to={`/exam/${test.exam_id}`} variant="primary" className="w-full text-xs sm:text-sm sm:py-2">
           {attemptStatus === 'completed'
             ? 'Retake Test'
             : attemptStatus === 'in_progress'
               ? 'Continue Test'
               : 'Start Test'}
-        </Link>
+        </Button>
       </div>
     </div>
   )
