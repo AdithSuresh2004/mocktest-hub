@@ -148,7 +148,7 @@ const ReviewArea = ({
             <div className="space-y-2 text-sm">
               <div className="flex items-center">
                 <FaUser className="mr-2 text-blue-500" />
-                <span className="font-medium">Your Answer:</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">Your Answer:</span>
                 <span className="ml-2 text-gray-700 dark:text-gray-300">
                   {userAnswer ? (
                     <>
@@ -168,7 +168,7 @@ const ReviewArea = ({
               </div>
               <div className="flex items-center">
                 <FaStar className="mr-2 text-green-500" />
-                <span className="font-medium">Correct Answer:</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">Correct Answer:</span>
                 <span className="ml-2 text-gray-700 dark:text-gray-300">
                   {correctOptionId ? (
                     <>

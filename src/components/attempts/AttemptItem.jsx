@@ -33,8 +33,8 @@ const AttemptItem = ({ attempt }) => {
   const timeLabel = formatDuration(attempt.timeTaken)
 
   return (
-    <article className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-      <div className="flex-1 min-w-0">
+    <article className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+      <div className="flex-1 min-w-0 mb-4 sm:mb-0">
         <div className="flex items-center gap-3 mb-2">
           {attempt.category && (
             <Badge variant="primary">{attempt.category}</Badge>
@@ -43,7 +43,7 @@ const AttemptItem = ({ attempt }) => {
             {attempt.examName}
           </h3>
         </div>
-        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-1">
             <FaCalendarAlt className="h-3 w-3" />
             <span>{dateLabel}</span>
@@ -64,13 +64,13 @@ const AttemptItem = ({ attempt }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="text-right">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+        <div className="text-left sm:text-right w-full sm:w-auto">
           <div className={`text-2xl font-bold ${scoreColor}`}>
             {scoreLabel}%
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <Button
             as={Link}
             to={`/review/${attempt.id}`}

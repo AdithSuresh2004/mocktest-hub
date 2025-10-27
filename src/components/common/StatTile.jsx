@@ -6,12 +6,13 @@ const StatTile = ({
   iconColor,
   valueColor,
   className = '',
+  valueClassName = '',
 }) => {
   return (
     <div
-      className={`rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800 sm:p-4 ${className}`}
+      className={`rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800 sm:px-5 sm:py-4 ${className}`}
     >
-      <div className="flex items-center gap-2.5 sm:gap-3">
+      <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
         {Icon && (
           <div
             className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg sm:h-12 sm:w-12 ${iconBgColor}`}
@@ -24,7 +25,7 @@ const StatTile = ({
             {label}
           </p>
           <p
-            className={`mt-0.5 truncate text-xl font-bold sm:mt-1 sm:text-2xl ${valueColor || 'text-gray-900 dark:text-gray-100'}`}
+            className={`mt-0.5 px-2 text-xl font-bold sm:mt-1 sm:text-2xl ${valueColor || 'text-gray-900 dark:text-gray-100'} ${valueClassName}`}
           >
             {value}
           </p>

@@ -8,6 +8,7 @@ import SkeletonLoader from '@/components/common/SkeletonLoader'
 import QuestionNavigator from '@/components/exam/QuestionNavigator'
 import ReviewArea from '@/components/review/ReviewArea'
 import Button from '@/components/common/Button'
+import ThemeToggle from '@/components/common/ThemeToggle'
 
 const ReviewPage = () => {
   const { attemptId } = useParams()
@@ -197,6 +198,7 @@ const ReviewPage = () => {
                   : `${Math.floor(attempt.time_taken / 60)}m`}
               </span>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>

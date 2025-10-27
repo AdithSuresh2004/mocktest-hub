@@ -130,7 +130,7 @@ export const calculateAnalysis = (examData, attemptData) => {
 }
 
 export const calculateScoreDistribution = (completedExams) => {
-  const distribution = [
+  const distributionData = [
     { name: '90-100%', value: 0, color: '#10b981' },
     { name: '75-89%', value: 0, color: '#3b82f6' },
     { name: '50-74%', value: 0, color: '#f59e0b' },
@@ -140,15 +140,15 @@ export const calculateScoreDistribution = (completedExams) => {
   completedExams.forEach((exam) => {
     const score = exam.score || 0;
     if (score >= 90) {
-      distribution[0].value++;
+      distributionData[0].value++;
     } else if (score >= 75) {
-      distribution[1].value++;
+      distributionData[1].value++;
     } else if (score >= 50) {
-      distribution[2].value++;
+      distributionData[2].value++;
     } else {
-      distribution[3].value++;
+      distributionData[3].value++;
     }
   });
 
-  return distribution.filter((item) => item.value > 0);
+  return distributionData.filter((item) => item.value > 0);
 };

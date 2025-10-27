@@ -193,7 +193,7 @@ const ExamPage = () => {
             onMarkForReview={toggleMarkForReview}
           />
         </main>
-        <aside className="hidden w-full border-l border-gray-200 transition-colors duration-300 dark:border-gray-800 lg:block lg:w-72 xl:w-80">
+        <aside className="hidden w-full border-l border-gray-200 transition-colors duration-300 dark:border-gray-800 lg:block lg:w-[388px] xl:w-[420px]">
           <div className="h-full overflow-y-auto custom-scrollbar">
             <QuestionNavigator
               sections={exam.sections}

@@ -21,7 +21,7 @@ const Button = ({
     secondary: theme.button.secondary,
     danger: theme.button.danger,
     success:
-      'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600',
+      'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white',
     text: theme.button.text,
   }
 

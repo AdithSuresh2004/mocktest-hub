@@ -38,12 +38,20 @@ export function getQuestionStatusClasses({
   const isMarked = markedForReview.has(qId)
   const isCurrent = qIndex === currentQuestionIndex
   if (isCurrent) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.CURRENT]
-  if (isReviewMode && isAnswered) {
-    const isCorrect = answers[qId] === question.correct_opt_id
-    return QUESTION_STATUS_CLASSES[
-      isCorrect ? QUESTION_STATUS.CORRECT : QUESTION_STATUS.INCORRECT
-    ]
+
+  if (isReviewMode) {
+    if (isAnswered) {
+      const isCorrect = answers[qId] === question.correct_opt_id
+      return QUESTION_STATUS_CLASSES[
+        isCorrect ? QUESTION_STATUS.CORRECT : QUESTION_STATUS.INCORRECT
+      ]
+    } else {
+      // In review mode, if not answered, it's not visited
+      return QUESTION_STATUS_CLASSES[QUESTION_STATUS.NOT_VISITED]
+    }
   }
+
+  // Not in review mode
   if (isMarked) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.MARKED]
   if (isAnswered) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.ANSWERED]
   return QUESTION_STATUS_CLASSES[QUESTION_STATUS.NOT_VISITED]

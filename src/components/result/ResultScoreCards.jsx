@@ -43,7 +43,8 @@ const ResultScoreCards = ({
           value={performance.text}
           iconBgColor="bg-yellow-100 dark:bg-yellow-900/50"
           iconColor="text-yellow-600 dark:text-yellow-400"
-          valueColor={`${performance.color} dark:${performance.color.replace('text-', 'text-dark-')}`}
+          valueColor={performance.color}
+          valueClassName="lg:text-xl"
         />
       </div>
     </ResultCard>

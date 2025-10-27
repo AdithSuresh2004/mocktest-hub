@@ -44,7 +44,7 @@ const ExamFilters = ({
         </button>
       </div>
       <div className={`${showMobileFilters ? 'block' : 'hidden'} p-4 lg:block`}>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <div className="col-span-full">
             <div className="relative mt-5">
               <FaSearch className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />

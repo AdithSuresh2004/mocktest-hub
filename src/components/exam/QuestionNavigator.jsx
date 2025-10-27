@@ -36,9 +36,17 @@ export default function QuestionNavigator({
     answered:
       currentSectionData?.questions.filter((q) => answers[q.q_id] != null)
         .length || 0,
+    incorrect:
+      isReviewMode
+        ? currentSectionData?.questions.filter(
+            (q) => answers[q.q_id] != null && answers[q.q_id] !== q.correct_opt_id
+          ).length || 0
+        : 0,
     marked:
-      currentSectionData?.questions.filter((q) => markedForReview.has(q.q_id))
-        .length || 0,
+      isReviewMode
+        ? 0
+        : currentSectionData?.questions.filter((q) => markedForReview.has(q.q_id))
+            .length || 0,
     notVisited:
       currentSectionData?.questions.filter(
         (q) => answers[q.q_id] == null && !markedForReview.has(q.q_id)
@@ -110,7 +118,7 @@ export default function QuestionNavigator({
               ))}
             </div>
           )}
-          <QuestionLegend stats={stats} />
+          <QuestionLegend stats={stats} isReviewMode={isReviewMode} />
         </div>
         <div className="flex-1 p-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(40px,1fr))] justify-items-center gap-3">
