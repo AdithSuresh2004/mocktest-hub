@@ -62,30 +62,35 @@ const ExamFilters = ({
             value={selectedExam}
             options={examNames}
             onChange={onFilterChange}
+            filterName="Exam"
           />
           <FilterSelect
             label="Subject"
             value={selectedSubject}
             options={subjects}
             onChange={onFilterChange}
+            filterName="Subject"
           />
           <FilterSelect
             label="Topic"
             value={selectedTopic}
             options={topics}
             onChange={onFilterChange}
+            filterName="Topic"
           />
           <FilterSelect
             label="Strength"
             value={selectedStrength}
             options={STRENGTHS}
             onChange={onFilterChange}
+            filterName="Strength"
           />
           <FilterSelect
             label="Attempt Status"
             value={selectedAttemptStatus}
             options={ATTEMPT_STATUSES}
             onChange={onFilterChange}
+            filterName="Attempt Status"
           />
         </div>
         {hasActiveFilters && (
