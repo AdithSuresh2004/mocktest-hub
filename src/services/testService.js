@@ -1,5 +1,5 @@
 import { findAllAttemptsByExamId } from '@/data/attemptRepository'
-import { FavoritesStorage } from '@/utils/storage'
+import FavoritesStorage from '@/utils/favorites-storage'
 import { getTestTypeConfig } from '@/utils/testHelpers'
 
 export const getAttemptStatus = (examId) => {

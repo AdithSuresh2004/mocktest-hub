@@ -51,15 +51,7 @@ export const getStartOfMonth = (date = new Date()) => {
   return new Date(d.getFullYear(), d.getMonth(), 1)
 }
 
-/**
- * Check if a date is within a date range
- */
-export const isDateInRange = (date, startDate, endDate) => {
-  const d = new Date(date)
-  const start = new Date(startDate)
-  const end = new Date(endDate)
-  return d >= start && d <= end
-}
+
 
 /**
  * Get days ago from current date
@@ -70,18 +62,4 @@ export const getDaysAgo = (days) => {
   return date
 }
 
-/**
- * Format date difference for display
- */
-export const formatDateDifference = (date1, date2) => {
-  const diff = Math.abs(new Date(date2) - new Date(date1))
-  const seconds = Math.floor(diff / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
 
-  if (days > 0) return `${days}d`
-  if (hours > 0) return `${hours}h`
-  if (minutes > 0) return `${minutes}m`
-  return `${seconds}s`
-}

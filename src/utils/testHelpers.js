@@ -42,7 +42,4 @@ export const getPerformanceColor = (score, total) => {
   return PERFORMANCE_COLORS.POOR
 }
 
-export const calculatePercentage = (score, total) => {
-  if (total === 0) return 0
-  return Math.round((score / total) * 100 * 100) / 100
-}
+

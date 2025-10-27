@@ -1,5 +1,5 @@
 import { findExamById } from '@/data/examRepository'
-import { getQuestionMarks, calculateTotalMarks } from '@/utils/calculations'
+import { calculateTotalMarks } from '@/utils/calculations/scoreCalculations'
 
 /**
  * Normalize attempt data with calculated score percentage

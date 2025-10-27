@@ -27,64 +27,53 @@ export const sortAttempts = (attempts, sortOrder) => {
   })
 }
 
+const testFilterRules = [
+  (test, filters) => {
+    if (!filters.activeTab || filters.activeTab === 'all') return true;
+    return test.type === filters.activeTab;
+  },
+  (test, filters) => {
+    if (!filters.searchTerm) return true;
+    const searchLower = filters.searchTerm.toLowerCase();
+    const testName = test.exam_name || '';
+    return testName.toLowerCase().includes(searchLower);
+  },
+  (test, filters) => {
+    if (!filters.selectedExam || filters.selectedExam === 'All Exams') return true;
+    return test.category?.toLowerCase() === filters.selectedExam.toLowerCase();
+  },
+  (test, filters) => {
+    if (!filters.selectedTopic || filters.selectedTopic === 'All Topics') return true;
+    if (Array.isArray(test.topics)) {
+      return test.topics.includes(filters.selectedTopic);
+    }
+    return test.topic === filters.selectedTopic;
+  },
+  (test, filters) => {
+    if (!filters.selectedSubject || filters.selectedSubject === 'All Subjects') return true;
+    if (Array.isArray(test.subjects)) {
+      return test.subjects.includes(filters.selectedSubject);
+    }
+    return test.subject === filters.selectedSubject;
+  },
+  (test, filters) => {
+    if (!filters.selectedStrength || filters.selectedStrength === 'All levels') return true;
+    return test.exam_strength?.toLowerCase() === filters.selectedStrength.toLowerCase();
+  },
+  (test, filters) => {
+    if (!filters.selectedAttemptStatus || filters.selectedAttemptStatus === 'all') return true;
+    const hasAttempted = filters.attemptedExams?.has(test.exam_id);
+    if (filters.selectedAttemptStatus === 'attempted') return hasAttempted;
+    if (filters.selectedAttemptStatus === 'unattempted') return !hasAttempted;
+    return true;
+  },
+];
+
 export const filterTests = (tests, filters) => {
   return tests.filter((test) => {
-    if (filters.activeTab && filters.activeTab !== 'all') {
-      if (test.type !== filters.activeTab) return false
-    }
-
-    if (filters.searchTerm) {
-      const searchLower = filters.searchTerm.toLowerCase()
-      const testName = test.exam_name || ''
-      if (!testName.toLowerCase().includes(searchLower)) return false
-    }
-
-    if (filters.selectedExam && filters.selectedExam !== 'All Exams') {
-      if (test.category?.toLowerCase() !== filters.selectedExam.toLowerCase())
-        return false
-    }
-
-    if (filters.selectedTopic && filters.selectedTopic !== 'All Topics') {
-      if (
-        (test.topic !== filters.selectedTopic && !Array.isArray(test.topics)) ||
-        !test.topics.includes(filters.selectedTopic)
-      ) {
-        return false
-      }
-    }
-
-    if (filters.selectedSubject && filters.selectedSubject !== 'All Subjects') {
-      if (
-        test.subject !== filters.selectedSubject &&
-        (!Array.isArray(test.subjects) ||
-          !test.subjects.includes(filters.selectedSubject))
-      ) {
-        return false
-      }
-    }
-
-    if (filters.selectedStrength && filters.selectedStrength !== 'All levels') {
-      if (
-        test.exam_strength?.toLowerCase() !==
-        filters.selectedStrength.toLowerCase()
-      )
-        return false
-    }
-
-    if (
-      filters.selectedAttemptStatus &&
-      filters.selectedAttemptStatus !== 'all'
-    ) {
-      const hasAttempted = filters.attemptedExams?.has(test.exam_id)
-      if (filters.selectedAttemptStatus === 'attempted' && !hasAttempted)
-        return false
-      if (filters.selectedAttemptStatus === 'unattempted' && hasAttempted)
-        return false
-    }
-
-    return true
-  })
-}
+    return testFilterRules.every((rule) => rule(test, filters));
+  });
+};
 
 export const hasActiveFilters = (filters) => {
   return !!(

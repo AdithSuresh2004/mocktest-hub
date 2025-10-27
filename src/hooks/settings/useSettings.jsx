@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { SettingsStorage } from '@/utils/storage'
+import SettingsStorage from '@/utils/settings-storage'
 
 export function useSettings() {
   const [notifications, setNotifications] = useState(true)

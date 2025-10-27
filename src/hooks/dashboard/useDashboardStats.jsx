@@ -3,6 +3,8 @@ import { getAllAttempts } from '@/data/attemptRepository'
 
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
 
+import { useAttemptStats } from '@/hooks/attempts/useAttemptStats'
+
 const DEFAULT_STATS = {
   totalExams: 0,
   pendingTests: 0,
@@ -15,6 +17,7 @@ const DEFAULT_STATS = {
 export function useDashboardStats() {
   const [stats, setStats] = useState(DEFAULT_STATS)
   const [loading, setLoading] = useState(true)
+  const [validCompleted, setValidCompleted] = useState([])
 
   const loadStats = async () => {
     setLoading(true)
@@ -25,41 +28,21 @@ export function useDashboardStats() {
       const completedNormalized = await Promise.allSettled(
         completedRaw.map(normalizeAttempt)
       )
-      const validCompleted = completedNormalized
+      const completed = completedNormalized
         .filter((result) => result.status === 'fulfilled' && result.value)
         .map((result) => result.value)
-      let avgScore = 0
-      let highScore = 0
-      let avgTime = 0
-      if (validCompleted.length > 0) {
-        const toNumber = (value) => {
-          const numeric = Number(value)
-          return Number.isFinite(numeric) ? numeric : 0
-        }
-        const scores = validCompleted.map((attempt) => toNumber(attempt.score))
-        avgScore =
-          scores.reduce((sum, score) => sum + score, 0) / validCompleted.length
-        highScore = Math.max(...scores)
-        const times = validCompleted.map((attempt) => {
-          const seconds = Math.max(0, toNumber(attempt.timeTaken))
-          return seconds / 60
-        })
-        avgTime =
-          times.reduce((sum, time) => sum + time, 0) / validCompleted.length
-      }
+
+      setValidCompleted(completed)
+
+      const { avgScore, bestScore, avgTime } = useAttemptStats(completed)
+
       const newStats = {
         totalExams: attempts.length,
         pendingTests: pending,
-        completedTests: validCompleted.length,
-        averageScore: Number.isFinite(avgScore)
-          ? parseFloat(avgScore.toFixed(1))
-          : 0,
-        highScore: Number.isFinite(highScore)
-          ? parseFloat(highScore.toFixed(1))
-          : 0,
-        averageTime: Number.isFinite(avgTime)
-          ? parseFloat(avgTime.toFixed(1))
-          : 0,
+        completedTests: completed.length,
+        averageScore: avgScore,
+        highScore: bestScore,
+        averageTime: avgTime,
       }
       setStats(newStats)
     } catch {
@@ -87,5 +70,5 @@ export function useDashboardStats() {
     }
   }, [])
 
-  return { stats, loading, refreshStats: loadStats }
+  return { stats, loading, refreshStats: loadStats, validCompleted }
 }

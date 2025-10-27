@@ -29,30 +29,27 @@ export const getAttemptById = (attemptId) => {
   return findAttemptById(attemptId)
 }
 
-export const getAttemptCategories = (attempts) => {
-  const categories = new Set()
+const getUniqueAttemptProperty = (attempts, property) => {
+  const propertySet = new Set()
   attempts.forEach((attempt) => {
-    if (attempt.category) categories.add(attempt.category)
+    const value = attempt[property]
+    if (Array.isArray(value)) {
+      value.forEach((item) => propertySet.add(item))
+    } else if (value) {
+      propertySet.add(value)
+    }
   })
-  return ['all', ...Array.from(categories).sort()]
+  return ['all', ...Array.from(propertySet).sort()]
+}
+
+export const getAttemptCategories = (attempts) => {
+  return getUniqueAttemptProperty(attempts, 'category')
 }
 
 export const getAttemptSubjects = (attempts) => {
-  const subjects = new Set()
-  attempts.forEach((attempt) => {
-    if (Array.isArray(attempt.subjects)) {
-      attempt.subjects.forEach((s) => subjects.add(s))
-    }
-  })
-  return ['all', ...Array.from(subjects).sort()]
+  return getUniqueAttemptProperty(attempts, 'subjects')
 }
 
 export const getAttemptTopics = (attempts) => {
-  const topics = new Set()
-  attempts.forEach((attempt) => {
-    if (Array.isArray(attempt.topics)) {
-      attempt.topics.forEach((t) => topics.add(t))
-    }
-  })
-  return ['all', ...Array.from(topics).sort()]
+  return getUniqueAttemptProperty(attempts, 'topics')
 }

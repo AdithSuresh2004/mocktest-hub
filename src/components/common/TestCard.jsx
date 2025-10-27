@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
 import { capitalizeStrength, getTestTypeConfig } from '@/utils/testHelpers'
-import { FavoritesStorage } from '@/utils/storage'
+import FavoritesStorage from '@/utils/favorites-storage'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
 import {

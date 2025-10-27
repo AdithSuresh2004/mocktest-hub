@@ -1,4 +1,4 @@
-import { AttemptsStorage } from '@/utils/storage'
+import AttemptsStorage from '@/utils/attempts-storage'
 
 function isValidAttempt(attempt) {
   return (

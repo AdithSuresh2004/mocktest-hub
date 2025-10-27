@@ -13,7 +13,7 @@ import SkeletonLoader from '@/components/common/SkeletonLoader'
 import PageHeader from '@/components/common/PageHeader'
 
 const DashboardPage = () => {
-  const { stats, loading: statsLoading } = useDashboardStats()
+  const { stats, loading: statsLoading, validCompleted } = useDashboardStats()
   const { recentActivity, loading: activityLoading } = useRecentActivity()
   const { originalAttempts } = useAttempts()
   const attemptStats = useAttemptStats(originalAttempts)
@@ -53,7 +53,7 @@ const DashboardPage = () => {
             <RecentActivity activities={recentActivity} />
             <PerformanceSnapshot stats={stats} />
           </div>
-          <ScoreDistribution stats={stats} />
+          <ScoreDistribution completedExams={validCompleted} />
         </div>
       </div>
     </div>

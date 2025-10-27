@@ -5,7 +5,7 @@ import Pagination from '@/components/common/Pagination'
 import FavoriteCard from '@/components/favorites/FavoriteCard'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 import { usePagination } from '@/hooks/common/usePagination'
-import { FavoritesStorage } from '@/utils/storage'
+import FavoritesStorage from '@/utils/favorites-storage'
 import { FaStar } from 'react-icons/fa'
 import EmptyState from '@/components/common/EmptyState'
 

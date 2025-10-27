@@ -1,8 +1,5 @@
-import {
-  AttemptsStorage,
-  FavoritesStorage,
-  SettingsStorage,
-} from '@/utils/storage'
+import AttemptsStorage from '@/utils/attempts-storage'
+import FavoritesStorage from '@/utils/favorites-storage'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
 export function useDataManagement() {

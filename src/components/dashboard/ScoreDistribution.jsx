@@ -1,21 +1,8 @@
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { calculateScoreDistribution } from '@/utils/calculations/resultAnalysis'
 
-const COLORS = {
-  excellent: '#10b981',
-  good: '#3b82f6',
-  average: '#f59e0b',
-  poor: '#ef4444',
-}
-
-const ScoreDistribution = ({ stats }) => {
-  if (!stats || stats.totalExams === 0) {
+const ScoreDistribution = ({ completedExams }) => {
+  if (!completedExams || completedExams.length === 0) {
     return (
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -30,29 +17,7 @@ const ScoreDistribution = ({ stats }) => {
     )
   }
 
-  const completedExams = stats.completedTests || 0
-  const distribution = [
-    {
-      name: '90-100%',
-      value: Math.floor(completedExams * 0.2),
-      color: COLORS.excellent,
-    },
-    {
-      name: '75-89%',
-      value: Math.floor(completedExams * 0.4),
-      color: COLORS.good,
-    },
-    {
-      name: '50-74%',
-      value: Math.floor(completedExams * 0.3),
-      color: COLORS.average,
-    },
-    {
-      name: '0-49%',
-      value: Math.floor(completedExams * 0.1),
-      color: COLORS.poor,
-    },
-  ].filter((item) => item.value > 0)
+  const distribution = calculateScoreDistribution(completedExams)
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
