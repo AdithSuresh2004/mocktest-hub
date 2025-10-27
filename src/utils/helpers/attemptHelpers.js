@@ -9,12 +9,12 @@ export async function normalizeAttempt(attempt) {
   try {
     const exam = await findExamById(attempt.exam_id)
     if (!exam) return null
-    
+
     const totalQuestions = exam.sections.reduce((sum, section) => {
       if (!Array.isArray(section.questions)) return sum
       return sum + section.questions.length
     }, 0)
-    
+
     const totalMarks = calculateTotalMarks(exam)
 
     const getScorePercentage = (score) => {
@@ -40,7 +40,7 @@ export async function normalizeAttempt(attempt) {
       }
       return 0
     }
-    
+
     return {
       id: attempt.attempt_id,
       attempt_id: attempt.attempt_id,

@@ -19,7 +19,11 @@ export default function ExamNavigation({
           <span className="hidden sm:inline">Previous</span>
           <span className="sm:hidden">Prev</span>
         </Button>
-        <Button onClick={onSubmit} variant="primary" className="text-sm sm:text-base">
+        <Button
+          onClick={onSubmit}
+          variant="primary"
+          className="text-sm sm:text-base"
+        >
           Submit
         </Button>
         <Button

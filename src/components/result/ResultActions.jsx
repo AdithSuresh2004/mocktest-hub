@@ -46,7 +46,11 @@ const ResultActions = ({
           label={showAnalysis ? 'Hide Analysis' : 'Show Analysis'}
           onClick={onToggleAnalysis}
         />
-        <ActionButton icon={FaHome} label="Go to Home" onClick={onNavigateHome} />
+        <ActionButton
+          icon={FaHome}
+          label="Go to Home"
+          onClick={onNavigateHome}
+        />
       </div>
     </ResultCard>
   )

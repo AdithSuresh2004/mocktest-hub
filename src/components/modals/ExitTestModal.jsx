@@ -45,7 +45,11 @@ const ExitTestModal = ({
         </div>
         <div className="flex flex-col gap-3">
           {hasAnswers && (
-            <Button onClick={onSaveAndExit} variant="primary" className="w-full">
+            <Button
+              onClick={onSaveAndExit}
+              variant="primary"
+              className="w-full"
+            >
               Save Progress & Exit
             </Button>
           )}

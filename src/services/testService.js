@@ -5,7 +5,7 @@ import { getTestTypeConfig } from '@/utils/testHelpers'
 export const getAttemptStatus = (examId) => {
   const attempts = findAllAttemptsByExamId(examId)
   if (attempts.length === 0) return 'not_attempted'
-  
+
   const completedAttempts = attempts.filter((att) => att.status === 'completed')
   if (completedAttempts.length > 0) return 'completed'
   return 'in_progress'
@@ -20,7 +20,10 @@ export const getExamTopics = (test) => {
 }
 
 export const getAllTags = (test) => {
-  const subjects = getExamSubjects(test).map((s) => ({ text: s, type: 'subject' }))
+  const subjects = getExamSubjects(test).map((s) => ({
+    text: s,
+    type: 'subject',
+  }))
   const topics = getExamTopics(test).map((t) => ({ text: t, type: 'topic' }))
   return [...subjects, ...topics]
 }
@@ -42,4 +45,3 @@ export const getFavoriteData = (test) => {
 export const toggleFavoriteStatus = (examId, favoriteData) => {
   return FavoritesStorage.toggle(examId, favoriteData)
 }
-

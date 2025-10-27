@@ -9,18 +9,20 @@ import { TEST_TYPES } from '@/utils/constants/filterOptions'
  */
 export const normalizeTests = (manifest) => {
   const testTypes = ['full_tests', 'subject_tests', 'topic_tests']
-  
-  return testTypes.flatMap((type, typeIndex) => {
-    const tests = manifest[type] || []
-    return tests.map((t, index) => ({
-      ...t,
-      type,
-      exam_id: t.id || t.exam_id,
-      exam_name: t.name || t.exam_name,
-      exam_strength: t.difficulty || t.exam_strength,
-      uid: `${type}-${t.id || t.exam_id || index}`,
-    }))
-  }).filter(t => t.exam_id && t.exam_name)
+
+  return testTypes
+    .flatMap((type, typeIndex) => {
+      const tests = manifest[type] || []
+      return tests.map((t, index) => ({
+        ...t,
+        type,
+        exam_id: t.id || t.exam_id,
+        exam_name: t.name || t.exam_name,
+        exam_strength: t.difficulty || t.exam_strength,
+        uid: `${type}-${t.id || t.exam_id || index}`,
+      }))
+    })
+    .filter((t) => t.exam_id && t.exam_name)
 }
 
 /**
@@ -31,9 +33,9 @@ export const getExamNames = (tests) => {
     'All Exams',
     ...new Set(
       tests
-        .map(t => t.category)
+        .map((t) => t.category)
         .filter(Boolean)
-        .map(cat => cat.toUpperCase())
+        .map((cat) => cat.toUpperCase())
         .sort()
     ),
   ]
@@ -44,8 +46,9 @@ export const getExamNames = (tests) => {
  */
 export const getTopics = (tests) => {
   const topicSet = new Set()
-  tests.forEach(t => {
-    if (Array.isArray(t.topics)) t.topics.forEach(topic => topicSet.add(topic))
+  tests.forEach((t) => {
+    if (Array.isArray(t.topics))
+      t.topics.forEach((topic) => topicSet.add(topic))
     if (t.topic) topicSet.add(t.topic)
   })
   return ['All Topics', ...Array.from(topicSet).filter(Boolean).sort()]
@@ -56,8 +59,9 @@ export const getTopics = (tests) => {
  */
 export const getSubjects = (tests) => {
   const subjectSet = new Set()
-  tests.forEach(t => {
-    if (Array.isArray(t.subjects)) t.subjects.forEach(subject => subjectSet.add(subject))
+  tests.forEach((t) => {
+    if (Array.isArray(t.subjects))
+      t.subjects.forEach((subject) => subjectSet.add(subject))
     if (t.subject) subjectSet.add(t.subject)
   })
   return ['All Subjects', ...Array.from(subjectSet).filter(Boolean).sort()]
@@ -67,11 +71,11 @@ export const getSubjects = (tests) => {
  * Calculate tab counts for each test type
  */
 export const calculateTabCounts = (tests) => {
-  return TEST_TYPES.map(type => ({
+  return TEST_TYPES.map((type) => ({
     ...type,
-    count: type.id === 'all' 
-      ? tests.length 
-      : tests.filter(t => t.type === type.id).length
+    count:
+      type.id === 'all'
+        ? tests.length
+        : tests.filter((t) => t.type === type.id).length,
   }))
 }
-

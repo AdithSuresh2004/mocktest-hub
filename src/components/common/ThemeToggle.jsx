@@ -3,7 +3,10 @@ import { useTheme } from '@/contexts/ThemeContext'
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()
-  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      window.matchMedia?.('(prefers-color-scheme: dark)').matches)
 
   const handleToggle = () => {
     // Simply toggle between actual light and dark modes

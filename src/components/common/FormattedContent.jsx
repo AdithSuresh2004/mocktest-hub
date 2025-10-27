@@ -33,10 +33,7 @@ const FormattedContent = ({ text, className = '' }) => {
 
           case 'table':
             return (
-              <TableRenderer
-                key={`table-${index}`}
-                content={part.content}
-              />
+              <TableRenderer key={`table-${index}`} content={part.content} />
             )
 
           default:

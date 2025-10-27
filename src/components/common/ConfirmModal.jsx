@@ -102,10 +102,7 @@ const ConfirmModal = ({
             </div>
           </div>
           <div className="mt-6 flex justify-end gap-3">
-            <Button
-              onClick={onClose}
-              variant="secondary"
-            >
+            <Button onClick={onClose} variant="secondary">
               {cancelText}
             </Button>
             <Button

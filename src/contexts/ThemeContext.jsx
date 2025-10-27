@@ -6,12 +6,15 @@ const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} })
 
 const getInitialTheme = () => {
   const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
-  if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
+  if (stored === 'light' || stored === 'dark' || stored === 'system')
+    return stored
   return 'system'
 }
 
 const getSystemTheme = () => {
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 const initialTheme = getInitialTheme()

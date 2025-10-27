@@ -1,5 +1,9 @@
 import { getAllAttempts, findAttemptById } from '@/data/attemptRepository'
-import { getStartOfDay, getStartOfWeek, getStartOfMonth } from '@/utils/helpers/dateHelpers'
+import {
+  getStartOfDay,
+  getStartOfWeek,
+  getStartOfMonth,
+} from '@/utils/helpers/dateHelpers'
 
 export const getCompletedAttempts = () => {
   return getAllAttempts().filter((a) => a.status === 'completed')
@@ -8,15 +12,16 @@ export const getCompletedAttempts = () => {
 export const getAttemptsForPeriod = (period = 'all') => {
   const allAttempts = getCompletedAttempts()
   const today = getStartOfDay()
-  
+
   if (period === 'all') return allAttempts
-  
-  const startDate = period === 'today' 
-    ? today 
-    : period === 'week' 
-      ? getStartOfWeek(today) 
-      : getStartOfMonth(today)
-  
+
+  const startDate =
+    period === 'today'
+      ? today
+      : period === 'week'
+        ? getStartOfWeek(today)
+        : getStartOfMonth(today)
+
   return allAttempts.filter((a) => new Date(a.timestamp) >= startDate)
 }
 
@@ -51,4 +56,3 @@ export const getAttemptTopics = (attempts) => {
   })
   return ['all', ...Array.from(topics).sort()]
 }
-

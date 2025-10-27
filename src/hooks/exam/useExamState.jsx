@@ -12,7 +12,9 @@ export const useExamState = (exam, currentSection, currentQuestion) => {
       }
     }
 
-    const currentSectionObj = exam.sections?.[currentSection] || { questions: [] }
+    const currentSectionObj = exam.sections?.[currentSection] || {
+      questions: [],
+    }
     const currentQ = currentSectionObj.questions[currentQuestion] || null
 
     const totalQuestions =
@@ -41,5 +43,8 @@ export const getExamAnimations = (isLandscape) => ({
 export const getAnsweredCount = (answers, totalQuestions) => ({
   answered: Object.keys(answers).length,
   total: totalQuestions,
-  percentage: totalQuestions > 0 ? Math.round((Object.keys(answers).length / totalQuestions) * 100) : 0,
+  percentage:
+    totalQuestions > 0
+      ? Math.round((Object.keys(answers).length / totalQuestions) * 100)
+      : 0,
 })

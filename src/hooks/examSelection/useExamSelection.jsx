@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
 import { getManifest as getExamsManifest } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
-import { TEST_TYPES, STRENGTHS, ATTEMPT_STATUSES } from '@/utils/constants/filterOptions'
-import { 
-  normalizeTests, 
-  getExamNames, 
-  getTopics, 
-  getSubjects, 
-  calculateTabCounts 
+import {
+  TEST_TYPES,
+  STRENGTHS,
+  ATTEMPT_STATUSES,
+} from '@/utils/constants/filterOptions'
+import {
+  normalizeTests,
+  getExamNames,
+  getTopics,
+  getSubjects,
+  calculateTabCounts,
 } from '@/utils/helpers/examSelectionHelpers'
 import { filterTests, hasActiveFilters } from '@/services/filterService'
 
@@ -52,7 +56,7 @@ const useExamSelection = () => {
   const topics = getTopics(allTests)
   const subjects = getSubjects(allTests)
   const tabCounts = calculateTabCounts(allTests)
-  
+
   const filteredTests = filterTests(allTests, {
     activeTab,
     searchTerm,
@@ -63,7 +67,7 @@ const useExamSelection = () => {
     selectedAttemptStatus,
     attemptedExams,
   })
-  
+
   const hasActiveFiltersState = hasActiveFilters({
     searchTerm,
     selectedExam,

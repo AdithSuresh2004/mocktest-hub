@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
-import { getCompletedAttempts, getAttemptCategories, getAttemptSubjects, getAttemptTopics } from '@/services/attemptService'
+import {
+  getCompletedAttempts,
+  getAttemptCategories,
+  getAttemptSubjects,
+  getAttemptTopics,
+} from '@/services/attemptService'
 import { filterAttempts, sortAttempts } from '@/services/filterService'
 
 const createDefaultFilters = () => ({
@@ -14,7 +19,7 @@ export function useAttempts() {
   const [loading, setLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState('desc')
   const [filters, setFilters] = useState(createDefaultFilters)
-  
+
   const loadAttempts = async () => {
     setLoading(true)
     try {
@@ -28,16 +33,19 @@ export function useAttempts() {
       setLoading(false)
     }
   }
-  
+
   useEffect(() => {
     loadAttempts()
   }, [])
-  
+
   const categories = getAttemptCategories(attempts)
   const subjects = getAttemptSubjects(attempts)
   const topics = getAttemptTopics(attempts)
-  
-  const sortedAndFiltered = sortAttempts(filterAttempts(attempts, filters), sortOrder)
+
+  const sortedAndFiltered = sortAttempts(
+    filterAttempts(attempts, filters),
+    sortOrder
+  )
   const toggleSort = () => {
     setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
   }

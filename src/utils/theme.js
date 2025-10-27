@@ -25,15 +25,20 @@ export const theme = {
   interactive: {
     hover: 'hover:bg-gray-50 dark:hover:bg-gray-700',
     active: 'active:bg-gray-100 dark:active:bg-gray-600',
-    focus: 'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none',
+    focus:
+      'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none',
     disabled: 'opacity-50 cursor-not-allowed',
   },
 
   button: {
-    primary: 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white',
-    secondary: 'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200',
-    danger: 'bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white',
-    success: 'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white',
+    primary:
+      'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white',
+    secondary:
+      'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200',
+    danger:
+      'bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white',
+    success:
+      'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white',
     text: 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100',
   },
 
@@ -59,7 +64,8 @@ export const containers = {
 
 export const animations = {
   fadeIn: 'animate-fadeIn',
-  shimmer: 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/60 dark:before:via-white/10 before:to-transparent',
+  shimmer:
+    'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/60 dark:before:via-white/10 before:to-transparent',
   pulse: 'animate-pulse',
 }
 

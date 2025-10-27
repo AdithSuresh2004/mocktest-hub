@@ -21,4 +21,3 @@ export const ATTEMPT_STATUSES = [
   { value: 'attempted', label: 'Attempted' },
   { value: 'unattempted', label: 'Unattempted' },
 ]
-

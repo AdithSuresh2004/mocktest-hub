@@ -1,22 +1,48 @@
-import { FaBullseye, FaChartLine, FaCalendarAlt, FaFire, FaTrophy, FaCalendarDay, FaStar } from 'react-icons/fa'
+import {
+  FaBullseye,
+  FaChartLine,
+  FaCalendarAlt,
+  FaFire,
+  FaTrophy,
+  FaCalendarDay,
+  FaStar,
+} from 'react-icons/fa'
 import MetricCard from '@/components/dashboard/MetricCard'
-import { calculateStreakData, getStreakMotivation, getAchievementBadges } from '@/utils/calculations/streakCalculations'
+import {
+  calculateStreakData,
+  getStreakMotivation,
+  getAchievementBadges,
+} from '@/utils/calculations/streakCalculations'
 
 const ProgressTracking = ({ stats, streakGoals }) => {
   if (!stats) return null
 
-  const completionRate = stats.totalExams > 0
-    ? ((stats.completedTests / stats.totalExams) * 100).toFixed(0)
-    : 0
+  const completionRate =
+    stats.totalExams > 0
+      ? ((stats.completedTests / stats.totalExams) * 100).toFixed(0)
+      : 0
 
-  const currentStreakGoals = streakGoals || { daily: 3, weekly: 15, monthly: 60 }
+  const currentStreakGoals = streakGoals || {
+    daily: 3,
+    weekly: 15,
+    monthly: 60,
+  }
 
-  const weeklyGoal = Math.min(currentStreakGoals.weekly, currentStreakGoals.daily * 7)
-  const monthlyGoal = Math.min(currentStreakGoals.monthly, currentStreakGoals.daily * 30)
+  const weeklyGoal = Math.min(
+    currentStreakGoals.weekly,
+    currentStreakGoals.daily * 7
+  )
+  const monthlyGoal = Math.min(
+    currentStreakGoals.monthly,
+    currentStreakGoals.daily * 30
+  )
 
   const streakData = calculateStreakData()
 
-  const todayProgress = Math.min((streakData.today / currentStreakGoals.daily) * 100, 100)
+  const todayProgress = Math.min(
+    (streakData.today / currentStreakGoals.daily) * 100,
+    100
+  )
   const weeklyProgress = Math.min((streakData.week / weeklyGoal) * 100, 100)
   const monthlyProgress = Math.min((streakData.month / monthlyGoal) * 100, 100)
 
@@ -70,7 +96,6 @@ const ProgressTracking = ({ stats, streakGoals }) => {
               style={{ width: `${todayProgress}%` }}
             />
           </div>
-
         </div>
 
         <div className="space-y-2">

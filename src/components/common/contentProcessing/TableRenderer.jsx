@@ -7,7 +7,8 @@ const TableRenderer = ({ content }) => {
 
   if (rows.length === 0) return null
 
-  const isSecondRowSeparator = rows.length > 1 && rows[1]?.every((cell) => /^:?-+:?$/.test(cell))
+  const isSecondRowSeparator =
+    rows.length > 1 && rows[1]?.every((cell) => /^:?-+:?$/.test(cell))
 
   const startDataIndex = isSecondRowSeparator ? 2 : 1
 
@@ -16,10 +17,7 @@ const TableRenderer = ({ content }) => {
       <table className="min-w-full divide-y divide-gray-200 border border-gray-300 dark:divide-gray-700 dark:border-gray-600">
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
           {rows.slice(0, startDataIndex).map((cells, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className="bg-gray-50 dark:bg-gray-700"
-            >
+            <tr key={rowIndex} className="bg-gray-50 dark:bg-gray-700">
               {cells.map((cell, cellIndex) => (
                 <th
                   key={cellIndex}
@@ -32,10 +30,7 @@ const TableRenderer = ({ content }) => {
           ))}
 
           {rows.slice(startDataIndex).map((cells, rowIndex) => (
-            <tr
-              key={rowIndex + startDataIndex}
-              className=""
-            >
+            <tr key={rowIndex + startDataIndex} className="">
               {cells.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}

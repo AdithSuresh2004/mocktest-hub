@@ -13,13 +13,15 @@ const Button = ({
   to,
   ...props
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed'
-  
+  const baseClasses =
+    'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed'
+
   const variants = {
     primary: theme.button.primary,
     secondary: theme.button.secondary,
     danger: theme.button.danger,
-    success: 'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600',
+    success:
+      'bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600',
     text: theme.button.text,
   }
 
@@ -61,4 +63,3 @@ const Button = ({
 }
 
 export default Button
-

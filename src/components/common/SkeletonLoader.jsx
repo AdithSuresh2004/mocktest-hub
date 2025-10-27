@@ -9,12 +9,20 @@ const shimmerClass = animations.shimmer
 
 const TableSkeleton = () => (
   <div className="animate-fadeIn">
-    <div className={`mb-4 h-10 w-full rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
+    <div
+      className={`mb-4 h-10 w-full rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}
+    ></div>
     {[...Array(5)].map((_, i) => (
       <div key={i} className="mb-2 flex gap-4">
-        <div className={`h-12 flex-1 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
-        <div className={`h-12 w-24 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
-        <div className={`h-12 w-24 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}></div>
+        <div
+          className={`h-12 flex-1 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}
+        ></div>
+        <div
+          className={`h-12 w-24 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}
+        ></div>
+        <div
+          className={`h-12 w-24 rounded bg-gray-200 dark:bg-gray-700 ${shimmerClass}`}
+        ></div>
       </div>
     ))}
   </div>

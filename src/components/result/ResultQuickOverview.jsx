@@ -8,12 +8,16 @@ import ResultCard from '@/components/result/ResultCard'
 
 const StatItem = ({ icon: Icon, value, label, color }) => (
   <div className="flex items-center rounded-lg bg-gray-50 p-2.5 dark:bg-gray-700/50 sm:p-3">
-    <Icon className={`mr-2.5 h-5 w-5 flex-shrink-0 sm:mr-3 sm:h-6 sm:w-6 ${color}`} />
+    <Icon
+      className={`mr-2.5 h-5 w-5 flex-shrink-0 sm:mr-3 sm:h-6 sm:w-6 ${color}`}
+    />
     <div>
       <p className="text-base font-bold text-gray-800 sm:text-lg dark:text-gray-100">
         {value}
       </p>
-      <p className="text-xs text-gray-600 sm:text-sm dark:text-gray-400">{label}</p>
+      <p className="text-xs text-gray-600 sm:text-sm dark:text-gray-400">
+        {label}
+      </p>
     </div>
   </div>
 )

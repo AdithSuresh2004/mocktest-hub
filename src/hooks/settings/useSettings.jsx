@@ -7,18 +7,18 @@ export function useSettings() {
   const [streakGoals, setStreakGoals] = useState({
     daily: 3,
     weekly: 15,
-    monthly: 60
+    monthly: 60,
   })
   const [focusExams, setFocusExams] = useState({
     primaryFocus: '',
-    quickAccess: []
+    quickAccess: [],
   })
   const [dashboardWidgets, setDashboardWidgets] = useState({
     performanceChart: true,
     scoreDistribution: true,
     recentActivity: true,
     progressTracking: true,
-    performanceSnapshot: true
+    performanceSnapshot: true,
   })
 
   const [showSaveSuccess, setShowSaveSuccess] = useState(false)
@@ -36,7 +36,7 @@ export function useSettings() {
         autoSave,
         streakGoals,
         focusExams,
-        dashboardWidgets
+        dashboardWidgets,
       }
       SettingsStorage.set(settingsToSave)
 
@@ -46,7 +46,14 @@ export function useSettings() {
       }
       setFirstSaveDone(true)
     }, 1000)
-  }, [isInitialized, notifications, autoSave, streakGoals, focusExams, dashboardWidgets])
+  }, [
+    isInitialized,
+    notifications,
+    autoSave,
+    streakGoals,
+    focusExams,
+    dashboardWidgets,
+  ])
 
   useEffect(() => {
     const settings = SettingsStorage.get()
@@ -56,7 +63,7 @@ export function useSettings() {
       setStreakGoals({
         daily: settings.streakGoals.daily || 3,
         weekly: settings.streakGoals.weekly || 15,
-        monthly: settings.streakGoals.monthly || 60
+        monthly: settings.streakGoals.monthly || 60,
       })
     }
     if (settings.focusExams) {
@@ -76,7 +83,7 @@ export function useSettings() {
       autoSave,
       streakGoals,
       focusExams,
-      dashboardWidgets
+      dashboardWidgets,
     })
     setShowSaveSuccess(true)
     setTimeout(() => setShowSaveSuccess(false), 3000)

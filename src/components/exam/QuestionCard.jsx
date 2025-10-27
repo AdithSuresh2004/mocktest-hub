@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import QuestionHeader from './QuestionHeader'
 import QuestionContent from './QuestionContent'
 import QuestionOption from './QuestionOption'

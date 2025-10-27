@@ -1,9 +1,7 @@
 const ExamStats = ({ filteredTests, allTests }) => {
   if (filteredTests.length === 0) {
     return (
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        No tests found
-      </p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">No tests found</p>
     )
   }
 
@@ -15,7 +13,8 @@ const ExamStats = ({ filteredTests, allTests }) => {
       </span>
       {filteredTests.length !== allTests.length && (
         <>
-          {' '}of <span className="font-semibold">{allTests.length}</span>
+          {' '}
+          of <span className="font-semibold">{allTests.length}</span>
         </>
       )}{' '}
       tests
@@ -24,4 +23,3 @@ const ExamStats = ({ filteredTests, allTests }) => {
 }
 
 export default ExamStats
-

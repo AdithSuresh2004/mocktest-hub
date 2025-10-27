@@ -9,9 +9,9 @@ const TEST_TYPE_ICONS = {
 }
 
 const ExamTabs = ({ tabCounts, activeTab, onTabChange }) => {
-  const tabs = tabCounts.map(tab => ({
+  const tabs = tabCounts.map((tab) => ({
     ...tab,
-    icon: TEST_TYPE_ICONS[tab.id]
+    icon: TEST_TYPE_ICONS[tab.id],
   }))
 
   return (
@@ -22,4 +22,3 @@ const ExamTabs = ({ tabCounts, activeTab, onTabChange }) => {
 }
 
 export default ExamTabs
-

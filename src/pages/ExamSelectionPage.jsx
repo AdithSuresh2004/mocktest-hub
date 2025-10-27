@@ -81,7 +81,7 @@ const ExamSelectionPage = () => {
   if (error) {
     return <ErrorDisplay message={error} onAction={loadManifest} />
   }
-  
+
   if (!allTests.length) {
     return (
       <EmptyState
@@ -95,12 +95,12 @@ const ExamSelectionPage = () => {
   return (
     <div className="min-h-full bg-gray-50 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <ExamTabs 
+        <ExamTabs
           tabCounts={tabCounts}
           activeTab={activeTab}
           onTabChange={setActiveTab}
         />
-        
+
         <ExamFilters
           showMobileFilters={showMobileFilters}
           hasActiveFilters={hasActiveFilters}
@@ -120,7 +120,7 @@ const ExamSelectionPage = () => {
           onFilterChange={handleFilterChange}
           onClearFilters={handleClearFilters}
         />
-        
+
         <div className="mb-6 flex items-center justify-between">
           <ExamStats filteredTests={filteredTests} allTests={allTests} />
         </div>

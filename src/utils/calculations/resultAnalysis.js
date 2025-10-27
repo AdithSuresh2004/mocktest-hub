@@ -67,7 +67,10 @@ export const analyzeSectionPerformance = (
   }
 }
 
-export const calculateOverallStats = (sectionAnalysis, totalQuestionsOverall) => {
+export const calculateOverallStats = (
+  sectionAnalysis,
+  totalQuestionsOverall
+) => {
   const totals = sectionAnalysis.reduce(
     (acc, section) => ({
       correct: acc.correct + section.correct,
@@ -105,7 +108,12 @@ export const calculateAnalysis = (examData, attemptData) => {
       : {}
 
   const sectionAnalysis = examData.sections.map((section, sectionIndex) =>
-    analyzeSectionPerformance(section, sectionIndex, responsesMap, sectionScores)
+    analyzeSectionPerformance(
+      section,
+      sectionIndex,
+      responsesMap,
+      sectionScores
+    )
   )
 
   const totalQuestionsOverall = examData.sections.reduce(

@@ -1,11 +1,21 @@
-import { FaDownload, FaTrash, FaUpload, FaCloudDownloadAlt, FaHistory, FaExclamationTriangle, FaDatabase, FaShieldAlt } from 'react-icons/fa'
+import {
+  FaDownload,
+  FaTrash,
+  FaUpload,
+  FaCloudDownloadAlt,
+  FaHistory,
+  FaExclamationTriangle,
+  FaDatabase,
+  FaShieldAlt,
+} from 'react-icons/fa'
 import Button from '@/components/common/Button'
 
 const DataManagementSection = ({ onExport, onImport, onClearData }) => {
   const handleExportSettings = () => {
     const settingsOnly = { ...window.localStorage }
     const dataStr = JSON.stringify(settingsOnly, null, 2)
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr)
+    const dataUri =
+      'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr)
 
     const exportFileDefaultName = `mocktest-settings-${new Date().toISOString().split('T')[0]}.json`
 
@@ -28,7 +38,8 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
           Backup & Export
         </h3>
         <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
-          Create backups of your data to prevent loss and easily restore your progress
+          Create backups of your data to prevent loss and easily restore your
+          progress
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -36,8 +47,12 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
             <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <FaDatabase className="h-5 w-5 text-blue-600 dark:text-blue-400" />
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">Complete Backup</h4>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Settings + all test attempts</p>
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                  Complete Backup
+                </h4>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Settings + all test attempts
+                </p>
               </div>
             </div>
             <Button
@@ -55,8 +70,12 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
             <div className="flex items-center gap-3 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
               <FaShieldAlt className="h-5 w-5 text-green-600 dark:text-green-400" />
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">Settings Only</h4>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Preferences & configuration</p>
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                  Settings Only
+                </h4>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Preferences & configuration
+                </p>
               </div>
             </div>
             <Button
@@ -86,8 +105,13 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
           <div className="flex items-center gap-3 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
             <FaExclamationTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
             <div>
-              <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">Important Note</h4>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Importing will overwrite your current data. Make sure to create a backup first!</p>
+              <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                Important Note
+              </h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                Importing will overwrite your current data. Make sure to create
+                a backup first!
+              </p>
             </div>
           </div>
 
@@ -117,7 +141,9 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
-              <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">Storage Used</div>
+              <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+                Storage Used
+              </div>
               <div className="text-xs text-gray-600 dark:text-gray-400">
                 {(JSON.stringify(localStorage).length / 1024).toFixed(1)} KB
               </div>
@@ -136,7 +162,9 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
           </div>
 
           <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-600">
-            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">What gets deleted?</h4>
+            <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+              What gets deleted?
+            </h4>
             <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
               <li>• All completed test attempts and scores</li>
               <li>• Performance history and analytics</li>

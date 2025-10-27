@@ -28,4 +28,3 @@ const useAsync = (asyncFunction, dependencies = []) => {
 }
 
 export default useAsync
-

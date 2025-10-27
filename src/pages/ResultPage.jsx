@@ -38,9 +38,7 @@ const ResultPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 px-3 py-6 sm:px-4 sm:py-8 lg:px-8 dark:bg-gray-900">
-      <div
-        className="mx-auto max-w-5xl space-y-4 sm:space-y-6 md:space-y-8"
-      >
+      <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6 md:space-y-8">
         <ResultHeader examName={exam.exam_name} />
 
         <ResultScoreCards
@@ -55,7 +53,7 @@ const ResultPage = () => {
 
         <ResultActions
           showAnalysis={showAnalysis}
-          onToggleAnalysis={() => setShowAnalysis(prev => !prev)}
+          onToggleAnalysis={() => setShowAnalysis((prev) => !prev)}
           onNavigateHome={() => navigate('/')}
           onNavigateReview={() => navigate(`/review/${attemptId}`)}
         />

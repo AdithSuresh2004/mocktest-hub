@@ -1,23 +1,25 @@
 import { FaFileAlt, FaSearch, FaRedo } from 'react-icons/fa'
 import { theme } from '@/utils/theme'
 
-const EmptyState = ({ 
+const EmptyState = ({
   icon: Icon = FaFileAlt,
   title = 'No data available',
   message,
   actionLabel,
   onAction,
-  className = '' 
+  className = '',
 }) => {
   return (
-    <div className={`flex min-h-full items-center justify-center bg-gray-50 ${className} dark:bg-gray-900`}>
+    <div
+      className={`flex min-h-full items-center justify-center bg-gray-50 ${className} dark:bg-gray-900`}
+    >
       <div className="mx-auto max-w-md px-4 text-center">
         <Icon className="mx-auto mb-4 h-16 w-16 text-gray-400" />
         <h3 className={`mb-2 text-xl font-semibold ${theme.text.primary}`}>
           {title}
         </h3>
         <p className={`mb-6 ${theme.text.secondary}`}>
-          {message || 'There\'s nothing to display here yet.'}
+          {message || "There's nothing to display here yet."}
         </p>
         {onAction && actionLabel && (
           <button

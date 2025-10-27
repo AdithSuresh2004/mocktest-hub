@@ -30,4 +30,3 @@ const useDataLoader = (loadFunction, autoLoad = true) => {
 }
 
 export default useDataLoader
-

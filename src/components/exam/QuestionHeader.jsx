@@ -5,7 +5,7 @@ const QuestionHeader = ({
   totalQuestions,
   sectionName,
   markedForReview,
-  onMarkForReview
+  onMarkForReview,
 }) => (
   <div className="relative flex items-center justify-between border-b border-blue-100 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/40 px-4 py-3 transition-[background-color,border-color] duration-300 dark:border-blue-900/30 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20 sm:px-6 sm:py-4">
     <div className="flex-1">
@@ -28,9 +28,7 @@ const QuestionHeader = ({
           ? 'Marked for Review (Press M)'
           : 'Mark for Review (Press M)'
       }
-      aria-label={
-        markedForReview ? 'Remove review mark' : 'Mark for review'
-      }
+      aria-label={markedForReview ? 'Remove review mark' : 'Mark for review'}
       aria-pressed={markedForReview}
       className={`rounded-xl p-2.5 transition-all duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
         markedForReview
@@ -39,12 +37,12 @@ const QuestionHeader = ({
       }`}
     >
       {markedForReview ? (
-        <IoBookmark
+        <IoBookmark className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
+      ) : (
+        <IoBookmarkOutline
           className="h-5 w-5 sm:h-6 sm:w-6"
           aria-hidden="true"
         />
-      ) : (
-        <IoBookmarkOutline className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
       )}
     </button>
   </div>

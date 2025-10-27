@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from 'recharts'
 import { getAllAttempts } from '@/data/attemptRepository'
 import ToggleButtons from './ToggleButtons'
@@ -23,7 +23,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         <p className="font-medium text-gray-900 dark:text-gray-100">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} className="text-sm" style={{ color: entry.color }}>
-            {entry.name}: {entry.value}{entry.dataKey === 'score' ? '%' : ' min'}
+            {entry.name}: {entry.value}
+            {entry.dataKey === 'score' ? '%' : ' min'}
           </p>
         ))}
       </div>
@@ -32,7 +33,11 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null
 }
 
-const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) => {
+const PerformanceChart = ({
+  attempts,
+  days = 30,
+  initialChartType = 'area',
+}) => {
   const [chartType, setChartType] = useState(initialChartType)
   const allAttempts = getAllAttempts()
     .filter((a) => a.status === 'completed')
@@ -47,14 +52,17 @@ const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) =>
       date: new Date(a.timestamp).toLocaleDateString(),
       score: a.score || 0,
       time: Math.floor((a.time_taken || 0) / 60),
-      attempt: index + 1
+      attempt: index + 1,
     }))
 
   const renderChart = () => {
     switch (chartType) {
       case 'line':
         return (
-          <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <LineChart
+            data={chartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis
               dataKey="date"
@@ -80,7 +88,10 @@ const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) =>
 
       case 'bar':
         return (
-          <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <BarChart
+            data={chartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis
               dataKey="date"
@@ -104,7 +115,10 @@ const PerformanceChart = ({ attempts, days = 30, initialChartType = 'area' }) =>
       case 'area':
       default:
         return (
-          <AreaChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <AreaChart
+            data={chartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis
               dataKey="date"

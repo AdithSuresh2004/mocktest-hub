@@ -1,9 +1,4 @@
-import {
-  FaTrophy,
-  FaPercentage,
-  FaClock,
-  FaChartLine,
-} from 'react-icons/fa'
+import { FaTrophy, FaPercentage, FaClock, FaChartLine } from 'react-icons/fa'
 import { formatTime } from '@/utils/formatters/formatters'
 import ResultCard from '@/components/result/ResultCard'
 import StatTile from '@/components/common/StatTile'

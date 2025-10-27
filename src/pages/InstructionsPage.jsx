@@ -162,11 +162,7 @@ const InstructionsPage = ({ exam, onStart }) => {
           >
             Cancel
           </Button>
-          <Button
-            onClick={onStart}
-            variant="primary"
-            size="lg"
-          >
+          <Button onClick={onStart} variant="primary" size="lg">
             Start Exam
           </Button>
         </div>

@@ -27,15 +27,19 @@ export default function PendingTestList({ tests, onDelete, onResume }) {
               </div>
             </div>
             <div className="mt-4 flex items-center gap-3 sm:mt-0">
-              <Button onClick={() => onResume(test.exam_id)} variant="primary" icon={FaPlay}>
+              <Button
+                onClick={() => onResume(test.exam_id)}
+                variant="primary"
+                icon={FaPlay}
+              >
                 Resume
               </Button>
-              <Button 
+              <Button
                 onClick={(e) => {
                   e.stopPropagation()
                   onDelete(test.attempt_id)
-                }} 
-                variant="danger" 
+                }}
+                variant="danger"
                 icon={FaTrash}
               >
                 Delete

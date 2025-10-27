@@ -83,7 +83,6 @@ const SettingsPage = () => {
         </div>
         <SuccessAlert show={showSaveSuccess} />
         <div className="space-y-8">
-
           <AppearanceSection theme={theme} onThemeChange={toggleTheme} />
 
           <PreferencesSection

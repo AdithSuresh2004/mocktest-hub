@@ -6,7 +6,7 @@ const QuestionOption = ({
   isSelected,
   onSelect,
   questionId,
-  index
+  index,
 }) => {
   const optionLabel = optionId.toUpperCase()
   const keyboardShortcut = index < 4 ? ` (${index + 1})` : ''
@@ -37,9 +37,7 @@ const QuestionOption = ({
           }`}
           aria-hidden="true"
         >
-          {isSelected && (
-            <div className="h-2.5 w-2.5 rounded-full bg-white" />
-          )}
+          {isSelected && <div className="h-2.5 w-2.5 rounded-full bg-white" />}
         </div>
         <div className="flex-1">
           <FormattedContent

@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
-import { FaBookOpen, FaPlayCircle, FaChartBar, FaBullseye } from 'react-icons/fa'
+import {
+  FaBookOpen,
+  FaPlayCircle,
+  FaChartBar,
+  FaBullseye,
+} from 'react-icons/fa'
 
 const QuickActions = ({ stats, focusExams }) => {
   return (
@@ -17,7 +22,9 @@ const QuickActions = ({ stats, focusExams }) => {
           className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-blue-500 to-blue-600"
         >
           <div className="flex flex-col items-center">
-            <span className="mb-2 text-2xl"><FaBookOpen className="text-blue-200" size={20} /></span>
+            <span className="mb-2 text-2xl">
+              <FaBookOpen className="text-blue-200" size={20} />
+            </span>
             <span className="text-sm font-semibold">Browse Exams</span>
           </div>
         </Link>
@@ -27,7 +34,9 @@ const QuickActions = ({ stats, focusExams }) => {
           className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-green-500 to-green-600"
         >
           <div className="flex flex-col items-center">
-            <span className="mb-2 text-2xl"><FaPlayCircle className="text-green-200" size={20} /></span>
+            <span className="mb-2 text-2xl">
+              <FaPlayCircle className="text-green-200" size={20} />
+            </span>
             <span className="text-sm font-semibold">Resume Test</span>
           </div>
         </Link>
@@ -37,7 +46,9 @@ const QuickActions = ({ stats, focusExams }) => {
           className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-purple-500 to-purple-600"
         >
           <div className="flex flex-col items-center">
-            <span className="mb-2 text-2xl"><FaChartBar className="text-purple-200" size={20} /></span>
+            <span className="mb-2 text-2xl">
+              <FaChartBar className="text-purple-200" size={20} />
+            </span>
             <span className="text-sm font-semibold">View Results</span>
           </div>
         </Link>
@@ -47,7 +58,9 @@ const QuickActions = ({ stats, focusExams }) => {
           className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-orange-500 to-orange-600"
         >
           <div className="flex flex-col items-center">
-            <span className="mb-2 text-2xl"><FaBullseye className="text-orange-200" size={20} /></span>
+            <span className="mb-2 text-2xl">
+              <FaBullseye className="text-orange-200" size={20} />
+            </span>
             <span className="text-sm font-semibold">Settings</span>
           </div>
         </Link>

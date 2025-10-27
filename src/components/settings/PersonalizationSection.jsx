@@ -1,4 +1,11 @@
-import { FaHeart, FaBolt, FaEye, FaClock, FaTrophy, FaChartBar } from 'react-icons/fa'
+import {
+  FaHeart,
+  FaBolt,
+  FaEye,
+  FaClock,
+  FaTrophy,
+  FaChartBar,
+} from 'react-icons/fa'
 
 const PersonalizationSection = ({
   focusExams,
@@ -9,16 +16,20 @@ const PersonalizationSection = ({
   const handleWidgetToggle = (widgetId) => {
     onDashboardWidgetsChange({
       ...dashboardWidgets,
-      [widgetId]: !dashboardWidgets[widgetId]
+      [widgetId]: !dashboardWidgets[widgetId],
     })
   }
 
   const widgetOptions = [
-    { id: 'performanceChart', name: 'Performance Trends Chart', icon: FaChartBar },
+    {
+      id: 'performanceChart',
+      name: 'Performance Trends Chart',
+      icon: FaChartBar,
+    },
     { id: 'scoreDistribution', name: 'Score Distribution', icon: FaTrophy },
     { id: 'recentActivity', name: 'Recent Activity Feed', icon: FaClock },
     { id: 'progressTracking', name: 'Progress & Streaks', icon: FaBolt },
-    { id: 'performanceSnapshot', name: 'Performance Overview', icon: FaTrophy }
+    { id: 'performanceSnapshot', name: 'Performance Overview', icon: FaTrophy },
   ]
 
   return (
@@ -39,10 +50,12 @@ const PersonalizationSection = ({
             </label>
             <select
               value={focusExams?.primaryFocus || ''}
-              onChange={(e) => onFocusExamsChange({
-                ...focusExams,
-                primaryFocus: e.target.value
-              })}
+              onChange={(e) =>
+                onFocusExamsChange({
+                  ...focusExams,
+                  primaryFocus: e.target.value,
+                })
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
             >
               <option value="">-- Choose primary focus --</option>
@@ -60,8 +73,16 @@ const PersonalizationSection = ({
               Quick Access Exams
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {['CUET PG MCA', 'NIMCET', 'Mathematics Mock', 'Reasoning Test'].map(exam => (
-                <label key={exam} className="flex items-center gap-3 cursor-pointer">
+              {[
+                'CUET PG MCA',
+                'NIMCET',
+                'Mathematics Mock',
+                'Reasoning Test',
+              ].map((exam) => (
+                <label
+                  key={exam}
+                  className="flex items-center gap-3 cursor-pointer"
+                >
                   <input
                     type="checkbox"
                     checked={focusExams?.quickAccess?.includes(exam) || false}
@@ -69,15 +90,17 @@ const PersonalizationSection = ({
                       const current = focusExams?.quickAccess || []
                       const newQuickAccess = e.target.checked
                         ? [...current, exam]
-                        : current.filter(item => item !== exam)
+                        : current.filter((item) => item !== exam)
                       onFocusExamsChange({
                         ...focusExams,
-                        quickAccess: newQuickAccess
+                        quickAccess: newQuickAccess,
                       })
                     }}
                     className="rounded text-blue-600 focus:ring-2 focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{exam}</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                    {exam}
+                  </span>
                 </label>
               ))}
             </div>
@@ -99,17 +122,26 @@ const PersonalizationSection = ({
           {widgetOptions.map((widget, index) => {
             const IconComponent = widget.icon
             return (
-              <div key={widget.id} className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+              <div
+                key={widget.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              >
                 <div className="flex items-center gap-3">
                   <IconComponent className="h-5 w-5 text-gray-500" />
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-gray-100">{widget.name}</p>
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
+                      {widget.name}
+                    </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {index === 0 ? "Your performance trends over time" :
-                       index === 1 ? "Score breakdown by ranges" :
-                       index === 2 ? "Recent completed tests" :
-                       index === 3 ? "Goals and streak tracking" :
-                       "Quick performance overview"}
+                      {index === 0
+                        ? 'Your performance trends over time'
+                        : index === 1
+                          ? 'Score breakdown by ranges'
+                          : index === 2
+                            ? 'Recent completed tests'
+                            : index === 3
+                              ? 'Goals and streak tracking'
+                              : 'Quick performance overview'}
                     </p>
                   </div>
                 </div>

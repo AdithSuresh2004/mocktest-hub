@@ -90,7 +90,9 @@ const ReviewPage = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold text-red-600">Error</h1>
+          <h1 className="mb-4 text-2xl font-bold text-red-600 dark:text-red-400">
+            Error
+          </h1>
           <p className="text-gray-600 dark:text-gray-400">{error}</p>
           <Link
             to="/"
@@ -200,8 +202,8 @@ const ReviewPage = () => {
       </header>
 
       {/* Main Content */}
-      <div className="grid flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-4">
-        <main className="flex flex-col rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
+      <div className="grid flex-1 grid-cols-1 gap-4 overflow-hidden p-4 lg:grid-cols-4">
+        <main className="flex flex-col overflow-hidden rounded-lg bg-white shadow-md lg:col-span-3 dark:bg-gray-800">
           <ReviewArea
             question={currentQuestion}
             sectionName={currentSection.section_name}
@@ -218,7 +220,6 @@ const ReviewPage = () => {
           />
         </main>
 
-        {/* Question Navigator */}
         <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 lg:h-full dark:bg-gray-800">
           <QuestionNavigator
             sections={exam.sections}

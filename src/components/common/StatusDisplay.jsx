@@ -52,11 +52,7 @@ export default function StatusDisplay({
         </span>
       )}
       {showBackHome && (
-        <Button
-          onClick={handleBackHome}
-          variant="secondary"
-          className="mt-6"
-        >
+        <Button onClick={handleBackHome} variant="secondary" className="mt-6">
           Back to Home
         </Button>
       )}

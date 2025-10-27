@@ -1,4 +1,11 @@
-import { FaPlay, FaListAlt, FaClock, FaStar, FaTrash, FaAward } from 'react-icons/fa'
+import {
+  FaPlay,
+  FaListAlt,
+  FaClock,
+  FaStar,
+  FaTrash,
+  FaAward,
+} from 'react-icons/fa'
 import { getDifficultyColor, capitalizeStrength } from '@/utils/testHelpers'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
@@ -25,23 +32,25 @@ const FavoriteCard = ({ favorite, onStart, onRemove }) => {
           <FaTrash className="h-4 w-4" />
         </button>
       </div>
-      
+
       <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
         {favorite.exam_name || `Exam ${favorite.exam_id}`}
       </h3>
-      
+
       {favorite.subject && (
         <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
           {favorite.subject}
         </p>
       )}
-      
+
       {favorite.exam_strength && (
         <div className="mb-3">
-          <Badge variant="warning">{capitalizeStrength(favorite.exam_strength)}</Badge>
+          <Badge variant="warning">
+            {capitalizeStrength(favorite.exam_strength)}
+          </Badge>
         </div>
       )}
-      
+
       <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
         {favorite.duration_minutes && (
           <div className="flex items-center gap-1.5">
@@ -62,7 +71,7 @@ const FavoriteCard = ({ favorite, onStart, onRemove }) => {
           </div>
         )}
       </div>
-      
+
       <Button
         onClick={(e) => {
           e.stopPropagation()
@@ -79,4 +88,3 @@ const FavoriteCard = ({ favorite, onStart, onRemove }) => {
 }
 
 export default FavoriteCard
-

@@ -1,9 +1,9 @@
-const ToggleButtons = ({ 
-  options, 
-  value, 
-  onChange, 
+const ToggleButtons = ({
+  options,
+  value,
+  onChange,
   className = '',
-  size = 'sm'
+  size = 'sm',
 }) => {
   const sizes = {
     sm: 'rounded-md px-3 py-1.5 text-sm',
@@ -14,7 +14,9 @@ const ToggleButtons = ({
   const sizeClass = sizes[size] || sizes.sm
 
   return (
-    <div className={`inline-flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1 ${className}`}>
+    <div
+      className={`inline-flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1 ${className}`}
+    >
       {options.map((option) => {
         const optionValue = typeof option === 'string' ? option : option.value
         const optionLabel = typeof option === 'string' ? option : option.label
@@ -39,4 +41,3 @@ const ToggleButtons = ({
 }
 
 export default ToggleButtons
-

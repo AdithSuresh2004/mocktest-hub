@@ -34,11 +34,7 @@ const TextRenderer = ({ text, className = '' }) => {
     }
   }
 
-  return (
-    <span className={className}>
-      {trimmed.replace(/\s+/g, ' ')}
-    </span>
-  )
+  return <span className={className}>{trimmed.replace(/\s+/g, ' ')}</span>
 }
 
 export default TextRenderer

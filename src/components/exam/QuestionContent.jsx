@@ -14,7 +14,12 @@ const QuestionImage = ({ src, alt }) => (
   </div>
 )
 
-const QuestionContent = ({ questionText, image, image_url, question_image }) => {
+const QuestionContent = ({
+  questionText,
+  image,
+  image_url,
+  question_image,
+}) => {
   const imageSrc = image || image_url || question_image
 
   return (
@@ -23,12 +28,7 @@ const QuestionContent = ({ questionText, image, image_url, question_image }) => 
         text={questionText}
         className="text-sm leading-relaxed text-gray-900 transition-colors sm:text-base dark:text-gray-50 md:text-lg"
       />
-      {imageSrc && (
-        <QuestionImage
-          src={imageSrc}
-          alt="Question illustration"
-        />
-      )}
+      {imageSrc && <QuestionImage src={imageSrc} alt="Question illustration" />}
     </div>
   )
 }

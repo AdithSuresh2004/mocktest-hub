@@ -9,14 +9,16 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
-import {
-  capitalizeStrength,
-  getTestTypeConfig,
-} from '@/utils/testHelpers'
+import { capitalizeStrength, getTestTypeConfig } from '@/utils/testHelpers'
 import { FavoritesStorage } from '@/utils/storage'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
-import { getAttemptStatus, getAllTags, toggleFavoriteStatus, getFavoriteData } from '@/services/testService'
+import {
+  getAttemptStatus,
+  getAllTags,
+  toggleFavoriteStatus,
+  getFavoriteData,
+} from '@/services/testService'
 
 const TestCard = ({ test }) => {
   const [isFavorite, setIsFavorite] = useState(false)
@@ -59,27 +61,39 @@ const TestCard = ({ test }) => {
         />
       </button>
       <div className="mb-2.5 flex flex-wrap gap-1.5 pr-8 sm:mb-3 sm:gap-2 sm:pr-10">
-        <Badge variant="warning" icon={testTypeConfig.icon} className="text-xs sm:text-sm">
+        <Badge
+          variant="warning"
+          icon={testTypeConfig.icon}
+          className="text-xs sm:text-sm"
+        >
           {capitalizeStrength(test.exam_strength) || 'Normal'}
         </Badge>
         <Badge variant="primary" icon={TestIcon} className="text-xs sm:text-sm">
           {testTypeConfig.label}
         </Badge>
         {attemptStatus && (
-          <Badge 
+          <Badge
             variant={
-              attemptStatus === 'completed' ? 'success' :
-              attemptStatus === 'in_progress' ? 'warning' : 'default'
+              attemptStatus === 'completed'
+                ? 'success'
+                : attemptStatus === 'in_progress'
+                  ? 'warning'
+                  : 'default'
             }
             icon={
-              attemptStatus === 'completed' ? FaCheckCircle :
-              attemptStatus === 'in_progress' ? FaPlay : null
+              attemptStatus === 'completed'
+                ? FaCheckCircle
+                : attemptStatus === 'in_progress'
+                  ? FaPlay
+                  : null
             }
             className="text-xs sm:text-sm"
           >
-            {attemptStatus === 'completed' ? 'Completed' :
-             attemptStatus === 'in_progress' ? 'In Progress' :
-             'Not Attempted'}
+            {attemptStatus === 'completed'
+              ? 'Completed'
+              : attemptStatus === 'in_progress'
+                ? 'In Progress'
+                : 'Not Attempted'}
           </Badge>
         )}
       </div>
@@ -129,7 +143,12 @@ const TestCard = ({ test }) => {
         </div>
       )}
       <div className="mt-auto">
-        <Button as={Link} to={`/exam/${test.exam_id}`} variant="primary" className="w-full text-xs sm:text-sm sm:py-2">
+        <Button
+          as={Link}
+          to={`/exam/${test.exam_id}`}
+          variant="primary"
+          className="w-full text-xs sm:text-sm sm:py-2"
+        >
           {attemptStatus === 'completed'
             ? 'Retake Test'
             : attemptStatus === 'in_progress'

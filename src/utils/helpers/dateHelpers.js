@@ -85,4 +85,3 @@ export const formatDateDifference = (date1, date2) => {
   if (minutes > 0) return `${minutes}m`
   return `${seconds}s`
 }
-

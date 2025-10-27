@@ -1,16 +1,20 @@
-import { 
+import {
   getQuestionMarks as baseGetQuestionMarks,
   getTotalMarks,
   getScore as baseGetScore,
-  getPerformanceLevel 
+  getPerformanceLevel,
 } from './scoreCalculations'
 
-export { calculateStreakData, getStreakMotivation, getAchievementBadges } from './streakCalculations'
-export { 
-  analyzeSectionPerformance, 
-  calculateOverallStats, 
+export {
+  calculateStreakData,
+  getStreakMotivation,
+  getAchievementBadges,
+} from './streakCalculations'
+export {
+  analyzeSectionPerformance,
+  calculateOverallStats,
   calculateAnalysis,
-  createResponsesMap 
+  createResponsesMap,
 } from './resultAnalysis'
 
 export const getQuestionMarks = (question) => {
@@ -27,7 +31,10 @@ export const getScore = (attempt) => {
   if (typeof attempt?.score === 'number') {
     return attempt.score
   }
-  if (typeof attempt?.score === 'object' && attempt.score?.total !== undefined) {
+  if (
+    typeof attempt?.score === 'object' &&
+    attempt.score?.total !== undefined
+  ) {
     return attempt.score.total
   }
   return 0
@@ -56,11 +63,13 @@ export const calculateTotalMarks = (exam) => {
   if (!exam?.sections) return 0
   return exam.sections.reduce((sum, section) => {
     if (!Array.isArray(section.questions)) return sum
-    return sum + section.questions.reduce((qSum, q) => {
-      return qSum + getQuestionMarks(q)
-    }, 0)
+    return (
+      sum +
+      section.questions.reduce((qSum, q) => {
+        return qSum + getQuestionMarks(q)
+      }, 0)
+    )
   }, 0)
 }
 
 export { getTotalMarks, getPerformanceLevel }
-
