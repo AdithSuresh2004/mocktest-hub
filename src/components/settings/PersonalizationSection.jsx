@@ -34,79 +34,7 @@ const PersonalizationSection = ({
 
   return (
     <div className="space-y-8">
-      {/* Focus Exams */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          Focus Exams
-        </h3>
-        <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
-          Prioritize specific exams or exam types on your dashboard
-        </p>
 
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Primary Focus Area
-            </label>
-            <select
-              value={focusExams?.primaryFocus || ''}
-              onChange={(e) =>
-                onFocusExamsChange({
-                  ...focusExams,
-                  primaryFocus: e.target.value,
-                })
-              }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
-            >
-              <option value="">-- Choose primary focus --</option>
-              <option value="cuet_mca">CUET PG MCA</option>
-              <option value="nimcet">NIMCET</option>
-              <option value="mathematics">Mathematics</option>
-              <option value="logical">Logical Reasoning</option>
-              <option value="verbal">Verbal Ability</option>
-              <option value="computer">Computer Science</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Quick Access Exams
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                'CUET PG MCA',
-                'NIMCET',
-                'Mathematics Mock',
-                'Reasoning Test',
-              ].map((exam) => (
-                <label
-                  key={exam}
-                  className="flex items-center gap-3 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={focusExams?.quickAccess?.includes(exam) || false}
-                    onChange={(e) => {
-                      const current = focusExams?.quickAccess || []
-                      const newQuickAccess = e.target.checked
-                        ? [...current, exam]
-                        : current.filter((item) => item !== exam)
-                      onFocusExamsChange({
-                        ...focusExams,
-                        quickAccess: newQuickAccess,
-                      })
-                    }}
-                    className="rounded text-blue-600 focus:ring-2 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {exam}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Dashboard Customization */}
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">

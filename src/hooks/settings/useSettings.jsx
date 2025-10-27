@@ -9,10 +9,6 @@ export function useSettings() {
     weekly: 15,
     monthly: 60,
   })
-  const [focusExams, setFocusExams] = useState({
-    primaryFocus: '',
-    quickAccess: [],
-  })
   const [dashboardWidgets, setDashboardWidgets] = useState({
     performanceChart: true,
     scoreDistribution: true,
@@ -35,7 +31,6 @@ export function useSettings() {
         notifications,
         autoSave,
         streakGoals,
-        focusExams,
         dashboardWidgets,
       }
       SettingsStorage.set(settingsToSave)
@@ -51,7 +46,6 @@ export function useSettings() {
     notifications,
     autoSave,
     streakGoals,
-    focusExams,
     dashboardWidgets,
   ])
 
@@ -66,9 +60,6 @@ export function useSettings() {
         monthly: settings.streakGoals.monthly || 60,
       })
     }
-    if (settings.focusExams) {
-      setFocusExams(settings.focusExams)
-    }
     if (settings.dashboardWidgets) {
       setDashboardWidgets(settings.dashboardWidgets)
     }
@@ -82,7 +73,6 @@ export function useSettings() {
       notifications,
       autoSave,
       streakGoals,
-      focusExams,
       dashboardWidgets,
     })
     setShowSaveSuccess(true)
@@ -96,8 +86,6 @@ export function useSettings() {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    focusExams,
-    setFocusExams,
     dashboardWidgets,
     setDashboardWidgets,
     showSaveSuccess,
