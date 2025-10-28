@@ -12,9 +12,7 @@ export const useModalState = () => {
     setShowExitModal(false)
   }
 
-  const handleSubmit = () => {
-    setShowSubmitModal(true)
-  }
+  const handleSubmit = () => setShowSubmitModal(true)
 
   const cancelSubmit = () => {
     setShowSubmitModal(false)

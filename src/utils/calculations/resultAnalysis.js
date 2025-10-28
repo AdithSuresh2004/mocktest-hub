@@ -14,7 +14,8 @@ export const analyzeSectionPerformance = (
   section,
   sectionIndex,
   responsesMap,
-  sectionScores
+  sectionScores,
+  markingScheme
 ) => {
   let sectionCorrect = 0
   let sectionIncorrect = 0
@@ -34,11 +35,13 @@ export const analyzeSectionPerformance = (
 
     if (!userAnswer) {
       sectionUnanswered++
+      sectionMarks += markingScheme.unattempted || 0
     } else if (userAnswer === question.correct_opt_id) {
       sectionCorrect++
-      sectionMarks += questionMarks
+      sectionMarks += markingScheme.correct_answer || questionMarks
     } else {
       sectionIncorrect++
+      sectionMarks += markingScheme.incorrect_answer || 0
     }
   })
 
@@ -46,6 +49,8 @@ export const analyzeSectionPerformance = (
     sectionScores[sectionKey] !== undefined
       ? sectionScores[sectionKey]
       : sectionMarks
+
+  const totalAttempted = sectionCorrect + sectionIncorrect
 
   return {
     sectionName: section.section_name,
@@ -56,8 +61,8 @@ export const analyzeSectionPerformance = (
     marksObtained: actualSectionMarks,
     totalMarks: sectionTotalMarks,
     accuracy:
-      section.questions.length > 0
-        ? ((sectionCorrect / section.questions.length) * 100).toFixed(1)
+      totalAttempted > 0
+        ? ((sectionCorrect / totalAttempted) * 100).toFixed(1)
         : 0,
     stats: {
       correct: sectionCorrect,
@@ -110,7 +115,8 @@ export const calculateAnalysis = (examData, attemptData) => {
       section,
       sectionIndex,
       responsesMap,
-      sectionScores
+      sectionScores,
+      examData.marking_scheme
     )
   )
 
@@ -126,20 +132,17 @@ export const calculateAnalysis = (examData, attemptData) => {
     0
   )
 
-  const speedValue =
-    attemptData.time_taken > 0
-      ? (overall.attempted / (attemptData.time_taken / 3600)).toFixed(1)
-      : '0.0'
+  const actualScore = sectionAnalysis.reduce(
+    (total, section) => total + section.marksObtained,
+    0
+  )
 
   return {
     sectionAnalysis,
     overall,
     score: {
-      actual: attemptData.score,
+      actual: actualScore,
       total: totalMarks,
-    },
-    speed: {
-      value: speedValue,
     },
     accuracy: {
       percentage: overall.accuracy,

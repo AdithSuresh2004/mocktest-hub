@@ -11,7 +11,6 @@ export function useSettingsPage() {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    showSaveSuccess,
     saveSettings,
   } = useSettings()
 
@@ -40,7 +39,6 @@ export function useSettingsPage() {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    showSaveSuccess,
     handleSave,
     handleExportData,
     handleImportData,

@@ -25,9 +25,9 @@ const ExamFilters = ({
       <div className="border-b border-gray-200 p-4 lg:hidden dark:border-gray-700">
         <button
           onClick={toggleMobileFilters}
-          className="flex w-full items-center justify-between text-left"
+          className="flex w-full items-center justify-between text-left text-gray-900 dark:text-gray-100"
         >
-          <span className="flex items-center font-medium text-gray-900 dark:text-gray-100">
+          <span className="flex items-center font-medium">
             <FaFilter className="mr-2 h-5 w-5" />
             Filters
             {hasActiveFilters && (

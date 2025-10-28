@@ -111,7 +111,7 @@ const useExam = (examId) => {
       ...attempt,
       status: 'completed',
       time_taken: exam.duration_minutes * 60 - timer.seconds,
-      score: analysis.overall.percentage,
+      score: analysis.score.actual,
       rawScore: {
         actual: analysis.overall.correct,
         total: analysis.overall.totalQuestions,

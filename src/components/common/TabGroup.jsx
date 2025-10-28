@@ -4,7 +4,7 @@ const TabGroup = ({ tabs, activeTab, onChange, className = '' }) => {
       className={`rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 ${className}`}
     >
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <div className="flex justify-between md:justify-start">
+        <div className="flex justify-between overflow-x-auto md:justify-start">
           {tabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
@@ -28,7 +28,7 @@ const TabGroup = ({ tabs, activeTab, onChange, className = '' }) => {
                 </span>
                 {tab.count !== undefined && (
                   <span
-                    className={`rounded-full px-2 py-0.5 text-xs ${
+                    className={`hidden rounded-full px-2 py-0.5 text-xs md:inline-block ${
                       isActive
                         ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
                         : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'

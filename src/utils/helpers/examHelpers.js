@@ -48,7 +48,7 @@ export const getQuestionStatusClasses = ({
   if (isReviewMode) {
     const isCorrect = answers[question.q_id] === question.correct_opt_id;
     if (isAnswered) {
-      return isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-orange-100 text-orange-900 dark:bg-orange-900/50 dark:text-orange-200';
+      return isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300';
     }
     return 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
   }

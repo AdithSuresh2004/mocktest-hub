@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import SettingsStorage from '@/utils/settings-storage'
+import { useToast } from '@/hooks/common/useToast'
 
 export function useSettings() {
+  const { addToast } = useToast()
   const [notifications, setNotifications] = useState(true)
   const [autoSave, setAutoSave] = useState(true)
   const [streakGoals, setStreakGoals] = useState({
@@ -10,13 +12,11 @@ export function useSettings() {
     monthly: 60,
   })
 
-  const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
-  const [firstSaveDone, setFirstSaveDone] = useState(false)
   const autoSaveTimeoutRef = useRef(null)
 
   useEffect(() => {
-    if (!isInitialized) return
+    if (!isInitialized || !autoSave) return
 
     clearTimeout(autoSaveTimeoutRef.current)
     autoSaveTimeoutRef.current = setTimeout(() => {
@@ -26,12 +26,6 @@ export function useSettings() {
         streakGoals,
       }
       SettingsStorage.set(settingsToSave)
-
-      if (firstSaveDone) {
-        setShowSaveSuccess(true)
-        setTimeout(() => setShowSaveSuccess(false), 2000)
-      }
-      setFirstSaveDone(true)
     }, 1000)
   }, [isInitialized, notifications, autoSave, streakGoals])
 
@@ -57,8 +51,7 @@ export function useSettings() {
       autoSave,
       streakGoals,
     })
-    setShowSaveSuccess(true)
-    setTimeout(() => setShowSaveSuccess(false), 3000)
+    addToast({ message: 'Settings saved successfully!', type: 'success' })
   }
 
   return {
@@ -68,7 +61,6 @@ export function useSettings() {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    showSaveSuccess,
     saveSettings,
   }
 }

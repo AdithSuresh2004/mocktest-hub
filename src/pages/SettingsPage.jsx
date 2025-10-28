@@ -20,7 +20,6 @@ const SettingsPage = () => {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    showSaveSuccess,
     handleSave,
     handleExportData,
     handleImportData,
@@ -47,7 +46,6 @@ const SettingsPage = () => {
           description="Manage your app preferences"
         />
         <div className="mt-8 space-y-10">
-          <SuccessAlert show={showSaveSuccess} />
           <AppearanceSection theme={theme} onThemeChange={toggleTheme} />
           <PreferencesSection
             notifications={notifications}

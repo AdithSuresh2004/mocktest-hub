@@ -9,7 +9,6 @@ const QuestionOption = ({
   index,
 }) => {
   const optionLabel = String.fromCharCode(65 + index)
-  const keyboardShortcut = index < 4 ? ` (${index + 1})` : ''
 
   return (
     <label
@@ -25,7 +24,7 @@ const QuestionOption = ({
         value={optionId}
         checked={isSelected}
         onChange={() => onSelect(optionId)}
-        aria-label={`Option ${optionLabel}: ${option.text}${keyboardShortcut}`}
+        aria-label={`Option ${optionLabel}: ${option.text}`}
         className="sr-only"
       />
       <div className="flex items-start gap-4">
@@ -56,11 +55,6 @@ const QuestionOption = ({
                 }}
               />
             </div>
-          )}
-          {index < 4 && (
-            <span className="absolute top-2 right-2 text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
-              {keyboardShortcut}
-            </span>
           )}
         </div>
       </div>

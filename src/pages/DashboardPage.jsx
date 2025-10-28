@@ -26,10 +26,10 @@ const DashboardPage = () => {
           title="Dashboard"
           description="Welcome back! Here's your performance at a glance."
         />
-        <div className="mt-8 space-y-10">
+        <div className="mt-8 space-y-6 md:space-y-8">
           <StatsGrid stats={stats} />
 
-          <div className="flex flex-col gap-10 lg:flex-row">
+          <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
             <div className="lg:w-2/3">
               <AttemptStats stats={attemptStats} />
             </div>
@@ -38,7 +38,7 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-10 xl:flex-row">
+          <div className="flex flex-col gap-6 xl:flex-row xl:gap-8">
             <div className="xl:w-1/3">
               <ProgressTracking stats={stats} streakGoals={streakGoals} />
             </div>
