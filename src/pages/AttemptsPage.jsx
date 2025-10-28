@@ -2,7 +2,7 @@ import { useAttempts, useAttemptStats } from '@/hooks/attempts'
 import AttemptStats from '@/components/attempts/AttemptStats'
 import AttemptFilter from '@/components/attempts/AttemptFilter'
 import AttemptList from '@/components/attempts/AttemptList'
-import SkeletonLoader from '@/components/common/SkeletonLoader'
+import AttemptsSkeleton from '@/components/common/skeletons/AttemptsSkeleton'
 import PageHeader from '@/components/common/PageHeader'
 import Pagination from '@/components/common/Pagination'
 import { usePagination } from '@/hooks/common/usePagination'
@@ -23,51 +23,35 @@ const AttemptsPage = () => {
   const pagination = usePagination(attempts, 10)
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-6 h-10 w-48 animate-pulse rounded bg-gray-300 dark:bg-gray-700"></div>
-          <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <SkeletonLoader type="stats" count={4} />
-          </div>
-          <SkeletonLoader type="list" count={3} />
-        </div>
-      </div>
-    )
+    return <AttemptsSkeleton />
   }
 
   return (
-    <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
+    <div className="min-h-full animate-fadeIn bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl">
         <PageHeader
           title="Test Results"
           description="View your completed exam results"
         />
-        <AttemptStats stats={stats} />
-        <AttemptFilter
-          filters={filters}
-          filterOptions={filterOptions}
-          handleFilterChange={handleFilterChange}
-          sortOrder={sortOrder}
-          toggleSort={toggleSort}
-          onResetFilters={resetFilters}
-        />
-        <AttemptList attempts={pagination.paginatedItems} />
+        <div className="mt-8">
+          <AttemptStats stats={stats} />
+        </div>
+        <div className="mt-8">
+          <AttemptFilter
+            filters={filters}
+            filterOptions={filterOptions}
+            handleFilterChange={handleFilterChange}
+            sortOrder={sortOrder}
+            toggleSort={toggleSort}
+            onResetFilters={resetFilters}
+          />
+        </div>
+        <div className="mt-8">
+          <AttemptList attempts={pagination.paginatedItems} />
+        </div>
         {pagination.totalPages > 1 && (
           <div className="mt-8">
-            <Pagination
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-              totalItems={pagination.totalItems}
-              pageSize={pagination.pageSize}
-              startIndex={pagination.startIndex}
-              endIndex={pagination.endIndex}
-              onPageChange={pagination.goToPage}
-              onPageSizeChange={pagination.changePageSize}
-              hasNextPage={pagination.hasNextPage}
-              hasPrevPage={pagination.hasPrevPage}
-              pageSizeOptions={[10, 20, 30, 50]}
-            />
+            <Pagination {...pagination} pageSizeOptions={[10, 20, 30, 50]} />
           </div>
         )}
       </div>

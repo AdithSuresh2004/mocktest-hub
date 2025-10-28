@@ -11,57 +11,55 @@ export function calculateStreakData() {
     .filter((attempt) => attempt.status === 'completed')
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
 
-  if (attempts.length === 0) {
-    return {
-      current: 0,
-      longest: 0,
-      today: 0,
-      week: 0,
-      month: 0,
+  const uniqueDates = [
+    ...new Set(attempts.map((a) => getDateKey(a.timestamp))),
+  ].sort()
+
+  if (uniqueDates.length === 0) {
+    return { current: 0, longest: 0, today: 0, week: 0, month: 0 }
+  }
+
+  let longestStreak = 0
+  let currentStreak = 0
+  for (let i = 0; i < uniqueDates.length; i++) {
+    currentStreak++
+    if (i + 1 < uniqueDates.length) {
+      const currentDay = new Date(uniqueDates[i])
+      const nextDay = new Date(uniqueDates[i + 1])
+      const diff = nextDay.getTime() - currentDay.getTime()
+      if (diff > 24 * 60 * 60 * 1000) {
+        if (currentStreak > longestStreak) {
+          longestStreak = currentStreak
+        }
+        currentStreak = 0
+      }
+    }
+  }
+  if (currentStreak > longestStreak) {
+    longestStreak = currentStreak
+  }
+
+  let isTodayInStreak = false
+  const todayKey = getDateKey(new Date())
+  if (uniqueDates.includes(todayKey)) {
+    isTodayInStreak = true
+  }
+
+  let finalCurrentStreak = 0
+  if (isTodayInStreak) {
+    finalCurrentStreak = currentStreak
+  } else {
+    const yesterdayKey = getDateKey(
+      new Date(new Date().setDate(new Date().getDate() - 1))
+    )
+    if (!uniqueDates.includes(yesterdayKey)) {
+      finalCurrentStreak = 0
+    } else {
+      finalCurrentStreak = currentStreak
     }
   }
 
   const today = getStartOfDay()
-  let currentStreak = 0
-  let currentDate = new Date(today)
-
-  const dateExists = {}
-  attempts.forEach((attempt) => {
-    const dateKey = getDateKey(attempt.timestamp)
-    dateExists[dateKey] = true
-  })
-
-  while (true) {
-    const dateKey = getDateKey(currentDate)
-    if (dateExists[dateKey]) {
-      currentStreak++
-      currentDate.setDate(currentDate.getDate() - 1)
-    } else {
-      break
-    }
-  }
-
-  let longestStreak = 0
-  let tempStreak = 0
-
-  attempts.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
-
-  for (let i = 0; i < attempts.length; i++) {
-    const currentDate = new Date(attempts[i].timestamp)
-    const previousDate = i > 0 ? new Date(attempts[i - 1].timestamp) : null
-
-    if (
-      !previousDate ||
-      currentDate.getTime() - previousDate.getTime() <= 24 * 60 * 60 * 1000
-    ) {
-      tempStreak++
-    } else {
-      longestStreak = Math.max(longestStreak, tempStreak)
-      tempStreak = 1
-    }
-  }
-  longestStreak = Math.max(longestStreak, tempStreak)
-
   const todayAttempts = attempts.filter(
     (attempt) => new Date(attempt.timestamp) >= today
   ).length
@@ -77,7 +75,7 @@ export function calculateStreakData() {
   ).length
 
   return {
-    current: currentStreak,
+    current: finalCurrentStreak,
     longest: longestStreak,
     today: todayAttempts,
     week: weekAttempts,

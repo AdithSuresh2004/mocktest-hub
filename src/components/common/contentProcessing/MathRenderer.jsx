@@ -15,7 +15,7 @@ const MathRenderer = ({ math, display = false, className = '' }) => {
     }
 
     return (
-      <span className={`align-baseline ${className}`.trim()}>
+      <span className={`mx-1 align-baseline ${className}`.trim()}>
         <InlineMath math={math} />
       </span>
     )

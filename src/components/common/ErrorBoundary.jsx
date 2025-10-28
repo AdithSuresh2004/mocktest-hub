@@ -154,6 +154,18 @@ class ErrorBoundary extends Component {
               >
                 🏠 Go Home
               </Button>
+
+              <Button
+                as="a"
+                href={`https://github.com/adith-ya/mocktest-hub/issues/new?title=Bug%20Report&body=Error%20ID:%20${this.state.errorId}%0A%0A**Error%20Message:**%0A${this.state.error?.message}%0A%0A**Component%20Stack:**%0A${this.state.errorInfo?.componentStack}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="danger"
+                size="lg"
+                aria-label="Report a bug on GitHub"
+              >
+                🐛 Report Bug
+              </Button>
             </div>
 
             {import.meta.env?.DEV && this.state.errorInfo && (
@@ -163,7 +175,9 @@ class ErrorBoundary extends Component {
                 </summary>
                 <pre className="mt-2 overflow-auto text-sm whitespace-pre-wrap text-gray-800 dark:text-gray-300">
                   {this.state.error && this.state.error.toString()}
-                  {'\n\n'}
+                  {`
+
+`}
                   {this.state.errorInfo && this.state.errorInfo.componentStack}
                 </pre>
               </details>

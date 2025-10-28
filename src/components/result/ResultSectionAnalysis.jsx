@@ -1,72 +1,72 @@
 import { FaBookOpen } from 'react-icons/fa'
 import ResultCard from '@/components/result/ResultCard'
 
+const StatItem = ({ label, value, color = 'text-gray-600 dark:text-gray-300' }) => (
+  <div className="flex flex-col items-center space-y-1">
+    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
+      {label}
+    </p>
+    <p className={`text-lg font-bold ${color} sm:text-xl`}>
+      {value}
+    </p>
+  </div>
+)
+
 const SectionRow = ({ section }) => {
   const accuracyColor =
     section.accuracy >= 75
-      ? 'bg-green-500'
+      ? 'bg-gradient-to-r from-green-500 to-green-400'
       : section.accuracy >= 50
-        ? 'bg-yellow-500'
-        : 'bg-red-500'
+        ? 'bg-gradient-to-r from-yellow-500 to-yellow-400'
+        : 'bg-gradient-to-r from-red-500 to-red-400'
 
   const accuracyTextColor =
     section.accuracy >= 75
-      ? 'text-green-600 dark:text-green-400'
+      ? 'text-green-700 dark:text-green-300'
       : section.accuracy >= 50
-        ? 'text-yellow-600 dark:text-yellow-400'
-        : 'text-red-600 dark:text-red-400'
+        ? 'text-yellow-700 dark:text-yellow-300'
+        : 'text-red-700 dark:text-red-300'
 
   return (
-    <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50 sm:p-4">
-      <div className="mb-3">
-        <div className="mb-1.5 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-800 sm:text-base dark:text-gray-100">
+    <div className="overflow-hidden rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-200 transition-all duration-200 hover:shadow-md dark:bg-gray-800 dark:ring-gray-700">
+      <div className="mb-4">
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 sm:text-lg">
             {section.sectionName}
           </h3>
-          <span className={`text-xs font-bold sm:text-sm ${accuracyTextColor}`}>
+          <span className={`text-sm font-bold ${accuracyTextColor}`}>
             {section.accuracy}%
           </span>
         </div>
-        <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-600">
+        <div className="relative h-3 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
           <div
-            className={`h-2 rounded-full ${accuracyColor}`}
-            style={{ width: `${section.accuracy}%` }}
-          ></div>
+            className={`h-full rounded-full transition-all duration-1000 ${accuracyColor}`}
+            style={{ width: `${Math.max(section.accuracy, 8)}%` }}
+          />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-2 pt-2 text-center sm:grid-cols-4 sm:gap-0">
-        <div>
-          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">
-            Correct
-          </p>
-          <p className="text-sm font-semibold text-green-600 sm:text-base dark:text-green-400">
-            {section.correct}
-          </p>
-        </div>
-        <div>
-          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">
-            Incorrect
-          </p>
-          <p className="text-sm font-semibold text-red-600 sm:text-base dark:text-red-400">
-            {section.incorrect}
-          </p>
-        </div>
-        <div>
-          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">
-            Unanswered
-          </p>
-          <p className="text-sm font-semibold text-gray-600 sm:text-base dark:text-gray-300">
-            {section.unanswered}
-          </p>
-        </div>
-        <div>
-          <p className="text-[0.65rem] text-gray-500 sm:text-xs dark:text-gray-400">
-            Total
-          </p>
-          <p className="text-sm font-semibold text-gray-800 sm:text-base dark:text-gray-100">
-            {section.totalQuestions}
-          </p>
-        </div>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <StatItem
+          label="Correct"
+          value={section.correct}
+          color="text-green-600 dark:text-green-400"
+        />
+        <StatItem
+          label="Incorrect"
+          value={section.incorrect}
+          color="text-red-600 dark:text-red-400"
+        />
+        <StatItem
+          label="Unanswered"
+          value={section.unanswered}
+          color="text-orange-600 dark:text-orange-400"
+        />
+        <StatItem
+          label="Total"
+          value={section.totalQuestions}
+          color="text-blue-600 dark:text-blue-400"
+        />
       </div>
     </div>
   )

@@ -8,18 +8,18 @@ const ResultCard = ({
 }) => {
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 ${className}`}
+      className={`overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg ring-1 ring-gray-100 transition-all duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:ring-gray-800 ${className}`}
     >
       {title && (
-        <div className="flex items-center border-b border-gray-200 p-3 dark:border-gray-700 sm:p-4">
+        <div className="flex items-center border-b border-gray-200 p-4 dark:border-gray-700 sm:p-5">
           {Icon && (
             <div
-              className={`mr-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg sm:mr-4 sm:h-10 sm:w-10 ${iconBgColor}`}
+              className={`mr-3 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl shadow-sm sm:mr-4 sm:h-10 sm:w-10 ${iconBgColor}`}
             >
               <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
             </div>
           )}
-          <h2 className="text-base font-semibold text-gray-800 sm:text-lg dark:text-gray-100">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 sm:text-xl">
             {title}
           </h2>
         </div>

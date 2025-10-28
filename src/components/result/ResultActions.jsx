@@ -1,58 +1,25 @@
-import { FaChartPie, FaRedo, FaHome } from 'react-icons/fa'
-import ResultCard from '@/components/result/ResultCard'
+import { useNavigate } from 'react-router-dom'
 
-const ActionButton = ({
-  icon: Icon,
-  label,
-  onClick,
-  primary = false,
-  className = '',
-}) => (
-  <button
-    onClick={onClick}
-    className={`flex w-full items-center justify-center rounded-lg px-3 py-2.5 text-sm font-semibold transition-all duration-200 sm:px-4 sm:py-3 sm:text-base ${
-      primary
-        ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
-        : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-    } ${className}`}
-  >
-    <Icon className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-    {label}
-  </button>
-)
+const ResultActions = ({ attemptId, onShowAnalysis, showAnalysis }) => {
+  const navigate = useNavigate()
 
-const ResultActions = ({
-  showAnalysis,
-  onToggleAnalysis,
-  onNavigateHome,
-  onNavigateReview,
-}) => {
   return (
-    <ResultCard
-      title="Next Steps"
-      icon={FaChartPie}
-      iconBgColor="bg-purple-100 dark:bg-purple-900/50"
-      iconColor="text-purple-600 dark:text-purple-400"
-    >
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
-        <ActionButton
-          icon={FaRedo}
-          label="Review Answers"
-          onClick={onNavigateReview}
-          primary
-        />
-        <ActionButton
-          icon={FaChartPie}
-          label={showAnalysis ? 'Hide Analysis' : 'Show Analysis'}
-          onClick={onToggleAnalysis}
-        />
-        <ActionButton
-          icon={FaHome}
-          label="Go to Home"
-          onClick={onNavigateHome}
-        />
+    <div className="rounded-2xl bg-white p-4 shadow-lg ring-1 ring-gray-200 transition-all duration-200 hover:shadow-xl dark:bg-gray-800 dark:ring-gray-700">
+      <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
+        <button
+          onClick={() => navigate(`/review/${attemptId}`)}
+          className="flex-1 rounded-xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md active:scale-95 dark:bg-blue-700 dark:hover:bg-blue-600 sm:text-base"
+        >
+          📝 Review Answers
+        </button>
+        <button
+          onClick={onShowAnalysis}
+          className="flex-1 rounded-xl border-2 border-gray-200 bg-gray-50 px-6 py-4 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md active:scale-95 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 sm:text-base"
+        >
+          {showAnalysis ? '📊 Hide Analysis' : '📊 Show Analysis'}
+        </button>
       </div>
-    </ResultCard>
+    </div>
   )
 }
 

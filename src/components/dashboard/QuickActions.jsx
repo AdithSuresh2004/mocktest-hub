@@ -19,11 +19,11 @@ const QuickActions = ({ stats, focusExams }) => {
       <div className="grid grid-cols-2 gap-4 flex-1">
         <Link
           to="/exams"
-          className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-blue-500 to-blue-600"
+          className="group flex transform items-center justify-center rounded-xl bg-blue-600 p-4 text-center text-white shadow-lg transition-all duration-300 hover:bg-blue-700 hover:-translate-y-1 hover:shadow-xl"
         >
           <div className="flex flex-col items-center">
             <span className="mb-2 text-2xl">
-              <FaBookOpen className="text-blue-200" size={20} />
+              <FaBookOpen className="text-blue-100" size={20} />
             </span>
             <span className="text-sm font-semibold">Browse Exams</span>
           </div>
@@ -31,11 +31,11 @@ const QuickActions = ({ stats, focusExams }) => {
 
         <Link
           to="/pending"
-          className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-green-500 to-green-600"
+          className="group flex transform items-center justify-center rounded-xl bg-green-600 p-4 text-center text-white shadow-lg transition-all duration-300 hover:bg-green-700 hover:-translate-y-1 hover:shadow-xl"
         >
           <div className="flex flex-col items-center">
             <span className="mb-2 text-2xl">
-              <FaPlayCircle className="text-green-200" size={20} />
+              <FaPlayCircle className="text-green-100" size={20} />
             </span>
             <span className="text-sm font-semibold">Resume Test</span>
           </div>
@@ -43,11 +43,11 @@ const QuickActions = ({ stats, focusExams }) => {
 
         <Link
           to="/attempts"
-          className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-purple-500 to-purple-600"
+          className="group flex transform items-center justify-center rounded-xl bg-purple-600 p-4 text-center text-white shadow-lg transition-all duration-300 hover:bg-purple-700 hover:-translate-y-1 hover:shadow-xl"
         >
           <div className="flex flex-col items-center">
             <span className="mb-2 text-2xl">
-              <FaChartBar className="text-purple-200" size={20} />
+              <FaChartBar className="text-purple-100" size={20} />
             </span>
             <span className="text-sm font-semibold">View Results</span>
           </div>
@@ -55,11 +55,11 @@ const QuickActions = ({ stats, focusExams }) => {
 
         <Link
           to="/settings"
-          className="group flex transform items-center justify-center rounded-xl bg-gradient-to-r p-4 text-center text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl from-orange-500 to-orange-600"
+          className="group flex transform items-center justify-center rounded-xl bg-orange-600 p-4 text-center text-white shadow-lg transition-all duration-300 hover:bg-orange-700 hover:-translate-y-1 hover:shadow-xl"
         >
           <div className="flex flex-col items-center">
             <span className="mb-2 text-2xl">
-              <FaBullseye className="text-orange-200" size={20} />
+              <FaBullseye className="text-orange-100" size={20} />
             </span>
             <span className="text-sm font-semibold">Settings</span>
           </div>

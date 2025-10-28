@@ -78,3 +78,19 @@ export function formatAttemptForDisplay(attempt) {
     timeTaken: attempt.time_taken || 0,
   }
 }
+
+export const createAttemptUpdates = (attempt, answers, timer, navigation, markedForReview) => {
+  const responses = Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+    q_id,
+    selected_opt_id,
+  }));
+
+  return {
+    ...attempt,
+    responses,
+    _currentSection: navigation.currentSection,
+    _currentQuestion: navigation.currentQuestion,
+    _timeRemainingSeconds: timer.seconds,
+    _markedForReview: Array.from(markedForReview),
+  };
+};

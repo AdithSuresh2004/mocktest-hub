@@ -14,6 +14,7 @@ import {
   calculateTabCounts,
 } from '@/utils/helpers/examSelectionHelpers'
 import { filterTests, hasActiveFilters } from '@/services/filterService'
+import { sortTests } from '@/utils/helpers/sortHelpers'
 
 const useExamSelection = () => {
   const [manifest, setManifest] = useState({
@@ -31,7 +32,9 @@ const useExamSelection = () => {
   const [selectedStrength, setSelectedStrength] = useState('All levels')
   const [attemptedExams, setAttemptedExams] = useState(new Set())
   const [selectedAttemptStatus, setSelectedAttemptStatus] = useState('all')
-
+  const [sortOrder, setSortOrder] = useState('default');
+  const [showMobileFilters, setShowMobileFilters] = useState(false)      
+             
   const loadManifest = async () => {
     setLoading(true)
     setError(null)
@@ -66,7 +69,9 @@ const useExamSelection = () => {
     selectedStrength,
     selectedAttemptStatus,
     attemptedExams,
-  })
+  });
+
+  const sortedTests = sortTests(filteredTests, sortOrder);
 
   const hasActiveFiltersState = hasActiveFilters({
     searchTerm,
@@ -76,14 +81,16 @@ const useExamSelection = () => {
     selectedStrength,
     selectedAttemptStatus,
   })
+  const filterActions = {
+    Exam: setSelectedExam,
+    Topic: setSelectedTopic,
+    Subject: setSelectedSubject,
+    Strength: setSelectedStrength,
+    'Attempt Status': setSelectedAttemptStatus,
+  }
+
   const handleFilterChange = (filter, value) => {
-    const action = {
-      Exam: setSelectedExam,
-      Topic: setSelectedTopic,
-      Subject: setSelectedSubject,
-      Strength: setSelectedStrength,
-      'Attempt Status': setSelectedAttemptStatus,
-    }[filter]
+    const action = filterActions[filter]
     if (action) action(value)
   }
   const clearAllFilters = () => {
@@ -93,7 +100,13 @@ const useExamSelection = () => {
     setSelectedSubject('All Subjects')
     setSelectedStrength('All levels')
     setSelectedAttemptStatus('all')
+    setShowMobileFilters(false)
   }
+
+  const toggleMobileFilters = () => {
+    setShowMobileFilters(!showMobileFilters)
+  }
+
   return {
     loading,
     error,
@@ -105,19 +118,23 @@ const useExamSelection = () => {
     selectedSubject,
     selectedStrength,
     selectedAttemptStatus,
+    showMobileFilters,
     ATTEMPT_STATUSES,
     tabCounts,
     examNames,
     topics,
     subjects,
     STRENGTHS,
-    filteredTests,
+    filteredTests: sortedTests,
     hasActiveFilters: hasActiveFiltersState,
     loadManifest,
     setActiveTab,
     setSearchTerm,
     handleFilterChange,
     clearAllFilters,
+    toggleMobileFilters,
+    sortOrder,
+    setSortOrder,
   }
 }
 

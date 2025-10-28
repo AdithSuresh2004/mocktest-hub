@@ -50,7 +50,7 @@ const ProgressTracking = ({ stats, streakGoals }) => {
   const motivationMessage = getStreakMotivation(streakData.current)
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 h-full">
       <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-gray-100">
         Your Progress
       </h3>

@@ -1,5 +1,8 @@
 import { useState, useRef } from 'react'
-import { getQuestionStatusClasses } from '@/utils/helpers/examHelpers'
+import {
+  getQuestionStatusClasses,
+  calculateSectionStats,
+} from '@/utils/helpers/examHelpers'
 import { IoClose, IoChevronDown, IoGrid } from 'react-icons/io5'
 import QuestionLegend from '@/components/exam/QuestionLegend'
 
@@ -31,33 +34,18 @@ export default function QuestionNavigator({
   }
 
   const currentSectionData = sections[currentSectionIndex]
-  const stats = {
-    total: currentSectionData?.questions.length || 0,
-    answered:
-      currentSectionData?.questions.filter((q) => answers[q.q_id] != null)
-        .length || 0,
-    incorrect:
-      isReviewMode
-        ? currentSectionData?.questions.filter(
-            (q) => answers[q.q_id] != null && answers[q.q_id] !== q.correct_opt_id
-          ).length || 0
-        : 0,
-    marked:
-      isReviewMode
-        ? 0
-        : currentSectionData?.questions.filter((q) => markedForReview.has(q.q_id))
-            .length || 0,
-    notVisited:
-      currentSectionData?.questions.filter(
-        (q) => answers[q.q_id] == null && !markedForReview.has(q.q_id)
-      ).length || 0,
-  }
+  const stats = calculateSectionStats(
+    currentSectionData?.questions,
+    answers,
+    markedForReview,
+    isReviewMode
+  )
 
   return (
     <>
       <button
         onClick={toggleMobileOpen}
-        className="fixed right-4 bottom-24 z-50 rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all duration-200 hover:bg-blue-700 md:hidden"
+        className="fixed right-4 bottom-20 z-50 rounded-full bg-blue-600 p-3 text-white shadow-xl transition-all duration-200 hover:bg-blue-700 hover:scale-105 md:hidden"
         aria-label="Toggle Question Navigator"
       >
         <IoGrid className="h-5 w-5" />

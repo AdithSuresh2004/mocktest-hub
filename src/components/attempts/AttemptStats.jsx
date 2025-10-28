@@ -38,17 +38,17 @@ const AttemptStats = ({ stats }) => {
   if (!highlights.length) return null
 
   return (
-    <section className="mb-10">
-      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <section className="mb-10 h-full">
+      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 h-full flex flex-col">
         <div className="mb-5">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Performance Snapshot
+            Attempt Statistics
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Track how your preparation is progressing across completed tests.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 flex-1">
           {highlights.map((stat, index) => (
             <HighlightCard key={index} {...stat} />
           ))}

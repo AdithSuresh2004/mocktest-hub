@@ -8,16 +8,13 @@ const PerformanceSnapshot = ({ stats }) => {
       : 0
 
   return (
-    <div className="space-y-4">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 h-full flex flex-col">
       <div>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Performance Snapshot
         </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Track how your preparation is progressing across completed tests.
-        </p>
       </div>
-      <div className="grid gap-4">
+      <div className="grid gap-4 flex-1 content-evenly">
         <MetricCard
           icon={FaTrophy}
           label="Best Score"
@@ -38,7 +35,7 @@ const PerformanceSnapshot = ({ stats }) => {
           icon={FaClock}
           label="Avg Time Per Test"
           value={stats?.averageTime?.toFixed(0) ?? 0}
-          suffix=" min"
+          suffix=" sec"
           color="purple"
           variant="prominent"
         />

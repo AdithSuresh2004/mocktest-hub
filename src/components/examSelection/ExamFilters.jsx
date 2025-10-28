@@ -15,16 +15,16 @@ const ExamFilters = ({
   subjects,
   STRENGTHS,
   ATTEMPT_STATUSES,
-  onToggleMobileFilters,
-  onSearchChange,
-  onFilterChange,
-  onClearFilters,
+  toggleMobileFilters,
+  setSearchTerm,
+  handleFilterChange,
+  clearAllFilters,
 }) => {
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <div className="border-b border-gray-200 p-4 lg:hidden dark:border-gray-700">
         <button
-          onClick={onToggleMobileFilters}
+          onClick={toggleMobileFilters}
           className="flex w-full items-center justify-between text-left"
         >
           <span className="flex items-center font-medium text-gray-900 dark:text-gray-100">
@@ -44,7 +44,7 @@ const ExamFilters = ({
         </button>
       </div>
       <div className={`${showMobileFilters ? 'block' : 'hidden'} p-4 lg:block`}>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <div className="col-span-full">
             <div className="relative mt-5">
               <FaSearch className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
@@ -53,7 +53,7 @@ const ExamFilters = ({
                 placeholder="Search exams..."
                 className="w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 pr-4 pl-10 text-sm text-gray-900 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                 value={searchTerm}
-                onChange={onSearchChange}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           </div>
@@ -61,42 +61,42 @@ const ExamFilters = ({
             label="Exam"
             value={selectedExam}
             options={examNames}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             filterName="Exam"
           />
           <FilterSelect
             label="Subject"
             value={selectedSubject}
             options={subjects}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             filterName="Subject"
           />
           <FilterSelect
             label="Topic"
             value={selectedTopic}
             options={topics}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             filterName="Topic"
           />
           <FilterSelect
             label="Strength"
             value={selectedStrength}
             options={STRENGTHS}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             filterName="Strength"
           />
           <FilterSelect
             label="Attempt Status"
             value={selectedAttemptStatus}
             options={ATTEMPT_STATUSES}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             filterName="Attempt Status"
           />
         </div>
         {hasActiveFilters && (
           <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
             <button
-              onClick={onClearFilters}
+              onClick={clearAllFilters}
               className="inline-flex items-center px-4 py-2 text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
             >
               <FaTimes className="mr-2 h-4 w-4" />

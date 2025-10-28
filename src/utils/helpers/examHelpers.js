@@ -1,90 +1,98 @@
-import {
-  QUESTION_STATUS_CLASSES,
-  QUESTION_STATUS,
-  DEFAULT_MARKS,
-} from '@/constants/testConfig'
+import { analyzeSectionPerformance } from '@/utils/calculations/resultAnalysis';
 
-export function calculateSectionStats(
-  questions = [],
-  answers = {},
-  markedForReview = new Set()
-) {
-  let answered = 0
-  let marked = 0
-  let notVisited = 0
-  for (const q of questions) {
-    const isAnswered =
-      Object.prototype.hasOwnProperty.call(answers, q.q_id) &&
-      answers[q.q_id] !== null
-    const isMarked = markedForReview.has(q.q_id)
-    if (isMarked) marked++
-    else if (isAnswered) answered++
-    else notVisited++
+export const initializeExamState = (attempt, exam, setAnswers, setMarkedForReview, setCurrentSection, setCurrentQuestion, timer) => {
+  if (!attempt) return;
+
+  const answersObj = {};
+  if (attempt.responses && Array.isArray(attempt.responses)) {
+    attempt.responses.forEach((response) => {
+      answersObj[response.q_id] = response.selected_opt_id;
+    });
   }
-  return { answered, marked, notVisited }
-}
+  setAnswers(answersObj);
+  setMarkedForReview(new Set(attempt._markedForReview || []));
 
-export function getQuestionStatusClasses({
+  const submitted = attempt.status === 'completed';
+  setCurrentSection(attempt._currentSection || 0);
+  setCurrentQuestion(attempt._currentQuestion || 0);
+  timer.setTime(attempt._timeRemainingSeconds || exam.duration_minutes * 60);
+
+  return attempt.status === 'in_progress' && attempt._hasStarted;
+};
+
+export const startTimer = (hasStarted, attempt, timer, setHasStarted, updateAttempt, setAttempt) => {
+  if (!hasStarted && attempt) {
+    timer.start();
+    setHasStarted(true);
+    const updatedAttempt = { ...attempt, _hasStarted: true };
+    updateAttempt(attempt.attempt_id, updatedAttempt);
+    setAttempt(updatedAttempt);
+  }
+};
+
+export const getQuestionStatusClasses = ({
   question,
   qIndex,
   answers,
   markedForReview,
   currentQuestionIndex,
-  isReviewMode = false,
-}) {
-  const qId = question.q_id
-  const isAnswered =
-    Object.prototype.hasOwnProperty.call(answers, qId) && answers[qId] !== null
-  const isMarked = markedForReview.has(qId)
-  const isCurrent = qIndex === currentQuestionIndex
-  if (isCurrent) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.CURRENT]
+  isReviewMode,
+}) => {
+  const isCurrent = qIndex === currentQuestionIndex;
+  const isMarked = markedForReview.has(question.q_id);
+  const isAnswered = answers[question.q_id] != null;
 
+  if (isCurrent) {
+    return 'bg-blue-500 text-white ring-2 ring-blue-300 dark:bg-blue-500 dark:ring-blue-400';
+  }
   if (isReviewMode) {
+    const isCorrect = answers[question.q_id] === question.correct_opt_id;
     if (isAnswered) {
-      const isCorrect = answers[qId] === question.correct_opt_id
-      return QUESTION_STATUS_CLASSES[
-        isCorrect ? QUESTION_STATUS.CORRECT : QUESTION_STATUS.INCORRECT
-      ]
-    } else {
-      // In review mode, if not answered, it's not visited
-      return QUESTION_STATUS_CLASSES[QUESTION_STATUS.NOT_VISITED]
+      return isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-orange-100 text-orange-900 dark:bg-orange-900/50 dark:text-orange-200';
     }
+    return 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
   }
 
-  // Not in review mode
-  if (isMarked) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.MARKED]
-  if (isAnswered) return QUESTION_STATUS_CLASSES[QUESTION_STATUS.ANSWERED]
-  return QUESTION_STATUS_CLASSES[QUESTION_STATUS.NOT_VISITED]
-}
-
-export const calculateScore = (examData, answersObj) => {
-  if (!examData?.sections) {
-    return { score: 0, correct: 0, incorrect: 0, unattempted: 0 }
+  if (isMarked && isAnswered) {
+    return 'bg-purple-200 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300'; // Answered and marked for review
   }
-  let score = 0
-  let correct = 0
+  if (isMarked) {
+    return 'bg-purple-200 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300'; // Marked for review
+  }
+  if (isAnswered) {
+    return 'bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-300'; // Answered
+  }
+
+  return 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'; // Not visited
+};
+
+export const calculateSectionStats = (
+  questions = [],
+  answers = {},
+  markedForReview = new Set(),
+  isReviewMode = false
+) => {
+  let answered = 0
   let incorrect = 0
-  let totalQuestions = 0
-  for (const section of examData.sections) {
-    if (!section.questions?.length) continue
-    totalQuestions += section.questions.length
-    for (const question of section.questions) {
-      const userAnswer = answersObj[question.q_id]
-      if (userAnswer !== undefined && userAnswer !== null) {
-        if (userAnswer === question.correct_opt_id) {
-          score += question.marks || DEFAULT_MARKS.POSITIVE
-          correct++
-        } else {
-          score -= question.negative_marks || DEFAULT_MARKS.NEGATIVE
-          incorrect++
-        }
+  let notVisited = 0
+
+  for (const q of questions) {
+    const isAnswered = answers[q.q_id] != null
+    if (isAnswered) {
+      answered++
+      if (isReviewMode && answers[q.q_id] !== q.correct_opt_id) {
+        incorrect++
       }
+    } else if (!markedForReview.has(q.q_id)) {
+      notVisited++
     }
   }
+
   return {
-    score,
-    correct,
+    total: questions.length,
+    answered,
     incorrect,
-    unattempted: totalQuestions - (correct + incorrect),
+    marked: markedForReview.size,
+    notVisited,
   }
 }

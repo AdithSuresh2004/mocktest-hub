@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import StatusDisplay from '@/components/common/StatusDisplay'
 
 export default function ErrorPage() {
   const navigate = useNavigate()

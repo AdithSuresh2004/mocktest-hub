@@ -7,42 +7,30 @@ const QuestionHeader = ({
   markedForReview,
   onMarkForReview,
 }) => (
-  <div className="relative flex items-center justify-between border-b border-blue-100 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/40 px-4 py-3 transition-[background-color,border-color] duration-300 dark:border-blue-900/30 dark:from-blue-950/20 dark:via-indigo-950/20 dark:to-purple-950/20 sm:px-6 sm:py-4">
-    <div className="flex-1">
-      <div className="mb-1">
-        <h3
-          id="question-header"
-          className="text-base font-bold text-gray-900 transition-colors sm:text-lg dark:text-white md:text-xl"
-        >
-          Question {questionNumber} of {totalQuestions}
-        </h3>
-      </div>
-      <span className="text-xs font-medium text-gray-600 transition-colors sm:text-sm dark:text-gray-300">
-        {sectionName}
-      </span>
+  <div className="flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800 sm:px-6">
+    <div>
+      <h2 id="question-header" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        Question {questionNumber}
+      </h2>
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        {sectionName} - {totalQuestions} questions
+      </p>
     </div>
     <button
       onClick={onMarkForReview}
-      title={
-        markedForReview
-          ? 'Marked for Review (Press M)'
-          : 'Mark for Review (Press M)'
-      }
-      aria-label={markedForReview ? 'Remove review mark' : 'Mark for review'}
+      title={markedForReview ? 'Unmark for Review' : 'Mark for Review'}
+      aria-label={markedForReview ? 'Unmark for review' : 'Mark for review'}
       aria-pressed={markedForReview}
-      className={`rounded-xl p-2.5 transition-all duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
+      className={`rounded-full p-3 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 ${
         markedForReview
-          ? 'bg-yellow-100 text-yellow-600 shadow-sm hover:bg-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-400 dark:hover:bg-yellow-900/60'
-          : 'text-gray-500 hover:bg-white/60 hover:text-yellow-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-yellow-400'
+          ? 'bg-yellow-400 text-white hover:bg-yellow-500'
+          : 'bg-gray-200 text-gray-600 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
       }`}
     >
       {markedForReview ? (
-        <IoBookmark className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
+        <IoBookmark className="h-5 w-5" />
       ) : (
-        <IoBookmarkOutline
-          className="h-5 w-5 sm:h-6 sm:w-6"
-          aria-hidden="true"
-        />
+        <IoBookmarkOutline className="h-5 w-5" />
       )}
     </button>
   </div>

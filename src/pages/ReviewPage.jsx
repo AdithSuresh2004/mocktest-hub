@@ -151,9 +151,9 @@ const ReviewPage = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-gray-50 dark:bg-gray-900">
+    <div className="fixed inset-0 flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <header className="flex-shrink-0 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-4">
             <Button
@@ -222,16 +222,14 @@ const ReviewPage = () => {
           />
         </main>
 
-        <aside className="overflow-y-auto rounded-lg bg-white shadow-md lg:col-span-1 lg:h-full dark:bg-gray-800">
-          <QuestionNavigator
-            sections={exam.sections}
-            answers={answers}
-            currentSectionIndex={currentSectionIndex}
-            currentQuestionIndex={currentQuestionIndex}
-            onQuestionSelect={navigateToQuestion}
-            isReviewMode={true}
-          />
-        </aside>
+        <QuestionNavigator
+          sections={exam.sections}
+          answers={answers}
+          currentSectionIndex={currentSectionIndex}
+          currentQuestionIndex={currentQuestionIndex}
+          onQuestionSelect={navigateToQuestion}
+          isReviewMode={true}
+        />
       </div>
     </div>
   )

@@ -89,12 +89,10 @@ export const calculateOverallStats = (
     totalQuestions: totalQuestionsOverall,
     attempted: totalAttempted,
     accuracy:
-      totalAttempted > 0
-        ? ((totals.correct / totalAttempted) * 100).toFixed(1)
-        : 0,
+      totalAttempted > 0 ? (totals.correct / totalAttempted) * 100 : 0,
     percentage:
       totalQuestionsOverall > 0
-        ? ((totals.correct / totalQuestionsOverall) * 100).toFixed(1)
+        ? (totals.correct / totalQuestionsOverall) * 100
         : 0,
   }
 }
@@ -123,9 +121,29 @@ export const calculateAnalysis = (examData, attemptData) => {
 
   const overall = calculateOverallStats(sectionAnalysis, totalQuestionsOverall)
 
+  const totalMarks = sectionAnalysis.reduce(
+    (total, section) => total + section.totalMarks,
+    0
+  )
+
+  const speedValue =
+    attemptData.time_taken > 0
+      ? (overall.attempted / (attemptData.time_taken / 3600)).toFixed(1)
+      : '0.0'
+
   return {
     sectionAnalysis,
     overall,
+    score: {
+      actual: attemptData.score,
+      total: totalMarks,
+    },
+    speed: {
+      value: speedValue,
+    },
+    accuracy: {
+      percentage: overall.accuracy,
+    },
   }
 }
 

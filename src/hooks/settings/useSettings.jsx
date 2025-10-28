@@ -9,13 +9,6 @@ export function useSettings() {
     weekly: 15,
     monthly: 60,
   })
-  const [dashboardWidgets, setDashboardWidgets] = useState({
-    performanceChart: true,
-    scoreDistribution: true,
-    recentActivity: true,
-    progressTracking: true,
-    performanceSnapshot: true,
-  })
 
   const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
@@ -31,7 +24,6 @@ export function useSettings() {
         notifications,
         autoSave,
         streakGoals,
-        dashboardWidgets,
       }
       SettingsStorage.set(settingsToSave)
 
@@ -41,13 +33,7 @@ export function useSettings() {
       }
       setFirstSaveDone(true)
     }, 1000)
-  }, [
-    isInitialized,
-    notifications,
-    autoSave,
-    streakGoals,
-    dashboardWidgets,
-  ])
+  }, [isInitialized, notifications, autoSave, streakGoals])
 
   useEffect(() => {
     const settings = SettingsStorage.get()
@@ -60,9 +46,6 @@ export function useSettings() {
         monthly: settings.streakGoals.monthly || 60,
       })
     }
-    if (settings.dashboardWidgets) {
-      setDashboardWidgets(settings.dashboardWidgets)
-    }
 
     setTimeout(() => setIsInitialized(true), 100)
   }, [])
@@ -73,7 +56,6 @@ export function useSettings() {
       notifications,
       autoSave,
       streakGoals,
-      dashboardWidgets,
     })
     setShowSaveSuccess(true)
     setTimeout(() => setShowSaveSuccess(false), 3000)
@@ -86,8 +68,6 @@ export function useSettings() {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    dashboardWidgets,
-    setDashboardWidgets,
     showSaveSuccess,
     saveSettings,
   }

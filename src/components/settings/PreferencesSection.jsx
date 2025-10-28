@@ -1,3 +1,5 @@
+import { FaBell, FaSave, FaTachometerAlt, FaSlidersH } from 'react-icons/fa'
+
 const PreferencesSection = ({
   notifications,
   autoSave,
@@ -6,21 +8,19 @@ const PreferencesSection = ({
   onAutoSaveChange,
   onStreakGoalsChange,
 }) => {
-  const handleGoalChange = (goalType, value) => {
-    const numValue = parseInt(value, 10)
-    if (!isNaN(numValue) && numValue >= 0) {
-      onStreakGoalsChange({
-        ...streakGoals,
-        [goalType]: numValue,
-      })
-    }
+  const handleGoalChange = (goal, value) => {
+    onStreakGoalsChange({ ...streakGoals, [goal]: Number(value) })
   }
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-gray-100">
+      <h3 className="mb-4 flex items-center gap-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <FaSlidersH className="h-5 w-5 text-blue-500" />
         Preferences
-      </h2>
+      </h3>
+      <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+        Customize your experience
+      </p>
 
       <div className="space-y-6">
         {/* General Preferences */}

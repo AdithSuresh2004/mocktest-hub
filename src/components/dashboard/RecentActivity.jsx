@@ -2,18 +2,33 @@ import { useNavigate, Link } from 'react-router-dom'
 import { FaClock, FaArrowRight } from 'react-icons/fa'
 import { formatDate, formatTime } from '@/utils/formatters/formatters'
 import Card from '@/components/common/Card'
+import { useState, useLayoutEffect, useRef } from 'react'
+
+const ESTIMATED_ITEM_HEIGHT = 76 // Estimated height of a single list item in pixels
 
 export default function RecentActivity({ activities }) {
   const navigate = useNavigate()
-  const recentActivities = activities.slice(0, 3)
+  const [visibleActivities, setVisibleActivities] = useState([])
+  const containerRef = useRef(null)
+  const headerRef = useRef(null)
+
+  useLayoutEffect(() => {
+    if (containerRef.current && headerRef.current) {
+      const containerHeight = containerRef.current.clientHeight
+      const headerHeight = headerRef.current.offsetHeight
+      const listHeight = containerHeight - headerHeight
+      const count = Math.max(1, Math.floor(listHeight / ESTIMATED_ITEM_HEIGHT))
+      setVisibleActivities(activities.slice(0, count))
+    }
+  }, [activities])
 
   return (
-    <Card>
-      <div className="mb-4 flex items-center justify-between">
+    <Card ref={containerRef}>
+      <div ref={headerRef} className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Recent Activity
         </h2>
-        {activities.length > 4 && (
+        {activities.length > visibleActivities.length && (
           <Link
             to="/attempts"
             className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"
@@ -28,7 +43,7 @@ export default function RecentActivity({ activities }) {
         </p>
       ) : (
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {recentActivities.map((activity) => (
+          {visibleActivities.map((activity) => (
             <li
               key={activity.id}
               className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between"

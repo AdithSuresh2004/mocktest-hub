@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { usePendingTests } from '@/hooks/pendingTests/usePendingTests'
 import PendingTestList from '@/components/pending/PendingTestList'
 import NoPendingTests from '@/components/pending/NoPendingTests'
-import LoadingSpinner from '@/components/common/LoadingSpinner'
+import PendingTestsSkeleton from '@/components/common/skeletons/PendingTestsSkeleton'
 import PageHeader from '@/components/common/PageHeader'
 
 export default function PendingTestsPage() {
@@ -14,18 +14,22 @@ export default function PendingTestsPage() {
   }
 
   if (loading) {
-    return <LoadingSpinner fullScreen />
+    return <PendingTestsSkeleton />
   }
 
   return (
-    <div className="min-h-full bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">
-      <div className="mx-auto max-w-7xl">
+    <div className="min-h-full animate-fadeIn bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900 flex flex-col">
+      <div className="mx-auto max-w-7xl w-full">
         <PageHeader
           title="Pending Tests"
           description="Resume your incomplete exams"
         />
+      </div>
+      <div className="mt-8 flex-1 w-full max-w-7xl mx-auto">
         {pendingTests.length === 0 ? (
-          <NoPendingTests />
+          <div className="h-full flex items-center justify-center">
+            <NoPendingTests />
+          </div>
         ) : (
           <PendingTestList
             tests={pendingTests}

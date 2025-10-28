@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExam from '@/hooks/exam/useExam'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
@@ -24,7 +24,6 @@ const ExamPage = () => {
     loading,
     error,
     isSubmitted,
-    hasStarted,
     navigation,
     timer,
     handleAnswer: saveAnswer,
@@ -56,13 +55,26 @@ const ExamPage = () => {
     cancelSubmit,
   } = modalState
 
-  // Determine if we should show instructions for fresh exams
-  const shouldShowInstructions =
-    !loading &&
-    exam &&
-    attempt &&
-    Object.keys(answers).length === 0 &&
-    !hasStarted
+  const exitType = useRef(null)
+  const saveAndExitExamRef = useRef(saveAndExitExam)
+  const deleteAndExitExamRef = useRef(deleteAndExitExam)
+
+  useEffect(() => {
+    saveAndExitExamRef.current = saveAndExitExam
+    deleteAndExitExamRef.current = deleteAndExitExam
+  })
+
+  useEffect(() => {
+    return () => {
+      if (exitType.current === 'save') {
+        saveAndExitExamRef.current()
+      } else if (exitType.current === 'delete') {
+        deleteAndExitExamRef.current()
+      }
+    }
+  }, [])
+
+  const shouldShowInstructions = !loading && exam && attempt && !attempt._hasStarted
 
   const handleStartExam = () => {
     startExamTimer()
@@ -85,16 +97,14 @@ const ExamPage = () => {
     finalizeExam()
   }
 
-  const saveAndExit = () => {
+  const handleSaveAndExit = () => {
+    exitType.current = 'save'
     navigate('/')
-    saveAndExitExam()
-    cancelExit()
   }
 
-  const exitWithoutSaving = () => {
+  const handleExitWithoutSaving = () => {
+    exitType.current = 'delete'
     navigate('/')
-    deleteAndExitExam()
-    cancelExit()
   }
 
   const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
@@ -181,7 +191,7 @@ const ExamPage = () => {
         />
       </div>
       <div className="flex flex-1 overflow-hidden">
-        <main className="flex-1 overflow-y-auto custom-scrollbar transition-colors duration-300">
+        <main className="flex-1 flex flex-col overflow-y-auto custom-scrollbar transition-colors duration-300">
           <QuestionArea
             question={currentQ}
             section={currentSectionObj.section_name}
@@ -191,20 +201,17 @@ const ExamPage = () => {
             markedForReview={markedForReview}
             onAnswer={saveAnswer}
             onMarkForReview={toggleMarkForReview}
+            containerClass="p-3 sm:p-4 flex-1"
           />
         </main>
-        <aside className="hidden w-full border-l border-gray-200 transition-colors duration-300 dark:border-gray-800 lg:block lg:w-[388px] xl:w-[420px]">
-          <div className="h-full overflow-y-auto custom-scrollbar">
-            <QuestionNavigator
-              sections={exam.sections}
-              currentSectionIndex={currentSection}
-              currentQuestionIndex={currentQuestion}
-              answers={answers}
-              markedForReview={markedForReview}
-              onQuestionSelect={navigateToQuestion}
-            />
-          </div>
-        </aside>
+        <QuestionNavigator
+          sections={exam.sections}
+          currentSectionIndex={currentSection}
+          currentQuestionIndex={currentQuestion}
+          answers={answers}
+          markedForReview={markedForReview}
+          onQuestionSelect={navigateToQuestion}
+        />
       </div>
       <div className="flex-shrink-0 border-t border-blue-200 bg-white shadow-md backdrop-blur-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900/95 dark:backdrop-blur-sm">
         <ExamNavigation
@@ -221,8 +228,8 @@ const ExamPage = () => {
       {showExitModal && (
         <ExitTestModal
           hasAnswers={Object.keys(answers).length > 0}
-          onSaveAndExit={saveAndExit}
-          onExitWithoutSaving={exitWithoutSaving}
+          onSaveAndExit={handleSaveAndExit}
+          onExitWithoutSaving={handleExitWithoutSaving}
           onCancel={cancelExit}
         />
       )}

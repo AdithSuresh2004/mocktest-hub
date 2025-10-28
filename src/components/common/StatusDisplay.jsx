@@ -14,7 +14,7 @@ export default function StatusDisplay({
 }) {
   const navigate = useNavigate()
   const containerClass = fullScreen
-    ? `fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4 text-center ${className}`
+    ? 'fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900'
     : `inline-flex items-center ${className}`
   const handleBackHome = () => {
     navigate('/')

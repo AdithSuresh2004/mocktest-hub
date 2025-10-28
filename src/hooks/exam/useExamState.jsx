@@ -1,38 +1,34 @@
-import { useMemo } from 'react'
-
 export const useExamState = (exam, currentSection, currentQuestion) => {
-  return useMemo(() => {
-    if (!exam) {
-      return {
-        currentSectionObj: { questions: [] },
-        currentQ: null,
-        totalQuestions: 0,
-        canGoPrev: false,
-        canGoNext: false,
-      }
-    }
-
-    const currentSectionObj = exam.sections?.[currentSection] || {
-      questions: [],
-    }
-    const currentQ = currentSectionObj.questions[currentQuestion] || null
-
-    const totalQuestions =
-      exam.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
-
-    const canGoPrev = currentSection > 0 || currentQuestion > 0
-    const canGoNext =
-      currentSection < exam.sections.length - 1 ||
-      currentQuestion < currentSectionObj.questions.length - 1
-
+  if (!exam) {
     return {
-      currentSectionObj,
-      currentQ,
-      totalQuestions,
-      canGoPrev,
-      canGoNext,
+      currentSectionObj: { questions: [] },
+      currentQ: null,
+      totalQuestions: 0,
+      canGoPrev: false,
+      canGoNext: false,
     }
-  }, [exam, currentSection, currentQuestion])
+  }
+
+  const currentSectionObj = exam.sections?.[currentSection] || {
+    questions: [],
+  }
+  const currentQ = currentSectionObj.questions[currentQuestion] || null
+
+  const totalQuestions =
+    exam.sections?.reduce((sum, s) => sum + s.questions.length, 0) || 0
+
+  const canGoPrev = currentSection > 0 || currentQuestion > 0
+  const canGoNext =
+    currentSection < exam.sections.length - 1 ||
+    currentQuestion < currentSectionObj.questions.length - 1
+
+  return {
+    currentSectionObj,
+    currentQ,
+    totalQuestions,
+    canGoPrev,
+    canGoNext,
+  }
 }
 
 export const getExamAnimations = (isLandscape) => ({

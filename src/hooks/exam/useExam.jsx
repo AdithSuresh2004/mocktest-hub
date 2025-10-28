@@ -1,15 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useExamLoader } from '@/hooks/exam/useExamLoader'
-import { useExamAnswers } from '@/hooks/exam/useExamAnswers'
-import { useExamPersistence } from '@/hooks/exam/useExamPersistence'
-import { useExamFinalize } from '@/hooks/exam/useExamFinalize'
 import { useExamNavigation } from '@/hooks/exam/useExamNavigation'
 import { useTimer } from '@/hooks/exam/useTimer'
-import {
-  updateAttempt,
-  removeAttempt,
-  createAttempt,
-} from '@/data/attemptRepository'
+import { initializeExamState, startTimer } from '@/utils/helpers/examHelpers'
+import { updateAttempt, removeAttempt } from '@/data/attemptRepository'
+import { calculateAnalysis } from '@/utils/calculations/resultAnalysis'
 
 const useExam = (examId) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -25,14 +20,54 @@ const useExam = (examId) => {
     setCurrentQuestion,
   } = navigation
 
-  const {
-    answers,
-    markedForReview,
-    setAnswers,
-    setMarkedForReview,
-    saveAnswer,
-    toggleMarkForReview,
-  } = useExamAnswers(attempt)
+  const [answers, setAnswers] = useState({})
+  const [markedForReview, setMarkedForReview] = useState(new Set())
+
+  const saveAnswer = (questionId, optionId) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: optionId }))
+
+    if (attempt) {
+      const currentResponses = attempt.responses || []
+      const existingResponseIndex = currentResponses.findIndex(
+        (r) => r.q_id === questionId
+      )
+      let newResponses
+
+      if (existingResponseIndex > -1) {
+        newResponses = [...currentResponses]
+        newResponses[existingResponseIndex] = {
+          q_id: questionId,
+          selected_opt_id: optionId,
+        }
+      } else {
+        newResponses = [
+          ...currentResponses,
+          { q_id: questionId, selected_opt_id: optionId },
+        ]
+      }
+
+      updateAttempt(attempt.attempt_id, { responses: newResponses })
+    }
+  }
+
+  const toggleMarkForReview = (questionId) => {
+    setMarkedForReview((prev) => {
+      const newMarked = new Set(prev)
+      if (newMarked.has(questionId)) {
+        newMarked.delete(questionId)
+      } else {
+        newMarked.add(questionId)
+      }
+
+      if (attempt) {
+        updateAttempt(attempt.attempt_id, {
+          _markedForReview: Array.from(newMarked),
+        })
+      }
+
+      return newMarked
+    })
+  }
 
   const finalizeExamRef = useRef(null)
   const onTimerEnd = () => {
@@ -43,32 +78,17 @@ const useExam = (examId) => {
   const timer = useTimer(0, onTimerEnd)
 
   useEffect(() => {
-    if (!attempt) return
-
-    const answersObj = {}
-    if (attempt.responses && Array.isArray(attempt.responses)) {
-      attempt.responses.forEach((response) => {
-        answersObj[response.q_id] = response.selected_opt_id
-      })
-    }
-    setAnswers(answersObj)
-    setMarkedForReview(new Set(attempt._markedForReview || []))
-
-    const submitted = attempt.status === 'completed'
-    setIsSubmitted(submitted)
-    setCurrentSection(attempt._currentSection || 0)
-    setCurrentQuestion(attempt._currentQuestion || 0)
-    timer.setTime(attempt._timeRemainingSeconds || exam.duration_minutes * 60)
-
-    setHasStarted(attempt.status === 'in_progress' && attempt._hasStarted)
-  }, [
-    attempt,
-    setAnswers,
-    setMarkedForReview,
-    setCurrentSection,
-    setCurrentQuestion,
-    exam,
-  ])
+    const started = initializeExamState(
+      attempt,
+      exam,
+      setAnswers,
+      setMarkedForReview,
+      setCurrentSection,
+      setCurrentQuestion,
+      timer
+    );
+    setHasStarted(started);
+  }, [attempt, exam, setAnswers, setMarkedForReview, setCurrentSection, setCurrentQuestion]);
 
   useEffect(() => {
     if (
@@ -78,41 +98,100 @@ const useExam = (examId) => {
     ) {
       timer.start()
     }
-  }, [hasStarted, attempt?.status, attempt?._hasStarted, timer])
+  }, [hasStarted, attempt?.status, attempt?._hasStarted])
 
-  const { finalizeExam } = useExamFinalize(
-    exam,
-    attempt,
-    answers,
-    timer,
-    setAttempt,
-    setIsSubmitted
-  )
+  const finalizeExam = (isTimeUp = false) => {
+    if (!exam || !attempt) return
 
-  useExamPersistence({
-    attempt,
+    timer.stop()
+
+    const analysis = calculateAnalysis(exam, { responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({ q_id, selected_opt_id })) });
+
+    const finalAttempt = {
+      ...attempt,
+      status: 'completed',
+      time_taken: exam.duration_minutes * 60 - timer.seconds,
+      score: analysis.overall.percentage,
+      rawScore: {
+        actual: analysis.overall.correct,
+        total: analysis.overall.totalQuestions,
+      },
+      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+        q_id,
+        selected_opt_id,
+      })),
+      analysis,
+    }
+
+    updateAttempt(attempt.attempt_id, finalAttempt)
+    setAttempt(finalAttempt)
+    setIsSubmitted(true)
+  }
+
+  useEffect(() => {
+    if (!attempt?.attempt_id || isSubmitted) return
+
+    const saveState = setTimeout(() => {
+      updateAttempt(attempt.attempt_id, {
+        _currentSection: currentSection,
+        _currentQuestion: currentQuestion,
+        _timeRemainingSeconds: timer.seconds,
+      })
+    }, 5000)
+
+    return () => clearTimeout(saveState)
+  }, [
     currentSection,
     currentQuestion,
-    timerSeconds: timer.seconds,
+    timer.seconds,
+    attempt?.attempt_id,
+    isSubmitted,
+  ])
+
+  useEffect(() => {
+    if (!attempt?.attempt_id || isSubmitted) return
+
+    const handleBeforeUnload = () => {
+      updateAttempt(attempt.attempt_id, {
+        _currentSection: currentSection,
+        _currentQuestion: currentQuestion,
+        _timeRemainingSeconds: timer.seconds,
+        _markedForReview: Array.from(markedForReview),
+        responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+          q_id,
+          selected_opt_id,
+        })),
+      })
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [
+    attempt?.attempt_id,
+    isSubmitted,
+    currentSection,
+    currentQuestion,
+    timer.seconds,
     markedForReview,
     answers,
-    isSubmitted,
-  })
+  ])
+
+  useEffect(() => {
+    finalizeExamRef.current = finalizeExam
+  }, [finalizeExam])
+
   const saveAndExitExam = () => {
     if (isSubmitted || !attempt?.attempt_id || !exam) return
     timer.stop()
-    const responses = Object.entries(answers).map(
-      ([q_id, selected_opt_id]) => ({
+    const updates = {
+      _currentSection: navigation.currentSection,
+      _currentQuestion: navigation.currentQuestion,
+      _timeRemainingSeconds: timer.seconds,
+      _markedForReview: Array.from(markedForReview),
+      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
         q_id,
         selected_opt_id,
-      })
-    )
-    const updates = {
-      status: 'in_progress',
-      _currentSection: currentSection,
-      _currentQuestion: currentQuestion,
-      _timeRemainingSeconds: timer.seconds,
-      responses,
+      })),
     }
     updateAttempt(attempt.attempt_id, updates)
   }
@@ -124,19 +203,9 @@ const useExam = (examId) => {
     timer.stop()
   }
 
-  useEffect(() => {
-    finalizeExamRef.current = finalizeExam
-  }, [finalizeExam])
-
   const startExamTimer = () => {
-    if (!hasStarted && attempt) {
-      timer.start()
-      setHasStarted(true)
-      const updatedAttempt = { ...attempt, _hasStarted: true }
-      updateAttempt(attempt.attempt_id, updatedAttempt)
-      setAttempt(updatedAttempt)
-    }
-  }
+    startTimer(hasStarted, attempt, timer, setHasStarted, updateAttempt, setAttempt);
+  };
 
   const handleAnswer = (questionId, optionId) => {
     if (isSubmitted) return

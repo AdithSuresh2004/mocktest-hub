@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 function useTimer(initialSeconds, onFinish) {
   const [seconds, setSeconds] = useState(initialSeconds)
@@ -47,33 +47,33 @@ function useTimer(initialSeconds, onFinish) {
         intervalRef.current = null
       }
     }
-  }, [running, isPaused, seconds])
+  }, [running, isPaused])
 
-  const start = () => {
+  const start = useCallback(() => {
     setRunning(true)
     setIsPaused(false)
-  }
+  }, [])
 
-  const stop = () => {
+  const stop = useCallback(() => {
     setRunning(false)
     setIsPaused(false)
-  }
+  }, [])
 
-  const pause = () => {
+  const pause = useCallback(() => {
     setIsPaused(true)
-  }
+  }, [])
 
-  const resume = () => {
+  const resume = useCallback(() => {
     setIsPaused(false)
-  }
+  }, [])
 
-  const setTime = (newSeconds) => {
+  const setTime = useCallback((newSeconds) => {
     setSeconds(Math.max(0, newSeconds))
-  }
+  }, [])
 
-  const addTime = (additionalSeconds) => {
+  const addTime = useCallback((additionalSeconds) => {
     setSeconds((prev) => Math.max(0, prev + additionalSeconds))
-  }
+  }, [])
 
   return {
     seconds,

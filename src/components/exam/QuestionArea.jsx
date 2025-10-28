@@ -1,4 +1,5 @@
 import QuestionCard from '@/components/exam/QuestionCard'
+import { cn } from '@/utils/cn'
 
 export default function QuestionArea({
   question,
@@ -9,6 +10,7 @@ export default function QuestionArea({
   markedForReview,
   onAnswer,
   onMarkForReview,
+  containerClass,
 }) {
   if (!question) {
     return (
@@ -23,15 +25,20 @@ export default function QuestionArea({
   const handleMarkToggle = () => onMarkForReview(question.q_id)
 
   return (
-    <QuestionCard
-      question={question}
-      questionNumber={displayQuestionNumber}
-      totalQuestions={totalQuestions}
-      sectionName={section}
-      selected={selected}
-      markedForReview={isMarked}
-      onAnswer={onAnswer}
-      onMarkForReview={handleMarkToggle}
-    />
+    <div className={cn('animate-fadeIn', containerClass)}>
+      <div className="mx-auto">
+        <QuestionCard
+          key={question.q_id}
+          question={question}
+          questionNumber={displayQuestionNumber}
+          totalQuestions={totalQuestions}
+          sectionName={section}
+          selected={selected}
+          markedForReview={isMarked}
+          onAnswer={onAnswer}
+          onMarkForReview={handleMarkToggle}
+        />
+      </div>
+    </div>
   )
 }

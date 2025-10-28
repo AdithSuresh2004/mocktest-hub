@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import {
   FaClock,
   FaListAlt,
@@ -10,43 +9,36 @@ import {
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
 import { capitalizeStrength, getTestTypeConfig } from '@/utils/testHelpers'
-import FavoritesStorage from '@/utils/favorites-storage'
+import { useTestCard } from '@/hooks/common/useTestCard'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
-import {
-  getAttemptStatus,
-  getAllTags,
-  toggleFavoriteStatus,
-  getFavoriteData,
-} from '@/services/testService'
+import Card from '@/components/common/Card'
 
 const TestCard = ({ test }) => {
-  const [isFavorite, setIsFavorite] = useState(false)
-  const [attemptStatus, setAttemptStatus] = useState(null)
-
+  const { isFavorite, attemptStatus, allTags, toggleFavorite } = useTestCard(test)
   const testTypeConfig = getTestTypeConfig(test.type)
   const TestIcon = testTypeConfig.icon
   const maxVisibleTags = 3
 
-  const allTags = getAllTags(test)
   const visibleTags = allTags.slice(0, maxVisibleTags)
   const remainingCount = allTags.length - maxVisibleTags
 
-  useEffect(() => {
-    setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
-    setAttemptStatus(getAttemptStatus(test.exam_id))
-  }, [test.exam_id])
-
-  const toggleFavorite = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const favoriteData = getFavoriteData(test)
-    const newStatus = toggleFavoriteStatus(test.exam_id, favoriteData)
-    setIsFavorite(newStatus)
+  const getButtonText = () => {
+    switch (attemptStatus) {
+      case 'completed':
+        return 'Retake Test'
+      case 'in_progress':
+        return 'Continue Test'
+      default:
+        return 'Start Test'
+    }
   }
 
   return (
-    <div className="relative flex min-h-[280px] flex-col rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-all duration-200 sm:min-h-[320px] sm:p-4 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+    <Card
+      hover
+      className="relative flex min-h-[280px] flex-col p-3 sm:min-h-[320px] sm:p-4"
+    >
       <button
         onClick={toggleFavorite}
         className="absolute top-2 right-2 z-10 rounded-full p-1.5 transition-colors sm:top-3 sm:right-3 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -89,11 +81,7 @@ const TestCard = ({ test }) => {
             }
             className="text-xs sm:text-sm"
           >
-            {attemptStatus === 'completed'
-              ? 'Completed'
-              : attemptStatus === 'in_progress'
-                ? 'In Progress'
-                : 'Not Attempted'}
+            {capitalizeText(attemptStatus.replace('_', ' '))}
           </Badge>
         )}
       </div>
@@ -149,14 +137,10 @@ const TestCard = ({ test }) => {
           variant="primary"
           className="w-full text-xs sm:text-sm sm:py-2"
         >
-          {attemptStatus === 'completed'
-            ? 'Retake Test'
-            : attemptStatus === 'in_progress'
-              ? 'Continue Test'
-              : 'Start Test'}
+          {getButtonText()}
         </Button>
       </div>
-    </div>
+    </Card>
   )
 }
 

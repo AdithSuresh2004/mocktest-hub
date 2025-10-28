@@ -1,8 +1,11 @@
 import AttemptsStorage from '@/utils/attempts-storage'
 import FavoritesStorage from '@/utils/favorites-storage'
-import { STORAGE_KEYS } from '@/constants/testConfig'
+import SettingsStorage from '@/utils/settings-storage'
+import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 
 export function useDataManagement() {
+  const { openConfirm, ...modalProps } = useConfirmModal()
+
   const handleExportData = () => {
     try {
       const data = {
@@ -56,9 +59,22 @@ export function useDataManagement() {
     }
   }
 
+  const handleClearWithConfirm = () => {
+    openConfirm({
+      title: 'Clear All Data?',
+      message:
+        'Are you sure you want to delete all your data? This action is irreversible.',
+      confirmText: 'Clear Data',
+      cancelText: 'Cancel',
+      type: 'danger',
+      onConfirm: handleClearData,
+    })
+  }
+
   return {
+    ...modalProps,
     handleExportData,
     handleImportData,
-    handleClearData,
+    handleClearWithConfirm,
   }
 }

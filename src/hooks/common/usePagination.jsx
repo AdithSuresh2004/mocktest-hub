@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export function usePagination(items, initialPageSize = 12) {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(initialPageSize)
+
+  useEffect(() => {
+    resetPagination()
+  }, [items])
 
   const totalPages = Math.ceil(items.length / pageSize)
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useLocation, Outlet } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Navbar from '@/components/layout/Navbar'
 import Sidebar from '@/components/layout/Sidebar'
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const location = useLocation()
 
@@ -59,7 +59,7 @@ const Layout = () => {
         </div>
         <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
           <div className="animate-fadeIn">
-            <Outlet />
+            {children}
           </div>
         </main>
       </div>

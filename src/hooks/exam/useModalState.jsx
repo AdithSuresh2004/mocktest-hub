@@ -1,24 +1,24 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 
 export const useModalState = () => {
   const [showExitModal, setShowExitModal] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)
 
-  const handleExit = useCallback(() => {
+  const handleExit = () => {
     setShowExitModal(true)
-  }, [])
+  }
 
-  const cancelExit = useCallback(() => {
+  const cancelExit = () => {
     setShowExitModal(false)
-  }, [])
+  }
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     setShowSubmitModal(true)
-  }, [])
+  }
 
-  const cancelSubmit = useCallback(() => {
+  const cancelSubmit = () => {
     setShowSubmitModal(false)
-  }, [])
+  }
 
   return {
     showExitModal,
