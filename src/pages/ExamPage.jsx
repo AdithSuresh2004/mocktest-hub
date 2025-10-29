@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExamPage from '@/hooks/exam/useExamPage'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
-import { useModalState } from '@/hooks/exam/useModalState'
+import { useExamModals } from '@/hooks/exam/useExamModals';
 import { useExamState } from '@/hooks/exam/useExamState'
 import InstructionsPage from '@/pages/InstructionsPage'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
@@ -45,7 +45,6 @@ const ExamPage = () => {
   } = navigation
   const { seconds: timeRemaining, stop, isWarning, isCritical } = timer
 
-  const modalState = useModalState()
   const {
     showExitModal,
     showSubmitModal,
@@ -53,9 +52,23 @@ const ExamPage = () => {
     cancelExit,
     handleSubmit,
     cancelSubmit,
-  } = modalState
+    confirmSubmit,
+    handleSaveAndExit,
+    handleExitWithoutSaving,
+    exitType,
+  } = useExamModals({
+    onConfirmSubmit: finalizeExam,
+    onSaveAndExit: () => {
+      if (document.fullscreenElement) document.exitFullscreen()
+      navigate('/')
+    },
+    onExitWithoutSaving: () => {
+      if (document.fullscreenElement) document.exitFullscreen()
+      navigate('/')
+    },
+  });
 
-  const exitType = useRef(null)
+
   const saveAndExitExamRef = useRef(saveAndExitExam)
   const deleteAndExitExamRef = useRef(deleteAndExitExam)
 
@@ -72,7 +85,7 @@ const ExamPage = () => {
         deleteAndExitExamRef.current()
       }
     }
-  }, [])
+  }, [exitType])
 
   const shouldShowInstructions =
     !loading && exam && attempt && !attempt._hasStarted
@@ -98,27 +111,6 @@ const ExamPage = () => {
       setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
     }
   }, [isSubmitted, attempt?.attempt_id, navigate])
-
-  const confirmSubmit = () => {
-    cancelSubmit()
-    finalizeExam()
-  }
-
-  const handleSaveAndExit = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    }
-    exitType.current = 'save'
-    navigate('/')
-  }
-
-  const handleExitWithoutSaving = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    }
-    exitType.current = 'delete'
-    navigate('/')
-  }
 
   const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
     useExamState(exam, currentSection, currentQuestion)
