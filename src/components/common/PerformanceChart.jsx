@@ -13,8 +13,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { getAllAttempts } from '@/data/attemptRepository'
 import ToggleButtons from '@/components/common/ToggleButtons'
+import { usePerformanceChartData } from '@/hooks/common/usePerformanceChartData'
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -39,21 +39,7 @@ const PerformanceChart = ({
   initialChartType = 'area',
 }) => {
   const [chartType, setChartType] = useState(initialChartType)
-  const allAttempts = getAllAttempts()
-    .filter((a) => a.status === 'completed')
-    .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
-
-  const cutoffDate = new Date()
-  cutoffDate.setDate(cutoffDate.getDate() - days)
-
-  const chartData = allAttempts
-    .filter((a) => new Date(a.timestamp) >= cutoffDate)
-    .map((a, index) => ({
-      date: new Date(a.timestamp).toLocaleDateString(),
-      score: a.score || 0,
-      time: Math.floor((a.time_taken || 0) / 60),
-      attempt: index + 1,
-    }))
+  const { chartData } = usePerformanceChartData(days)
 
   const renderChart = () => {
     switch (chartType) {
