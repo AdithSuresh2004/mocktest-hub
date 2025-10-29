@@ -1,3 +1,4 @@
+// Force re-processing by Vite/SWC
 import {
   FaDownload,
   FaUpload,
