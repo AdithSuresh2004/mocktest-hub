@@ -30,15 +30,6 @@ const useExamPage = (examId) => {
     toggleMarkForReview,
   } = useExamAttemptState(attempt)
 
-  const { finalizeExam } = useExamFinalization(
-    exam,
-    attempt,
-    answers,
-    timer,
-    setAttempt,
-    setIsSubmitted
-  )
-
   const { timer, startExamTimer } = useExamSessionTimer(
     attempt,
     exam,
@@ -51,6 +42,15 @@ const useExamPage = (examId) => {
     () => finalizeExam(true), // onTimerEnd callback
     updateAttempt,
     setAttempt
+  )
+
+  const { finalizeExam } = useExamFinalization(
+    exam,
+    attempt,
+    answers,
+    timer,
+    setAttempt,
+    setIsSubmitted
   )
 
   useEffect(() => {
