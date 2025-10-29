@@ -3,7 +3,7 @@
  * Extracted to a separate file to avoid React Refresh warnings in ThemeContext
  */
 
-import StorageManager from '@/utils/storage'
+import StorageManager from '@/utils/storage/storage.js'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
 export const getInitialTheme = () => {

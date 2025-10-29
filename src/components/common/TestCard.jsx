@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { capitalizeText } from '@/utils/formatters/formatters'
-import { capitalizeStrength, getTestTypeConfig } from '@/utils/testHelpers'
+import { capitalizeStrength, getTestTypeConfig } from '@/utils/helpers'
 import { useTestCard } from '@/hooks/common/useTestCard'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'

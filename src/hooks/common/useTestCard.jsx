@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import FavoritesStorage from '@/utils/favorites-storage'
+import { FavoritesStorage } from '@/utils/storage'
 import {
   getAttemptStatus,
   getAllTags,

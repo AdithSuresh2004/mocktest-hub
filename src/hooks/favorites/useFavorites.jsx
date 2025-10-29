@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import FavoritesStorage from '@/utils/favorites-storage'
+import { FavoritesStorage } from '@/utils/storage'
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState([])

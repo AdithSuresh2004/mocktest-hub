@@ -1,6 +1,6 @@
 import { findAllAttemptsByExamId } from '@/data/attemptRepository'
-import FavoritesStorage from '@/utils/favorites-storage'
-import { getTestTypeConfig } from '@/utils/testHelpers'
+import { FavoritesStorage } from '@/utils/storage'
+import { getTestTypeConfig } from '@/utils/helpers'
 
 export const getAttemptStatus = (examId) => {
   const attempts = findAllAttemptsByExamId(examId)

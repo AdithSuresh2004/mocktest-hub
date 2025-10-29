@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import SettingsStorage from '@/utils/settings-storage'
+import { SettingsStorage } from '@/utils/storage'
 import { useToast } from '@/hooks/common/useToast'
 
 const useSettings = () => {

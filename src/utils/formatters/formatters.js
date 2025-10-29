@@ -51,4 +51,4 @@ export {
   getDifficultyColor,
   normalizeDifficulty,
   capitalizeStrength,
-} from '@/utils/testHelpers'
+} from '@/utils/helpers'

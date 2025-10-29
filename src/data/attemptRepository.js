@@ -1,4 +1,4 @@
-import AttemptsStorage from '@/utils/attempts-storage'
+import { AttemptsStorage } from '@/utils/storage'
 
 const isValidAttempt = (attempt) => {
   return (

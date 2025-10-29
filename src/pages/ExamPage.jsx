@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useExamPage from '@/hooks/exam/useExamPage'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
@@ -88,6 +88,12 @@ const ExamPage = () => {
   }, [stop])
 
   useEffect(() => {
+    if (isSubmitted && document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, [isSubmitted]);
+
+  useEffect(() => {
     if (isSubmitted && attempt?.attempt_id) {
       setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
     }
@@ -99,11 +105,17 @@ const ExamPage = () => {
   }
 
   const handleSaveAndExit = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    }
     exitType.current = 'save'
     navigate('/')
   }
 
   const handleExitWithoutSaving = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    }
     exitType.current = 'delete'
     navigate('/')
   }

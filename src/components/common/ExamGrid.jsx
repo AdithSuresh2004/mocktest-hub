@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {
   capitalizeStrength,
   getDifficultyBadgeColor,
-} from '@/utils/testHelpers'
+} from '@/utils/helpers'
 
 const ExamGrid = ({ exams }) => {
   return (

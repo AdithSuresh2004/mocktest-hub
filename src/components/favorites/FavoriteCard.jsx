@@ -6,7 +6,7 @@ import {
   FaTrash,
   FaAward,
 } from 'react-icons/fa'
-import { getDifficultyColor, capitalizeStrength } from '@/utils/testHelpers'
+import { getDifficultyColor, capitalizeStrength } from '@/utils/helpers'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
 

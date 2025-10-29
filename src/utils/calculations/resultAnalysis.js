@@ -15,7 +15,7 @@ const analyzeSectionPerformance = (
   sectionIndex,
   responsesMap,
   sectionScores,
-  markingScheme
+  markingScheme = {}
 ) => {
   let sectionCorrect = 0
   let sectionIncorrect = 0

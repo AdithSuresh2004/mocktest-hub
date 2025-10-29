@@ -1,4 +1,4 @@
-import StorageManager from './storage'
+import StorageManager from './storage.js'
 
 /**
  * Generic storage class that provides common CRUD operations

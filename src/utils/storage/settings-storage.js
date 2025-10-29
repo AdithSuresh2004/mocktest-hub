@@ -1,4 +1,4 @@
-import GenericStorage from './generic-storage'
+import GenericStorage from './generic-storage.js'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
 class SettingsStorage extends GenericStorage {

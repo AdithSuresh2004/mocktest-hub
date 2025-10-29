@@ -1,7 +1,7 @@
 import MathRenderer from '@/components/common/contentProcessing/MathRenderer'
 import TableRenderer from '@/components/common/contentProcessing/TableRenderer'
 import TextRenderer from '@/components/common/contentProcessing/TextRenderer'
-import { parseMathAndText, isMathHeavy } from '@/utils/contentParsers'
+import { parseMathAndText, isMathHeavy } from '@/utils/parsers'
 
 const FormattedContent = ({ text, className = '' }) => {
   const parts = parseMathAndText(text)

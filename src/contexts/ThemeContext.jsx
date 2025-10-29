@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import StorageManager from '@/utils/storage'
-import { getInitialTheme, getSystemTheme } from '@/utils/theme-helpers'
+import { getInitialTheme, getSystemTheme } from '@/utils/helpers'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
 const ThemeContext = createContext({
@@ -32,7 +32,6 @@ const ThemeProvider = ({ children }) => {
 
     const handler = () => {
       if (theme === 'system') {
-        // This will trigger a re-render and update the actualTheme
         setTheme('system')
       }
     }

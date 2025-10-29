@@ -1,6 +1,6 @@
-import AttemptsStorage from '@/utils/attempts-storage'
-import FavoritesStorage from '@/utils/favorites-storage'
-import SettingsStorage from '@/utils/settings-storage'
+import { AttemptsStorage } from '@/utils/storage'
+import { FavoritesStorage } from '@/utils/storage'
+import { SettingsStorage } from '@/utils/storage'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 
 export function useDataManagement() {
