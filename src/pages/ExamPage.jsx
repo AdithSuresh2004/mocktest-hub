@@ -10,6 +10,8 @@ import ExamLayout from '@/components/exam/ExamLayout'
 import ExamModalsDisplay from '@/components/exam/ExamModalsDisplay'
 import { useExamStateSaver } from '@/hooks/exam/useExamStateSaver'
 import { useFullscreenToggle } from '@/hooks/common/useFullscreenToggle'
+import { useExamExitHandler } from '@/hooks/exam/useExamExitHandler'
+import { useExamResultNavigation } from '@/hooks/exam/useExamResultNavigation'
 
 const ExamPage = () => {
   const { examId } = useParams()
@@ -64,24 +66,7 @@ const ExamPage = () => {
     },
   });
 
-
-  const saveAndExitExamRef = useRef(saveAndExitExam)
-  const deleteAndExitExamRef = useRef(deleteAndExitExam)
-
-  useEffect(() => {
-    saveAndExitExamRef.current = saveAndExitExam
-    deleteAndExitExamRef.current = deleteAndExitExam
-  })
-
-  useEffect(() => {
-    return () => {
-      if (exitType.current === 'save') {
-        saveAndExitExamRef.current()
-      } else if (exitType.current === 'delete') {
-        deleteAndExitExamRef.current()
-      }
-    }
-  }, [exitType])
+  useExamExitHandler(saveAndExitExam, deleteAndExitExam, exitType);
 
   const shouldShowInstructions =
     !loading && exam && attempt && !attempt._hasStarted
@@ -102,11 +87,7 @@ const ExamPage = () => {
     }
   }, [isSubmitted]);
 
-  useEffect(() => {
-    if (isSubmitted && attempt?.attempt_id) {
-      setTimeout(() => navigate(`/result/${attempt.attempt_id}`), 500)
-    }
-  }, [isSubmitted, attempt?.attempt_id, navigate])
+  useExamResultNavigation(isSubmitted, attempt);
 
   const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
     useExamState(exam, currentSection, currentQuestion)
