@@ -2,7 +2,7 @@
  * Helper functions for exam selection logic
  */
 
-import { TEST_TYPES } from '@/utils/constants/filterOptions'
+import { FILTER_OPTIONS } from '@/constants'
 
 /**
  * Transform manifest data into normalized test objects
@@ -71,7 +71,7 @@ export const getSubjects = (tests) => {
  * Calculate tab counts for each test type
  */
 export const calculateTabCounts = (tests) => {
-  return TEST_TYPES.map((type) => ({
+  return FILTER_OPTIONS.TEST_TYPES.map((type) => ({
     ...type,
     count:
       type.id === 'all'

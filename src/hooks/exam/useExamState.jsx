@@ -30,17 +30,3 @@ export const useExamState = (exam, currentSection, currentQuestion) => {
     canGoNext,
   }
 }
-
-export const getExamAnimations = (isLandscape) => ({
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  transformDelay: isLandscape ? '150ms' : '0ms',
-})
-
-export const getAnsweredCount = (answers, totalQuestions) => ({
-  answered: Object.keys(answers).length,
-  total: totalQuestions,
-  percentage:
-    totalQuestions > 0
-      ? Math.round((Object.keys(answers).length / totalQuestions) * 100)
-      : 0,
-})

@@ -3,7 +3,7 @@ import {
   KEYBOARD_SHORTCUTS,
   isKeyInShortcuts,
   getOptionIndexFromKey,
-} from '@/utils/constants/keyboardShortcuts'
+} from '@/constants'
 
 const isEditableField = (target) => {
   if (!target) return true

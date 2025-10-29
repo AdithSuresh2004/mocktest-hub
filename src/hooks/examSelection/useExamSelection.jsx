@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getManifest as getExamsManifest } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
-import {
-  TEST_TYPES,
-  STRENGTHS,
-  ATTEMPT_STATUSES,
-} from '@/utils/constants/filterOptions'
+import { FILTER_OPTIONS } from '@/constants'
 import {
   normalizeTests,
   getExamNames,
@@ -119,12 +115,12 @@ const useExamSelection = () => {
     selectedStrength,
     selectedAttemptStatus,
     showMobileFilters,
-    ATTEMPT_STATUSES,
+    ATTEMPT_STATUSES: FILTER_OPTIONS.ATTEMPT_STATUSES,
     tabCounts,
     examNames,
     topics,
     subjects,
-    STRENGTHS,
+    STRENGTHS: FILTER_OPTIONS.STRENGTHS,
     filteredTests: sortedTests,
     hasActiveFilters: hasActiveFiltersState,
     loadManifest,
