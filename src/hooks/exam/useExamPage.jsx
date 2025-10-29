@@ -3,8 +3,9 @@ import { useExamLoader } from '@/hooks/exam/useExamLoader'
 import { useExamNavigation } from '@/hooks/exam/useExamNavigation'
 import { useExamSessionTimer } from './useExamSessionTimer'
 import { useExamAttemptState } from './useExamAttemptState'
+import { useExamFinalization } from './useExamFinalization'
+import { useExamExitActions } from './useExamExitActions'
 import { updateAttempt, removeAttempt } from '@/data/attemptRepository'
-import { calculateAnalysis } from '@/utils/calculations/resultAnalysis'
 
 const useExamPage = (examId) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -29,38 +30,14 @@ const useExamPage = (examId) => {
     toggleMarkForReview,
   } = useExamAttemptState(attempt)
 
-  const finalizeExam = (isTimeUp = false) => {
-    if (!exam || !attempt) return
-
-    timer.stop()
-
-    const analysis = calculateAnalysis(exam, {
-      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
-        q_id,
-        selected_opt_id,
-      })),
-    })
-
-    const finalAttempt = {
-      ...attempt,
-      status: 'completed',
-      time_taken: exam.duration_minutes * 60 - timer.seconds,
-      score: analysis.score.actual,
-      rawScore: {
-        actual: analysis.overall.correct,
-        total: analysis.overall.totalQuestions,
-      },
-      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
-        q_id,
-        selected_opt_id,
-      })),
-      analysis,
-    }
-
-    updateAttempt(attempt.attempt_id, finalAttempt)
-    setAttempt(finalAttempt)
-    setIsSubmitted(true)
-  }
+  const { finalizeExam } = useExamFinalization(
+    exam,
+    attempt,
+    answers,
+    timer,
+    setAttempt,
+    setIsSubmitted
+  )
 
   const { timer, startExamTimer } = useExamSessionTimer(
     attempt,
@@ -124,28 +101,15 @@ const useExamPage = (examId) => {
     answers,
   ])
 
-  const saveAndExitExam = () => {
-    if (isSubmitted || !attempt?.attempt_id || !exam) return
-    timer.stop()
-    const updates = {
-      _currentSection: navigation.currentSection,
-      _currentQuestion: navigation.currentQuestion,
-      _timeRemainingSeconds: timer.seconds,
-      _markedForReview: Array.from(markedForReview),
-      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
-        q_id,
-        selected_opt_id,
-      })),
-    }
-    updateAttempt(attempt.attempt_id, updates)
-  }
-
-  const deleteAndExitExam = () => {
-    if (attempt) {
-      removeAttempt(attempt.attempt_id)
-    }
-    timer.stop()
-  }
+  const { saveAndExitExam, deleteAndExitExam } = useExamExitActions(
+    isSubmitted,
+    attempt,
+    exam,
+    timer,
+    navigation,
+    markedForReview,
+    answers
+  )
 
   const handleAnswer = (questionId, optionId) => {
     if (isSubmitted) return
