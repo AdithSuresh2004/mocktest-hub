@@ -4,7 +4,7 @@ import { formatDate, formatTime } from '@/utils/formatters/formatters'
 import Card from '@/components/common/Card'
 import { useState, useLayoutEffect, useRef } from 'react'
 
-const ESTIMATED_ITEM_HEIGHT = 76 // Estimated height of a single list item in pixels
+const ESTIMATED_ITEM_HEIGHT = 76
 
 export default function RecentActivity({ activities }) {
   const navigate = useNavigate()

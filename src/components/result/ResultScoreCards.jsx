@@ -3,8 +3,8 @@ import StatCard from '@/components/common/StatCard'
 const ResultScoreCards = ({ analysis }) => {
   if (!analysis) {
     return (
-<div className="grid grid-cols-1 gap-3 sm:gap-5 lg:grid-cols-3">
-{   Array.from({ length: 3 }, (_, i) => (
+      <div className="grid grid-cols-1 gap-3 sm:gap-5 lg:grid-cols-3">
+        {Array.from({ length: 3 }, (_, i) => (
           <div
             key={i}
             className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow dark:bg-gray-800 sm:p-6"
@@ -33,7 +33,11 @@ const ResultScoreCards = ({ analysis }) => {
     {
       name: 'Performance Level',
       stat: overall.text || 'Good',
-      color: overall.color?.includes('green') ? 'green' : overall.color?.includes('red') ? 'red' : 'yellow',
+      color: overall.color?.includes('green')
+        ? 'green'
+        : overall.color?.includes('red')
+          ? 'red'
+          : 'yellow',
     },
   ]
 

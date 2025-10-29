@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import FavoritesStorage from '@/utils/favorites-storage'
 import {
   getAttemptStatus,
@@ -12,11 +12,13 @@ export const useTestCard = (test) => {
   const [attemptStatus, setAttemptStatus] = useState(null)
 
   useEffect(() => {
-    setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
-    setAttemptStatus(getAttemptStatus(test.exam_id))
+    setTimeout(() => {
+      setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
+      setAttemptStatus(getAttemptStatus(test.exam_id))
+    }, 0)
   }, [test.exam_id])
 
-  const allTags = useMemo(() => getAllTags(test), [test])
+  const allTags = getAllTags(test)
 
   const toggleFavorite = (e) => {
     e.preventDefault()

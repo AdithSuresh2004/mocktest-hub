@@ -24,7 +24,9 @@ export function useQuestionNavigator({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-  const currentSectionData = sections?.[visibleSectionIndex] || { questions: [] }
+  const currentSectionData = sections?.[visibleSectionIndex] || {
+    questions: [],
+  }
   const stats = calculateSectionStats(
     currentSectionData.questions,
     answers,

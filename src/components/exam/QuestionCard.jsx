@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import QuestionHeader from './QuestionHeader'
-import QuestionContent from './QuestionContent'
-import QuestionOption from './QuestionOption'
+import QuestionHeader from '@/components/exam/QuestionHeader'
+import QuestionContent from '@/components/exam/QuestionContent'
+import QuestionOption from '@/components/exam/QuestionOption'
 
 export default function QuestionCard({
   question,
@@ -62,7 +62,11 @@ export default function QuestionCard({
         aria-labelledby="question-header"
       >
         {question.options.map((option, index) => (
-          <div key={option.opt_id} className="animate-fadeInUp" style={{ animationDelay: `${index * 100}ms` }}>
+          <div
+            key={option.opt_id}
+            className="animate-fadeInUp"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
             <QuestionOption
               option={option}
               optionId={option.opt_id}

@@ -1,11 +1,10 @@
 import { useSettingsPage } from '@/hooks/settings/useSettingsPage'
 import ConfirmModal from '@/components/common/ConfirmModal'
-import SuccessAlert from '@/components/settings/SuccessAlert'
+
 import AppearanceSection from '@/components/settings/AppearanceSection'
 import PreferencesSection from '@/components/settings/PreferencesSection'
 import DataManagementSection from '@/components/settings/DataManagementSection'
 import PageHeader from '@/components/common/PageHeader'
-import Button from '@/components/common/Button'
 
 const SettingsPage = () => {
   const {
@@ -20,7 +19,6 @@ const SettingsPage = () => {
     setAutoSave,
     streakGoals,
     setStreakGoals,
-    handleSave,
     handleExportData,
     handleImportData,
     handleClearWithConfirm,
@@ -60,11 +58,6 @@ const SettingsPage = () => {
             onImport={handleImportData}
             onClearData={handleClearWithConfirm}
           />
-          <div className="flex justify-end">
-            <Button onClick={handleSave} size="lg">
-              Save Changes
-            </Button>
-          </div>
         </div>
       </div>
     </div>

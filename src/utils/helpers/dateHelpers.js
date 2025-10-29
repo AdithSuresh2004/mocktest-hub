@@ -51,8 +51,6 @@ export const getStartOfMonth = (date = new Date()) => {
   return new Date(d.getFullYear(), d.getMonth(), 1)
 }
 
-
-
 /**
  * Get days ago from current date
  */
@@ -61,5 +59,3 @@ export const getDaysAgo = (days) => {
   date.setDate(date.getDate() - days)
   return date
 }
-
-

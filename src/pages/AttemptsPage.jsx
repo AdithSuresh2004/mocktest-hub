@@ -1,4 +1,5 @@
-import { useAttempts, useAttemptStats } from '@/hooks/attempts'
+import { useAttempts } from '@/hooks/attempts'
+import { calculateAttemptStats } from '@/utils/calculations/attemptStats'
 import AttemptStats from '@/components/attempts/AttemptStats'
 import AttemptFilter from '@/components/attempts/AttemptFilter'
 import AttemptList from '@/components/attempts/AttemptList'
@@ -19,7 +20,7 @@ const AttemptsPage = () => {
     originalAttempts,
     resetFilters,
   } = useAttempts()
-  const stats = useAttemptStats(originalAttempts)
+  const stats = calculateAttemptStats(originalAttempts)
   const pagination = usePagination(attempts, 10)
 
   if (loading) {

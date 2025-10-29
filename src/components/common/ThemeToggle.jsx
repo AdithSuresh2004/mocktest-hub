@@ -9,8 +9,6 @@ export default function ThemeToggle() {
       window.matchMedia?.('(prefers-color-scheme: dark)').matches)
 
   const handleToggle = () => {
-    // Simply toggle between actual light and dark modes
-    // Always switch to the opposite of what the user currently sees
     if (isDark) {
       toggleTheme('light')
     } else {

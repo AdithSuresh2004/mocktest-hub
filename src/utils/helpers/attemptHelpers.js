@@ -79,11 +79,17 @@ export function formatAttemptForDisplay(attempt) {
   }
 }
 
-export const createAttemptUpdates = (attempt, answers, timer, navigation, markedForReview) => {
+export const createAttemptUpdates = (
+  attempt,
+  answers,
+  timer,
+  navigation,
+  markedForReview
+) => {
   const responses = Object.entries(answers).map(([q_id, selected_opt_id]) => ({
     q_id,
     selected_opt_id,
-  }));
+  }))
 
   return {
     ...attempt,
@@ -92,5 +98,5 @@ export const createAttemptUpdates = (attempt, answers, timer, navigation, marked
     _currentQuestion: navigation.currentQuestion,
     _timeRemainingSeconds: timer.seconds,
     _markedForReview: Array.from(markedForReview),
-  };
-};
+  }
+}

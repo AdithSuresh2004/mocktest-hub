@@ -15,7 +15,7 @@ export const useFavorites = () => {
   }, [])
 
   useEffect(() => {
-    loadFavorites()
+    setTimeout(() => loadFavorites(), 0)
     const handleStorageChange = () => {
       loadFavorites()
     }

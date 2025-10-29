@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
-    setMobileSidebarOpen(false)
+    setTimeout(() => setMobileSidebarOpen(false), 0)
   }, [location])
 
   useEffect(() => {
@@ -58,9 +58,7 @@ const Layout = ({ children }) => {
           <Sidebar />
         </div>
         <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-          <div className="animate-fadeIn">
-            {children}
-          </div>
+          <div className="animate-fadeIn">{children}</div>
         </main>
       </div>
     </div>

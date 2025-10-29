@@ -23,7 +23,7 @@ function useTimer(initialSeconds, onFinish) {
       return
     }
     if (seconds <= 0) {
-      setRunning(false)
+      setTimeout(() => setRunning(false), 0)
       if (onFinishRef.current) {
         onFinishRef.current()
       }
@@ -47,7 +47,7 @@ function useTimer(initialSeconds, onFinish) {
         intervalRef.current = null
       }
     }
-  }, [running, isPaused])
+  }, [running, isPaused, seconds])
 
   const start = useCallback(() => {
     setRunning(true)

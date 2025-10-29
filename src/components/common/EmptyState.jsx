@@ -1,5 +1,5 @@
 import { FaFileAlt, FaSearch, FaRedo } from 'react-icons/fa'
-import { theme } from '@/utils/theme'
+import { theme } from '@/constants/theme'
 
 const EmptyState = ({
   icon: Icon = FaFileAlt,

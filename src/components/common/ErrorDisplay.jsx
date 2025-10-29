@@ -1,5 +1,5 @@
 import { FaExclamationCircle, FaRedo } from 'react-icons/fa'
-import { theme } from '@/utils/theme'
+import { theme } from '@/constants/theme'
 
 const ErrorDisplay = ({
   title = 'Oops! Something went wrong',

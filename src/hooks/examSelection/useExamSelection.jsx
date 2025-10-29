@@ -32,9 +32,9 @@ const useExamSelection = () => {
   const [selectedStrength, setSelectedStrength] = useState('All levels')
   const [attemptedExams, setAttemptedExams] = useState(new Set())
   const [selectedAttemptStatus, setSelectedAttemptStatus] = useState('all')
-  const [sortOrder, setSortOrder] = useState('default');
-  const [showMobileFilters, setShowMobileFilters] = useState(false)      
-             
+  const [sortOrder, setSortOrder] = useState('default')
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
+
   const loadManifest = async () => {
     setLoading(true)
     setError(null)
@@ -69,9 +69,9 @@ const useExamSelection = () => {
     selectedStrength,
     selectedAttemptStatus,
     attemptedExams,
-  });
+  })
 
-  const sortedTests = sortTests(filteredTests, sortOrder);
+  const sortedTests = sortTests(filteredTests, sortOrder)
 
   const hasActiveFiltersState = hasActiveFilters({
     searchTerm,

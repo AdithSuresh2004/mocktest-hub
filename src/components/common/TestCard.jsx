@@ -15,7 +15,8 @@ import Button from '@/components/common/Button'
 import Card from '@/components/common/Card'
 
 const TestCard = ({ test }) => {
-  const { isFavorite, attemptStatus, allTags, toggleFavorite } = useTestCard(test)
+  const { isFavorite, attemptStatus, allTags, toggleFavorite } =
+    useTestCard(test)
   const testTypeConfig = getTestTypeConfig(test.type)
   const TestIcon = testTypeConfig.icon
   const maxVisibleTags = 3

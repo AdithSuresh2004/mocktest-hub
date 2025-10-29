@@ -31,7 +31,6 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
 
   return (
     <div className="space-y-8">
-      {/* Backup & Export Section */}
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-3">
           <FaCloudDownloadAlt className="h-5 w-5 text-blue-500" />
@@ -91,7 +90,6 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
         </div>
       </div>
 
-      {/* Restore & Import Section */}
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-3">
           <FaHistory className="h-5 w-5 text-green-500" />
@@ -128,7 +126,6 @@ const DataManagementSection = ({ onExport, onImport, onClearData }) => {
         </div>
       </div>
 
-      {/* Data Management Section */}
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-3">
           <FaTrash className="h-5 w-5 text-red-500" />

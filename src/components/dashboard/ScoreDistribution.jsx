@@ -1,5 +1,21 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import { calculateScoreDistribution } from '@/utils/calculations/resultAnalysis'
+
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-600 dark:bg-gray-700">
+        <p className="font-medium text-gray-900 dark:text-gray-100">
+          {payload[0].name}
+        </p>
+        <p className="text-sm" style={{ color: payload[0].payload.color }}>
+          Tests: {payload[0].value}
+        </p>
+      </div>
+    )
+  }
+  return null
+}
 
 const ScoreDistribution = ({ completedExams }) => {
   if (!completedExams || completedExams.length === 0) {
@@ -18,22 +34,6 @@ const ScoreDistribution = ({ completedExams }) => {
   }
 
   const distribution = calculateScoreDistribution(completedExams)
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-600 dark:bg-gray-700">
-          <p className="font-medium text-gray-900 dark:text-gray-100">
-            {payload[0].name}
-          </p>
-          <p className="text-sm" style={{ color: payload[0].payload.color }}>
-            Tests: {payload[0].value}
-          </p>
-        </div>
-      )
-    }
-    return null
-  }
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -74,7 +74,6 @@ const ScoreDistribution = ({ completedExams }) => {
         </div>
       )}
 
-      {/* Legend */}
       <div className="mt-4 grid grid-cols-2 gap-2">
         {distribution.map((item, index) => (
           <div key={index} className="flex items-center gap-2">

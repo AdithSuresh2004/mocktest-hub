@@ -9,9 +9,13 @@ export default function QuestionLegend({ stats, isReviewMode }) {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className={`h-3 w-3 rounded ${isReviewMode ? 'bg-red-600' : 'bg-purple-600'}`}></div>
+          <div
+            className={`h-3 w-3 rounded ${isReviewMode ? 'bg-red-600' : 'bg-purple-600'}`}
+          ></div>
           <span className="font-medium text-gray-800 dark:text-gray-200">
-            {isReviewMode ? `Incorrect (${stats.incorrect})` : `Marked (${stats.marked})`}
+            {isReviewMode
+              ? `Incorrect (${stats.incorrect})`
+              : `Marked (${stats.marked})`}
           </span>
         </div>
         <div className="flex items-center gap-2">

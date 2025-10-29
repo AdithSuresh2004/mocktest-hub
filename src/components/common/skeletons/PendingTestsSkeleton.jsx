@@ -1,4 +1,4 @@
-import { animations } from '@/utils/theme'
+import { animations } from '@/utils/animations'
 import ListSkeleton from '@/components/common/skeletons/ListSkeleton'
 
 const shimmerClass = animations.shimmer

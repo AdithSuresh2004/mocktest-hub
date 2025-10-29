@@ -1,6 +1,6 @@
-import MathRenderer from './contentProcessing/MathRenderer'
-import TableRenderer from './contentProcessing/TableRenderer'
-import TextRenderer from './contentProcessing/TextRenderer'
+import MathRenderer from '@/components/common/contentProcessing/MathRenderer'
+import TableRenderer from '@/components/common/contentProcessing/TableRenderer'
+import TextRenderer from '@/components/common/contentProcessing/TextRenderer'
 import { parseMathAndText, isMathHeavy } from '@/utils/contentParsers'
 
 const FormattedContent = ({ text, className = '' }) => {

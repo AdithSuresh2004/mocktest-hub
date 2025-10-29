@@ -9,7 +9,7 @@ import {
   FaCrosshairs,
 } from 'react-icons/fa'
 import ResultCard from '@/components/result/ResultCard'
-import { formatTime } from '@/utils/formatters/formatters'
+import { formatTime, formatDate } from '@/utils/formatters/formatters'
 
 const StatItem = ({ icon: Icon, value, label, color, subtext = null }) => (
   <div className="flex items-center rounded-xl bg-white p-3 ring-1 ring-gray-200 transition-all duration-200 hover:shadow-sm dark:bg-gray-800 dark:ring-gray-700">
@@ -54,16 +54,6 @@ const AccuracyBar = ({ accuracy, label }) => (
 const ResultQuickOverview = ({ attempt, exam, analysis }) => {
   if (!analysis || !attempt || !exam) return null
 
-  const formatDate = (timestamp) => {
-    return new Date(timestamp || Date.now()).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
-
   return (
     <div className="space-y-6">
       <ResultCard
@@ -96,7 +86,10 @@ const ResultQuickOverview = ({ attempt, exam, analysis }) => {
               subtext={`${((analysis.overall.unanswered / analysis.overall.totalQuestions) * 100).toFixed(0)}% of total`}
             />
           </div>
-          <AccuracyBar accuracy={analysis.overall.accuracy} label="Overall Accuracy" />
+          <AccuracyBar
+            accuracy={analysis.overall.accuracy}
+            label="Overall Accuracy"
+          />
         </div>
       </ResultCard>
 
@@ -144,7 +137,7 @@ const ResultQuickOverview = ({ attempt, exam, analysis }) => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  {formatDate(attempt.created_at)}
+                  {formatDate(attempt.timestamp)}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Test Completed

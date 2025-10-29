@@ -41,5 +41,3 @@ export const getPerformanceColor = (score, total) => {
     return PERFORMANCE_COLORS.AVERAGE
   return PERFORMANCE_COLORS.POOR
 }
-
-

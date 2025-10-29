@@ -17,8 +17,4 @@ export {
   createResponsesMap,
 } from './resultAnalysis'
 
-
-
-
-
 export { getTotalMarks, getPerformanceLevel }

@@ -1,14 +1,16 @@
 import { FaBookOpen } from 'react-icons/fa'
 import ResultCard from '@/components/result/ResultCard'
 
-const StatItem = ({ label, value, color = 'text-gray-600 dark:text-gray-300' }) => (
+const StatItem = ({
+  label,
+  value,
+  color = 'text-gray-600 dark:text-gray-300',
+}) => (
   <div className="flex flex-col items-center space-y-1">
     <p className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
       {label}
     </p>
-    <p className={`text-lg font-bold ${color} sm:text-xl`}>
-      {value}
-    </p>
+    <p className={`text-lg font-bold ${color} sm:text-xl`}>{value}</p>
   </div>
 )
 

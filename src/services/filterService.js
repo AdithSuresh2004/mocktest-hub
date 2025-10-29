@@ -29,51 +29,62 @@ export const sortAttempts = (attempts, sortOrder) => {
 
 const testFilterRules = [
   (test, filters) => {
-    if (!filters.activeTab || filters.activeTab === 'all') return true;
-    return test.type === filters.activeTab;
+    if (!filters.activeTab || filters.activeTab === 'all') return true
+    return test.type === filters.activeTab
   },
   (test, filters) => {
-    if (!filters.searchTerm) return true;
-    const searchLower = filters.searchTerm.toLowerCase();
-    const testName = test.exam_name || '';
-    return testName.toLowerCase().includes(searchLower);
+    if (!filters.searchTerm) return true
+    const searchLower = filters.searchTerm.toLowerCase()
+    const testName = test.exam_name || ''
+    return testName.toLowerCase().includes(searchLower)
   },
   (test, filters) => {
-    if (!filters.selectedExam || filters.selectedExam === 'All Exams') return true;
-    return test.category?.toLowerCase() === filters.selectedExam.toLowerCase();
+    if (!filters.selectedExam || filters.selectedExam === 'All Exams')
+      return true
+    return test.category?.toLowerCase() === filters.selectedExam.toLowerCase()
   },
   (test, filters) => {
-    if (!filters.selectedTopic || filters.selectedTopic === 'All Topics') return true;
+    if (!filters.selectedTopic || filters.selectedTopic === 'All Topics')
+      return true
     if (Array.isArray(test.topics)) {
-      return test.topics.includes(filters.selectedTopic);
+      return test.topics.includes(filters.selectedTopic)
     }
-    return test.topic === filters.selectedTopic;
+    return test.topic === filters.selectedTopic
   },
   (test, filters) => {
-    if (!filters.selectedSubject || filters.selectedSubject === 'All Subjects') return true;
+    if (!filters.selectedSubject || filters.selectedSubject === 'All Subjects')
+      return true
     if (Array.isArray(test.subjects)) {
-      return test.subjects.includes(filters.selectedSubject);
+      return test.subjects.includes(filters.selectedSubject)
     }
-    return test.subject === filters.selectedSubject;
+    return test.subject === filters.selectedSubject
   },
   (test, filters) => {
-    if (!filters.selectedStrength || filters.selectedStrength === 'All levels') return true;
-    return test.exam_strength?.toLowerCase() === filters.selectedStrength.toLowerCase();
+    if (!filters.selectedStrength || filters.selectedStrength === 'All levels')
+      return true
+    return (
+      test.exam_strength?.toLowerCase() ===
+      filters.selectedStrength.toLowerCase()
+    )
   },
   (test, filters) => {
-    if (!filters.selectedAttemptStatus || filters.selectedAttemptStatus === 'all') return true;
-    const hasAttempted = filters.attemptedExams?.has(test.exam_id);
-    if (filters.selectedAttemptStatus === 'attempted') return hasAttempted;
-    if (filters.selectedAttemptStatus === 'unattempted') return !hasAttempted;
-    return true;
+    if (
+      !filters.selectedAttemptStatus ||
+      filters.selectedAttemptStatus === 'all'
+    )
+      return true
+    const hasAttempted = filters.attemptedExams?.has(test.exam_id)
+    if (filters.selectedAttemptStatus === 'attempted') return hasAttempted
+    if (filters.selectedAttemptStatus === 'unattempted') return !hasAttempted
+    return true
   },
-];
+]
 
 export const filterTests = (tests, filters) => {
   return tests.filter((test) => {
-    return testFilterRules.every((rule) => rule(test, filters));
-  });
-};
+    return testFilterRules.every((rule) => rule(test, filters))
+  })
+}
 
 export const hasActiveFilters = (filters) => {
   return !!(

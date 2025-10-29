@@ -1,5 +1,5 @@
 import CardSkeleton from '@/components/common/skeletons/CardSkeleton'
-import { animations } from '@/utils/theme'
+import { animations } from '@/utils/animations'
 
 const shimmerClass = animations.shimmer
 

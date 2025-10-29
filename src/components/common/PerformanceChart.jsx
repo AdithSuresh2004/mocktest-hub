@@ -14,7 +14,7 @@ import {
   YAxis,
 } from 'recharts'
 import { getAllAttempts } from '@/data/attemptRepository'
-import ToggleButtons from './ToggleButtons'
+import ToggleButtons from '@/components/common/ToggleButtons'
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {

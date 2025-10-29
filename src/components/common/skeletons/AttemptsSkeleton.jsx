@@ -1,4 +1,4 @@
-import { animations } from '@/utils/theme'
+import { animations } from '@/utils/animations'
 import StatsSkeleton from '@/components/common/skeletons/StatsSkeleton'
 import ListSkeleton from '@/components/common/skeletons/ListSkeleton'
 

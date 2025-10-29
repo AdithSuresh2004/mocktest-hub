@@ -6,7 +6,7 @@ import { initializeExamState, startTimer } from '@/utils/helpers/examHelpers'
 import { updateAttempt, removeAttempt } from '@/data/attemptRepository'
 import { calculateAnalysis } from '@/utils/calculations/resultAnalysis'
 
-const useExam = (examId) => {
+const useExamPage = (examId) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
 
@@ -86,9 +86,16 @@ const useExam = (examId) => {
       setCurrentSection,
       setCurrentQuestion,
       timer
-    );
-    setHasStarted(started);
-  }, [attempt, exam, setAnswers, setMarkedForReview, setCurrentSection, setCurrentQuestion]);
+    )
+    setHasStarted(started)
+  }, [
+    attempt,
+    exam,
+    setAnswers,
+    setMarkedForReview,
+    setCurrentSection,
+    setCurrentQuestion,
+  ])
 
   useEffect(() => {
     if (
@@ -105,7 +112,12 @@ const useExam = (examId) => {
 
     timer.stop()
 
-    const analysis = calculateAnalysis(exam, { responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({ q_id, selected_opt_id })) });
+    const analysis = calculateAnalysis(exam, {
+      responses: Object.entries(answers).map(([q_id, selected_opt_id]) => ({
+        q_id,
+        selected_opt_id,
+      })),
+    })
 
     const finalAttempt = {
       ...attempt,
@@ -204,8 +216,15 @@ const useExam = (examId) => {
   }
 
   const startExamTimer = () => {
-    startTimer(hasStarted, attempt, timer, setHasStarted, updateAttempt, setAttempt);
-  };
+    startTimer(
+      hasStarted,
+      attempt,
+      timer,
+      setHasStarted,
+      updateAttempt,
+      setAttempt
+    )
+  }
 
   const handleAnswer = (questionId, optionId) => {
     if (isSubmitted) return
@@ -232,4 +251,4 @@ const useExam = (examId) => {
   }
 }
 
-export default useExam
+export default useExamPage

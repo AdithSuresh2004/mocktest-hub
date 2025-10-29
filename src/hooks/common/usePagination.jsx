@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 export function usePagination(items, initialPageSize = 12) {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(initialPageSize)
 
+  const resetPagination = useCallback(() => {
+    setCurrentPage(1)
+  }, [])
+
   useEffect(() => {
     resetPagination()
-  }, [items])
+  }, [items, resetPagination])
 
   const totalPages = Math.ceil(items.length / pageSize)
 
@@ -33,10 +37,6 @@ export function usePagination(items, initialPageSize = 12) {
 
   const changePageSize = (newSize) => {
     setPageSize(newSize)
-    setCurrentPage(1)
-  }
-
-  const resetPagination = () => {
     setCurrentPage(1)
   }
 

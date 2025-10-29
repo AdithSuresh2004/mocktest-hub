@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
-import { theme } from '@/utils/theme'
-import LoadingSpinner from './LoadingSpinner'
+import { theme } from '@/constants/theme'
+import LoadingSpinner from '@/components/common/LoadingSpinner'
 
 const Button = forwardRef(
   (

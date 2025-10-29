@@ -51,10 +51,22 @@ const StatCard = ({
       className={`rounded-xl border ${scheme.border} ${scheme.bg} p-4 text-center transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 sm:p-5 md:p-6`}
     >
       <div className="mb-2 flex items-center justify-between sm:mb-3">
-        <span className={`text-xs font-semibold tracking-wide uppercase sm:text-sm ${scheme.text}`}>{label}</span>
-        {Icon && <Icon className={`h-3 w-3 sm:h-4 sm:w-4 opacity-75 ${scheme.iconColor}`} />}
+        <span
+          className={`text-xs font-semibold tracking-wide uppercase sm:text-sm ${scheme.text}`}
+        >
+          {label}
+        </span>
+        {Icon && (
+          <Icon
+            className={`h-3 w-3 sm:h-4 sm:w-4 opacity-75 ${scheme.iconColor}`}
+          />
+        )}
       </div>
-      <p className={`text-2xl font-bold sm:text-3xl md:text-4xl ${scheme.text}`}>{value}</p>
+      <p
+        className={`text-2xl font-bold sm:text-3xl md:text-4xl ${scheme.text}`}
+      >
+        {value}
+      </p>
     </div>
   )
 }

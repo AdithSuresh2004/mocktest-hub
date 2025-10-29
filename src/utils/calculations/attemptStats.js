@@ -1,4 +1,4 @@
-export function useAttemptStats(attempts) {
+export function calculateAttemptStats(attempts) {
   if (!attempts || attempts.length === 0) {
     return {
       avgScore: 0,

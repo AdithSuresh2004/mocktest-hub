@@ -77,7 +77,11 @@ export default function ResultPage() {
         <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-6xl lg:px-8">
           <div className="space-y-6 sm:space-y-8">
             <ResultScoreCards analysis={enrichedAnalysis} />
-            <ResultQuickOverview attempt={attempt} exam={exam} analysis={analysis} />
+            <ResultQuickOverview
+              attempt={attempt}
+              exam={exam}
+              analysis={analysis}
+            />
             <ResultActions
               attemptId={attemptId}
               onShowAnalysis={handleScrollToAnalysis}

@@ -23,7 +23,6 @@ const PreferencesSection = ({
       </p>
 
       <div className="space-y-6">
-        {/* General Preferences */}
         <div className="space-y-4">
           <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
             General
@@ -64,7 +63,6 @@ const PreferencesSection = ({
           </label>
         </div>
 
-        {/* Streak Goals */}
         <div className="border-t border-gray-200 pt-6 dark:border-gray-600">
           <h3 className="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">
             Streak Goals

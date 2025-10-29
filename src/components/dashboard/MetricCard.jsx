@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types'
-
 const MetricCard = ({
   icon: Icon,
   label,
@@ -81,15 +79,6 @@ const MetricCard = ({
       </div>
     </div>
   )
-}
-
-MetricCard.propTypes = {
-  icon: PropTypes.elementType.isRequired,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  suffix: PropTypes.string,
-  color: PropTypes.oneOf(['blue', 'green', 'purple', 'yellow', 'red']),
-  variant: PropTypes.oneOf(['standard', 'compact', 'prominent']),
 }
 
 export default MetricCard

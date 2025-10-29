@@ -93,8 +93,7 @@ export const calculateOverallStats = (
     unanswered: totals.unanswered,
     totalQuestions: totalQuestionsOverall,
     attempted: totalAttempted,
-    accuracy:
-      totalAttempted > 0 ? (totals.correct / totalAttempted) * 100 : 0,
+    accuracy: totalAttempted > 0 ? (totals.correct / totalAttempted) * 100 : 0,
     percentage:
       totalQuestionsOverall > 0
         ? (totals.correct / totalQuestionsOverall) * 100
@@ -156,20 +155,20 @@ export const calculateScoreDistribution = (completedExams) => {
     { name: '75-89%', value: 0, color: '#3b82f6' },
     { name: '50-74%', value: 0, color: '#f59e0b' },
     { name: '0-49%', value: 0, color: '#ef4444' },
-  ];
+  ]
 
   completedExams.forEach((exam) => {
-    const score = exam.score || 0;
+    const score = exam.score || 0
     if (score >= 90) {
-      distributionData[0].value++;
+      distributionData[0].value++
     } else if (score >= 75) {
-      distributionData[1].value++;
+      distributionData[1].value++
     } else if (score >= 50) {
-      distributionData[2].value++;
+      distributionData[2].value++
     } else {
-      distributionData[3].value++;
+      distributionData[3].value++
     }
-  });
+  })
 
-  return distributionData.filter((item) => item.value > 0);
-};
+  return distributionData.filter((item) => item.value > 0)
+}

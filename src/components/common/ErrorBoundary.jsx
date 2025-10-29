@@ -22,18 +22,10 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     const errorId = `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
-    console.error('ErrorBoundary caught error:', error, errorInfo)
-
     this.setState({
       errorInfo,
       errorId,
     })
-
-    if (import.meta.env?.DEV) {
-      console.warn('Error:', error)
-      console.warn('Error Info:', errorInfo)
-      console.warn('Error ID:', errorId)
-    }
   }
 
   handleReset = () => {

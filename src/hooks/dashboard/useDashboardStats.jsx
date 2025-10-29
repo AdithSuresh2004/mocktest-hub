@@ -3,7 +3,7 @@ import { getAllAttempts } from '@/data/attemptRepository'
 
 import { normalizeAttempt } from '@/utils/helpers/attemptHelpers'
 
-import { useAttemptStats } from '@/hooks/attempts/useAttemptStats'
+import { calculateAttemptStats } from '@/utils/calculations/attemptStats'
 
 const DEFAULT_STATS = {
   totalExams: 0,
@@ -34,7 +34,7 @@ export function useDashboardStats() {
 
       setValidCompleted(completed)
 
-      const { avgScore, bestScore, avgTime } = useAttemptStats(completed)
+      const { avgScore, bestScore, avgTime } = calculateAttemptStats(completed)
 
       const newStats = {
         totalExams: attempts.length,

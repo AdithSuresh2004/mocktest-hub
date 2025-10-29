@@ -1,9 +1,9 @@
-import CardSkeleton from './skeletons/CardSkeleton'
-import ListSkeleton from './skeletons/ListSkeleton'
-import StatsSkeleton from './skeletons/StatsSkeleton'
-import ExamSkeleton from './skeletons/ExamSkeleton'
-import FullPageSkeleton from './skeletons/FullPageSkeleton'
-import { animations } from '@/utils/theme'
+import CardSkeleton from '@/components/common/skeletons/CardSkeleton'
+import ListSkeleton from '@/components/common/skeletons/ListSkeleton'
+import StatsSkeleton from '@/components/common/skeletons/StatsSkeleton'
+import ExamSkeleton from '@/components/common/skeletons/ExamSkeleton'
+import FullPageSkeleton from '@/components/common/skeletons/FullPageSkeleton'
+import { animations } from '@/utils/animations'
 
 const shimmerClass = animations.shimmer
 

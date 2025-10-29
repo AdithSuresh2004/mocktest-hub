@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import useExam from '@/hooks/exam/useExam'
+import useExamPage from '@/hooks/exam/useExamPage'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
 import { useModalState } from '@/hooks/exam/useModalState'
 import { useExamState } from '@/hooks/exam/useExamState'
@@ -34,7 +34,7 @@ const ExamPage = () => {
     answers,
     markedForReview,
     startExamTimer,
-  } = useExam(examId)
+  } = useExamPage(examId)
 
   const {
     currentSection,
@@ -74,7 +74,8 @@ const ExamPage = () => {
     }
   }, [])
 
-  const shouldShowInstructions = !loading && exam && attempt && !attempt._hasStarted
+  const shouldShowInstructions =
+    !loading && exam && attempt && !attempt._hasStarted
 
   const handleStartExam = () => {
     startExamTimer()

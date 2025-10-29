@@ -1,10 +1,5 @@
 import { useEffect, useRef } from 'react'
 
-/**
- * Hook to detect clicks outside an element
- * @param {Function} handler - Callback to execute when clicked outside
- * @returns {React.RefObject} Ref to attach to the element
- */
 export const useClickOutside = (handler) => {
   const ref = useRef(null)
 
