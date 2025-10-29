@@ -71,10 +71,10 @@ const getQuestionStatusClasses = ({
   }
 
   if (isMarked && isAnswered) {
-    return 'bg-purple-200 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300' // Answered and marked for review
+    return 'bg-purple-200 text-purple-800 dark:bg-purple-700 dark:text-purple-300' // Answered and marked for review
   }
   if (isMarked) {
-    return 'bg-purple-200 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300' // Marked for review
+    return 'bg-purple-200 text-purple-800 dark:bg-purple-700 dark:text-purple-300' // Marked for review
   }
   if (isAnswered) {
     return 'bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-300' // Answered
