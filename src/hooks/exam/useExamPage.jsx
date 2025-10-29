@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useExamLoader } from '@/hooks/exam/useExamLoader'
 import { useExamNavigation } from '@/hooks/exam/useExamNavigation'
-import { useTimer } from '@/hooks/exam/useTimer'
-import { initializeExamState, startTimer } from '@/utils/helpers/examHelpers'
+import { useExamSessionTimer } from './useExamSessionTimer'
 import { updateAttempt, removeAttempt } from '@/data/attemptRepository'
 import { calculateAnalysis } from '@/utils/calculations/resultAnalysis'
 
@@ -69,48 +68,6 @@ const useExamPage = (examId) => {
     })
   }
 
-  const finalizeExamRef = useRef(null)
-  const onTimerEnd = () => {
-    if (finalizeExamRef.current) {
-      finalizeExamRef.current(true)
-    }
-  }
-  const timer = useTimer(0, onTimerEnd)
-
-  useEffect(() => {
-    if (attempt && exam && !hasStarted) {
-      const started = initializeExamState(
-        attempt,
-        exam,
-        setAnswers,
-        setMarkedForReview,
-        setCurrentSection,
-        setCurrentQuestion,
-        timer
-      )
-      setHasStarted((prev) => (prev !== started ? started : prev))
-    }
-  }, [
-    attempt,
-    exam,
-    hasStarted,
-    setAnswers,
-    setMarkedForReview,
-    setCurrentSection,
-    setCurrentQuestion,
-    timer,
-  ])
-
-  useEffect(() => {
-    if (
-      hasStarted &&
-      attempt?.status === 'in_progress' &&
-      attempt?._hasStarted
-    ) {
-      timer.start()
-    }
-  }, [hasStarted, attempt?.status, attempt?._hasStarted]) // timer intentionally not in deps per guidelines
-
   const finalizeExam = (isTimeUp = false) => {
     if (!exam || !attempt) return
 
@@ -143,6 +100,20 @@ const useExamPage = (examId) => {
     setAttempt(finalAttempt)
     setIsSubmitted(true)
   }
+
+  const { timer, startExamTimer } = useExamSessionTimer(
+    attempt,
+    exam,
+    hasStarted,
+    setHasStarted,
+    setAnswers,
+    setMarkedForReview,
+    setCurrentSection,
+    setCurrentQuestion,
+    () => finalizeExam(true), // onTimerEnd callback
+    updateAttempt,
+    setAttempt
+  )
 
   useEffect(() => {
     if (!attempt?.attempt_id || isSubmitted) return
@@ -192,10 +163,6 @@ const useExamPage = (examId) => {
     answers,
   ])
 
-  useEffect(() => {
-    finalizeExamRef.current = finalizeExam
-  }, [finalizeExam])
-
   const saveAndExitExam = () => {
     if (isSubmitted || !attempt?.attempt_id || !exam) return
     timer.stop()
@@ -217,17 +184,6 @@ const useExamPage = (examId) => {
       removeAttempt(attempt.attempt_id)
     }
     timer.stop()
-  }
-
-  const startExamTimer = () => {
-    startTimer(
-      hasStarted,
-      attempt,
-      timer,
-      setHasStarted,
-      updateAttempt,
-      setAttempt
-    )
   }
 
   const handleAnswer = (questionId, optionId) => {
