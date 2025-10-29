@@ -1,4 +1,4 @@
-import { analyzeSectionPerformance } from '@/utils/calculations/resultAnalysis'
+import { analyzeSectionPerformance } from '@/utils/calculations/sectionAnalysis'
 
 const initializeExamState = (
   attempt,
