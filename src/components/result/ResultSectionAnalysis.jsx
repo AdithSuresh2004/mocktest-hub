@@ -43,7 +43,7 @@ const SectionRow = ({ section }) => {
         <div className="relative h-3 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className={`h-full rounded-full transition-all duration-1000 ${accuracyColor}`}
-            style={{ width: `${Math.max(section.accuracy, 8)}%` }}
+            style={{ width: `${section.accuracy}%` }}
           />
         </div>
       </div>

@@ -45,7 +45,7 @@ const AccuracyBar = ({ accuracy, label }) => (
     <div className="relative h-3 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
       <div
         className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-1000 ease-out"
-        style={{ width: `${Math.max(parseFloat(accuracy), 8)}%` }}
+        style={{ width: `${parseFloat(accuracy)}%` }}
       />
     </div>
   </div>

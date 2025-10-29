@@ -8,7 +8,7 @@ let manifestPromise = null
 const examCache = new Map()
 const examLoadingPromises = new Map()
 
-export async function getManifest(forceRefresh = false) {
+const getManifest = async (forceRefresh = false) => {
   const now = Date.now()
 
   if (manifestPromise && !forceRefresh) {
@@ -47,7 +47,7 @@ export async function getManifest(forceRefresh = false) {
   return manifestPromise
 }
 
-export async function findExamById(examId) {
+const findExamById = async (examId) => {
   if (!examId || examId === 'undefined' || examId === 'null') {
     throw new Error('Invalid exam ID. Please select a valid exam.')
   }
@@ -116,7 +116,7 @@ export async function findExamById(examId) {
   return loadPromise
 }
 
-export function clearExamCache() {
+const clearExamCache = () => {
   manifestCache = null
   manifestCacheTime = 0
   manifestPromise = null
@@ -124,8 +124,12 @@ export function clearExamCache() {
   examLoadingPromises.clear()
 }
 
-export function preloadExam(examId) {
+const preloadExam = (examId) => {
   if (!examCache.has(examId) && !examLoadingPromises.has(examId)) {
     findExamById(examId).catch(() => {})
   }
 }
+
+export { getManifest, findExamById, clearExamCache, preloadExam }
+
+

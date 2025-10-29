@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import SettingsStorage from '@/utils/settings-storage'
 import { useToast } from '@/hooks/common/useToast'
 
-export function useSettings() {
+const useSettings = () => {
   const { addToast } = useToast()
   const [notifications, setNotifications] = useState(true)
   const [autoSave, setAutoSave] = useState(true)
@@ -31,13 +31,27 @@ export function useSettings() {
 
   useEffect(() => {
     const settings = SettingsStorage.get()
-    setNotifications(settings.notifications !== false)
-    setAutoSave(settings.autoSave !== false)
+    setNotifications((prev) =>
+      prev !== settings.notifications ? settings.notifications !== false : prev
+    )
+    setAutoSave((prev) =>
+      prev !== settings.autoSave ? settings.autoSave !== false : prev
+    )
     if (settings.streakGoals) {
-      setStreakGoals({
-        daily: settings.streakGoals.daily || 3,
-        weekly: settings.streakGoals.weekly || 15,
-        monthly: settings.streakGoals.monthly || 60,
+      setStreakGoals((prev) => {
+        const newGoals = {
+          daily: settings.streakGoals.daily || 3,
+          weekly: settings.streakGoals.weekly || 15,
+          monthly: settings.streakGoals.monthly || 60,
+        }
+        if (
+          prev.daily !== newGoals.daily ||
+          prev.weekly !== newGoals.weekly ||
+          prev.monthly !== newGoals.monthly
+        ) {
+          return newGoals
+        }
+        return prev
       })
     }
 
@@ -64,3 +78,5 @@ export function useSettings() {
     saveSettings,
   }
 }
+
+export { useSettings }

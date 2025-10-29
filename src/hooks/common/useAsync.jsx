@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 
 const useAsync = (asyncFunction, options = {}) => {
   const { autoLoad = true, dependencies = [] } = options
@@ -6,7 +6,7 @@ const useAsync = (asyncFunction, options = {}) => {
   const [loading, setLoading] = useState(autoLoad)
   const [error, setError] = useState(null)
 
-  const execute = useCallback(async () => {
+  const execute = async () => {
     setLoading(true)
     setError(null)
     try {
@@ -19,13 +19,13 @@ const useAsync = (asyncFunction, options = {}) => {
     } finally {
       setLoading(false)
     }
-  }, [asyncFunction])
+  }
 
   useEffect(() => {
     if (autoLoad) {
       execute()
     }
-  }, [autoLoad, execute, ...dependencies])
+  }, [autoLoad])
 
   return { data, loading, error, refetch: execute, setData }
 }

@@ -1,6 +1,6 @@
 import { analyzeSectionPerformance } from '@/utils/calculations/resultAnalysis'
 
-export const initializeExamState = (
+const initializeExamState = (
   attempt,
   exam,
   setAnswers,
@@ -28,7 +28,7 @@ export const initializeExamState = (
   return attempt.status === 'in_progress' && attempt._hasStarted
 }
 
-export const startTimer = (
+const startTimer = (
   hasStarted,
   attempt,
   timer,
@@ -45,7 +45,7 @@ export const startTimer = (
   }
 }
 
-export const getQuestionStatusClasses = ({
+const getQuestionStatusClasses = ({
   question,
   qIndex,
   answers,
@@ -83,7 +83,7 @@ export const getQuestionStatusClasses = ({
   return 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600' // Not visited
 }
 
-export const calculateSectionStats = (
+const calculateSectionStats = (
   questions = [],
   answers = {},
   markedForReview = new Set(),
@@ -94,10 +94,11 @@ export const calculateSectionStats = (
   let notVisited = 0
 
   for (const q of questions) {
-    const isAnswered = answers[q.q_id] != null
+    const userAnswer = answers[q.q_id]
+    const isAnswered = userAnswer != null
     if (isAnswered) {
       answered++
-      if (isReviewMode && answers[q.q_id] !== q.correct_opt_id) {
+      if (isReviewMode && userAnswer !== q.correct_opt_id) {
         incorrect++
       }
     } else if (!markedForReview.has(q.q_id)) {
@@ -113,3 +114,7 @@ export const calculateSectionStats = (
     notVisited,
   }
 }
+
+export { initializeExamState, startTimer, getQuestionStatusClasses, calculateSectionStats }
+
+

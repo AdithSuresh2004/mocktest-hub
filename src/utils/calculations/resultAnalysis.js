@@ -1,6 +1,6 @@
 import { getQuestionMarks } from './scoreCalculations'
 
-export const createResponsesMap = (responses) => {
+const createResponsesMap = (responses) => {
   const responsesMap = {}
   if (responses) {
     responses.forEach((r) => {
@@ -10,7 +10,7 @@ export const createResponsesMap = (responses) => {
   return responsesMap
 }
 
-export const analyzeSectionPerformance = (
+const analyzeSectionPerformance = (
   section,
   sectionIndex,
   responsesMap,
@@ -62,7 +62,7 @@ export const analyzeSectionPerformance = (
     totalMarks: sectionTotalMarks,
     accuracy:
       totalAttempted > 0
-        ? ((sectionCorrect / totalAttempted) * 100).toFixed(1)
+        ? Number(((sectionCorrect / totalAttempted) * 100).toFixed(1))
         : 0,
     stats: {
       correct: sectionCorrect,
@@ -72,19 +72,21 @@ export const analyzeSectionPerformance = (
   }
 }
 
-export const calculateOverallStats = (
+const calculateSectionTotals = (sectionAnalysis) => {
+  let correct = 0, incorrect = 0, unanswered = 0
+  for (const section of sectionAnalysis) {
+    correct += section.correct
+    incorrect += section.incorrect
+    unanswered += section.unanswered
+  }
+  return { correct, incorrect, unanswered }
+}
+
+const calculateOverallStats = (
   sectionAnalysis,
   totalQuestionsOverall
 ) => {
-  const totals = sectionAnalysis.reduce(
-    (acc, section) => ({
-      correct: acc.correct + section.correct,
-      incorrect: acc.incorrect + section.incorrect,
-      unanswered: acc.unanswered + section.unanswered,
-    }),
-    { correct: 0, incorrect: 0, unanswered: 0 }
-  )
-
+  const totals = calculateSectionTotals(sectionAnalysis)
   const totalAttempted = totals.correct + totals.incorrect
 
   return {
@@ -101,7 +103,7 @@ export const calculateOverallStats = (
   }
 }
 
-export const calculateAnalysis = (examData, attemptData) => {
+const calculateAnalysis = (examData, attemptData) => {
   const responsesMap = createResponsesMap(attemptData.responses)
 
   const sectionScores =
@@ -149,7 +151,7 @@ export const calculateAnalysis = (examData, attemptData) => {
   }
 }
 
-export const calculateScoreDistribution = (completedExams) => {
+const calculateScoreDistribution = (completedExams) => {
   const distributionData = [
     { name: '90-100%', value: 0, color: '#10b981' },
     { name: '75-89%', value: 0, color: '#3b82f6' },
@@ -172,3 +174,7 @@ export const calculateScoreDistribution = (completedExams) => {
 
   return distributionData.filter((item) => item.value > 0)
 }
+
+export { createResponsesMap, analyzeSectionPerformance, calculateOverallStats, calculateAnalysis, calculateScoreDistribution }
+
+

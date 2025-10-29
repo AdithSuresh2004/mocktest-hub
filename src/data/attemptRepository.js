@@ -1,6 +1,6 @@
 import AttemptsStorage from '@/utils/attempts-storage'
 
-function isValidAttempt(attempt) {
+const isValidAttempt = (attempt) => {
   return (
     attempt &&
     typeof attempt === 'object' &&
@@ -11,13 +11,13 @@ function isValidAttempt(attempt) {
   )
 }
 
-function generateAttemptId(examId) {
+const generateAttemptId = (examId) => {
   const timestamp = Date.now().toString(36)
   const random = Math.random().toString(36).substring(2, 7)
   return `att_${examId}_${timestamp}_${random}`
 }
 
-export function getAllAttempts() {
+const getAllAttempts = () => {
   const attempts = AttemptsStorage.getAll()
   if (!Array.isArray(attempts)) return []
   const validAttempts = attempts.filter(isValidAttempt)
@@ -27,7 +27,7 @@ export function getAllAttempts() {
   return validAttempts
 }
 
-export function createAttempt(examId, examName, durationMinutes) {
+const createAttempt = (examId, examName, durationMinutes) => {
   if (!examId || !examName || !durationMinutes) return null
   const attempt = {
     attempt_id: generateAttemptId(examId),
@@ -50,7 +50,7 @@ export function createAttempt(examId, examName, durationMinutes) {
   return AttemptsStorage.add(attempt) ? attempt : null
 }
 
-export function getLatestInProgressAttempt(examId) {
+const getLatestInProgressAttempt = (examId) => {
   const attempts = getAllAttempts()
   const inProgressAttempts = attempts.filter(
     (att) => att.exam_id === examId && att.status === 'in_progress'
@@ -62,7 +62,7 @@ export function getLatestInProgressAttempt(examId) {
   return inProgressAttempts[0]
 }
 
-export function updateAttempt(attemptId, updates) {
+const updateAttempt = (attemptId, updates) => {
   if (!attemptId || !updates || typeof updates !== 'object') return null
   const attempts = getAllAttempts()
   const attemptIndex = attempts.findIndex((att) => att.attempt_id === attemptId)
@@ -80,15 +80,27 @@ export function updateAttempt(attemptId, updates) {
   return attempts[attemptIndex]
 }
 
-export function findAttemptById(attemptId) {
+const findAttemptById = (attemptId) => {
   return AttemptsStorage.getById(attemptId)
 }
 
-export function findAllAttemptsByExamId(examId) {
+const findAllAttemptsByExamId = (examId) => {
   const attempts = getAllAttempts()
   return attempts.filter((att) => att.exam_id === examId)
 }
 
-export function removeAttempt(attemptId) {
+const removeAttempt = (attemptId) => {
   return AttemptsStorage.deleteById(attemptId)
 }
+
+export { 
+  getAllAttempts, 
+  createAttempt, 
+  getLatestInProgressAttempt, 
+  updateAttempt, 
+  findAttemptById, 
+  findAllAttemptsByExamId, 
+  removeAttempt 
+}
+
+

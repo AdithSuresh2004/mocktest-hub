@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import StorageManager from '@/utils/storage'
+import { getInitialTheme, getSystemTheme } from '@/utils/theme-helpers'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
 const ThemeContext = createContext({
@@ -8,20 +9,7 @@ const ThemeContext = createContext({
   toggleTheme: () => {},
 })
 
-const getInitialTheme = () => {
-  const stored = StorageManager.getItem(STORAGE_KEYS.THEME)
-  return stored === 'light' || stored === 'dark' || stored === 'system'
-    ? stored
-    : 'system'
-}
-
-const getSystemTheme = () => {
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
-}
-
-export function ThemeProvider({ children }) {
+const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getInitialTheme)
 
   const actualTheme = useMemo(() => {
@@ -65,3 +53,5 @@ export function ThemeProvider({ children }) {
 export function useTheme() {
   return useContext(ThemeContext)
 }
+
+export { ThemeProvider }

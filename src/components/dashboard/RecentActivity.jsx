@@ -2,33 +2,20 @@ import { useNavigate, Link } from 'react-router-dom'
 import { FaClock, FaArrowRight } from 'react-icons/fa'
 import { formatDate, formatTime } from '@/utils/formatters/formatters'
 import Card from '@/components/common/Card'
-import { useState, useLayoutEffect, useRef } from 'react'
 
-const ESTIMATED_ITEM_HEIGHT = 76
+const MAX_VISIBLE_ACTIVITIES = 5
 
 export default function RecentActivity({ activities }) {
   const navigate = useNavigate()
-  const [visibleActivities, setVisibleActivities] = useState([])
-  const containerRef = useRef(null)
-  const headerRef = useRef(null)
-
-  useLayoutEffect(() => {
-    if (containerRef.current && headerRef.current) {
-      const containerHeight = containerRef.current.clientHeight
-      const headerHeight = headerRef.current.offsetHeight
-      const listHeight = containerHeight - headerHeight
-      const count = Math.max(1, Math.floor(listHeight / ESTIMATED_ITEM_HEIGHT))
-      setVisibleActivities(activities.slice(0, count))
-    }
-  }, [activities])
+  const visibleActivities = activities.slice(0, MAX_VISIBLE_ACTIVITIES)
 
   return (
-    <Card ref={containerRef}>
-      <div ref={headerRef} className="mb-4 flex items-center justify-between">
+    <Card>
+      <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Recent Activity
         </h2>
-        {activities.length > visibleActivities.length && (
+        {activities.length > 0 && (
           <Link
             to="/attempts"
             className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"

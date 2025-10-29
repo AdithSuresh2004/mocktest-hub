@@ -78,23 +78,27 @@ const useExamPage = (examId) => {
   const timer = useTimer(0, onTimerEnd)
 
   useEffect(() => {
-    const started = initializeExamState(
-      attempt,
-      exam,
-      setAnswers,
-      setMarkedForReview,
-      setCurrentSection,
-      setCurrentQuestion,
-      timer
-    )
-    setHasStarted(started)
+    if (attempt && exam && !hasStarted) {
+      const started = initializeExamState(
+        attempt,
+        exam,
+        setAnswers,
+        setMarkedForReview,
+        setCurrentSection,
+        setCurrentQuestion,
+        timer
+      )
+      setHasStarted((prev) => (prev !== started ? started : prev))
+    }
   }, [
     attempt,
     exam,
+    hasStarted,
     setAnswers,
     setMarkedForReview,
     setCurrentSection,
     setCurrentQuestion,
+    timer,
   ])
 
   useEffect(() => {
@@ -105,7 +109,7 @@ const useExamPage = (examId) => {
     ) {
       timer.start()
     }
-  }, [hasStarted, attempt?.status, attempt?._hasStarted])
+  }, [hasStarted, attempt?.status, attempt?._hasStarted]) // timer intentionally not in deps per guidelines
 
   const finalizeExam = (isTimeUp = false) => {
     if (!exam || !attempt) return

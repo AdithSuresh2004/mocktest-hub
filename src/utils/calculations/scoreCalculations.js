@@ -1,4 +1,4 @@
-export const getQuestionMarks = (question) => {
+const getQuestionMarks = (question) => {
   if (typeof question.marks === 'number') {
     return question.marks
   }
@@ -8,9 +8,10 @@ export const getQuestionMarks = (question) => {
   return 1
 }
 
-export const getTotalMarks = (exam) => {
+const getTotalMarks = (exam) => {
   if (!exam?.sections) return 0
   return exam.sections.reduce((sum, section) => {
+    if (!Array.isArray(section.questions)) return sum
     return (
       sum +
       section.questions.reduce((qSum, q) => {
@@ -20,7 +21,7 @@ export const getTotalMarks = (exam) => {
   }, 0)
 }
 
-export const getScore = (attempt) => {
+const getScore = (attempt) => {
   if (typeof attempt?.score === 'number') {
     return attempt.score
   }
@@ -33,7 +34,7 @@ export const getScore = (attempt) => {
   return 0
 }
 
-export const getPerformanceLevel = (percentage) => {
+const getPerformanceLevel = (percentage) => {
   const numPercentage = parseFloat(percentage)
   if (numPercentage >= 90)
     return { text: 'Excellent', color: 'text-green-600 dark:text-green-400' }
@@ -46,12 +47,12 @@ export const getPerformanceLevel = (percentage) => {
   return { text: 'Needs Improvement', color: 'text-red-600 dark:text-red-400' }
 }
 
-export const calculateAccuracy = (correct, attempted) => {
+const calculateAccuracy = (correct, attempted) => {
   if (!attempted || attempted === 0) return 0
   return ((correct / attempted) * 100).toFixed(1)
 }
 
-export const getTotalQuestions = (exam) => {
+const getTotalQuestions = (exam) => {
   if (!exam?.sections) return 0
   return exam.sections.reduce((sum, section) => {
     if (!Array.isArray(section.questions)) return sum
@@ -59,7 +60,7 @@ export const getTotalQuestions = (exam) => {
   }, 0)
 }
 
-export const calculateTotalMarks = (exam) => {
+const calculateTotalMarks = (exam) => {
   if (!exam?.sections) return 0
   return exam.sections.reduce((sum, section) => {
     if (!Array.isArray(section.questions)) return sum
@@ -71,3 +72,17 @@ export const calculateTotalMarks = (exam) => {
     )
   }, 0)
 }
+
+export { 
+  getQuestionMarks, 
+  getTotalMarks, 
+  getScore, 
+  getPerformanceLevel, 
+  calculateAccuracy, 
+  getTotalQuestions,
+  calculateTotalMarks
+}
+
+
+
+
