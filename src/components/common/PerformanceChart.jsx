@@ -1,37 +1,8 @@
 import { useState } from 'react'
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { ResponsiveContainer } from 'recharts'
 import ToggleButtons from '@/components/common/ToggleButtons'
 import { usePerformanceChartData } from '@/hooks/common/usePerformanceChartData'
-
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-600 dark:bg-gray-700">
-        <p className="font-medium text-gray-900 dark:text-gray-100">{label}</p>
-        {payload.map((entry, index) => (
-          <p key={index} className="text-sm" style={{ color: entry.color }}>
-            {entry.name}: {entry.value}
-            {entry.dataKey === 'score' ? '%' : ' min'}
-          </p>
-        ))}
-      </div>
-    )
-  }
-  return null
-}
+import ChartRenderer from './ChartRenderer'
 
 const PerformanceChart = ({
   attempts,
@@ -40,94 +11,6 @@ const PerformanceChart = ({
 }) => {
   const [chartType, setChartType] = useState(initialChartType)
   const { chartData } = usePerformanceChartData(days)
-
-  const renderChart = () => {
-    switch (chartType) {
-      case 'line':
-        return (
-          <LineChart
-            data={chartData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-            <XAxis
-              dataKey="date"
-              className="text-xs text-gray-600 dark:text-gray-400"
-            />
-            <YAxis
-              className="text-xs text-gray-600 dark:text-gray-400"
-              domain={[0, 100]}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="score"
-              stroke="#3b82f6"
-              strokeWidth={3}
-              name="Score (%)"
-              dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        )
-
-      case 'bar':
-        return (
-          <BarChart
-            data={chartData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-            <XAxis
-              dataKey="date"
-              className="text-xs text-gray-600 dark:text-gray-400"
-            />
-            <YAxis
-              className="text-xs text-gray-600 dark:text-gray-400"
-              domain={[0, 100]}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar
-              dataKey="score"
-              fill="#3b82f6"
-              name="Score (%)"
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        )
-
-      case 'area':
-      default:
-        return (
-          <AreaChart
-            data={chartData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-            <XAxis
-              dataKey="date"
-              className="text-xs text-gray-600 dark:text-gray-400"
-            />
-            <YAxis
-              className="text-xs text-gray-600 dark:text-gray-400"
-              domain={[0, 100]}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Area
-              type="monotone"
-              dataKey="score"
-              stroke="#3b82f6"
-              fill="#3b82f6"
-              fillOpacity={0.3}
-              name="Score (%)"
-            />
-          </AreaChart>
-        )
-    }
-  }
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -151,7 +34,7 @@ const PerformanceChart = ({
           style={{ minHeight: '256px', minWidth: '320px' }}
         >
           <ResponsiveContainer width="100%" height="100%">
-            {renderChart()}
+            <ChartRenderer chartType={chartType} chartData={chartData} />
           </ResponsiveContainer>
         </div>
       ) : (
