@@ -8,8 +8,8 @@ import {
   FaShieldAlt,
 } from 'react-icons/fa'
 import Button from '@/components/common/Button'
-import DataStatsDisplay from './DataStatsDisplay'
-import ClearDataActions from './ClearDataActions'
+import DataStatsDisplay from '@/components/settings/DataStatsDisplay'
+import ClearDataActions from '@/components/settings/ClearDataActions'
 
 const DataManagementSection = ({ onExport, onImport, onClearData }) => {
   const handleExportSettings = () => {
