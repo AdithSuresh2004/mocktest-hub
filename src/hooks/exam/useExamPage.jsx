@@ -30,7 +30,7 @@ const useExamPage = (examId) => {
     toggleMarkForReview,
   } = useExamAttemptState(attempt)
 
-  const { timer, startExamTimer } = useExamSessionTimer(
+  const { timer, startExamSession: startExamTimer } = useExamSessionTimer(
     attempt,
     exam,
     hasStarted,
