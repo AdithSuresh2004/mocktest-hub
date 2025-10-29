@@ -136,6 +136,7 @@ const ExamPage = () => {
         isCritical={isCritical}
         currentQ={currentQ}
         currentSectionObj={currentSectionObj}
+        currentSection={currentSection}
         currentQuestion={currentQuestion}
         answers={answers}
         markedForReview={markedForReview}

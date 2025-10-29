@@ -12,6 +12,7 @@ const ExamLayout = ({
   isCritical,
   currentQ,
   currentSectionObj,
+  currentSection,
   currentQuestion,
   answers,
   markedForReview,
