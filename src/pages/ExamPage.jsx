@@ -8,6 +8,8 @@ import ExamStatusDisplay from '@/components/exam/ExamStatusDisplay'
 import ExamInstructionsDisplay from '@/components/exam/ExamInstructionsDisplay'
 import ExamLayout from '@/components/exam/ExamLayout'
 import ExamModalsDisplay from '@/components/exam/ExamModalsDisplay'
+import { useExamStateSaver } from '@/hooks/exam/useExamStateSaver'
+import { useFullscreenToggle } from '@/hooks/common/useFullscreenToggle'
 
 const ExamPage = () => {
   const { examId } = useParams()
@@ -115,13 +117,7 @@ const ExamPage = () => {
     }
   }
 
-  const handleToggleFullscreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    } else {
-      document.documentElement.requestFullscreen()
-    }
-  }
+  const { handleToggleFullscreen } = useFullscreenToggle();
 
   useKeyboardShortcuts({
     onPrevQuestion: canGoPrev ? goToPrev : null,
@@ -132,6 +128,16 @@ const ExamPage = () => {
     enabled:
       !shouldShowInstructions && !loading && !showExitModal && !showSubmitModal,
   })
+
+  useExamStateSaver(
+    attempt,
+    isSubmitted,
+    currentSection,
+    currentQuestion,
+    timeRemaining,
+    markedForReview,
+    answers
+  );
 
   const statusDisplay = ExamStatusDisplay({ loading, error, isSubmitted, exam, currentQ });
   if (statusDisplay) return statusDisplay;
@@ -178,6 +184,3 @@ const ExamPage = () => {
     </>
   );
 };
-
-
-export default ExamPage
