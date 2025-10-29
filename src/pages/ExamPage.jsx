@@ -4,16 +4,10 @@ import useExamPage from '@/hooks/exam/useExamPage'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
 import { useExamModals } from '@/hooks/exam/useExamModals';
 import { useExamState } from '@/hooks/exam/useExamState'
-import InstructionsPage from '@/pages/InstructionsPage'
-import SkeletonLoader from '@/components/common/SkeletonLoader'
-import ExamHeader from '@/components/exam/ExamHeader'
-import QuestionArea from '@/components/exam/QuestionArea'
-import QuestionNavigator from '@/components/exam/QuestionNavigator'
-import ExamNavigation from '@/components/exam/ExamNavigation'
-import ExitTestModal from '@/components/modals/ExitTestModal'
-import SubmissionModal from '@/components/modals/SubmissionModal'
-import StatusDisplay from '@/components/common/StatusDisplay'
-import Button from '@/components/common/Button'
+import ExamStatusDisplay from '@/components/exam/ExamStatusDisplay'
+import ExamInstructionsDisplay from '@/components/exam/ExamInstructionsDisplay'
+import ExamLayout from '@/components/exam/ExamLayout'
+import ExamModalsDisplay from '@/components/exam/ExamModalsDisplay'
 
 const ExamPage = () => {
   const { examId } = useParams()
@@ -139,115 +133,51 @@ const ExamPage = () => {
       !shouldShowInstructions && !loading && !showExitModal && !showSubmitModal,
   })
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 p-4 sm:p-6 dark:bg-gray-900">
-        <SkeletonLoader type="exam" count={1} />
-      </div>
-    )
-  }
+  const statusDisplay = ExamStatusDisplay({ loading, error, isSubmitted, exam, currentQ });
+  if (statusDisplay) return statusDisplay;
 
-  if (error) {
-    return (
-      <div className="flex min-h-full flex-col items-center justify-center gap-4 p-4 text-center">
-        <p className="text-lg text-red-600 sm:text-xl dark:text-red-400">
-          {error}
-        </p>
-        <Button onClick={() => (window.location.href = '/')} variant="primary">
-          Back to Home
-        </Button>
-      </div>
-    )
-  }
-
-  if (shouldShowInstructions) {
-    return <InstructionsPage exam={exam} onStart={handleStartExam} />
-  }
-
-  if (isSubmitted) {
-    return (
-      <StatusDisplay
-        type="loading"
-        message="Submitting exam and preparing results..."
-        fullScreen
-      />
-    )
-  }
-
-  if (!exam || !currentQ) {
-    return (
-      <StatusDisplay
-        type="error"
-        message="Exam data is incomplete or invalid."
-        fullScreen
-      />
-    )
-  }
+  const instructionsDisplay = ExamInstructionsDisplay({ shouldShowInstructions, exam, onStart: handleStartExam });
+  if (instructionsDisplay) return instructionsDisplay;
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50/30 transition-[background-color] duration-300 dark:from-gray-950 dark:via-gray-950 dark:to-gray-950">
-      <div className="flex-shrink-0 border-b border-blue-200 bg-white shadow-md backdrop-blur-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900/95 dark:backdrop-blur-sm">
-        <ExamHeader
-          exam={exam}
-          timeRemaining={timeRemaining}
-          onExit={handleExit}
-          isWarning={isWarning}
-          isCritical={isCritical}
-        />
-      </div>
-      <div className="flex flex-1 overflow-hidden">
-        <main className="flex-1 flex flex-col overflow-y-auto custom-scrollbar transition-colors duration-300">
-          <QuestionArea
-            question={currentQ}
-            section={currentSectionObj.section_name}
-            questionIndex={currentQuestion}
-            totalQuestions={currentSectionObj.questions.length}
-            selected={answers[currentQ.q_id]}
-            markedForReview={markedForReview}
-            onAnswer={saveAnswer}
-            onMarkForReview={toggleMarkForReview}
-            containerClass="p-3 sm:p-4 flex-1"
-          />
-        </main>
-        <QuestionNavigator
-          sections={exam.sections}
-          currentSectionIndex={currentSection}
-          currentQuestionIndex={currentQuestion}
-          answers={answers}
-          markedForReview={markedForReview}
-          onQuestionSelect={navigateToQuestion}
-        />
-      </div>
-      <div className="flex-shrink-0 border-t border-blue-200 bg-white shadow-md backdrop-blur-sm transition-[background-color,border-color] duration-300 dark:border-gray-800 dark:bg-gray-900/95 dark:backdrop-blur-sm">
-        <ExamNavigation
-          canGoPrev={currentSection > 0 || currentQuestion > 0}
-          canGoNext={
-            currentSection < exam.sections.length - 1 ||
-            currentQuestion < currentSectionObj.questions.length - 1
-          }
-          onPrev={goToPrev}
-          onNext={goToNext}
-          onSubmit={handleSubmit}
-        />
-      </div>
-      {showExitModal && (
-        <ExitTestModal
-          hasAnswers={Object.keys(answers).length > 0}
-          onSaveAndExit={handleSaveAndExit}
-          onExitWithoutSaving={handleExitWithoutSaving}
-          onCancel={cancelExit}
-        />
-      )}
-      {showSubmitModal && (
-        <SubmissionModal
-          answeredCount={Object.keys(answers).length}
-          totalQuestions={totalQuestions}
-          onConfirm={confirmSubmit}
-          onCancel={cancelSubmit}
-        />
-      )}
-    </div>
-  )
-}
+    <>
+      <ExamLayout
+        exam={exam}
+        timeRemaining={timeRemaining}
+        onExit={handleExit}
+        isWarning={isWarning}
+        isCritical={isCritical}
+        currentQ={currentQ}
+        currentSectionObj={currentSectionObj}
+        currentQuestion={currentQuestion}
+        answers={answers}
+        markedForReview={markedForReview}
+        saveAnswer={saveAnswer}
+        toggleMarkForReview={toggleMarkForReview}
+        canGoPrev={currentSection > 0 || currentQuestion > 0}
+        canGoNext={
+          currentSection < exam.sections.length - 1 ||
+          currentQuestion < currentSectionObj.questions.length - 1
+        }
+        goToPrev={goToPrev}
+        goToNext={goToNext}
+        handleSubmit={handleSubmit}
+        navigateToQuestion={navigateToQuestion}
+      />
+      <ExamModalsDisplay
+        showExitModal={showExitModal}
+        showSubmitModal={showSubmitModal}
+        answers={answers}
+        totalQuestions={totalQuestions}
+        confirmSubmit={confirmSubmit}
+        cancelSubmit={cancelSubmit}
+        handleSaveAndExit={handleSaveAndExit}
+        handleExitWithoutSaving={handleExitWithoutSaving}
+        cancelExit={cancelExit}
+      />
+    </>
+  );
+};
+
 
 export default ExamPage
