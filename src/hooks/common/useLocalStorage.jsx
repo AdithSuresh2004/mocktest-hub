@@ -1,41 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 export function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    try {
-      const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      return initialValue
-    }
-  })
+  const readValue = useCallback(() => {
+    const item = window.localStorage.getItem(key)
+    return item ? JSON.parse(item) : initialValue
+  }, [key, initialValue])
 
-  const setStoredValue = (newValue) => {
-    try {
+  const [value, setValue] = useState(readValue)
+
+  const setStoredValue = useCallback(
+    (newValue) => {
       const valueToStore =
         newValue instanceof Function ? newValue(value) : newValue
       setValue(valueToStore)
       window.localStorage.setItem(key, JSON.stringify(valueToStore))
       window.dispatchEvent(new StorageEvent('storage', { key }))
-    } catch {
-      setValue(initialValue)
-    }
-  }
+    },
+    [key, value]
+  )
+
+  useEffect(() => {
+    setValue(readValue())
+  }, [key, readValue])
 
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === key) {
-        try {
-          const item = window.localStorage.getItem(key)
-          setValue(item ? JSON.parse(item) : initialValue)
-        } catch {
-          setValue(initialValue)
-        }
+        setValue(readValue())
       }
     }
     window.addEventListener('storage', handleStorageChange)
     return () => window.removeEventListener('storage', handleStorageChange)
-  }, [key, initialValue])
+  }, [key, readValue])
 
   return [value, setStoredValue]
 }

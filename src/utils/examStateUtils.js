@@ -1,4 +1,4 @@
-export const useExamState = (exam, currentSection, currentQuestion) => {
+export const getExamState = (exam, currentSection, currentQuestion) => {
   if (!exam) {
     return {
       currentSectionObj: { questions: [] },

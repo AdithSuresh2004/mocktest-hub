@@ -1,8 +1,8 @@
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 import StatsSkeleton from '@/components/common/skeletons/StatsSkeleton'
 import ListSkeleton from '@/components/common/skeletons/ListSkeleton'
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer;
 
 const AttemptsSkeleton = () => (
   <div className="min-h-screen animate-fadeIn bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">

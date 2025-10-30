@@ -1,5 +1,5 @@
 import { findAllAttemptsByExamId } from '@/data/attemptRepository'
-import { FavoritesStorage } from '@/utils/storage'
+import { toggleFavorite } from '@/utils/storage'
 import { getTestTypeConfig } from '@/utils/helpers'
 
 export const getAttemptStatus = (examId) => {
@@ -43,5 +43,5 @@ export const getFavoriteData = (test) => {
 }
 
 export const toggleFavoriteStatus = (examId, favoriteData) => {
-  return FavoritesStorage.toggle(examId, favoriteData)
+  return toggleFavorite(examId, favoriteData)
 }

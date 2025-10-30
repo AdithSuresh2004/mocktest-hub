@@ -46,9 +46,3 @@ export const formatDuration = (seconds) => {
   return `${mins}m ${secs}s`
 }
 
-export {
-  getPerformanceColor,
-  getDifficultyColor,
-  normalizeDifficulty,
-  capitalizeStrength,
-} from '@/utils/helpers'

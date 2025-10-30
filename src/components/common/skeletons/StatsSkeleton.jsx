@@ -1,6 +1,6 @@
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer;
 
 const StatsSkeleton = () => (
   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

@@ -1,24 +1,22 @@
-import GenericStorage from './generic-storage.js'
+import { createStorage } from './generic-storage.js'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
-class AttemptsStorage extends GenericStorage {
-  constructor() {
-    // Use attempt_id as the identifier
-    super(STORAGE_KEYS.ATTEMPTS, [], 'attempt_id')
-  }
+const attemptsStorage = createStorage(
+  STORAGE_KEYS.ATTEMPTS,
+  [],
+  'attempt_id'
+)
 
-  // Add specific functionality for attempts
-  getById(attemptId) {
-    return this.find(attemptId)
-  }
+export const getAllAttempts = () => attemptsStorage.getAll()
 
-  deleteById(attemptId) {
-    return this.remove(attemptId)
-  }
+export const getAttemptById = attemptId => attemptsStorage.find(attemptId)
 
-  deleteAll() {
-    return this.setAll([])
-  }
-}
+export const addAttempt = attempt => attemptsStorage.add(attempt)
 
-export default new AttemptsStorage()
+export const updateAttempt = (attemptId, updates) =>
+  attemptsStorage.update(attemptId, updates)
+
+export const deleteAttemptById = attemptId => attemptsStorage.remove(attemptId)
+
+export const deleteAllAttempts = () => attemptsStorage.clear();
+export const setAllAttempts = (attempts) => attemptsStorage.setAll(attempts);

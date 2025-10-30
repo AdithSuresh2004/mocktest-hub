@@ -51,6 +51,25 @@ const calculateAnalysis = (examData, attemptData) => {
   }
 }
 
-export { calculateAnalysis, calculateScoreDistribution }
+const calculatePerformanceOverTime = (completedExams) => {
+  if (!completedExams || completedExams.length === 0) {
+    return [];
+  }
+
+  const sortedExams = [...completedExams]
+    .filter(exam => !isNaN(new Date(exam.date).getTime())) // Filter out invalid dates
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  return sortedExams.map(exam => {
+    const date = new Date(exam.date);
+    const name = date.toLocaleDateString(); // No need to check for Invalid Date here, as they are already filtered
+    return {
+      name,
+      score: exam.score,
+    };
+  });
+};
+
+export { calculateAnalysis, calculateScoreDistribution, calculatePerformanceOverTime };
 
 

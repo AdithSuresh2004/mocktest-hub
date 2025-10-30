@@ -1,30 +1,16 @@
-import GenericStorage from './generic-storage.js'
+import { createStorage } from './generic-storage.js'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
-class SettingsStorage extends GenericStorage {
-  constructor() {
-    super(STORAGE_KEYS.SETTINGS, {})
-  }
+const settingsStorage = createStorage(STORAGE_KEYS.SETTINGS, {})
 
-  // Add specific functionality for settings
-  get() {
-    return this.getAll()
-  }
+export const getSettings = () => settingsStorage.getAll()
 
-  set(settings) {
-    return this.setAll(settings)
-  }
+export const setSettings = settings => settingsStorage.setAll(settings)
 
-  update(key, value) {
-    const settings = this.get()
-
-    settings[key] = value
-    return this.set(settings)
-  }
-
-  reset() {
-    return this.set({})
-  }
+export const updateSetting = (key, value) => {
+  const settings = getSettings()
+  settings[key] = value
+  setSettings(settings)
 }
 
-export default new SettingsStorage()
+export const resetSettings = () => settingsStorage.clear()

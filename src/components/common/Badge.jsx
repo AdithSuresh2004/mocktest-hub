@@ -1,3 +1,5 @@
+import { cn } from '@/utils/cn'
+
 const Badge = ({
   children,
   variant = 'default',
@@ -22,12 +24,14 @@ const Badge = ({
     md: 'px-3 py-1.5 text-sm',
   }
 
-  const variantClass = variants[variant] || variants.default
-  const sizeClass = sizes[size] || sizes.sm
-
   return (
     <span
-      className={`inline-flex items-center rounded-full ${variantClass} ${sizeClass} ${className}`}
+      className={cn(
+        'inline-flex items-center rounded-full',
+        variants[variant],
+        sizes[size],
+        className
+      )}
     >
       {Icon && <Icon className="mr-1 h-3 w-3" />}
       {children}

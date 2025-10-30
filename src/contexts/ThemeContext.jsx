@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, useMemo } from 'react'
-import StorageManager from '@/utils/storage'
+import { setItem } from '@/utils/storage'
 import { getInitialTheme, getSystemTheme } from '@/utils/helpers'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
@@ -23,7 +23,7 @@ const ThemeProvider = ({ children }) => {
     } else {
       root.classList.remove('dark')
     }
-    StorageManager.setItem(STORAGE_KEYS.THEME, theme)
+    setItem(STORAGE_KEYS.THEME, theme)
   }, [theme, actualTheme])
 
   useEffect(() => {

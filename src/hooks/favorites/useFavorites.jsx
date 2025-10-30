@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
-import { FavoritesStorage } from '@/utils/storage'
+import { getAllFavorites, removeFavorite as removeFavoriteFromStorage } from '@/utils/storage'
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState([])
   const [loading, setLoading] = useState(true)
 
   const loadFavorites = useCallback(() => {
-    const savedFavorites = FavoritesStorage.getAll()
+    const savedFavorites = getAllFavorites()
     const sorted = savedFavorites.sort(
       (a, b) => new Date(b.addedAt || 0) - new Date(a.addedAt || 0)
     )
@@ -24,7 +24,7 @@ export const useFavorites = () => {
   }, [loadFavorites])
 
   const removeFavorite = (examId) => {
-    FavoritesStorage.remove(examId)
+    removeFavoriteFromStorage(examId)
     setFavorites((prev) => prev.filter((f) => f.exam_id !== examId))
   }
 

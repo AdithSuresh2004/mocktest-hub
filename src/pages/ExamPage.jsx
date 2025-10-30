@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useExamPage from '@/hooks/exam/useExamPage'
 import { useKeyboardShortcuts } from '@/hooks/exam/useKeyboardShortcuts'
 import { useExamModals } from '@/hooks/exam/useExamModals';
-import { useExamState } from '@/hooks/exam/useExamState'
+import { getExamState } from '@/utils/examStateUtils'
 import ExamStatusDisplay from '@/components/exam/ExamStatusDisplay'
 import ExamInstructionsDisplay from '@/components/exam/ExamInstructionsDisplay'
 import ExamLayout from '@/components/exam/ExamLayout'
@@ -90,7 +90,7 @@ const ExamPage = () => {
   useExamResultNavigation(isSubmitted, attempt);
 
   const { currentSectionObj, currentQ, totalQuestions, canGoPrev, canGoNext } =
-    useExamState(exam, currentSection, currentQuestion)
+    getExamState(exam, currentSection, currentQuestion)
 
   const handleSelectOption = (optionIndex) => {
     if (currentQ?.options[optionIndex]) {

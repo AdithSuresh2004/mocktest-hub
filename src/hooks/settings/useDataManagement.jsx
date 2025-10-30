@@ -1,6 +1,4 @@
-import { AttemptsStorage } from '@/utils/storage'
-import { FavoritesStorage } from '@/utils/storage'
-import { SettingsStorage } from '@/utils/storage'
+import { getAllAttempts, setAllAttempts, deleteAllAttempts, getAllFavorites, setAllFavorites, getSettings, setSettings, resetSettings } from '@/utils/storage'
 import { useConfirmModal } from '@/hooks/common/useConfirmModal'
 
 export function useDataManagement() {
@@ -9,9 +7,9 @@ export function useDataManagement() {
   const handleExportData = () => {
     try {
       const data = {
-        attempts: AttemptsStorage.getAll(),
-        favorites: FavoritesStorage.getAll(),
-        settings: SettingsStorage.get(),
+        attempts: getAllAttempts(),
+        favorites: getAllFavorites(),
+        settings: getSettings(),
       }
       const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: 'application/json',
@@ -36,9 +34,9 @@ export function useDataManagement() {
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target?.result)
-        if (data.attempts) AttemptsStorage.setAll(data.attempts)
-        if (data.favorites) FavoritesStorage.setAll(data.favorites)
-        if (data.settings) SettingsStorage.set(data.settings)
+        if (data.attempts) setAllAttempts(data.attempts)
+        if (data.favorites) setAllFavorites(data.favorites)
+        if (data.settings) setSettings(data.settings)
         window.location.reload()
       } catch {
         console.error('Invalid file format')
@@ -49,9 +47,9 @@ export function useDataManagement() {
 
   const handleClearData = () => {
     try {
-      AttemptsStorage.deleteAll()
-      FavoritesStorage.setAll([])
-      SettingsStorage.reset()
+      deleteAllAttempts()
+      setAllFavorites([])
+      resetSettings()
       window.location.reload()
       return true
     } catch {

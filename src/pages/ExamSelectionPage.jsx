@@ -1,16 +1,16 @@
-import { useExamSelection } from '@/hooks/examSelection/useExamSelection'
-import { usePagination } from '@/hooks/common/usePagination'
-import TestCard from '@/components/common/TestCard'
-import ExamSelectionSkeleton from '@/components/common/skeletons/ExamSelectionSkeleton'
-import Pagination from '@/components/common/Pagination'
-import ErrorDisplay from '@/components/common/ErrorDisplay'
-import EmptyState from '@/components/common/EmptyState'
-import ExamTabs from '@/components/examSelection/ExamTabs'
-import ExamFilters from '@/components/examSelection/ExamFilters'
-import ExamStats from '@/components/examSelection/ExamStats'
-import { FaSearch } from 'react-icons/fa'
+import { useExamSelectionContext, ExamSelectionProvider } from '@/contexts/ExamSelectionContext';
+import { usePagination } from '@/hooks/common/usePagination';
+import TestCard from '@/components/common/TestCard';
+import ExamSelectionSkeleton from '@/components/common/skeletons/ExamSelectionSkeleton';
+import Pagination from '@/components/common/Pagination';
+import ErrorDisplay from '@/components/common/ErrorDisplay';
+import EmptyState from '@/components/common/EmptyState';
+import ExamTabs from '@/components/examSelection/ExamTabs';
+import ExamFilters from '@/components/examSelection/ExamFilters';
+import ExamStats from '@/components/examSelection/ExamStats';
+import { FaSearch } from 'react-icons/fa';
 
-const ExamSelectionPage = () => {
+const ExamSelectionPageContent = () => {
   const {
     loading,
     error,
@@ -20,16 +20,16 @@ const ExamSelectionPage = () => {
     loadManifest,
     setActiveTab,
     ...filterProps
-  } = useExamSelection()
+  } = useExamSelectionContext();
 
-  const pagination = usePagination(filteredTests, 12)
+  const pagination = usePagination(filteredTests, 12);
 
   if (loading) {
-    return <ExamSelectionSkeleton />
+    return <ExamSelectionSkeleton />;
   }
 
   if (error) {
-    return <ErrorDisplay message={error} onAction={loadManifest} />
+    return <ErrorDisplay message={error} onAction={loadManifest} />;
   }
 
   if (!allTests.length) {
@@ -40,7 +40,7 @@ const ExamSelectionPage = () => {
         actionLabel="Refresh"
         onAction={loadManifest}
       />
-    )
+    );
   }
   return (
     <div className="min-h-full animate-fadeIn bg-gray-50 dark:bg-gray-900">
@@ -51,13 +51,7 @@ const ExamSelectionPage = () => {
           onTabChange={setActiveTab}
         />
 
-        <ExamFilters
-          {...filterProps}
-          setSearchTerm={filterProps.setSearchTerm}
-          handleFilterChange={filterProps.handleFilterChange}
-          clearAllFilters={filterProps.clearAllFilters}
-          toggleMobileFilters={filterProps.toggleMobileFilters}
-        />
+        <ExamFilters />
 
         <div className="my-6 flex items-center justify-between">
           <ExamStats filteredTests={filteredTests} allTests={allTests} />
@@ -104,7 +98,13 @@ const ExamSelectionPage = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ExamSelectionPage
+const ExamSelectionPage = () => (
+  <ExamSelectionProvider>
+    <ExamSelectionPageContent />
+  </ExamSelectionProvider>
+);
+
+export default ExamSelectionPage;

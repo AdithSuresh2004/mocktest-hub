@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { theme } from '@/constants/theme'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
+import { cn } from '@/utils/cn'
 
 const Button = forwardRef(
   (
@@ -38,9 +39,14 @@ const Button = forwardRef(
       lg: 'px-6 py-3 text-base rounded-lg',
     }
 
-    const variantClass = variants[variant] || variants.primary
-    const sizeClass = sizes[size] || sizes.md
     const isDisabled = disabled || loading
+
+    const buttonClasses = cn(
+      baseClasses,
+      variants[variant],
+      sizes[size],
+      className
+    )
 
     if (Component === 'a' || Component !== 'button') {
       return (
@@ -48,7 +54,7 @@ const Button = forwardRef(
           ref={ref}
           to={to}
           onClick={onClick}
-          className={`${baseClasses} ${variantClass} ${sizeClass} ${className}`}
+          className={buttonClasses}
           aria-disabled={isDisabled}
           {...props}
         >
@@ -70,7 +76,7 @@ const Button = forwardRef(
         type={type}
         onClick={onClick}
         disabled={isDisabled}
-        className={`${baseClasses} ${variantClass} ${sizeClass} ${className}`}
+        className={buttonClasses}
         aria-disabled={isDisabled}
         {...props}
       >

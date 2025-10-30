@@ -1,6 +1,6 @@
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer
 
 const ExamSkeleton = () => (
   <div className="animate-fadeIn">

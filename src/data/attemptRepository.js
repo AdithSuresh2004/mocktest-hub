@@ -1,4 +1,4 @@
-import { AttemptsStorage } from '@/utils/storage'
+import { getAllAttempts as getAllFromStorage, setAllAttempts, addAttempt, getAttemptById, deleteAttemptById } from '@/utils/storage'
 
 const isValidAttempt = (attempt) => {
   return (
@@ -18,11 +18,11 @@ const generateAttemptId = (examId) => {
 }
 
 const getAllAttempts = () => {
-  const attempts = AttemptsStorage.getAll()
+  const attempts = getAllFromStorage()
   if (!Array.isArray(attempts)) return []
   const validAttempts = attempts.filter(isValidAttempt)
   if (validAttempts.length !== attempts.length) {
-    AttemptsStorage.setAll(validAttempts)
+    setAllAttempts(validAttempts)
   }
   return validAttempts
 }
@@ -47,7 +47,7 @@ const createAttempt = (examId, examName, durationMinutes) => {
     _markedForReview: [],
     _hasStarted: false,
   }
-  return AttemptsStorage.add(attempt) ? attempt : null
+  return addAttempt(attempt) ? attempt : null
 }
 
 const getLatestInProgressAttempt = (examId) => {
@@ -76,12 +76,12 @@ const updateAttempt = (attemptId, updates) => {
   if (!isValidAttempt(attempts[attemptIndex])) {
     return attempts[attemptIndex]
   }
-  AttemptsStorage.setAll(attempts)
+  setAllAttempts(attempts)
   return attempts[attemptIndex]
 }
 
 const findAttemptById = (attemptId) => {
-  return AttemptsStorage.getById(attemptId)
+  return getAttemptById(attemptId)
 }
 
 const findAllAttemptsByExamId = (examId) => {
@@ -90,7 +90,7 @@ const findAllAttemptsByExamId = (examId) => {
 }
 
 const removeAttempt = (attemptId) => {
-  return AttemptsStorage.deleteById(attemptId)
+  return deleteAttemptById(attemptId)
 }
 
 export { 

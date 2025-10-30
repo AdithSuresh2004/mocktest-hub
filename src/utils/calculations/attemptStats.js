@@ -36,3 +36,12 @@ export function calculateAttemptStats(attempts) {
     count,
   }
 }
+
+export const getAnsweredCount = (answers, totalQuestions) => ({
+  answered: Object.keys(answers).length,
+  total: totalQuestions,
+  percentage:
+    totalQuestions > 0
+      ? Math.round((Object.keys(answers).length / totalQuestions) * 100)
+      : 0,
+})

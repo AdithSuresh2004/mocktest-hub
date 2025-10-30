@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { getManifest as getExamsManifest } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
-import { FILTER_OPTIONS } from '@/constants'
+<<<<<<< HEAD
+import { FILTER_OPTIONS } from '@/constants/filterOptions';
+
+>>>>>>> cd1374c (Refactor: Improve code structure and add performance chart to dashboard)
 import {
   normalizeTests,
   getExamNames,
@@ -11,6 +14,8 @@ import {
 } from '@/utils/helpers/examSelectionHelpers'
 import { filterTests, hasActiveFilters } from '@/services/filterService'
 import { sortTests } from '@/utils/helpers/sortHelpers'
+
+const { STRENGTHS, ATTEMPT_STATUSES } = FILTER_OPTIONS;
 
 const useExamSelection = () => {
   const [manifest, setManifest] = useState({

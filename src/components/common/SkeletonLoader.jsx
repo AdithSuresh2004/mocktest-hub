@@ -3,9 +3,9 @@ import ListSkeleton from '@/components/common/skeletons/ListSkeleton'
 import StatsSkeleton from '@/components/common/skeletons/StatsSkeleton'
 import ExamSkeleton from '@/components/common/skeletons/ExamSkeleton'
 import FullPageSkeleton from '@/components/common/skeletons/FullPageSkeleton'
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer;
 
 const TableSkeleton = () => (
   <div className="animate-fadeIn">

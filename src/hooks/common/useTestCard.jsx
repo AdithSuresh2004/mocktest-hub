@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FavoritesStorage } from '@/utils/storage'
+import { isFavorite as isFavoriteInStorage } from '@/utils/storage'
 import {
   getAttemptStatus,
   getAllTags,
@@ -13,7 +13,7 @@ export const useTestCard = (test) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsFavorite(FavoritesStorage.isFavorite(test.exam_id))
+      setIsFavorite(isFavoriteInStorage(test.exam_id))
       setAttemptStatus(getAttemptStatus(test.exam_id))
     }, 0)
   }, [test.exam_id])

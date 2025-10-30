@@ -2,7 +2,9 @@
  * Helper functions for exam selection logic
  */
 
-import { FILTER_OPTIONS } from '@/constants'
+import { FILTER_OPTIONS } from '@/constants/filterOptions'
+
+const { TEST_TYPES } = FILTER_OPTIONS
 
 /**
  * Transform manifest data into normalized test objects

@@ -1,45 +1,38 @@
-import GenericStorage from './generic-storage.js'
+import { createStorage } from './generic-storage.js'
 import { STORAGE_KEYS } from '@/constants/testConfig'
 
-class FavoritesStorage extends GenericStorage {
-  constructor() {
-    super(STORAGE_KEYS.FAVORITES, [])
-  }
+const favoritesStorage = createStorage(STORAGE_KEYS.FAVORITES, [], 'exam_id')
 
-  // Add specific functionality for favorites
-  add(favorite) {
-    const favorites = this.getAll()
-    const exists = favorites.some((f) => f.exam_id === favorite.exam_id)
+export const isFavorite = examId => {
+  const favorites = favoritesStorage.getAll()
+  return favorites.some(f => f.exam_id === examId)
+}
 
-    if (!exists) {
-      favorites.push({ ...favorite, addedAt: new Date().toISOString() })
-      return this.setAll(favorites)
-    }
-    return false
-  }
+export const addFavorite = favorite => {
+  const favorites = favoritesStorage.getAll()
+  const exists = favorites.some(f => f.exam_id === favorite.exam_id)
 
-  remove(examId) {
-    const favorites = this.getAll()
-    const filtered = favorites.filter((f) => f.exam_id !== examId)
-
-    return this.setAll(filtered)
-  }
-
-  isFavorite(examId) {
-    const favorites = this.getAll()
-
-    return favorites.some((f) => f.exam_id === examId)
-  }
-
-  toggle(examId, favoriteData) {
-    if (this.isFavorite(examId)) {
-      this.remove(examId)
-      return false
-    } else {
-      this.add(favoriteData)
-      return true
-    }
+  if (!exists) {
+    favorites.push({ ...favorite, addedAt: new Date().toISOString() })
+    favoritesStorage.setAll(favorites)
   }
 }
 
-export default new FavoritesStorage()
+export const removeFavorite = examId => {
+  const favorites = favoritesStorage.getAll()
+  const filtered = favorites.filter(f => f.exam_id !== examId)
+  favoritesStorage.setAll(filtered)
+}
+
+export const toggleFavorite = (examId, favoriteData) => {
+  if (isFavorite(examId)) {
+    removeFavorite(examId)
+    return false
+  } else {
+    addFavorite(favoriteData)
+    return true
+  }
+}
+
+export const getAllFavorites = () => favoritesStorage.getAll();
+export const setAllFavorites = (favorites) => favoritesStorage.setAll(favorites);

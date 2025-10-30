@@ -11,42 +11,23 @@ function useTimer(initialSeconds, onFinish) {
     onFinishRef.current = onFinish
   }, [onFinish])
 
-  const isWarning = seconds <= 300 && seconds > 60
-  const isCritical = seconds <= 60
-
   useEffect(() => {
     if (!running || isPaused) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-        intervalRef.current = null
-      }
+      clearInterval(intervalRef.current)
       return
     }
+
     if (seconds <= 0) {
-      setTimeout(() => setRunning(false), 0)
-      if (onFinishRef.current) {
-        onFinishRef.current()
-      }
+      setRunning(false)
+      onFinishRef.current?.()
       return
     }
+
     intervalRef.current = setInterval(() => {
-      setSeconds((prev) => {
-        if (prev <= 1) {
-          setRunning(false)
-          if (onFinishRef.current) {
-            onFinishRef.current()
-          }
-          return 0
-        }
-        return prev - 1
-      })
+      setSeconds((prev) => prev - 1)
     }, 1000)
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-        intervalRef.current = null
-      }
-    }
+
+    return () => clearInterval(intervalRef.current)
   }, [running, isPaused, seconds])
 
   const start = useCallback(() => {
@@ -79,8 +60,8 @@ function useTimer(initialSeconds, onFinish) {
     seconds,
     running,
     isPaused,
-    isWarning,
-    isCritical,
+    isWarning: seconds <= 300 && seconds > 60,
+    isCritical: seconds <= 60,
     start,
     stop,
     pause,

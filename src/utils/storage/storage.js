@@ -1,39 +1,16 @@
-const StorageManager = {
-  getItem(key, defaultValue = null) {
-    try {
-      const item = localStorage.getItem(key)
-      return item ? JSON.parse(item) : defaultValue
-    } catch {
-      return defaultValue
-    }
-  },
-
-  setItem(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value))
-      return true
-    } catch {
-      return false
-    }
-  },
-
-  removeItem(key) {
-    try {
-      localStorage.removeItem(key)
-      return true
-    } catch {
-      return false
-    }
-  },
-
-  clear() {
-    try {
-      localStorage.clear()
-      return true
-    } catch {
-      return false
-    }
-  },
+export const getItem = (key, defaultValue = null) => {
+  const item = localStorage.getItem(key)
+  return item ? JSON.parse(item) : defaultValue
 }
 
-export default StorageManager
+export const setItem = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+export const removeItem = key => {
+  localStorage.removeItem(key)
+}
+
+export const clear = () => {
+  localStorage.clear()
+}

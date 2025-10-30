@@ -1,25 +1,28 @@
-import { FaFilter, FaTimes, FaSearch } from 'react-icons/fa'
-import FilterSelect from '@/components/common/FilterSelect'
+import { FaFilter, FaTimes, FaSearch } from 'react-icons/fa';
+import FilterSelect from '@/components/common/FilterSelect';
+import { useExamSelectionContext } from '@/contexts/ExamSelectionContext';
 
-const ExamFilters = ({
-  showMobileFilters,
-  hasActiveFilters,
-  searchTerm,
-  selectedExam,
-  selectedTopic,
-  selectedSubject,
-  selectedStrength,
-  selectedAttemptStatus,
-  examNames,
-  topics,
-  subjects,
-  STRENGTHS,
-  ATTEMPT_STATUSES,
-  toggleMobileFilters,
-  setSearchTerm,
-  handleFilterChange,
-  clearAllFilters,
-}) => {
+const ExamFilters = () => {
+  const {
+    showMobileFilters,
+    hasActiveFilters,
+    searchTerm,
+    selectedExam,
+    selectedTopic,
+    selectedSubject,
+    selectedStrength,
+    selectedAttemptStatus,
+    examNames,
+    topics,
+    subjects,
+    STRENGTHS,
+    ATTEMPT_STATUSES,
+    toggleMobileFilters,
+    setSearchTerm,
+    handleFilterChange,
+    clearAllFilters,
+  } = useExamSelectionContext();
+
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <div className="border-b border-gray-200 p-4 lg:hidden dark:border-gray-700">
@@ -106,7 +109,7 @@ const ExamFilters = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ExamFilters
+export default ExamFilters;

@@ -1,7 +1,7 @@
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 import CardSkeleton from '@/components/common/skeletons/CardSkeleton'
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer;
 
 const ExamSelectionSkeleton = () => (
   <div className="min-h-full animate-fadeIn bg-gray-50 p-4 sm:p-6 lg:p-8 dark:bg-gray-900">

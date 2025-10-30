@@ -1,6 +1,6 @@
 import { getJSON } from '@/api/http'
 import { CACHE_DURATION, STORAGE_KEYS } from '@/constants/testConfig'
-import StorageManager from '@/utils/storage'
+import { getItem, setItem } from '@/utils/storage'
 
 let manifestCache = null
 let manifestCacheTime = 0
@@ -28,10 +28,10 @@ const getManifest = async (forceRefresh = false) => {
       const data = await getJSON('/data/exams_manifest.json')
       manifestCache = data
       manifestCacheTime = now
-      StorageManager.setItem(STORAGE_KEYS.MANIFEST, data)
+      setItem(STORAGE_KEYS.MANIFEST, data)
       return data
     } catch {
-      const cached = StorageManager.getItem(STORAGE_KEYS.MANIFEST)
+      const cached = getItem(STORAGE_KEYS.MANIFEST)
       if (cached) {
         manifestCache = cached
         manifestCacheTime = now

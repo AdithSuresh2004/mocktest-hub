@@ -1,6 +1,6 @@
-import { animations } from '@/utils/animations'
+import { shimmer } from '@/utils/animations';
 
-const shimmerClass = animations.shimmer
+const shimmerClass = shimmer;
 
 const CardSkeleton = () => (
   <div className="animate-fadeIn rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">

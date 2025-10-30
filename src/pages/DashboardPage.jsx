@@ -8,10 +8,11 @@ import ScoreDistribution from '@/components/dashboard/ScoreDistribution'
 import QuickActions from '@/components/dashboard/QuickActions'
 import AttemptStats from '@/components/attempts/AttemptStats'
 import PageHeader from '@/components/common/PageHeader'
-import FullPageSkeleton from '@/components/common/skeletons/FullPageSkeleton'
+import FullPageSkeleton from '@/components/common/skeletons/FullPageSkeleton';
+import PerformanceChart from '@/components/dashboard/PerformanceChart';
 
 const DashboardPage = () => {
-  const { stats, validCompleted, recentActivity, attemptStats, loading } =
+  const { stats, validCompleted, recentActivity, attemptStats, performanceChartData, loading } =
     useDashboardData()
   const { streakGoals } = useSettings()
 
@@ -50,8 +51,9 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <div>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
             <ScoreDistribution completedExams={validCompleted} />
+            <PerformanceChart data={performanceChartData} />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { SettingsStorage } from '@/utils/storage'
+import { getSettings, setSettings } from '@/utils/storage'
 import { useToast } from '@/hooks/common/useToast'
 
 const useSettings = () => {
@@ -25,12 +25,12 @@ const useSettings = () => {
         autoSave,
         streakGoals,
       }
-      SettingsStorage.set(settingsToSave)
+      setSettings(settingsToSave)
     }, 1000)
   }, [isInitialized, notifications, autoSave, streakGoals])
 
   useEffect(() => {
-    const settings = SettingsStorage.get()
+    const settings = getSettings()
     setNotifications((prev) =>
       prev !== settings.notifications ? settings.notifications !== false : prev
     )
@@ -59,7 +59,7 @@ const useSettings = () => {
   }, [])
 
   const saveSettings = (theme) => {
-    SettingsStorage.set({
+    setSettings({
       theme,
       notifications,
       autoSave,
