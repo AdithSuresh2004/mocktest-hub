@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getManifest as getExamsManifest } from '@/data/examRepository'
 import { getAllAttempts } from '@/data/attemptRepository'
-<<<<<<< HEAD
 import { FILTER_OPTIONS } from '@/constants/filterOptions';
-
->>>>>>> cd1374c (Refactor: Improve code structure and add performance chart to dashboard)
 import {
   normalizeTests,
   getExamNames,
