@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Exam Schema",
+  "description": "Standard schema for all exam JSON files in MockTest Hub",
+  "type": "object",
+  "required": [
+    "exam_id",
+    "exam_name",
+    "type",
+    "category",
+    "difficulty",
+    "duration_minutes",
+    "total_marks",
+    "total_questions",
+    "marking_scheme",
+    "sections"
+  ],
+  "properties": {
+    "exam_id": {
+      "type": "string",
+      "description": "Unique identifier for the exam"
+    },
+    "exam_name": {
+      "type": "string",
+      "description": "Display name of the exam"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["full_tests", "subject_tests", "topic_tests"],
+      "description": "Type of exam"
+    },
+    "category": {
+      "type": "string",
+      "description": "Exam category (e.g., nimcet, cuetmca, gate)"
+    },
+    "subject": {
+      "type": ["string", "null"],
+      "description": "Subject name for subject-specific tests"
+    },
+    "subjects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of subjects covered in the exam"
+    },
+    "topic": {
+      "type": ["string", "null"],
+      "description": "Topic name for topic-specific tests"
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of topics covered in the exam"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"],
+      "description": "Difficulty level"
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "description": "Exam duration in minutes"
+    },
+    "total_marks": {
+      "type": "integer",
+      "description": "Total marks for the exam"
+    },
+    "total_questions": {
+      "type": "integer",
+      "description": "Total number of questions"
+    },
+    "marking_scheme": {
+      "type": "object",
+      "required": ["correct_answer"],
+      "properties": {
+        "correct_answer": {
+          "type": "number",
+          "description": "Marks for correct answer"
+        },
+        "incorrect_answer": {
+          "type": "number",
+          "description": "Marks for incorrect answer (usually negative)"
+        },
+        "unattempted": {
+          "type": "number",
+          "description": "Marks for unattempted questions"
+        }
+      }
+    },
+    "medium": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Languages available for the exam"
+    },
+    "instructions": {
+      "type": "string",
+      "description": "General instructions for the exam"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section_id", "section_name", "questions"],
+        "properties": {
+          "section_id": {
+            "type": "string"
+          },
+          "section_name": {
+            "type": "string"
+          },
+          "max_marks": {
+            "type": "integer"
+          },
+          "question_count": {
+            "type": "integer"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["q_id", "text", "options", "correct_opt_id"],
+              "properties": {
+                "q_id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "Question text content"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Optional image URL for the question"
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["opt_id", "text"],
+                    "properties": {
+                      "opt_id": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "image": {
+                        "type": "string",
+                        "description": "Optional image URL for the option"
+                      }
+                    }
+                  }
+                },
+                "correct_opt_id": {
+                  "type": "string"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "enum": ["easy", "medium", "hard"]
+                },
+                "marks": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

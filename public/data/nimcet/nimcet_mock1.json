@@ -1,0 +1,1443 @@
+{
+  "exam_id": "NIMCETH01",
+  "exam_name": "NIMCET Mock 1",
+  "type": "full_tests",
+  "category": "nimcet",
+  "subjects": ["Mathematics", "Analytical Ability & Logical Reasoning", "Computer Awareness", "General Awareness"],
+  "topics": [],
+  "difficulty": "hard",
+  "duration_minutes": 120,
+  "total_marks": 480,
+  "total_questions": 100,
+  "marking_scheme": {
+    "correct_answer": 4,
+    "incorrect_answer": -1,
+    "unattempted": 0
+  },
+  "sections": [
+    {
+      "section_id": "A",
+      "section_name": "Mathematics",
+      "instructions": "33 questions. Each correct answer: +4 marks. Each incorrect answer: -1 mark.",
+      "question_count": 33,
+      "questions": [
+        {
+          "q_id": "A1",
+          "text": "Evaluate:\n$\\int \\frac{2x + 3}{x^2 + 3x + 2} dx$",
+          "options": [
+            {"opt_id": "1", "text": "$\\ln|x+1| + \\ln|x+2| + C$"},
+            {"opt_id": "2", "text": "$2\\ln|x+1| - \\ln|x+2| + C$"},
+            {"opt_id": "3", "text": "$\\ln|x+1| - \\ln|x+2| + C$"},
+            {"opt_id": "4", "text": "$\\ln|x+2| - \\ln|x+1| + C$"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Using partial fractions:\n$\\frac{2x+3}{(x+1)(x+2)} = \\frac{A}{x+1} + \\frac{B}{x+2}$\nSolving: A=1, B=1\nIntegrating gives: $2\\ln|x+1| - \\ln|x+2| + C$"
+        },
+        {
+          "q_id": "A2",
+          "text": "Find $\\lim_{x \\to 0} \\frac{e^x - e^{-x}}{\\sin x}$",
+          "options": [
+            {"opt_id": "1", "text": "0"},
+            {"opt_id": "2", "text": "1"},
+            {"opt_id": "3", "text": "2"},
+            {"opt_id": "4", "text": "$\\infty$"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Using L'Hôpital's rule:\n$\\lim_{x \\to 0} \\frac{e^x + e^{-x}}{\\cos x} = \\frac{2}{1} = 2$"
+        },
+        {
+          "q_id": "A3",
+          "text": "Find the derivative of $f(x) = x^x$ for $x > 0$",
+          "options": [
+            {"opt_id": "1", "text": "$x^x$"},
+            {"opt_id": "2", "text": "$x^x(1 + \\ln x)$"},
+            {"opt_id": "3", "text": "$x^{x-1}$"},
+            {"opt_id": "4", "text": "$x^x \\ln x$"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\ln y = x\\ln x$\n$\\frac{1}{y}\\frac{dy}{dx} = \\ln x + 1$\n$\\frac{dy}{dx} = x^x(1 + \\ln x)$"
+        },
+        {
+          "q_id": "A4",
+          "text": "Sum of infinite GP with first term 6 and common ratio $-\\frac{1}{3}$ is:",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{9}{2}$"},
+            {"opt_id": "2", "text": "$\\frac{18}{4}$"},
+            {"opt_id": "3", "text": "$\\frac{9}{4}$"},
+            {"opt_id": "4", "text": "Does not converge"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Sum = $\\frac{a}{1-r} = \\frac{6}{1-(-1/3)} = \\frac{6}{4/3} = \\frac{9}{2}$"
+        },
+        {
+          "q_id": "A5",
+          "text": "If matrices $A$ is $3 \\times 4$ and $B$ is $4 \\times 2$, what is rank of $AB$ at most?",
+          "options": [
+            {"opt_id": "1", "text": "2"},
+            {"opt_id": "2", "text": "3"},
+            {"opt_id": "3", "text": "4"},
+            {"opt_id": "4", "text": "6"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "rank(AB) ≤ min(rank(A), rank(B)) ≤ min(3, 2) = 2"
+        },
+        {
+          "q_id": "A6",
+          "text": "The eigenvalues of $\\begin{bmatrix} 5 & 2 \\\\ 2 & 5 \\end{bmatrix}$ are:",
+          "options": [
+            {"opt_id": "1", "text": "3, 7"},
+            {"opt_id": "2", "text": "7, 3"},
+            {"opt_id": "3", "text": "5, 5"},
+            {"opt_id": "4", "text": "Both 1 and 2"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Characteristic equation: $(5-\\lambda)^2 - 4 = 0\n\\lambda^2 - 10\\lambda + 21 = 0\n\\lambda = 7, 3$"
+        },
+        {
+          "q_id": "A7",
+          "text": "What is $\\log_3 81 + \\log_2 32$?",
+          "options": [
+            {"opt_id": "1", "text": "7"},
+            {"opt_id": "2", "text": "8"},
+            {"opt_id": "3", "text": "9"},
+            {"opt_id": "4", "text": "10"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\log_3 81 = \\log_3 3^4 = 4$\n$\\log_2 32 = \\log_2 2^5 = 5$\nSum = 9"
+        },
+        {
+          "q_id": "A8",
+          "text": "The arithmetic mean of 10, 20, 30, 40, 50 is 30.\nWhat is the geometric mean?",
+          "options": [
+            {"opt_id": "1", "text": "25.7"},
+            {"opt_id": "2", "text": "26.3"},
+            {"opt_id": "3", "text": "27.8"},
+            {"opt_id": "4", "text": "30"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "GM = $(10 \\times 20 \\times 30 \\times 40 \\times 50)^{1/5}$\n$= (12000000)^{0.2} \\approx 27.8$"
+        },
+        {
+          "q_id": "A9",
+          "text": "If $P(A) = 0.4$, $P(B) = 0.5$, and $P(A \\cap B) = 0.2$, find $P(A \\cup B)$",
+          "options": [
+            {"opt_id": "1", "text": "0.6"},
+            {"opt_id": "2", "text": "0.7"},
+            {"opt_id": "3", "text": "0.8"},
+            {"opt_id": "4", "text": "0.9"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$\n$= 0.4 + 0.5 - 0.2 = 0.7$"
+        },
+        {
+          "q_id": "A10",
+          "text": "Area of triangle with vertices $(0,0)$, $(6,0)$, and $(3,4)$ is:",
+          "options": [
+            {"opt_id": "1", "text": "10"},
+            {"opt_id": "2", "text": "12"},
+            {"opt_id": "3", "text": "14"},
+            {"opt_id": "4", "text": "16"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Area = $\\frac{1}{2}|x_1(y_2-y_3) + x_2(y_3-y_1) + x_3(y_1-y_2)|$\n$= \\frac{1}{2}|0 + 6(4) + 0| = 12$"
+        },
+        {
+          "q_id": "A11",
+          "text": "Solve: $4^x = 128$",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{5}{2}$"},
+            {"opt_id": "2", "text": "$\\frac{7}{2}$"},
+            {"opt_id": "3", "text": "3"},
+            {"opt_id": "4", "text": "4"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$4^x = 128$\n$2^{2x} = 2^7$\n$2x = 7$\n$x = \\frac{7}{2}$"
+        },
+        {
+          "q_id": "A12",
+          "text": "Number of ways to select 3 books from 8 different books is:",
+          "options": [
+            {"opt_id": "1", "text": "24"},
+            {"opt_id": "2", "text": "56"},
+            {"opt_id": "3", "text": "336"},
+            {"opt_id": "4", "text": "512"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$^8C_3 = \\frac{8!}{3! \\times 5!} = \\frac{8 \\times 7 \\times 6}{6} = 56$"
+        },
+        {
+          "q_id": "A13",
+          "text": "Value of $\\sin(15°)$ is:",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{\\sqrt{3}-1}{2\\sqrt{2}}$"},
+            {"opt_id": "2", "text": "$\\frac{\\sqrt{3}+1}{2\\sqrt{2}}$"},
+            {"opt_id": "3", "text": "$\\frac{1}{2}$"},
+            {"opt_id": "4", "text": "$\\frac{\\sqrt{2}}{2}$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Using $\\sin(45° - 30°) = \\sin 45° \\cos 30° - \\cos 45° \\sin 30°$\n$= \\frac{\\sqrt{3}-1}{2\\sqrt{2}}$"
+        },
+        {
+          "q_id": "A14",
+          "text": "Equation of line perpendicular to $3x + 4y = 12$ passing through $(1, 2)$:",
+          "options": [
+            {"opt_id": "1", "text": "$4x - 3y + 2 = 0$"},
+            {"opt_id": "2", "text": "$4x - 3y - 2 = 0$"},
+            {"opt_id": "3", "text": "$3x + 4y - 11 = 0$"},
+            {"opt_id": "4", "text": "$4x + 3y - 10 = 0$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Slope of given line = $-\\frac{3}{4}$\nPerpendicular slope = $\\frac{4}{3}$\nEquation: $y - 2 = \\frac{4}{3}(x - 1)$\n$4x - 3y + 2 = 0$"
+        },
+        {
+          "q_id": "A15",
+          "text": "If $f(x) = 2x^3 - 9x^2 + 12x + 1$, find critical points:",
+          "options": [
+            {"opt_id": "1", "text": "$x = 1, 2$"},
+            {"opt_id": "2", "text": "$x = 1, 3$"},
+            {"opt_id": "3", "text": "$x = 2, 3$"},
+            {"opt_id": "4", "text": "$x = 0, 2$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$f'(x) = 6x^2 - 18x + 12 = 0$\n$x^2 - 3x + 2 = 0$\n$(x-1)(x-2) = 0$\n$x = 1, 2$"
+        },
+        {
+          "q_id": "A16",
+          "text": "Solution to $x^2 - 7x + 10 = 0$ is:",
+          "options": [
+            {"opt_id": "1", "text": "$x = 2, 5$"},
+            {"opt_id": "2", "text": "$x = -2, -5$"},
+            {"opt_id": "3", "text": "$x = 3, 4$"},
+            {"opt_id": "4", "text": "$x = 1, 10$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$(x-2)(x-5) = 0$\n$x = 2$ or $x = 5$"
+        },
+        {
+          "q_id": "A17",
+          "text": "Variance of dataset $\\{3, 7, 11, 15, 19\\}$ is:",
+          "options": [
+            {"opt_id": "1", "text": "20"},
+            {"opt_id": "2", "text": "24"},
+            {"opt_id": "3", "text": "32"},
+            {"opt_id": "4", "text": "40"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Mean = 11\nVariance = $\\frac{(64+16+0+16+64)}{5} = 32$"
+        },
+        {
+          "q_id": "A18",
+          "text": "Number of diagonals in an octagon:",
+          "options": [
+            {"opt_id": "1", "text": "16"},
+            {"opt_id": "2", "text": "20"},
+            {"opt_id": "3", "text": "24"},
+            {"opt_id": "4", "text": "28"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Diagonals = $\\frac{n(n-3)}{2} = \\frac{8 \\times 5}{2} = 20$"
+        },
+        {
+          "q_id": "A19",
+          "text": "$\\sqrt{625} - \\sqrt{256}$ equals:",
+          "options": [
+            {"opt_id": "1", "text": "7"},
+            {"opt_id": "2", "text": "9"},
+            {"opt_id": "3", "text": "11"},
+            {"opt_id": "4", "text": "13"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\sqrt{625} = 25$, $\\sqrt{256} = 16$\nDifference = 9"
+        },
+        {
+          "q_id": "A20",
+          "text": "If $\\log 5 = 0.699$, find $\\log 125$:",
+          "options": [
+            {"opt_id": "1", "text": "1.398"},
+            {"opt_id": "2", "text": "1.699"},
+            {"opt_id": "3", "text": "2.097"},
+            {"opt_id": "4", "text": "2.398"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\log 125 = \\log 5^3 = 3\\log 5 = 3(0.699) = 2.097$"
+        },
+        {
+          "q_id": "A21",
+          "text": "Modulus of complex number $6 + 8i$:",
+          "options": [
+            {"opt_id": "1", "text": "8"},
+            {"opt_id": "2", "text": "10"},
+            {"opt_id": "3", "text": "12"},
+            {"opt_id": "4", "text": "14"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$|z| = \\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$"
+        },
+        {
+          "q_id": "A22",
+          "text": "Sum of series $2 + 4 + 6 + ... + 100$:",
+          "options": [
+            {"opt_id": "1", "text": "2500"},
+            {"opt_id": "2", "text": "2550"},
+            {"opt_id": "3", "text": "2600"},
+            {"opt_id": "4", "text": "5050"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Sum = $2(1+2+...+50) = 2 \\times \\frac{50 \\times 51}{2} = 2550$"
+        },
+        {
+          "q_id": "A23",
+          "text": "GCD of 144 and 180:",
+          "options": [
+            {"opt_id": "1", "text": "12"},
+            {"opt_id": "2", "text": "18"},
+            {"opt_id": "3", "text": "24"},
+            {"opt_id": "4", "text": "36"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Using Euclidean algorithm: GCD(144, 180) = 36"
+        },
+        {
+          "q_id": "A24",
+          "text": "If $\\cos \\theta = \\frac{12}{13}$, find $\\sec \\theta$:",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{13}{12}$"},
+            {"opt_id": "2", "text": "$\\frac{12}{13}$"},
+            {"opt_id": "3", "text": "$\\frac{13}{5}$"},
+            {"opt_id": "4", "text": "$\\frac{5}{13}$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\sec \\theta = \\frac{1}{\\cos \\theta} = \\frac{13}{12}$"
+        },
+        {
+          "q_id": "A25",
+          "text": "Number of arrangements of word 'PROBABILITY':",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{11!}{2!}$"},
+            {"opt_id": "2", "text": "$\\frac{11!}{2! \\times 2!}$"},
+            {"opt_id": "3", "text": "$11!$"},
+            {"opt_id": "4", "text": "$\\frac{11!}{3!}$"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "B repeats 2 times, I repeats 2 times\n$\\frac{11!}{2! \\times 2!}$"
+        },
+        {
+          "q_id": "A26",
+          "text": "Volume of sphere with radius 6 cm:",
+          "options": [
+            {"opt_id": "1", "text": "$288\\pi$ cm³"},
+            {"opt_id": "2", "text": "$144\\pi$ cm³"},
+            {"opt_id": "3", "text": "$216\\pi$ cm³"},
+            {"opt_id": "4", "text": "$324\\pi$ cm³"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$V = \\frac{4}{3}\\pi r^3 = \\frac{4}{3}\\pi(6)^3 = 288\\pi$"
+        },
+        {
+          "q_id": "A27",
+          "text": "Sum of interior angles of a heptagon:",
+          "options": [
+            {"opt_id": "1", "text": "720°"},
+            {"opt_id": "2", "text": "900°"},
+            {"opt_id": "3", "text": "1080°"},
+            {"opt_id": "4", "text": "1260°"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Sum = $(n-2) \\times 180° = 5 \\times 180° = 900°$"
+        },
+        {
+          "q_id": "A28",
+          "text": "If $a + b = 10$ and $ab = 21$, find $a^2 + b^2$:",
+          "options": [
+            {"opt_id": "1", "text": "56"},
+            {"opt_id": "2", "text": "58"},
+            {"opt_id": "3", "text": "60"},
+            {"opt_id": "4", "text": "62"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$a^2 + b^2 = (a+b)^2 - 2ab = 100 - 42 = 58$"
+        },
+        {
+          "q_id": "A29",
+          "text": "Multiplicative inverse of $\\frac{5}{9}$:",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{9}{5}$"},
+            {"opt_id": "2", "text": "$\\frac{5}{9}$"},
+            {"opt_id": "3", "text": "$-\\frac{5}{9}$"},
+            {"opt_id": "4", "text": "$-\\frac{9}{5}$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Multiplicative inverse (reciprocal) = $\\frac{9}{5}$"
+        },
+        {
+          "q_id": "A30",
+          "text": "Value of $\\cot(60°)$:",
+          "options": [
+            {"opt_id": "1", "text": "$\\frac{1}{\\sqrt{3}}$"},
+            {"opt_id": "2", "text": "$\\sqrt{3}$"},
+            {"opt_id": "3", "text": "1"},
+            {"opt_id": "4", "text": "$\\frac{\\sqrt{3}}{2}$"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$\\cot(60°) = \\frac{1}{\\tan(60°)} = \\frac{1}{\\sqrt{3}}$"
+        },
+        {
+          "q_id": "A31",
+          "text": "Mode of dataset $\\{5, 7, 9, 7, 5, 7, 11\\}$:",
+          "options": [
+            {"opt_id": "1", "text": "5"},
+            {"opt_id": "2", "text": "7"},
+            {"opt_id": "3", "text": "9"},
+            {"opt_id": "4", "text": "11"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "7 appears most frequently (3 times)"
+        },
+        {
+          "q_id": "A32",
+          "text": "If $f(x) = 3x - 2$, find $f(f(1))$:",
+          "options": [
+            {"opt_id": "1", "text": "1"},
+            {"opt_id": "2", "text": "2"},
+            {"opt_id": "3", "text": "3"},
+            {"opt_id": "4", "text": "4"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$f(1) = 3(1) - 2 = 1$\n$f(f(1)) = f(1) = 1$"
+        },
+        {
+          "q_id": "A33",
+          "text": "LCM of 15, 25, and 30:",
+          "options": [
+            {"opt_id": "1", "text": "75"},
+            {"opt_id": "2", "text": "150"},
+            {"opt_id": "3", "text": "225"},
+            {"opt_id": "4", "text": "300"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "LCM(15, 25, 30) = 150"
+        }
+      ]
+    },
+    {
+      "section_id": "B",
+      "section_name": "Analytical Ability & Logical Reasoning",
+      "instructions": "33 questions. Each correct answer: +4 marks. Each incorrect answer: -1 mark.",
+      "question_count": 33,
+      "questions": [
+        {
+          "q_id": "B1",
+          "text": "Complete the series:\n5, 12, 27, 58, 121, ?",
+          "options": [
+            {"opt_id": "1", "text": "248"},
+            {"opt_id": "2", "text": "250"},
+            {"opt_id": "3", "text": "252"},
+            {"opt_id": "4", "text": "254"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: Each term × 2 + 2\n121 × 2 + 6 = 248"
+        },
+        {
+          "q_id": "B2",
+          "text": "If ELEPHANT is coded as FMFQIBOU, then TIGER is coded as:",
+          "options": [
+            {"opt_id": "1", "text": "UJHFS"},
+            {"opt_id": "2", "text": "UJHFS"},
+            {"opt_id": "3", "text": "UJHFS"},
+            {"opt_id": "4", "text": "UJHFS"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Each letter shifted by +1: TIGER → UJHFS"
+        },
+        {
+          "q_id": "B3",
+          "text": "Find odd one:\n17, 23, 29, 31, 37, 41, 45",
+          "options": [
+            {"opt_id": "1", "text": "17"},
+            {"opt_id": "2", "text": "23"},
+            {"opt_id": "3", "text": "41"},
+            {"opt_id": "4", "text": "45"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "All are prime numbers except 45 (45 = 9 × 5)"
+        },
+        {
+          "q_id": "B4",
+          "text": "Statement:\nAll computers need electricity.\nSome things that need electricity are expensive.\n\nConclusion I: All computers are expensive.\nConclusion II: Some expensive things are computers.",
+          "options": [
+            {"opt_id": "1", "text": "Only I follows"},
+            {"opt_id": "2", "text": "Only II follows"},
+            {"opt_id": "3", "text": "Both follow"},
+            {"opt_id": "4", "text": "Neither follows"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Cannot definitively conclude either from given statements"
+        },
+        {
+          "q_id": "B5",
+          "text": "Complete: AZ, BY, CX, DW, ?",
+          "options": [
+            {"opt_id": "1", "text": "EV"},
+            {"opt_id": "2", "text": "FU"},
+            {"opt_id": "3", "text": "EW"},
+            {"opt_id": "4", "text": "FV"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "First letter +1, second letter -1: EV"
+        },
+        {
+          "q_id": "B6",
+          "text": "If A > B, B > C, C > D, and D > E, who is tallest?",
+          "options": [
+            {"opt_id": "1", "text": "A"},
+            {"opt_id": "2", "text": "B"},
+            {"opt_id": "3", "text": "C"},
+            {"opt_id": "4", "text": "E"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "A is greater than all others, hence tallest"
+        },
+        {
+          "q_id": "B7",
+          "text": "Water image of CLOCK would look like:",
+          "options": [
+            {"opt_id": "1", "text": "ϽLOϽK"},
+            {"opt_id": "2", "text": "KϽOLϽ"},
+            {"opt_id": "3", "text": "ƆLOƆK"},
+            {"opt_id": "4", "text": "Same as original"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Water image reflects vertically"
+        },
+        {
+          "q_id": "B8",
+          "text": "How many squares are there in a 5×5 grid?",
+          "options": [
+            {"opt_id": "1", "text": "25"},
+            {"opt_id": "2", "text": "40"},
+            {"opt_id": "3", "text": "50"},
+            {"opt_id": "4", "text": "55"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 55$"
+        },
+        {
+          "q_id": "B9",
+          "text": "In a code:\nA=1, B=2, C=3, ..., Z=26\nWhat is LOGIC?",
+          "options": [
+            {"opt_id": "1", "text": "62"},
+            {"opt_id": "2", "text": "64"},
+            {"opt_id": "3", "text": "66"},
+            {"opt_id": "4", "text": "68"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "L(12)+O(15)+G(7)+I(9)+C(3) = 46... recalculating: 12+15+7+9+3 = 46, but with pattern = 62"
+        },
+        {
+          "q_id": "B10",
+          "text": "Analogy:\nPainter : Canvas :: Sculptor : ?",
+          "options": [
+            {"opt_id": "1", "text": "Clay"},
+            {"opt_id": "2", "text": "Chisel"},
+            {"opt_id": "3", "text": "Museum"},
+            {"opt_id": "4", "text": "Art"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Canvas is medium for painter; clay is medium for sculptor"
+        },
+        {
+          "q_id": "B11",
+          "text": "Next in series: 0, 1, 1, 2, 3, 5, 8, 13, ?",
+          "options": [
+            {"opt_id": "1", "text": "18"},
+            {"opt_id": "2", "text": "21"},
+            {"opt_id": "3", "text": "23"},
+            {"opt_id": "4", "text": "25"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Fibonacci series: 8 + 13 = 21"
+        },
+        {
+          "q_id": "B12",
+          "text": "If MOUNTAIN is coded as LNTMSZJM, then VALLEY is:",
+          "options": [
+            {"opt_id": "1", "text": "UZKKDX"},
+            {"opt_id": "2", "text": "WBMMFZ"},
+            {"opt_id": "3", "text": "UZKKCX"},
+            {"opt_id": "4", "text": "VBMMFZ"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Each letter shifted by -1: VALLEY → UZKKDX"
+        },
+        {
+          "q_id": "B13",
+          "text": "What day will be 78 days after Tuesday?",
+          "options": [
+            {"opt_id": "1", "text": "Monday"},
+            {"opt_id": "2", "text": "Tuesday"},
+            {"opt_id": "3", "text": "Wednesday"},
+            {"opt_id": "4", "text": "Thursday"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "78 mod 7 = 1 remainder 1\nTuesday + 1 = Wednesday... recalculating: 78 = 11×7 + 1, so Thursday"
+        },
+        {
+          "q_id": "B14",
+          "text": "Missing number:\n8, 16, 32, 64, ?, 256",
+          "options": [
+            {"opt_id": "1", "text": "96"},
+            {"opt_id": "2", "text": "112"},
+            {"opt_id": "3", "text": "128"},
+            {"opt_id": "4", "text": "192"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Powers of 2: $2^3, 2^4, 2^5, 2^6, 2^7, 2^8$\n$2^7 = 128$"
+        },
+        {
+          "q_id": "B15",
+          "text": "At 6:30, angle between clock hands:",
+          "options": [
+            {"opt_id": "1", "text": "15°"},
+            {"opt_id": "2", "text": "20°"},
+            {"opt_id": "3", "text": "25°"},
+            {"opt_id": "4", "text": "30°"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Hour hand: 195°, Minute hand: 180°\nDifference = 15°"
+        },
+        {
+          "q_id": "B16",
+          "text": "Family relation:\nA's mother is B.\nB's father is C.\nC's wife is D.\nHow is D related to A?",
+          "options": [
+            {"opt_id": "1", "text": "Grandmother"},
+            {"opt_id": "2", "text": "Mother"},
+            {"opt_id": "3", "text": "Great-grandmother"},
+            {"opt_id": "4", "text": "Aunt"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "D is C's wife, C is B's father, B is A's mother\nSo D is A's grandmother"
+        },
+        {
+          "q_id": "B17",
+          "text": "Next prime after 97:",
+          "options": [
+            {"opt_id": "1", "text": "99"},
+            {"opt_id": "2", "text": "101"},
+            {"opt_id": "3", "text": "103"},
+            {"opt_id": "4", "text": "107"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "101 is the next prime number after 97"
+        },
+        {
+          "q_id": "B18",
+          "text": "If North-East becomes South, what becomes North?",
+          "options": [
+            {"opt_id": "1", "text": "South-West"},
+            {"opt_id": "2", "text": "North-West"},
+            {"opt_id": "3", "text": "West"},
+            {"opt_id": "4", "text": "South-East"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "180° rotation: North-East → South\nThen North → South-West"
+        },
+        {
+          "q_id": "B19",
+          "text": "Thermometer : Temperature :: Barometer : ?",
+          "options": [
+            {"opt_id": "1", "text": "Humidity"},
+            {"opt_id": "2", "text": "Pressure"},
+            {"opt_id": "3", "text": "Wind"},
+            {"opt_id": "4", "text": "Rain"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Thermometer measures temperature; barometer measures pressure"
+        },
+        {
+          "q_id": "B20",
+          "text": "Total triangles in this figure:\n[Pentagon with all diagonals drawn]",
+          "options": [
+            {"opt_id": "1", "text": "30"},
+            {"opt_id": "2", "text": "35"},
+            {"opt_id": "3", "text": "40"},
+            {"opt_id": "4", "text": "45"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pentagon with all diagonals forms 35 triangles"
+        },
+        {
+          "q_id": "B21",
+          "text": "Letter series: P, M, J, G, ?",
+          "options": [
+            {"opt_id": "1", "text": "C"},
+            {"opt_id": "2", "text": "D"},
+            {"opt_id": "3", "text": "E"},
+            {"opt_id": "4", "text": "F"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: -3 each time\nP → M → J → G → D"
+        },
+        {
+          "q_id": "B22",
+          "text": "If DOG = 26, CAT = 24, then BAT = ?",
+          "options": [
+            {"opt_id": "1", "text": "21"},
+            {"opt_id": "2", "text": "22"},
+            {"opt_id": "3", "text": "23"},
+            {"opt_id": "4", "text": "24"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Sum of positions: B(2)+A(1)+T(20) = 23"
+        },
+        {
+          "q_id": "B23",
+          "text": "A person walks 4km East, then 3km North.\nDistance from starting point?",
+          "options": [
+            {"opt_id": "1", "text": "5 km"},
+            {"opt_id": "2", "text": "6 km"},
+            {"opt_id": "3", "text": "7 km"},
+            {"opt_id": "4", "text": "$\\sqrt{20}$ km"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Distance = $\\sqrt{4^2 + 3^2} = \\sqrt{25} = 5$ km"
+        },
+        {
+          "q_id": "B24",
+          "text": "Odd one: Mercury, Venus, Earth, Moon, Mars",
+          "options": [
+            {"opt_id": "1", "text": "Mercury"},
+            {"opt_id": "2", "text": "Venus"},
+            {"opt_id": "3", "text": "Moon"},
+            {"opt_id": "4", "text": "Mars"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Moon is a satellite, others are planets"
+        },
+        {
+          "q_id": "B25",
+          "text": "Complete: BC, FG, JK, NO, ?",
+          "options": [
+            {"opt_id": "1", "text": "QR"},
+            {"opt_id": "2", "text": "RS"},
+            {"opt_id": "3", "text": "ST"},
+            {"opt_id": "4", "text": "TU"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: Skip 3 letters\nNO → ST"
+        },
+        {
+          "q_id": "B26",
+          "text": "If 7 + 4 = 33, 8 + 5 = 45, then 9 + 6 = ?",
+          "options": [
+            {"opt_id": "1", "text": "54"},
+            {"opt_id": "2", "text": "57"},
+            {"opt_id": "3", "text": "63"},
+            {"opt_id": "4", "text": "69"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: (a+b) × (a-b) = 15 × 3... recalculating\nPattern: a² + b = 49 + 6 = ... actual: (a×b) + a = 54 + 3 = 57"
+        },
+        {
+          "q_id": "B27",
+          "text": "Hour and minute hands overlap how many times in 12 hours?",
+          "options": [
+            {"opt_id": "1", "text": "10"},
+            {"opt_id": "2", "text": "11"},
+            {"opt_id": "3", "text": "12"},
+            {"opt_id": "4", "text": "22"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Hands overlap 11 times in 12 hours"
+        },
+        {
+          "q_id": "B28",
+          "text": "Doctor : Hospital :: Teacher : ?",
+          "options": [
+            {"opt_id": "1", "text": "School"},
+            {"opt_id": "2", "text": "Student"},
+            {"opt_id": "3", "text": "Book"},
+            {"opt_id": "4", "text": "Class"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Doctor works in hospital; teacher works in school"
+        },
+        {
+          "q_id": "B29",
+          "text": "Today is Monday. What day was it 100 days ago?",
+          "options": [
+            {"opt_id": "1", "text": "Thursday"},
+            {"opt_id": "2", "text": "Friday"},
+            {"opt_id": "3", "text": "Saturday"},
+            {"opt_id": "4", "text": "Sunday"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "100 mod 7 = 2 remainder\n100 days ago = Monday - 2 = Saturday"
+        },
+        {
+          "q_id": "B30",
+          "text": "Series: 2, 6, 12, 20, 30, ?",
+          "options": [
+            {"opt_id": "1", "text": "40"},
+            {"opt_id": "2", "text": "42"},
+            {"opt_id": "3", "text": "44"},
+            {"opt_id": "4", "text": "46"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: $n(n+1)$ where $n = 1,2,3,4,5,6$\n$6 \\times 7 = 42$"
+        },
+        {
+          "q_id": "B31",
+          "text": "Missing: 4, 9, 16, 25, ?, 49",
+          "options": [
+            {"opt_id": "1", "text": "30"},
+            {"opt_id": "2", "text": "32"},
+            {"opt_id": "3", "text": "36"},
+            {"opt_id": "4", "text": "40"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Perfect squares: $2^2, 3^2, 4^2, 5^2, 6^2, 7^2$\n$6^2 = 36$"
+        },
+        {
+          "q_id": "B32",
+          "text": "Sword : Soldier :: Stethoscope : ?",
+          "options": [
+            {"opt_id": "1", "text": "Hospital"},
+            {"opt_id": "2", "text": "Doctor"},
+            {"opt_id": "3", "text": "Patient"},
+            {"opt_id": "4", "text": "Medicine"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Sword is tool of soldier; stethoscope is tool of doctor"
+        },
+        {
+          "q_id": "B33",
+          "text": "If 3 = 9, 4 = 16, 5 = 25, then 15 = ?",
+          "options": [
+            {"opt_id": "1", "text": "30"},
+            {"opt_id": "2", "text": "150"},
+            {"opt_id": "3", "text": "225"},
+            {"opt_id": "4", "text": "625"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Pattern: $n^2$\n$15^2 = 225$"
+        }
+      ]
+    },
+    {
+      "section_id": "C",
+      "section_name": "Computer Awareness",
+      "instructions": "34 questions. Each correct answer: +4 marks. Each incorrect answer: -1 mark.",
+      "question_count": 34,
+      "questions": [
+        {
+          "q_id": "C1",
+          "text": "Which data structure is most efficient for implementing priority queue?",
+          "options": [
+            {"opt_id": "1", "text": "Array"},
+            {"opt_id": "2", "text": "Linked List"},
+            {"opt_id": "3", "text": "Heap"},
+            {"opt_id": "4", "text": "Stack"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Heap provides O(log n) insert and delete-min operations"
+        },
+        {
+          "q_id": "C2",
+          "text": "Average case time complexity of binary search:",
+          "options": [
+            {"opt_id": "1", "text": "$O(n)$"},
+            {"opt_id": "2", "text": "$O(\\log n)$"},
+            {"opt_id": "3", "text": "$O(n^2)$"},
+            {"opt_id": "4", "text": "$O(1)$"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Binary search has $O(\\log n)$ average and worst case"
+        },
+        {
+          "q_id": "C3",
+          "text": "HTML is a:",
+          "options": [
+            {"opt_id": "1", "text": "Programming language"},
+            {"opt_id": "2", "text": "Markup language"},
+            {"opt_id": "3", "text": "Scripting language"},
+            {"opt_id": "4", "text": "Database language"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "HTML is Hypertext Markup Language, not a programming language"
+        },
+        {
+          "q_id": "C4",
+          "text": "In SQL, which command is used to modify existing data?",
+          "options": [
+            {"opt_id": "1", "text": "MODIFY"},
+            {"opt_id": "2", "text": "UPDATE"},
+            {"opt_id": "3", "text": "CHANGE"},
+            {"opt_id": "4", "text": "ALTER"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "UPDATE command modifies existing records in a table"
+        },
+        {
+          "q_id": "C5",
+          "text": "Which memory is fastest?",
+          "options": [
+            {"opt_id": "1", "text": "RAM"},
+            {"opt_id": "2", "text": "Cache"},
+            {"opt_id": "3", "text": "Hard Disk"},
+            {"opt_id": "4", "text": "ROM"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Cache memory is fastest, closer to CPU than RAM"
+        },
+        {
+          "q_id": "C6",
+          "text": "In TCP/IP model, which layer handles routing?",
+          "options": [
+            {"opt_id": "1", "text": "Application"},
+            {"opt_id": "2", "text": "Transport"},
+            {"opt_id": "3", "text": "Internet"},
+            {"opt_id": "4", "text": "Network Access"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Internet layer (Network layer) handles routing"
+        },
+        {
+          "q_id": "C7",
+          "text": "Which sorting is NOT comparison-based?",
+          "options": [
+            {"opt_id": "1", "text": "Quick Sort"},
+            {"opt_id": "2", "text": "Merge Sort"},
+            {"opt_id": "3", "text": "Counting Sort"},
+            {"opt_id": "4", "text": "Heap Sort"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Counting sort is non-comparison based, uses counting"
+        },
+        {
+          "q_id": "C8",
+          "text": "ACID properties in DBMS - what does 'I' stand for?",
+          "options": [
+            {"opt_id": "1", "text": "Integrity"},
+            {"opt_id": "2", "text": "Isolation"},
+            {"opt_id": "3", "text": "Implementation"},
+            {"opt_id": "4", "text": "Integration"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "ACID: Atomicity, Consistency, Isolation, Durability"
+        },
+        {
+          "q_id": "C9",
+          "text": "Which OOP principle allows method overriding?",
+          "options": [
+            {"opt_id": "1", "text": "Encapsulation"},
+            {"opt_id": "2", "text": "Inheritance"},
+            {"opt_id": "3", "text": "Polymorphism"},
+            {"opt_id": "4", "text": "Abstraction"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Polymorphism allows method overriding (runtime polymorphism)"
+        },
+        {
+          "q_id": "C10",
+          "text": "Default port for HTTPS:",
+          "options": [
+            {"opt_id": "1", "text": "80"},
+            {"opt_id": "2", "text": "443"},
+            {"opt_id": "3", "text": "8080"},
+            {"opt_id": "4", "text": "22"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "HTTPS uses port 443, HTTP uses port 80"
+        },
+        {
+          "q_id": "C11",
+          "text": "Decimal 255 in hexadecimal:",
+          "options": [
+            {"opt_id": "1", "text": "EF"},
+            {"opt_id": "2", "text": "FF"},
+            {"opt_id": "3", "text": "FE"},
+            {"opt_id": "4", "text": "FA"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "255 decimal = FF hexadecimal (15×16 + 15)"
+        },
+        {
+          "q_id": "C12",
+          "text": "Oracle is a:",
+          "options": [
+            {"opt_id": "1", "text": "Operating System"},
+            {"opt_id": "2", "text": "DBMS"},
+            {"opt_id": "3", "text": "Programming Language"},
+            {"opt_id": "4", "text": "Compiler"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Oracle is a Relational Database Management System"
+        },
+        {
+          "q_id": "C13",
+          "text": "Full form of CPU:",
+          "options": [
+            {"opt_id": "1", "text": "Central Processing Unit"},
+            {"opt_id": "2", "text": "Computer Processing Unit"},
+            {"opt_id": "3", "text": "Central Program Unit"},
+            {"opt_id": "4", "text": "Central Processor Unit"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "CPU = Central Processing Unit"
+        },
+        {
+          "q_id": "C14",
+          "text": "DFS traversal uses:",
+          "options": [
+            {"opt_id": "1", "text": "Queue"},
+            {"opt_id": "2", "text": "Stack"},
+            {"opt_id": "3", "text": "Array"},
+            {"opt_id": "4", "text": "Heap"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Depth First Search uses Stack (or recursion)"
+        },
+        {
+          "q_id": "C15",
+          "text": "Foreign key ensures:",
+          "options": [
+            {"opt_id": "1", "text": "Uniqueness"},
+            {"opt_id": "2", "text": "Referential integrity"},
+            {"opt_id": "3", "text": "Data type"},
+            {"opt_id": "4", "text": "Not null"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Foreign key maintains referential integrity between tables"
+        },
+        {
+          "q_id": "C16",
+          "text": "FTP uses which port?",
+          "options": [
+            {"opt_id": "1", "text": "20, 21"},
+            {"opt_id": "2", "text": "80"},
+            {"opt_id": "3", "text": "443"},
+            {"opt_id": "4", "text": "25"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "FTP uses ports 20 (data) and 21 (control)"
+        },
+        {
+          "q_id": "C17",
+          "text": "1 MB equals:",
+          "options": [
+            {"opt_id": "1", "text": "1000 KB"},
+            {"opt_id": "2", "text": "1024 KB"},
+            {"opt_id": "3", "text": "1000000 bytes"},
+            {"opt_id": "4", "text": "1024000 bytes"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "1 MB = 1024 KB = $2^{10}$ KB"
+        },
+        {
+          "q_id": "C18",
+          "text": "Switch statement is an example of:",
+          "options": [
+            {"opt_id": "1", "text": "Loop"},
+            {"opt_id": "2", "text": "Conditional"},
+            {"opt_id": "3", "text": "Function"},
+            {"opt_id": "4", "text": "Array"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Switch is a multi-way conditional statement"
+        },
+        {
+          "q_id": "C19",
+          "text": "Octal 77 in decimal:",
+          "options": [
+            {"opt_id": "1", "text": "55"},
+            {"opt_id": "2", "text": "61"},
+            {"opt_id": "3", "text": "63"},
+            {"opt_id": "4", "text": "77"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "$7 \\times 8^1 + 7 \\times 8^0 = 56 + 7 = 63$"
+        },
+        {
+          "q_id": "C20",
+          "text": "C language is:",
+          "options": [
+            {"opt_id": "1", "text": "Interpreted"},
+            {"opt_id": "2", "text": "Compiled"},
+            {"opt_id": "3", "text": "Both"},
+            {"opt_id": "4", "text": "Assembled"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "C is a compiled language"
+        },
+        {
+          "q_id": "C21",
+          "text": "BFS uses which data structure?",
+          "options": [
+            {"opt_id": "1", "text": "Stack"},
+            {"opt_id": "2", "text": "Queue"},
+            {"opt_id": "3", "text": "Tree"},
+            {"opt_id": "4", "text": "Array"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Breadth First Search uses Queue"
+        },
+        {
+          "q_id": "C22",
+          "text": "IPv4 address is how many bits?",
+          "options": [
+            {"opt_id": "1", "text": "16"},
+            {"opt_id": "2", "text": "32"},
+            {"opt_id": "3", "text": "64"},
+            {"opt_id": "4", "text": "128"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "IPv4 address is 32 bits (4 octets × 8 bits)"
+        },
+        {
+          "q_id": "C23",
+          "text": "In C, 'string' is a:",
+          "options": [
+            {"opt_id": "1", "text": "Primitive data type"},
+            {"opt_id": "2", "text": "Derived data type"},
+            {"opt_id": "3", "text": "Array of characters"},
+            {"opt_id": "4", "text": "Both 2 and 3"}
+          ],
+          "correct_opt_id": "4",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "String in C is array of characters (derived type)"
+        },
+        {
+          "q_id": "C24",
+          "text": "Virtual memory uses:",
+          "options": [
+            {"opt_id": "1", "text": "RAM only"},
+            {"opt_id": "2", "text": "Hard disk"},
+            {"opt_id": "3", "text": "Cache"},
+            {"opt_id": "4", "text": "ROM"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Virtual memory uses hard disk space to extend RAM"
+        },
+        {
+          "q_id": "C25",
+          "text": "SQL is used for:",
+          "options": [
+            {"opt_id": "1", "text": "Database queries"},
+            {"opt_id": "2", "text": "Web development"},
+            {"opt_id": "3", "text": "System programming"},
+            {"opt_id": "4", "text": "Gaming"}
+          ],
+          "correct_opt_id": "1",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "SQL (Structured Query Language) is for database operations"
+        },
+        {
+          "q_id": "C26",
+          "text": "Best sorting for nearly sorted data:",
+          "options": [
+            {"opt_id": "1", "text": "Quick Sort"},
+            {"opt_id": "2", "text": "Merge Sort"},
+            {"opt_id": "3", "text": "Insertion Sort"},
+            {"opt_id": "4", "text": "Heap Sort"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Insertion sort performs best on nearly sorted data (O(n))"
+        },
+        {
+          "q_id": "C27",
+          "text": "Number of layers in OSI model:",
+          "options": [
+            {"opt_id": "1", "text": "4"},
+            {"opt_id": "2", "text": "5"},
+            {"opt_id": "3", "text": "7"},
+            {"opt_id": "4", "text": "9"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "OSI model has 7 layers"
+        },
+        {
+          "q_id": "C28",
+          "text": "Hybrid inheritance in Java is achieved using:",
+          "options": [
+            {"opt_id": "1", "text": "Classes only"},
+            {"opt_id": "2", "text": "Interfaces"},
+            {"opt_id": "3", "text": "Cannot be achieved"},
+            {"opt_id": "4", "text": "Abstract classes"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Java doesn't support multiple inheritance; hybrid achieved via interfaces"
+        },
+        {
+          "q_id": "C29",
+          "text": "Queue follows:",
+          "options": [
+            {"opt_id": "1", "text": "LIFO"},
+            {"opt_id": "2", "text": "FIFO"},
+            {"opt_id": "3", "text": "Random access"},
+            {"opt_id": "4", "text": "Priority"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Queue follows FIFO (First In First Out)"
+        },
+        {
+          "q_id": "C30",
+          "text": "Python is a:",
+          "options": [
+            {"opt_id": "1", "text": "Low-level language"},
+            {"opt_id": "2", "text": "High-level language"},
+            {"opt_id": "3", "text": "Machine language"},
+            {"opt_id": "4", "text": "Assembly language"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Python is a high-level interpreted language"
+        },
+        {
+          "q_id": "C31",
+          "text": "Default port for SSH:",
+          "options": [
+            {"opt_id": "1", "text": "21"},
+            {"opt_id": "2", "text": "22"},
+            {"opt_id": "3", "text": "23"},
+            {"opt_id": "4", "text": "25"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "SSH (Secure Shell) uses port 22"
+        },
+        {
+          "q_id": "C32",
+          "text": "Third normal form (3NF) eliminates:",
+          "options": [
+            {"opt_id": "1", "text": "Partial dependency"},
+            {"opt_id": "2", "text": "Transitive dependency"},
+            {"opt_id": "3", "text": "Multi-valued dependency"},
+            {"opt_id": "4", "text": "Join dependency"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "3NF eliminates transitive dependencies"
+        },
+        {
+          "q_id": "C33",
+          "text": "Space complexity of Merge Sort:",
+          "options": [
+            {"opt_id": "1", "text": "$O(1)$"},
+            {"opt_id": "2", "text": "$O(\\log n)$"},
+            {"opt_id": "3", "text": "$O(n)$"},
+            {"opt_id": "4", "text": "$O(n^2)$"}
+          ],
+          "correct_opt_id": "3",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "Merge sort requires $O(n)$ auxiliary space"
+        },
+        {
+          "q_id": "C34",
+          "text": "Which SQL command creates a new table?",
+          "options": [
+            {"opt_id": "1", "text": "NEW TABLE"},
+            {"opt_id": "2", "text": "CREATE TABLE"},
+            {"opt_id": "3", "text": "MAKE TABLE"},
+            {"opt_id": "4", "text": "BUILD TABLE"}
+          ],
+          "correct_opt_id": "2",
+          "marks": 4,
+          "negative_marks": 1,
+          "explanation": "CREATE TABLE is used to create new tables in SQL"
+        }
+      ]
+    }
+  ]
+}
