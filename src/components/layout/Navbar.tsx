@@ -23,22 +23,6 @@ const Navbar = ({ toggleSidebar = () => {} }: NavbarProps) => {
             <RxHamburgerMenu className="h-6 w-6" />
           </Button>
           <Link to="/" className="flex items-center gap-2">
-            <img
-              src="/images/icon-light.svg"
-              alt="MockTest Hub logo"
-              className="block h-7 w-7 dark:hidden"
-              decoding="async"
-              loading="eager"
-              draggable="false"
-            />
-            <img
-              src="/images/icon.svg"
-              alt="MockTest Hub logo"
-              className="hidden h-7 w-7 dark:block"
-              decoding="async"
-              loading="eager"
-              draggable="false"
-            />
             <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
               MockTest Hub
             </span>
