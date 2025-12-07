@@ -4,9 +4,10 @@ import ReviewQuestionOptions from "@/components/review/ReviewQuestionOptions";
 import ReviewAnswerSummary from "@/components/review/ReviewAnswerSummary";
 import ReviewExplanation from "@/components/review/ReviewExplanation";
 import ReviewNavigationControls from "@/components/review/ReviewNavigationControls";
+import type { Question } from "@/types";
 
 interface ReviewAreaProps {
-  question: any;
+  question: Question;
   sectionName: string;
   questionIndex: number;
   totalQuestions: number;
@@ -50,7 +51,9 @@ const ReviewArea: React.FC<ReviewAreaProps> = ({
         <ReviewQuestionOptions question={question} userAnswer={userAnswer} />
         <div className="space-y-4">
           <ReviewAnswerSummary question={question} userAnswer={userAnswer} />
-          <ReviewExplanation explanation={question.explanation} />
+          {question.explanation && (
+            <ReviewExplanation explanation={question.explanation} />
+          )}
         </div>
       </div>
       <ReviewNavigationControls

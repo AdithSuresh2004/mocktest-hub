@@ -151,65 +151,63 @@ export default function QuestionNavigator({
         </div>
         <div className="flex-1 p-4">
           <div className={NAVIGATOR_STYLES.questionGrid}>
-            {currentSectionData?.questions.map(
-              (question: any, qIndex: number) => {
-                const isAnswered = answers[question.q_id];
-                const isMarked = markedForReview.has(question.q_id);
-                const isCorrect =
-                  isReviewMode &&
-                  isAnswered &&
-                  answers[question.q_id] === question.correct_opt_id;
-                const isIncorrect =
-                  isReviewMode &&
-                  isAnswered &&
-                  answers[question.q_id] !== question.correct_opt_id;
+            {currentSectionData?.questions.map((question, qIndex) => {
+              const isAnswered = answers[question.q_id];
+              const isMarked = markedForReview.has(question.q_id);
+              const isCorrect =
+                isReviewMode &&
+                isAnswered &&
+                answers[question.q_id] === question.correct_opt_id;
+              const isIncorrect =
+                isReviewMode &&
+                isAnswered &&
+                answers[question.q_id] !== question.correct_opt_id;
 
-                return (
-                  <button
-                    key={question.q_id}
-                    onClick={() => handleQuestionClick(qIndex)}
-                    className={cn(
-                      NAVIGATOR_STYLES.questionButton,
-                      "relative",
-                      getQuestionStatusClasses({
-                        question,
-                        qIndex,
-                        answers,
-                        markedForReview,
-                        currentQuestionIndex,
-                        isReviewMode,
-                      }),
-                    )}
-                    aria-current={
-                      qIndex === currentQuestionIndex ? "page" : undefined
-                    }
-                    aria-label={`Go to question ${qIndex + 1}`}
-                  >
-                    {qIndex + 1}
-                    {isCorrect && (
-                      <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-green-600 shadow-sm">
-                        ✓
-                      </span>
-                    )}
-                    {isIncorrect && (
-                      <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white shadow-sm">
-                        <FaTimes className="h-2.5 w-2.5 text-red-600" />
-                      </span>
-                    )}
-                    {!isReviewMode && isAnswered && (
-                      <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] font-bold text-white shadow-sm">
-                        ✓
-                      </span>
-                    )}
-                    {isMarked && (
-                      <span className="absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[10px] font-bold text-white shadow-sm">
-                        !
-                      </span>
-                    )}
-                  </button>
-                );
-              },
-            )}
+              return (
+                <button
+                  key={question.q_id}
+                  onClick={() => handleQuestionClick(qIndex)}
+                  className={cn(
+                    NAVIGATOR_STYLES.questionButton,
+                    "relative",
+                    getQuestionStatusClasses({
+                      question,
+                      qIndex,
+                      answers,
+                      markedForReview,
+                      currentQuestionIndex,
+                      isReviewMode,
+                    }),
+                  )}
+                  aria-current={
+                    qIndex === currentQuestionIndex ? "page" : undefined
+                  }
+                  aria-label={`Go to question ${qIndex + 1}`}
+                >
+                  {qIndex + 1}
+                  {isCorrect && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-green-600 shadow-sm">
+                      ✓
+                    </span>
+                  )}
+                  {isIncorrect && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white shadow-sm">
+                      <FaTimes className="h-2.5 w-2.5 text-red-600" />
+                    </span>
+                  )}
+                  {!isReviewMode && isAnswered && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] font-bold text-white shadow-sm">
+                      ✓
+                    </span>
+                  )}
+                  {isMarked && (
+                    <span className="absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[10px] font-bold text-white shadow-sm">
+                      !
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

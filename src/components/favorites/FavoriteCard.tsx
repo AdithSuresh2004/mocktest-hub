@@ -1,19 +1,11 @@
-import {
-  FaPlay,
-  FaListAlt,
-  FaClock,
-  FaStar,
-  FaTrash,
-  FaAward,
-} from "react-icons/fa";
+import { FaPlay, FaStar, FaTrash } from "react-icons/fa";
 import Card from "@/components/common/Card";
 import Badge from "@/components/common/Badge";
 import Button from "@/components/common/Button";
-import { capitalizeText } from "@/utils/formatters";
-import type { Exam } from "@/types";
+import type { FavoriteItem } from "@/stores/favoriteStore";
 
 interface FavoriteCardProps {
-  favorite: Exam;
+  favorite: FavoriteItem;
   onStart: (examId: string) => void;
   onRemove: (examId: string, examName: string, e: React.MouseEvent) => void;
 }
@@ -45,44 +37,9 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
         </button>
       </div>
 
-      <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
+      <h3 className="mb-4 line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
         {favorite.exam_name || `Exam ${favorite.exam_id}`}
       </h3>
-
-      {favorite.subject && (
-        <p className="mb-3 truncate text-sm text-gray-600 dark:text-gray-400">
-          {favorite.subject}
-        </p>
-      )}
-
-      {favorite.exam_strength && (
-        <div className="mb-3">
-          <Badge variant="warning">
-            {capitalizeText(favorite.exam_strength, "Medium")}
-          </Badge>
-        </div>
-      )}
-
-      <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
-        {favorite.duration_minutes && (
-          <div className="flex items-center gap-1.5">
-            <FaClock className="h-4 w-4" />
-            <span>{favorite.duration_minutes} mins</span>
-          </div>
-        )}
-        {favorite.total_questions && (
-          <div className="flex items-center gap-1.5">
-            <FaListAlt className="h-4 w-4" />
-            <span>{favorite.total_questions} ques</span>
-          </div>
-        )}
-        {favorite.total_marks && (
-          <div className="flex items-center gap-1.5">
-            <FaAward className="h-4 w-4" />
-            <span>{favorite.total_marks} marks</span>
-          </div>
-        )}
-      </div>
 
       <Button
         onClick={(e: React.MouseEvent) => {

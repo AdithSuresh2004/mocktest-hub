@@ -1,11 +1,12 @@
 import React from "react";
 import FormattedContent from "@/components/common/FormattedContent";
 import { FaUser, FaStar } from "react-icons/fa";
+import type { Option } from "@/types";
 
 interface ReviewAnswerSummaryProps {
   question: {
     correct_opt_id: string;
-    options: any[];
+    options: Option[];
   };
   userAnswer: string;
 }
@@ -33,7 +34,8 @@ const ReviewAnswerSummary: React.FC<ReviewAnswerSummaryProps> = ({
                 {userAnswer.toUpperCase()}.{" "}
                 <FormattedContent
                   text={
-                    question.options.find((o) => o.opt_id === userAnswer)?.text
+                    question.options.find((o) => o.opt_id === userAnswer)
+                      ?.text ?? ""
                   }
                   className="inline text-gray-700 dark:text-gray-300"
                 />
@@ -55,7 +57,7 @@ const ReviewAnswerSummary: React.FC<ReviewAnswerSummaryProps> = ({
                 <FormattedContent
                   text={
                     question.options.find((o) => o.opt_id === correctOptionId)
-                      ?.text
+                      ?.text ?? ""
                   }
                   className="inline text-gray-700 dark:text-gray-300"
                 />

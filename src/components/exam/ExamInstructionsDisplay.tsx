@@ -1,7 +1,8 @@
 import InstructionsPage from "@/pages/InstructionsPage";
+import type { Exam } from "@/types";
 
 interface ExamInstructionsDisplayProps {
-  exam: any;
+  exam: Exam;
   onStart: () => void;
   isStarting?: boolean;
 }

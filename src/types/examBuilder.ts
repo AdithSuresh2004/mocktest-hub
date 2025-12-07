@@ -107,9 +107,9 @@ export interface ExamBuilderState {
   setActiveQuestion: (index: number) => void;
   setValidationErrors: (errors: ValidationError[]) => void;
   validateExam: () => ValidationResult;
-  saveToLocalStorage: () => void;
+  saveToLocalStorage: () => boolean;
   loadFromLocalStorage: () => boolean;
-  reset: () => void;
+  reset: () => boolean;
   exportExam: () => string;
   importExam: (jsonString: string) => boolean;
 }

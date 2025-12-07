@@ -40,7 +40,7 @@ export default function FavoritesPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {pagination.paginatedItems.map((favorite: any) => (
+              {pagination.paginatedItems.map((favorite) => (
                 <FavoriteCard
                   key={favorite.exam_id}
                   favorite={favorite}

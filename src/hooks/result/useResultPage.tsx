@@ -1,14 +1,47 @@
-import { useEffect } from "react";
-import { resultStore } from "../../stores/resultStore";
+import { useRef, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { resultStore } from "@/stores/resultStore";
 
-const useResultPage = (attemptId: string) => {
-  const { attempt, loading, error, loadResult } = resultStore();
+export const useResultPage = () => {
+  const { attemptId } = useParams();
+  const {
+    attempt,
+    exam,
+    analysis,
+    enrichedAnalysis,
+    loading,
+    error,
+    loadResult,
+  } = resultStore();
+  const analysisRef = useRef<HTMLDivElement>(null);
+  const [showAnalysis, setShowAnalysis] = useState(true);
 
   useEffect(() => {
-    loadResult(attemptId);
+    if (attemptId) {
+      void loadResult(attemptId);
+    }
   }, [attemptId, loadResult]);
 
-  return { attempt, loading, error };
-};
+  const handleScrollToAnalysis = () => {
+    const newShowAnalysis = !showAnalysis;
+    setShowAnalysis(newShowAnalysis);
+    if (newShowAnalysis) {
+      setTimeout(() => {
+        analysisRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  };
 
-export default useResultPage;
+  return {
+    attemptId,
+    attempt,
+    exam,
+    analysis,
+    enrichedAnalysis,
+    loading,
+    error,
+    analysisRef,
+    showAnalysis,
+    handleScrollToAnalysis,
+  };
+};

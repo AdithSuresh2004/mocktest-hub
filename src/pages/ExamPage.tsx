@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useNavigation } from "react-router-dom";
-import useExamPage from "@/hooks/exam/useExamPage";
+import useExam from "@/hooks/exam/useExam";
 import { useKeyboardShortcuts } from "@/hooks/common/useKeyboardShortcuts";
 import { getExamState } from "@/services/examService";
 import ExamInstructionsDisplay from "@/components/exam/ExamInstructionsDisplay";
@@ -25,17 +25,21 @@ const ExamPage = () => {
     loading,
     error,
     isSubmitted,
-    navigation: examNavigation,
-    timer,
-    handleAnswer: saveAnswer,
+    currentSection,
+    currentQuestion,
+    goToQuestion,
+    nextQuestion,
+    prevQuestion,
+    seconds,
+    saveAnswer,
     toggleMarkForReview,
     finalizeExam,
-    saveAndExitExam,
-    deleteAndExitExam,
+    saveAndExit,
+    deleteAndExit,
     answers,
     markedForReview,
     startNewExam,
-  } = useExamPage(examId);
+  } = useExam(examId);
 
   const { handleToggleFullscreen } = useFullscreenToggle();
   const routeNavigation = useNavigation();
@@ -43,11 +47,7 @@ const ExamPage = () => {
 
   const examState =
     exam && attempt
-      ? getExamState(
-          exam,
-          examNavigation.currentSection,
-          examNavigation.currentQuestion,
-        )
+      ? getExamState(exam, currentSection, currentQuestion)
       : {
           currentSectionObj: null,
           currentQ: null,
@@ -64,28 +64,31 @@ const ExamPage = () => {
   };
 
   useKeyboardShortcuts({
-    onPrevQuestion: canGoPrev ? examNavigation.prevQuestion : null,
-    onNextQuestion: canGoNext ? examNavigation.nextQuestion : null,
+    onPrevQuestion: canGoPrev ? prevQuestion : null,
+    onNextQuestion: canGoNext ? nextQuestion : null,
     onSelectOption: handleSelectOption,
     onMarkForReview: () => currentQ && toggleMarkForReview(currentQ.q_id),
     onToggleFullscreen: handleToggleFullscreen,
     enabled: !loading && Boolean(attempt?._hasStarted),
   });
 
+  // Navigate to result when submitted
   useEffect(() => {
     if (isSubmitted && attempt) navigate(`/result/${attempt.id}`);
   }, [isSubmitted, attempt, navigate]);
 
-  if (isRouteLoading) {
-    return <PageStatus loading loadingMessage="Loading exam..." />;
-  }
-
+  // Hide global loading when exam is ready
   useEffect(() => {
     const { hide } = globalLoadingStore.getState();
     if (exam && attempt && attempt._hasStarted && currentQ) {
       hide();
     }
   }, [exam, attempt, currentQ]);
+
+  // Early returns for loading/error states
+  if (isRouteLoading) {
+    return <PageStatus loading loadingMessage="Loading exam..." />;
+  }
 
   if (loading) {
     return <PageStatus loading loadingMessage="Preparing your exam..." />;
@@ -122,8 +125,8 @@ const ExamPage = () => {
     }, 300);
   };
 
-  const handleSaveAndExit = () => handleExitAction(saveAndExitExam);
-  const handleExitWithoutSaving = () => handleExitAction(deleteAndExitExam);
+  const handleSaveAndExit = () => handleExitAction(saveAndExit);
+  const handleExitWithoutSaving = () => handleExitAction(deleteAndExit);
 
   const handleStartExam = () => {
     setIsStarting(true);
@@ -153,24 +156,24 @@ const ExamPage = () => {
     <>
       <ExamLayout
         exam={exam}
-        timeRemaining={timer.seconds}
+        timeRemaining={seconds}
         onExit={handleExit}
-        isWarning={timer.seconds < 300}
-        isCritical={timer.seconds < 60}
+        isWarning={seconds < 300}
+        isCritical={seconds < 60}
         currentQ={currentQ ?? undefined}
         currentSectionObj={currentSectionObj ?? undefined}
-        currentSection={examNavigation.currentSection}
-        currentQuestion={examNavigation.currentQuestion}
+        currentSection={currentSection}
+        currentQuestion={currentQuestion}
         answers={answers}
         markedForReview={markedForReview}
         saveAnswer={saveAnswer}
         toggleMarkForReview={toggleMarkForReview}
         canGoPrev={canGoPrev}
         canGoNext={canGoNext}
-        goToPrev={examNavigation.prevQuestion}
-        goToNext={examNavigation.nextQuestion}
+        goToPrev={prevQuestion}
+        goToNext={nextQuestion}
         handleSubmit={handleSubmit}
-        navigateToQuestion={examNavigation.goToQuestion}
+        navigateToQuestion={goToQuestion}
       />
       {showExitModal && (
         <ExitTestModal

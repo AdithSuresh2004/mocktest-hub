@@ -1,4 +1,4 @@
-import { ReactNode, ReactElement } from "react";
+import { ReactNode } from "react";
 
 export interface Toast {
   id: string;
@@ -20,23 +20,6 @@ export interface ThemeContextType {
 
 export interface LayoutProps {
   children: ReactNode;
-}
-
-export interface LoadingSpinnerProps {
-  fullScreen?: boolean;
-  message?: string;
-  size?: "sm" | "md" | "lg";
-}
-
-export interface ErrorBoundaryProps {
-  children: ReactNode;
-}
-
-export interface ErrorFallbackProps {
-  error: Error;
-  errorInfo: React.ErrorInfo;
-  errorId: string;
-  fallbackUI?: ReactElement;
 }
 
 export type ToastContainerProps = Record<string, never>;

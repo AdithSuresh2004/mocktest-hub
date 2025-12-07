@@ -68,9 +68,7 @@ const ExamSelectionPage = () => {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {pagination.paginatedItems.map((test) => (
               <TestCard
-                key={
-                  test.uid || test.exam_id || `${test.type}-${test.exam_name}`
-                }
+                key={test.exam_id || `${test.type}-${test.exam_name}`}
                 test={test}
               />
             ))}

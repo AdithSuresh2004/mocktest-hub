@@ -24,6 +24,8 @@ interface BaseButtonProps {
   children?: React.ReactNode;
 }
 
+// Polymorphic button - eslint-disable needed for flexible prop passing
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ButtonProps = BaseButtonProps & Record<string, any>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -41,6 +43,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
+    // Type assertions needed due to polymorphic props intersection
+    const typedVariant = variant as ButtonVariant;
+    const typedSize = size as ButtonSize;
+
     const sizeClasses: Record<ButtonSize, string> = {
       sm: "px-2 py-1 text-xs",
       md: "px-3 py-1.5 text-sm",
@@ -51,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loading || disabled ? "opacity-50 cursor-not-allowed" : "";
 
     const variantClass =
-      (THEME_CLASSES.button as any)[variant] || THEME_CLASSES.button.primary;
+      THEME_CLASSES.button[typedVariant] ?? THEME_CLASSES.button.primary;
 
     return (
       <Component
@@ -59,8 +65,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "inline-flex cursor-pointer items-center justify-center rounded-md font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900",
           variantClass,
-
-          (sizeClasses as any)[size],
+          sizeClasses[typedSize],
           disabledClasses,
           className,
         )}
@@ -69,7 +74,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading && <LoadingSpinner className="mr-2" />}
         {Icon && (
-          <Icon className={cn("mr-2", size === "sm" ? "h-3 w-3" : "h-4 w-4")} />
+          <Icon
+            className={cn("mr-2", typedSize === "sm" ? "h-3 w-3" : "h-4 w-4")}
+          />
         )}
         {children}
       </Component>
