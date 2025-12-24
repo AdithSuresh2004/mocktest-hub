@@ -3,9 +3,8 @@ import ListSkeleton from "@/components/common/skeletons/ListSkeleton";
 import StatsSkeleton from "@/components/common/skeletons/StatsSkeleton";
 import ExamSkeleton from "@/components/common/skeletons/ExamSkeleton";
 import FullPageSkeleton from "@/components/common/skeletons/FullPageSkeleton";
-import { shimmer } from "@/utils/common";
 
-const shimmerClass = shimmer;
+const shimmerClass = "animate-shimmer";
 
 const TableSkeleton = () => (
   <div className="animate-fadeIn">
